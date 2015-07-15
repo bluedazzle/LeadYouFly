@@ -37,6 +37,7 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'LYFAdmin',
+    'LYFSite',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -62,9 +63,9 @@ DATABASES = {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME': 'leadyoufly',
         'USER': 'postgres',                      # Not used with sqlite3.
-        'PASSWORD': '123456',                  # Not used with sqlite3.
+        'PASSWORD': 'GDBDYL886',                  # Not used with sqlite3.
         'HOST': 'localhost',                      # Set to empty string for localhost. Not used with sqlite3.
-        'PORT': '',
+        'PORT': '5433',
     }
 }
 
@@ -90,3 +91,9 @@ STATIC_URL = '/static/'
 TEMPLATE_DIRS = (
     os.path.join(BASE_DIR,  'templates'),
 )
+
+CSS_DIR = './static/css/'
+IMG_DIR = './static/img/'
+JS_DIR = './static/js/'
+FONTS_DIR = './static/fonts/'
+STATIC_DIR = './static/'

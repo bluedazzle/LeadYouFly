@@ -1,0 +1,19 @@
+.lg-title{
+    font-size: 18px;
+}
+.sm-title{
+    font-size: 14px;
+}
+.list-group-item{
+    background-color: #222222;
+    border: 0;
+}
+.list-group-item->a{
+    color: #ffffff;
+    font-size: 14px;
+}
+.panel-black{
+    background-color: #000000;
+    border: #222222;
+    border-radius: 0;
+}

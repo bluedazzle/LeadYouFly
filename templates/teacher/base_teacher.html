@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+{% block define %}
+  <div class="col-md-12 col-lg-12 teacher-host-nav">
+    <div class="teacher-host-head text-center">
+      <img class="teacher-head" src="/img/touxiang.jpg"/>
+      <p style="color: #ffffff;font-size: 16px;margin-top: 5px">测试用户</p>
+      <p style="color: #ffffff; font-size: 12px">
+        授课<span style="color: red">100</span>堂
+        教过学员<span style="color: red">91</span>位
+        获得<span style="color: red">￥970</span>收入
+      </p>
+    </div>
+  </div>
+  <div class="col-md-12 col-lg-12" style="background: #ffffff;min-height: 400px;padding-top: 30px">
+    <div class="container">
+      <div class="col-md-2 col-lg-2">
+        <div class="list-group list-teacher-user text-center">
+          <a class="list-group-item list-group-item-active" href="#">
+            <p>订单接收</p>
+          </a>
+          <a class="list-group-item" href="#">
+            <p>联系信息</p>
+          </a>
+          <a class="list-group-item" href="#">
+            <p>课程管理</p>
+          </a>
+          <a class="list-group-item" href="#">
+            <p>导师主页</p>
+          </a>
+          <a class="list-group-item" href="#">
+            <p>视频上传</p>
+          </a>
+          <a class="list-group-item" href="#">
+            <p>赔款管理</p>
+          </a>
+        </div>
+      </div>
+      <div class="col-md-10 col-lg-10">
+        {% block teacher_define %}
+        {% endblock %}
+      </div>
+    </div>
+  </div>
+{% endblock %}
+{% block script %}
+{% endblock %}

@@ -17,3 +17,113 @@
     border: #222222;
     border-radius: 0;
 }
+
+.table-host>tbody>tr>td{
+    border-top: 0;
+}
+
+.table-host>tbody>tr>td>a:link,
+.table-host>tbody>tr>td>a:visited,
+.table-host>tbody>tr>td>a:active{
+    text-decoration:none;
+}
+
+.table-host>tbody>tr>td>a{
+    text-decoration:none;
+    color: #ffffff;
+    font-size: 14px;
+}
+
+.table-host>tbody>tr>td>a:hover{
+    text-decoration:none;
+    color: #a6e1ec;
+
+}
+
+.title-line{
+    width: 200px;
+    height: 2px;
+    background-image:-webkit-linear-gradient(to right, rgb(51, 60, 69), rgb(26, 33, 41));
+    background-image:linear-gradient(to right,rgb(51, 60, 69),rgb(26, 33, 41));
+}
+
+.footer-one{
+    height: 100px;
+    padding-top: 50px;
+    padding-left: 15%;
+    padding-right: 15%;
+}
+
+.footer-line{
+    background-color: rgb(43, 43, 43);
+    height: 1px;
+    padding-left: 10%;
+    padding-right: 10%;
+}
+
+.footer-one>div>a {
+    color: #ffffff;
+    text-decoration: none;
+}
+.footer-one>div>a:hover{
+    color: #a6e1ec;
+    text-decoration: none;
+}
+.footer-two{
+    height: 40px;
+    padding-top: 10px;
+    padding-left: 32%;
+    padding-right: 32%;
+}
+.footer-two>div>a{
+    font-size: 8px;
+    color: #ffffff;
+    text-decoration: none;
+}
+
+.footer-two>div>a:hover{
+    font-size: 8px;
+    color: #a6e1ec;
+    text-decoration: none;
+}
+
+.teacher-host-nav{
+    height: 250px;
+    background: url(/img/3.jpg) center;
+    background-size: cover;
+    vertical-align:middle;
+    padding: 0;
+}
+.teacher-host-head{
+    background-color: rgba(0, 0, 0, 0.2);
+    height: 250px;
+    padding-top: 30px;
+}
+.teacher-head{
+    width: 100px;
+    height: 100px;
+    border-radius: 100px;
+}
+.list-teacher-user{
+    background-color: #ffffff;
+    border: 1px solid #ecf0f1;
+    box-shadow: 0 0 10px #ecf0f1;
+}
+.list-teacher-user>a{
+    background-color: #ffffff;
+    padding: 0;
+    margin-bottom: 0;
+}
+.list-group-item>p{
+    border-bottom: 1px solid #ecf0f1;
+    margin: 0 10px 0 10px;
+    padding: 15px 0 15px 0;
+}
+.list-teacher-user>a:hover,
+.list-group-item-active{
+    background-color: #ffffff;
+    border-left: 4px solid #1abc3c;
+    color: #1abc3c;
+}
+
+

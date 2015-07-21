@@ -3,5 +3,6 @@ from views import *
 
 
 urlpatterns = patterns('',
-                       url('^index$', index)
+                       url('^host$', host),
+                       url('^teacher_host$', teacher_host),
                        )

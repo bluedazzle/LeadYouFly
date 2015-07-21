@@ -12,5 +12,12 @@ from django.contrib.auth.decorators import login_required
 import datetime
 
 
-def index(requset):
-    return render_to_response('index.html')
+def host(requset):
+    test_array = []
+    for i in range(0, 6):
+        test_array.append("测试数据!!!这个是测试数据" + str(i))
+    return render_to_response('host.html', {"test_array": test_array})
+
+
+def teacher_host(request):
+    return render_to_response('teacher/teacher_host.html')

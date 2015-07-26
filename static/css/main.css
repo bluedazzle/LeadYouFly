@@ -4,6 +4,48 @@
 .sm-title{
     font-size: 14px;
 }
+.footer-one{
+    height: 100px;
+    padding-top: 50px;
+    padding-left: 15%;
+    padding-right: 15%;
+}
+
+.footer-line{
+    background-color: rgb(43, 43, 43);
+    height: 1px;
+    padding-left: 10%;
+    padding-right: 10%;
+}
+
+.footer-one>div>a {
+    color: #ffffff;
+    text-decoration: none;
+    font-size: 14px;
+}
+.footer-one>div>a:hover{
+    color: #a6e1ec;
+    text-decoration: none;
+}
+.footer-two{
+    height: 40px;
+    padding-top: 10px;
+    padding-left: 32%;
+    padding-right: 32%;
+}
+.footer-two>div>a{
+    font-size: 8px;
+    color: #ffffff;
+    text-decoration: none;
+}
+
+.footer-two>div>a:hover{
+    font-size: 8px;
+    color: #a6e1ec;
+    text-decoration: none;
+}
+
+/*导师页面*/
 .list-group-item{
     background-color: #222222;
     border: 0;
@@ -40,51 +82,18 @@
 
 }
 
+.teacher-define{
+    background-color: #ffffff;
+    border: 1px solid #ecf0f1;
+    box-shadow: 0 0 10px #ecf0f1;
+    min-height: 330px;
+}
+
 .title-line{
     width: 200px;
     height: 2px;
     background-image:-webkit-linear-gradient(to right, rgb(51, 60, 69), rgb(26, 33, 41));
     background-image:linear-gradient(to right,rgb(51, 60, 69),rgb(26, 33, 41));
-}
-
-.footer-one{
-    height: 100px;
-    padding-top: 50px;
-    padding-left: 15%;
-    padding-right: 15%;
-}
-
-.footer-line{
-    background-color: rgb(43, 43, 43);
-    height: 1px;
-    padding-left: 10%;
-    padding-right: 10%;
-}
-
-.footer-one>div>a {
-    color: #ffffff;
-    text-decoration: none;
-}
-.footer-one>div>a:hover{
-    color: #a6e1ec;
-    text-decoration: none;
-}
-.footer-two{
-    height: 40px;
-    padding-top: 10px;
-    padding-left: 32%;
-    padding-right: 32%;
-}
-.footer-two>div>a{
-    font-size: 8px;
-    color: #ffffff;
-    text-decoration: none;
-}
-
-.footer-two>div>a:hover{
-    font-size: 8px;
-    color: #a6e1ec;
-    text-decoration: none;
 }
 
 .teacher-host-nav{
@@ -118,12 +127,112 @@
     border-bottom: 1px solid #ecf0f1;
     margin: 0 10px 0 10px;
     padding: 15px 0 15px 0;
+    font-size: 14px;
 }
 .list-teacher-user>a:hover,
 .list-group-item-active{
     background-color: #ffffff;
-    border-left: 4px solid #1abc3c;
+    border-left:4px solid #1abc9c;
     color: #1abc3c;
 }
 
+.teacher-host-input{
+    border:1px solid #1abc9c;
+    height: 45px;
+    border-radius: 4px;
+    margin-bottom: 25px;
+    margin-left: -7%;
+}
 
+.teacher-host-input:focus{
+    border-color: #1abc9c;
+    outline: 0;
+    box-shadow: none;
+}
+
+.teacher-host-label{
+    height: 45px;
+    color: #1abc9c;
+    font-size: 14px;
+    margin-bottom: 25px;
+    padding-top: 7px;
+}
+
+.checkbox-group{
+    height: 45px;
+    margin-bottom: 25px;
+    margin-left: -9%;
+}
+.checkbox-group>div{
+    margin-top: 7px;
+
+}
+
+/* checkbox*/
+.checkbox-wrapper {
+    width: 30px;
+    height: 30px;
+    position: relative;
+    display: inline-block;
+    overflow: hidden;
+    border: 1px solid #1abc9c;
+    border-radius: 15px;
+    cursor: pointer;
+}
+.checkbox {
+    display: none;
+}
+
+.checkbox-label{
+    background-color: #1abc9c;
+    height: 30px;
+    width: 30px;
+    padding: 9px;
+    display: none;
+    cursor: pointer;
+}
+
+.checkbox-div{
+    background-color: #ffffff;
+    width: 10px;
+    height: 10px;
+    border-radius: 6px;
+    display: none;
+    cursor: pointer;
+}
+
+.position-text{
+    margin-top: -37px;
+    margin-left: 40px;
+    font-size: 16px;
+    color: #1abc9c;
+}
+
+.btn-upload{
+    background-color: #ffffff;
+    color: #1abc9c;
+    border:1px solid #1abc9c;
+}
+
+.btn-upload:hover{
+    color: #ffffff;
+    background-color: #1abc9c;
+}
+
+.indemnity-title-sm{
+    font-size: 14px;
+    color: rgb(179, 179, 179);
+}
+
+.indemnity-number-lg{
+    font-size: 36px;
+    color: rgb(234, 184, 0);
+}
+
+.table-indemnity>tbody>tr>td{
+    border: none;
+}
+
+.table-indemnity{
+    border-collapse: inherit;
+}

@@ -1,0 +1,42 @@
+{% extends 'teacher/base_teacher.html' %}
+{% block teacher_define %}
+  <div style="padding-top:25px;">
+    <div class="col-lg-12 col-md-12">
+      <div class="col-lg-4 col-md-4" style="border-right: 1px solid rgb(230, 230, 230);">
+        <p class="text-center indemnity-title-sm">总账款额度</p>
+        <p class="text-center indemnity-number-lg">19000</p>
+      </div>
+      <div class="col-lg-4 col-md-4" style="border-right: 1px solid rgb(230, 230, 230);">
+        <p class="text-center indemnity-title-sm">可用额度</p>
+        <p class="text-center indemnity-number-lg">16000</p>
+      </div>
+      <div class="col-lg-4 col-md-4">
+        <p class="text-center indemnity-title-sm">待确认付款</p>
+        <p class="text-center indemnity-number-lg">3000</p>
+      </div>
+    </div>
+    <div class="col-lg-12 col-md-12" style="margin-top: 20px">
+      <table class="table text-left table-indemnity text-center">
+        <thead>
+          <tr style="background-color: rgb(170, 185, 202);color: #ffffff;">
+            <td>日期</td>
+            <td>收入</td>
+            <td>支出</td>
+          </tr>
+        </thead>
+        <tbody>
+        {% for item in test_list %}
+          <tr>
+            <td>{{ item.test_date | date:'Y.m.d' }}</td>
+            <td>￥{{ item.test_number }}</td>
+            <td>-￥{{ item.test_pay }}</td>
+          </tr>
+        </tbody>
+        {% endfor %}
+      </table>
+    </div>
+  </div>
+{% endblock %}
+{% block script %}
+  <script src="/js/teacher/indemnity.js"></script>
+{% endblock %}

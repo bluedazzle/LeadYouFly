@@ -15,27 +15,27 @@
     <div class="container">
       <div class="col-md-2 col-lg-2">
         <div class="list-group list-teacher-user text-center">
-          <a class="list-group-item list-group-item-active" href="#">
+          <a class="list-group-item" id="teacher_order_accept" href="/site/teacher/order_accept">
             <p>订单接收</p>
           </a>
-          <a class="list-group-item" href="#">
+          <a class="list-group-item" id="teacher_contact" href="/site/teacher/contact">
             <p>联系信息</p>
           </a>
-          <a class="list-group-item" href="#">
+          <a class="list-group-item" id="manage_courses" href="/site/teacher/manage_courses">
             <p>课程管理</p>
           </a>
-          <a class="list-group-item" href="#">
+          <a class="list-group-item" id="teacher_host" href="/site/teacher/host">
             <p>导师主页</p>
           </a>
-          <a class="list-group-item" href="#">
+          <a class="list-group-item" id="upload_video" href="/site/teacher/upload_video">
             <p>视频上传</p>
           </a>
-          <a class="list-group-item" href="#">
+          <a class="list-group-item" id="manage_indemnity" href="/site/teacher/indemnity">
             <p>赔款管理</p>
           </a>
         </div>
       </div>
-      <div class="col-md-10 col-lg-10">
+      <div class="col-md-10 col-lg-10 teacher-define">
         {% block teacher_define %}
         {% endblock %}
       </div>

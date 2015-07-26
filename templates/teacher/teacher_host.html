@@ -1,1 +1,139 @@
 {% extends 'teacher/base_teacher.html' %}
+{% block teacher_define %}
+  <div style="padding-top:25px;">
+    <form action="#" method="post">
+      <div class="col-lg-12 col-md-12">
+        <label class="col-md-2 col-lg-2 teacher-host-label">名字：</label>
+        <input class="col-md-10 col-lg-10 teacher-host-input" name="name"/>
+      </div>
+
+      <div class="col-lg-12 col-md-12">
+        <label class="col-md-2 col-lg-2 teacher-host-label">简介：</label>
+        <input class="col-md-10 col-lg-10 teacher-host-input" name="name"/>
+      </div>
+
+      <div class="col-lg-12 col-md-12">
+        <label class="col-md-2 col-lg-2 teacher-host-label">擅长位置：</label>
+        <div class="checkbox-group col-lg-10 col-md-10">
+          <div class="col-lg-2 col-md-2">
+            <input type="checkbox" name="position_all" id="checkbox-all" class="checkbox"/>
+            <div class="checkbox-wrapper" onclick="position_check('checkbox-all')">
+              <label class="checkbox-label" id="checkbox-all-label">
+                <div class="checkbox-div" id="checkbox-all-div"></div>
+              </label>
+            </div>
+            <div class="position-text">全部</div>
+          </div>
+          <div class="col-lg-2 col-md-2">
+            <input type="checkbox" name="position_mid" id="checkbox-mid" class="checkbox"/>
+            <div class="checkbox-wrapper" onclick="position_check('checkbox-mid')">
+              <label class="checkbox-label" id="checkbox-mid-label">
+                <div class="checkbox-div" id="checkbox-mid-div"></div>
+              </label>
+            </div>
+            <div class="position-text">中单</div>
+          </div>
+          <div class="col-lg-2 col-md-2">
+            <input type="checkbox" name="position_jungle" id="checkbox-jungle" class="checkbox"/>
+            <div class="checkbox-wrapper" onclick="position_check('checkbox-jungle')">
+              <label class="checkbox-label" id="checkbox-jungle-label">
+                <div class="checkbox-div" id="checkbox-jungle-div"></div>
+              </label>
+            </div>
+            <div class="position-text">打野</div>
+          </div>
+          <div class="col-lg-2 col-md-2">
+            <input type="checkbox" name="position_top" id="checkbox-top" class="checkbox"/>
+            <div class="checkbox-wrapper" onclick="position_check('checkbox-top')">
+              <label class="checkbox-label" id="checkbox-top-label">
+                <div class="checkbox-div" id="checkbox-top-div"></div>
+              </label>
+            </div>
+            <div class="position-text">上单</div>
+          </div>
+          <div class="col-lg-2 col-md-2">
+            <input type="checkbox" name="position_ADC" id="checkbox-ADC" class="checkbox"/>
+            <div class="checkbox-wrapper" onclick="position_check('checkbox-ADC')">
+              <label class="checkbox-label" id="checkbox-ADC-label">
+                <div class="checkbox-div" id="checkbox-ADC-div"></div>
+              </label>
+            </div>
+            <div class="position-text">ADC</div>
+          </div>
+          <div class="col-lg-2 col-md-2">
+            <input type="checkbox" name="position_support" id="checkbox-support" class="checkbox"/>
+            <div class="checkbox-wrapper" onclick="position_check('checkbox-support')">
+              <label class="checkbox-label" id="checkbox-support-label">
+                <div class="checkbox-div" id="checkbox-support-div"></div>
+              </label>
+            </div>
+            <div class="position-text">辅助</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-lg-12 col-md-12">
+        <label class="col-md-2 col-lg-2 teacher-host-label">擅长英雄：</label>
+      </div>
+
+      <div class="col-lg-12 col-md-12">
+        <label class="col-md-2 col-lg-2 teacher-host-label">教学英雄：</label>
+      </div>
+
+      <div class="col-lg-12 col-md-12">
+        <label class="col-md-2 col-lg-2 teacher-host-label">游戏段位：</label>
+        <input class="col-md-10 col-lg-10 teacher-host-input" name="level"/>
+      </div>
+
+      <div class="col-lg-12 col-md-12">
+        <label class="col-md-2 col-lg-2 teacher-host-label">可教学大区：</label>
+        <div class="checkbox-group col-lg-10 col-md-10">
+          <div class="col-lg-2 col-md-2">
+            <input type="checkbox" name="area_all" id="checkbox-area-all" class="checkbox"/>
+            <div class="checkbox-wrapper" onclick="position_check('checkbox-area-all')">
+              <label class="checkbox-label" id="checkbox-area-all-label">
+                <div class="checkbox-div" id="checkbox-area-all-div"></div>
+              </label>
+            </div>
+            <div class="position-text">全区</div>
+          </div>
+          <div class="col-lg-2 col-md-2">
+            <input type="checkbox" name="area_telecom" id="checkbox-telecom" class="checkbox"/>
+            <div class="checkbox-wrapper" onclick="position_check('checkbox-telecom')">
+              <label class="checkbox-label" id="checkbox-telecom-label">
+                <div class="checkbox-div" id="checkbox-telecom-div"></div>
+              </label>
+            </div>
+            <div class="position-text">电信</div>
+          </div>
+          <div class="col-lg-2 col-md-2">
+            <input type="checkbox" name="area_netcom" id="checkbox-netcom" class="checkbox"/>
+            <div class="checkbox-wrapper" onclick="position_check('checkbox-netcom')">
+              <label class="checkbox-label" id="checkbox-netcom-label">
+                <div class="checkbox-div" id="checkbox-netcom-div"></div>
+              </label>
+            </div>
+            <div class="position-text">网通</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-lg-12 col-md-12">
+        <div class="col-lg-2 col-md-2 teacher-host-label">视频上传</div>
+        <div class="col-lg-10 col-md-10" style="margin-left: -9%">
+          <a type="button" class="btn btn-upload">视频上传</a>
+        </div>
+      </div>
+
+      <div class="col-lg-11 col-md-11" style="float: right;margin-left: 2.5%">
+        <button type="submit" class="btn btn-primary btn-lg">
+          &nbsp;&nbsp;保&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;存&nbsp;&nbsp;
+        </button>
+      </div>
+    </form>
+  </div>
+{% endblock %}
+
+{% block script %}
+  <script src="/js/teacher/teacher_host.js"></script>
+{% endblock %}

@@ -7,4 +7,5 @@ urlpatterns = patterns('',
                        url('^teacher/host$', teacher_host),
                        url('^teacher/contact$', teacher_contact),
                        url('^teacher/indemnity$', teacher_indemnity),
+                       url('^teacher/order_accept$', order_accept),
                        )

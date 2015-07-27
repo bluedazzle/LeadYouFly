@@ -35,3 +35,8 @@ def teacher_indemnity(request):
                     'test_pay': 356}
         test_list.append(test_dic)
     return render_to_response('teacher/indemnity.html', {'test_list': test_list})
+
+
+def order_accept(request):
+    test_list = range(0, 4)
+    return render_to_response('teacher/order_accept.html', {'test_list': test_list})

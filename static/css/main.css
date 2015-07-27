@@ -87,6 +87,7 @@
     border: 1px solid #ecf0f1;
     box-shadow: 0 0 10px #ecf0f1;
     min-height: 330px;
+    padding-bottom: 10px;
 }
 
 .title-line{
@@ -235,4 +236,35 @@
 
 .table-indemnity{
     border-collapse: inherit;
+}
+
+/*order css*/
+
+.panel-order{
+    background-color: #ffffff;
+    border: 1px solid #ecf0f1;
+    box-shadow: 0 0 10px #ecf0f1;
+    padding: 15px 10px 15px 10px;
+    margin-bottom: 15px;
+}
+
+.panel-order-item-head{
+    height: 50px;
+    padding-top: 10px;
+    font-size: 16px;
+}
+
+.panel-order-start{
+    height: 50px;
+    padding-top: 15px;
+    font-size: 16px;
+    float: right;
+}
+
+.panel-order-detail{
+    margin-top: 15px;
+}
+
+.panel-order-detail>p{
+    font-size: 14px;
 }

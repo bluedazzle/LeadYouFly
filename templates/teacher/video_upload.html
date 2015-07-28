@@ -1,0 +1,28 @@
+{% extends 'teacher/base_teacher.html' %}
+{% block teacher_define %}
+  <div class="col-md-12 col-lg-12 teacher-define">
+    {% for item in test_list %}
+      <div class="col-md-4 col-lg-4 course-box">
+        <div>
+        </div>
+      </div>
+    {% endfor %}
+    <div class="col-md-4 col-lg-4 course-box">
+      <div class="course-add text-center">
+        <span class="glyphicon glyphicon-plus"></span>
+      </div>
+    </div>
+    <div class="col-md-12 col-lg-12" style="margin-top: 40px">
+      <form action="#" method="post" id="">
+        <input type="file"/>
+        <input class="form-control course-input" name="order_number" placeholder="订单号..."/>
+      </form>
+      <button type="submit" class="btn btn-primary btn-lg" style="margin-top: 10px;">
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;保&nbsp;&nbsp;&nbsp;存&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      </button>
+    </div>
+  </div>
+{% endblock %}
+{% block script %}
+  <script src="/js/teacher/video_upload.js"></script>
+{% endblock %}

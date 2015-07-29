@@ -4,6 +4,48 @@
 .sm-title{
     font-size: 14px;
 }
+.footer-one{
+    height: 100px;
+    padding-top: 50px;
+    padding-left: 15%;
+    padding-right: 15%;
+}
+
+.footer-line{
+    background-color: rgb(43, 43, 43);
+    height: 1px;
+    padding-left: 10%;
+    padding-right: 10%;
+}
+
+.footer-one>div>a {
+    color: #ffffff;
+    text-decoration: none;
+    font-size: 14px;
+}
+.footer-one>div>a:hover{
+    color: #a6e1ec;
+    text-decoration: none;
+}
+.footer-two{
+    height: 40px;
+    padding-top: 10px;
+    padding-left: 32%;
+    padding-right: 32%;
+}
+.footer-two>div>a{
+    font-size: 8px;
+    color: #ffffff;
+    text-decoration: none;
+}
+
+.footer-two>div>a:hover{
+    font-size: 8px;
+    color: #a6e1ec;
+    text-decoration: none;
+}
+
+/*导师页面*/
 .list-group-item{
     background-color: #222222;
     border: 0;
@@ -16,4 +58,333 @@
     background-color: #000000;
     border: #222222;
     border-radius: 0;
+}
+
+.table-host>tbody>tr>td{
+    border-top: 0;
+}
+
+.table-host>tbody>tr>td>a:link,
+.table-host>tbody>tr>td>a:visited,
+.table-host>tbody>tr>td>a:active{
+    text-decoration:none;
+}
+
+.table-host>tbody>tr>td>a{
+    text-decoration:none;
+    color: #ffffff;
+    font-size: 14px;
+}
+
+.table-host>tbody>tr>td>a:hover{
+    text-decoration:none;
+    color: #a6e1ec;
+
+}
+
+.teacher-define{
+    background-color: #ffffff;
+    border: 1px solid #ecf0f1;
+    box-shadow: 0 0 10px #ecf0f1;
+    min-height: 330px;
+    padding-top: 25px;
+    padding-bottom: 10px;
+}
+
+.title-line{
+    width: 200px;
+    height: 2px;
+    background-image:-webkit-linear-gradient(to right, rgb(51, 60, 69), rgb(26, 33, 41));
+    background-image:linear-gradient(to right,rgb(51, 60, 69),rgb(26, 33, 41));
+}
+
+.teacher-host-nav{
+    height: 250px;
+    background: url(/img/3.jpg) center;
+    background-size: cover;
+    vertical-align:middle;
+    padding: 0;
+}
+.teacher-host-head{
+    background-color: rgba(0, 0, 0, 0.2);
+    height: 250px;
+    padding-top: 30px;
+}
+.teacher-head{
+    width: 100px;
+    height: 100px;
+    border-radius: 100px;
+}
+.list-teacher-user{
+    background-color: #ffffff;
+    border: 1px solid #ecf0f1;
+    box-shadow: 0 0 10px #ecf0f1;
+}
+.list-teacher-user>a{
+    background-color: #ffffff;
+    padding: 0;
+    margin-bottom: 0;
+}
+.list-group-item>p{
+    border-bottom: 1px solid #ecf0f1;
+    margin: 0 10px 0 10px;
+    padding: 15px 0 15px 0;
+    font-size: 14px;
+}
+.list-teacher-user>a:hover,
+.list-group-item-active{
+    background-color: #ffffff;
+    border-left:4px solid #1abc9c;
+    color: #1abc3c;
+}
+
+.teacher-host-input{
+    border:1px solid #1abc9c;
+    height: 45px;
+    border-radius: 4px;
+    margin-bottom: 25px;
+    margin-left: -7%;
+}
+
+.teacher-host-input:focus{
+    border-color: #1abc9c;
+    outline: 0;
+    box-shadow: none;
+}
+
+.teacher-host-label{
+    height: 45px;
+    color: #1abc9c;
+    font-size: 14px;
+    margin-bottom: 25px;
+    padding-top: 7px;
+}
+
+.checkbox-group{
+    height: 45px;
+    margin-bottom: 25px;
+    margin-left: -9%;
+}
+.checkbox-group>div{
+    margin-top: 7px;
+
+}
+
+/* checkbox*/
+.checkbox-wrapper {
+    width: 30px;
+    height: 30px;
+    position: relative;
+    display: inline-block;
+    overflow: hidden;
+    border: 1px solid #1abc9c;
+    border-radius: 15px;
+    cursor: pointer;
+}
+.checkbox {
+    display: none;
+}
+
+.checkbox-label{
+    background-color: #1abc9c;
+    height: 30px;
+    width: 30px;
+    padding: 9px;
+    display: none;
+    cursor: pointer;
+}
+
+.checkbox-div{
+    background-color: #ffffff;
+    width: 10px;
+    height: 10px;
+    border-radius: 6px;
+    display: none;
+    cursor: pointer;
+}
+
+.position-text{
+    margin-top: -37px;
+    margin-left: 40px;
+    font-size: 16px;
+    color: #1abc9c;
+}
+
+.btn-upload{
+    background-color: #ffffff;
+    color: #1abc9c;
+    border:1px solid #1abc9c;
+}
+
+.btn-upload:hover{
+    color: #ffffff;
+    background-color: #1abc9c;
+}
+
+.indemnity-title-sm{
+    font-size: 14px;
+    color: rgb(179, 179, 179);
+}
+
+.indemnity-number-lg{
+    font-size: 36px;
+    color: rgb(234, 184, 0);
+}
+
+.table-indemnity>tbody>tr>td{
+    border: none;
+}
+
+.table-indemnity{
+    border-collapse: inherit;
+}
+
+/*order css*/
+
+.panel-order{
+    background-color: #ffffff;
+    border: 1px solid #ecf0f1;
+    box-shadow: 0 0 10px #ecf0f1;
+    padding: 15px 10px 15px 10px;
+    margin-bottom: 15px;
+}
+
+.panel-order-item-head{
+    height: 50px;
+    padding-top: 10px;
+    font-size: 16px;
+}
+
+.panel-order-start{
+    height: 50px;
+    padding-top: 15px;
+    font-size: 16px;
+    float: right;
+}
+
+.panel-order-detail{
+    margin-top: 15px;
+}
+
+.panel-order-detail>p{
+    font-size: 14px;
+}
+
+/*courses manage*/
+.course-box{
+    min-height: 100px;
+    padding: 10px;
+}
+
+.course-box div{
+    min-height: 80px;
+    background-color: rgb(242, 242, 242);
+    padding: 10px;
+}
+
+.course-title{
+    font-size: 16px;
+}
+
+.course-content{
+    font-size: 14px;
+}
+
+.course-value{
+    font-size: 17px;
+    color: #f1c40f;
+    float: right;
+    margin-top: -2px;
+}
+
+.course-box .course-add{
+    border: 3px dashed rgb(242, 242, 242);
+    background-color: #ffffff;
+}
+
+.course-add .glyphicon-plus{
+    font-size: 36px;
+}
+
+.course-input{
+    border: 1px solid #bdc3c7;
+    width: 40%;
+    border-radius: 2px;
+    margin-top: 20px;
+}
+
+.course-text{
+    border: 1px solid #bdc3c7;
+    width: 60%;
+    border-radius: 2px;
+    margin-top: 20px;
+    resize: none;
+}
+
+
+
+
+/*time-line*/
+
+.ver-line{
+    position: absolute;
+    left: 50%;
+    top: 0;
+    width: 2px;
+    height: 100%;
+    background-color: #fff;
+    overflow: hidden;
+}
+
+
+.time-line {
+    width: 100%;
+    margin: 0 auto;
+    min-width: 800px;
+    background: url(/img/2.jpg);
+}
+.time-line ul{
+    overflow:hidden;
+    padding: 0;
+    list-style: none;
+}
+.time-line li{
+    width: 50%;
+}
+.time-line .in{
+    min-height: 300px;
+    /*background-color: #ddd;*/
+    margin-bottom: 40px;
+    position: relative;
+}
+
+.time-line .in div {
+    margin: 5%;
+}
+.time-line .a{
+    float: left;
+}
+.time-line .b{
+    float: right;
+    margin-top: 60px;
+}
+
+.time-line .dot{
+    height: 10px;
+    width: 10px;
+    background-color: #fff;
+    border-radius: 50%;
+    overflow: hidden;
+    position: absolute;
+    top: 30px;
+}
+
+.time-line .a .dot{
+    right: 0;
+    margin-right: -5px;
+}
+
+.time-line .b .dot{
+    left: 0;
+    margin-left: -5px;
 }

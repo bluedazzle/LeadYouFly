@@ -1,0 +1,36 @@
+{% extends 'teacher/base_teacher.html' %}
+{% block teacher_define %}
+  <div class="col-md-12 col-lg-12 teacher-define">
+    {% for item in test_list %}
+      <div class="col-md-4 col-lg-4 course-box">
+        <div>
+          <span class="course-title">课程教学</span>
+          <span class="course-value">￥30</span>
+          <br/>
+          <div class="course-content">
+            *计时单大优惠* ♥．累计60局 或者 累计40小 时任何模式、小游戏，送歌单2首会员均一次 性付款）
+            <a href="#" style="font-size: 10px;float: right;margin-top: 10px">修改价格</a>
+          </div>
+        </div>
+      </div>
+    {% endfor %}
+    <div class="col-md-4 col-lg-4 course-box">
+      <div class="course-add text-center">
+        <span class="glyphicon glyphicon-plus"></span>
+      </div>
+    </div>
+    <div class="col-md-12 col-lg-12" style="margin-top: 40px">
+      <form action="#" method="post" id="">
+        <input class="form-control course-input" name="course_name" placeholder="课程名称..."/>
+        <input class="form-control course-input" name="course_value" placeholder="课程价格..."/>
+        <textarea class="form-control course-text" name="course_content" rows="5" placeholder="课程说明..."></textarea>
+      </form>
+      <button type="submit" class="btn btn-primary btn-lg" style="margin-top: 10px;">
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;保&nbsp;&nbsp;&nbsp;存&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      </button>
+    </div>
+  </div>
+{% endblock %}
+{% block script %}
+  <script src="/js/teacher/manage_courses.js"></script>
+{% endblock %}

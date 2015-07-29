@@ -1,0 +1,150 @@
+{% extends "base.html" %}
+{% block title %}主页管理{% endblock %}
+{% block page %}主页管理{% endblock %}
+{% block content %}
+    <div class="my_container" xmlns="http://www.w3.org/1999/html">
+        <div>
+            <form action="/" method="post">
+                <h5>推荐导师编辑：</h5>
+
+                <div class="row">
+
+                    <div class="col-md-3 text-center">
+                        <div><span>推荐导师1:</span></div>
+                        <img src="/img/master.png" width="100px" height="100px" alt=""/>
+                        <h5>xxx</h5>
+
+                        <div><span>更改：</span>
+                            <select id="rec_select_1" class="form-control select select-primary select-block mbl">
+                                <option value="1">test</option>
+                                <option value="2">haha</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-3 text-center">
+                        <div><span>推荐导师2:</span></div>
+
+                        <img src="/img/master.png" width="100px" height="100px" alt=""/>
+                        <h5>xxx</h5>
+
+                        <div><span>更改：</span>
+                            <select id="rec_select_2" class="form-control select select-primary select-block mbl">
+                                <option value="1">test</option>
+                                <option value="2">haha</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-3 text-center">
+                        <div><span>推荐导师3:</span></div>
+
+                        <img src="/img/master.png" width="100px" height="100px" alt=""/>
+                        <h5>xxx</h5>
+
+                        <div><span>更改：</span>
+                            <select id="rec_select_3" class="form-control select select-primary select-block mbl">
+                                <option value="1">test</option>
+                                <option value="2">haha</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-3 text-center">
+                        <div><span>推荐导师4:</span></div>
+
+                        <img src="/img/master.png" width="100px" height="100px" alt=""/>
+                        <h5>xxx</h5>
+
+                        <div><span>更改：</span>
+                            <select id="rec_select_4" class="form-control select select-primary select-block mbl">
+                                <option value="1">test</option>
+                                <option value="2">haha</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="text-right">
+                    <button class="btn btn-primary" type="submit">保存</button>
+                </div>
+            </form>
+        </div>
+        <div class="my_divider"></div>
+        <div class="">
+            <form action="/" method="post">
+                <h5>轮播图片编辑：</h5>
+
+                <div class="row">
+                    <div class="col-md-4 text-center">
+                        <div><span>轮播图片1:</span></div>
+                        <img src="/img/block.jpg" width="500px" height="250px" alt=""/>
+
+                        <div class="form-inline" style="margin-top: 10px; margin-left: 5%;">
+                            <div class="col-md-3"><span style="font-size: 1.2em;">更改：</span></div>
+                            <div class="col-md-9">
+                                <input type="file" id="pic_choice_1" class="btn btn-primary"/>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 text-center">
+                        <div><span>轮播图片2:</span></div>
+                        <img src="/img/block.jpg" width="500px" height="250px" alt=""/>
+
+                        <div class="form-inline" style="margin-top: 10px; margin-left: 5%;">
+                            <div class="col-md-3"><span style="font-size: 1.2em;">更改：</span></div>
+                            <div class="col-md-9">
+                                <input type="file" id="pic_choice_2" class="btn btn-primary"/>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 text-center">
+                        <div><span>轮播图片3:</span></div>
+                        <img src="/img/block.jpg" width="500px" height="250px" alt=""/>
+
+                        <div class="form-inline" style="margin-top: 10px; margin-left: 5%;">
+                            <div class="col-md-3"><span style="font-size: 1.2em;">更改：</span></div>
+                            <div class="col-md-9">
+                                <input type="file" id="pic_choice_3" class="btn btn-primary"/>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <br/>
+
+                <div class="text-right">
+                    <button type="submit" class="btn btn-primary">保存</button>
+                </div>
+            </form>
+        </div>
+        <div class="my_divider"></div>
+        <div>
+            <h5>首页视频编辑：</h5>
+
+            <form action="/" method="post">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div>当前视频：</div>
+                        <video class="video-js" preload="auto" poster="assets/img/video/poster.jpg" data-setup="{}">
+                            <source src="http://iurevych.github.com/Flat-UI-videos/big_buck_bunny.mp4" type="video/mp4">
+                        </video>
+                    </div>
+                    <div class="col-md-6">
+                        <div>更改视频：</div>
+                        <div class="form-group">
+                            <div class="input-group">
+
+                                <input type="text" class="form-control" placeholder="填入新视频url："/>
+                                <span class="input-group-btn" ><button class="btn btn-primary" type="submit">保存</button></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+{% endblock %}
+{% block script %}
+    {{ block.super }}
+    <script>
+        $("select").select2({dropdownCssClass: 'dropdown-inverse'});
+    </script>
+    <script src="//vjs.zencdn.net/4.7/video.js"></script>
+{% endblock %}

@@ -1,0 +1,109 @@
+.btn-mine{
+    color: #2ecc71;
+    background-color: #ffffff;
+    border:1px solid #1abc9c;
+    border-radius: 0;
+}
+.btn-mine:hover,
+.btn-mine:focus,
+.btn-mine:active,
+.btn-mine.active, {
+  color: #ffffff;
+  background-color:#1abc9c;
+
+  border-color: #2ecc71;
+}
+
+.demo-sidebar {
+        position: fixed;
+        top: 0;
+        left: 0;
+        z-index: 98;
+        height: 100%;
+        padding: 0;
+        margin: 0;
+        overflow: auto;
+        font-size: 16px;
+        line-height: 1.714;
+        list-style-type: none;
+        background-color:  #ecf0f1;
+        border-right:1px solid #bdc3c7;
+}
+.demo-sidebar0 {
+        position: fixed;
+        top: 0;
+        left: 0;
+        z-index: 99;
+        height: 100%;
+        padding: 0;
+        margin: 0;
+        overflow: auto;
+        font-size: 16px;
+        line-height: 1.714;
+        list-style-type: none;
+        background-color:  #000000;
+        border-right:1px solid #bdc3c7;
+}
+li,
+li>a{
+    color: #1abc9c;
+    border-radius: 0;
+}
+
+.nav>li>a:hover{
+    background-color: #1abc9c;
+    color: #ffffff;
+    border-radius: 0;
+}
+
+.message_active,
+.message_active>a{
+    color: #ffffff;
+    background-color: #1abc9c;
+    border-radius: 0;
+}
+
+.nav>li.active{
+    background-color: #3498db;
+    color: #ffffff;
+    border-radius: 0;
+}
+
+.panel-finish>.panel-heading{
+    color: #ffffff;
+    background-color: #1abc9c;
+    border: 1px solid #1abc9c;
+}
+.panel-finish>.panel-body{
+    border: 1px solid #1abc9c;
+}
+
+#program_manage>a:hover>ul{
+        display: block;
+        transition: width 2s, height 2s, transform 2s;
+        -moz-transition: width 2s, height 2s, -moz-transform 2s;
+        -webkit-transition: width 2s, height 2s, -webkit-transform 2s;
+        -o-transition: width 2s, height 2s, -o-transform 2s;
+}
+
+.checkbox {
+ width: 19px;
+ height: 25px;
+ padding: 0 5px 0 0;
+ display: block;
+ clear: left;
+ float: left;
+}
+
+.my_contianer {
+	margin-left: 5%;
+	margin-right: 5%;
+}
+
+.my_divider {
+    background-color: #1abc9c;
+    margin-top: 10px;
+    margin-bottom: 40px;
+    height: 1px;
+    width: 100%;
+}

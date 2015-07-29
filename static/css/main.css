@@ -364,9 +364,13 @@
 .time-line .a{
     float: left;
 }
+.time-line .a1{
+    float: right;
+    color: #ffffff;
+    margin-left: 5%;
+}
 .time-line .b{
     float: right;
-    margin-top: 60px;
 }
 
 .time-line .dot{

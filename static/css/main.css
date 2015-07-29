@@ -350,6 +350,7 @@
 }
 .time-line li{
     width: 50%;
+    height: 200px;
 }
 .time-line .in{
     min-height: 300px;
@@ -361,8 +362,13 @@
 .time-line .in div {
     margin: 5%;
 }
+.time-line .in .panel{
+    width: 70%;
+    margin-left: 20%;
+}
 .time-line .a{
     float: left;
+    margin-bottom: 100px;
 }
 .time-line .a1{
     float: right;
@@ -371,6 +377,7 @@
 }
 .time-line .b{
     float: right;
+    margin-top: 100px;
 }
 
 .time-line .dot{
@@ -388,7 +395,23 @@
     margin-right: -5px;
 }
 
+.time-line .a .time-date{
+    right: 0;
+    top: 25px;
+    margin-right: -100px;
+    color: #ffffff;
+    position: absolute;
+}
+
 .time-line .b .dot{
     left: 0;
     margin-left: -5px;
+}
+
+.time-line .b .time-date{
+    left: 0;
+    top: 25px;
+    margin-left: -100px;
+    color: #ffffff;
+    position: absolute;
 }

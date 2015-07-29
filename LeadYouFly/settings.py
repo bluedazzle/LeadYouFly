@@ -63,9 +63,9 @@ DATABASES = {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME': 'leadyoufly',
         'USER': 'postgres',                      # Not used with sqlite3.
-        'PASSWORD': 'GDBDYL886',                  # Not used with sqlite3.
+        'PASSWORD': '123456',                  # Not used with sqlite3.
         'HOST': 'localhost',                      # Set to empty string for localhost. Not used with sqlite3.
-        'PORT': '5433',
+        'PORT': '',
     }
 }
 
@@ -90,6 +90,7 @@ STATIC_URL = '/static/'
 
 TEMPLATE_DIRS = (
     os.path.join(BASE_DIR,  'templates'),
+    os.path.join(BASE_DIR,  'templates/LYFAdmin'),
 )
 
 CSS_DIR = './static/css/'

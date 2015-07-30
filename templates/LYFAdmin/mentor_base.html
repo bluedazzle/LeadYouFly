@@ -3,9 +3,9 @@
 <head lang="en">
     <meta charset="UTF-8">
     {% block style %}
-    <link href="/css/bootstrap.min.css" rel="stylesheet">
-    <link href="/css/flat-ui.min.css" rel="stylesheet">
-    <link href="/css/LFYAdmin/main.css" rel="stylesheet">
+        <link href="/css/bootstrap.min.css" rel="stylesheet">
+        <link href="/css/flat-ui.min.css" rel="stylesheet">
+        <link href="/css/LFYAdmin/main.css" rel="stylesheet">
     {% endblock %}
     <title>{% block title %}{{ webtitle }}{% endblock %}</title>
 </head>
@@ -15,9 +15,9 @@
 {#</audio>#}
 <ul class="demo-sidebar nav nav-pills nav-stacked col-md-2 col-sm-2 col-lg-1 text-center"
     style="border-right:2px solid rgba(255,255,255,0.14);">
-    <li style="padding-top: 1%;background-color: #2980b9;height: 53px;color: #ffffff;">
+    <li style="padding-top: 1%;height: 53px;">
         <p style="font-size: 20px;padding-left: 10px">
-            带你飞管理系统
+
         </p>
     </li>
     <li style="margin-top:2%;color: #16a085;padding-left: 10px">
@@ -51,13 +51,14 @@
         </a>
     </li>
 </ul>
-<nav class="navbar navbar-default" role="navigation"
-     style="margin-bottom: 0;background-color: #3498db;border-radius: 0">
-    <div class="navbar-header" style="margin-left: 50%">
-        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-collapse-01">
-            <span class="sr-only">Toggle navigation</span>
-        </button>
-        <p id="page_title" class="navbar-brand" style="padding-bottom: 0;margin-bottom: 0;color: #ffffff">{% block page %}{% endblock %}</p>
+<nav class="navbar navbar-inverse navbar-embossed" role="navigation"
+     style="margin-bottom: 0;border-radius: 0">
+    <div class="navbar-header">
+          <a href="#" class="navbar-brand">带你飞管理</a>
+        </div>
+    <div class="collapse navbar-collapse" style="margin-left: 50%">
+        <p id="page_title" class="navbar-brand" style="padding-bottom: 0;margin-bottom: 0;color: #00BC9D;cursor: default;">
+            {% block page %}{% endblock %}</p>
     </div>
 </nav>
 <!-- /navbar -->
@@ -66,9 +67,10 @@
     {% endblock %}
 </div>
 {% block script %}
-<script src="/js/jquery.min.js"></script>
-<script src="/js/bootstrap.min.js"></script>
-<script src="/js/flat-ui.min.js"></script>
+    <script src="/js/jquery.min.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
+    <script src="/js/flat-ui.min.js"></script>
 {% endblock %}
 </body>
 </html>
+

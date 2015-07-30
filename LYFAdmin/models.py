@@ -208,3 +208,30 @@ class Order(BaseModel):
 
     def __unicode__(self):
         return self.order_id
+
+
+class IndexAdmin(models.Model):
+    rec_mentor1 = models.ForeignKey(Mentor, blank=True, null=True, related_name='ind_rec_1')
+    rec_mentor2 = models.ForeignKey(Mentor, blank=True, null=True, related_name='ind_rec_2')
+    rec_mentor3 = models.ForeignKey(Mentor, blank=True, null=True, related_name='ind_rec_3')
+    rec_mentor4 = models.ForeignKey(Mentor, blank=True, null=True, related_name='ind_rec_4')
+
+    def __unicode__(self):
+        return self.id
+
+
+class Report(BaseModel):
+    reporter = models.ForeignKey(Student, related_name='stu_reports')
+    name = models.CharField(max_length=100)
+    phone = models.CharField(max_length=11)
+    qq = models.CharField(max_length=30, null=True, blank=True)
+    reported = models.CharField(max_length=30)
+    type = models.IntegerField(default=0)
+    content = models.CharField(max_length=1000, default='')
+    pic1 = models.CharField(max_length=200, default='')
+    pic2 = models.CharField(max_length=200, default='')
+    pic3 = models.CharField(max_length=200, default='')
+    pic4 = models.CharField(max_length=200, default='')
+
+    def __unicode__(self):
+        return self.name

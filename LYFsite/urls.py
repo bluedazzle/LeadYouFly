@@ -3,7 +3,7 @@ from views import *
 
 
 urlpatterns = patterns('',
-                       url('^host$', host),
+                       url('^$', host),
 
                        # teacher
 
@@ -18,5 +18,5 @@ urlpatterns = patterns('',
 
                        url('^user/message$', user_message),
 
-                       url('^$', test)
+                       url('^test$', test)
                        )

@@ -32,5 +32,17 @@ def admin_mentor_detail(req):
     return render_to_response('mentor_detail_admin.html')
 
 
-def admin_student_detail(req):
-    return render_to_response('student_detail_admin.html')
+def admin_mentor_info(req):
+    return render_to_response('mentor_info_admin.html')
+
+
+def admin_mentor_order(req):
+    return render_to_response('mentor_order_admin.html')
+
+
+def admin_student_info(req):
+    return render_to_response('student_info_admin.html')
+
+
+def admin_student_order(req):
+    return render_to_response('student_order_admin.html')

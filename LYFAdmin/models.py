@@ -93,6 +93,7 @@ class Mentor(AbstractBaseUser, BaseModel):
     expert_hero2 = models.ForeignKey(Hero, related_name='who_expert2')
     expert_hero3 = models.ForeignKey(Hero, related_name='who_expert3')
     hero_list = models.ManyToManyField(Hero, related_name='who_uses')
+    id_picture = models.CharField(max_length=100, default='')
 
 
     USERNAME_FIELD = 'account'

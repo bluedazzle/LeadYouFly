@@ -1,4 +1,5 @@
 from django.conf.urls import patterns, include, url
+from LeadYouFly.settings import UPLOAD_DIR
 from LYFAdmin import views
 
 urlpatterns = patterns('',
@@ -9,6 +10,7 @@ urlpatterns = patterns('',
     url(r'^audit/$', views.admin_audit),
     url(r'^pay/$', views.admin_pay),
     url(r'^mentor/detail/$', views.admin_mentor_detail),
+    url(r'^mentor/detail/static/upload/(?P<path>.*)$', 'django.views.static.serve', {'document_root': UPLOAD_DIR}),
     url(r'^mentor/info/$', views.admin_mentor_info),
     url(r'^mentor/order/$', views.admin_mentor_order),
     url(r'^student/info/$', views.admin_student_info),

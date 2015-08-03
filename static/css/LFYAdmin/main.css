@@ -20,6 +20,7 @@
         height: 100%;
         padding: 0;
         margin: 0;
+        font-size:14px;
         overflow: auto;
         line-height: 1.714;
         list-style-type: none;

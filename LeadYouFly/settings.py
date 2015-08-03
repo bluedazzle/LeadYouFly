@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 """
 Django settings for LeadYouFly project.
 
@@ -10,6 +12,7 @@ https://docs.djangoproject.com/en/1.7/ref/settings/
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 import os
+
 BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 
 
@@ -38,6 +41,7 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'LYFAdmin',
     'LYFSite',
+    'DjangoUeditor',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -62,10 +66,21 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME': 'leadyoufly',
-        'USER': 'postgres',                      # Not used with sqlite3.
-        'PASSWORD': '123456',                  # Not used with sqlite3.
-        'HOST': 'localhost',                      # Set to empty string for localhost. Not used with sqlite3.
+        'USER': 'postgres',  # Not used with sqlite3.
+        'PASSWORD': '123456',  # Not used with sqlite3.
+        'HOST': 'localhost',  # Set to empty string for localhost. Not used with sqlite3.
         'PORT': '5432',
+    }
+}
+
+UEDITOR_SETTINGS = {
+    "config": {
+        'initialFrameWidth': 800,
+        'initialFrameHeight': 500,
+        'minFrameWidth': 800,
+    },
+    "upload": {
+        'imagePathFormat': 'img/%(basename)s_%(datetime)s.%(extname)s',
     }
 }
 
@@ -89,12 +104,16 @@ USE_TZ = True
 STATIC_URL = '/static/'
 
 TEMPLATE_DIRS = (
-    os.path.join(BASE_DIR,  'templates'),
-    os.path.join(BASE_DIR,  'templates/LYFAdmin'),
+    os.path.join(BASE_DIR, 'templates'),
+    os.path.join(BASE_DIR, 'templates/LYFAdmin'),
 )
 
 CSS_DIR = './static/css/'
+UPLOAD_DIR = './static/upload/'
 IMG_DIR = './static/img/'
 JS_DIR = './static/js/'
 FONTS_DIR = './static/fonts/'
 STATIC_DIR = './static/'
+STATIC_ROOT = './static/'
+MEDIA_ROOT = './static/upload/'
+MEDIA_URL = './static/upload/'

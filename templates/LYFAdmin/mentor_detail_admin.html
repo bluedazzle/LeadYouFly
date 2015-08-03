@@ -1,8 +1,136 @@
 {% extends "mentor_base.html" %}
 {% block title %}导师详情管理{% endblock %}
 {% block page %}导师详情{% endblock %}
+{% block style %}
+    {{ block.super }}
+    {{ form.media }}
+{% endblock %}
 {% block content %}
     <div class="my_contianer">
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <h3 class="panel-title">介绍视频编辑</h3>
+            </div>
+            <div class="panel-body">
+                <form action="/" method="post">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div>当前视频：</div>
+                            <video class="video-js" preload="auto" poster="assets/img/video/poster.jpg" data-setup="{}">
+                                <source src="http://iurevych.github.com/Flat-UI-videos/big_buck_bunny.mp4"
+                                        type="video/mp4">
+                            </video>
+                        </div>
+                        <div class="col-md-6">
+                            <div>更改视频：</div>
+                            <div class="form-group">
+                                <div class="input-group">
+
+                                    <input type="text" class="form-control" placeholder="填入新视频url："/>
+                                    <span class="input-group-btn"><button class="btn btn-primary" type="submit">保存
+                                    </button></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <h3 class="panel-title">英雄池编辑</h3>
+            </div>
+            <div class="panel-body">
+                <table class="table table-hover" data-toggle="table">
+                    <thead>
+                    <tr>
+                        <th>英雄名称</th>
+                        <th>英雄图标</th>
+                        <th>操作</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td>shadow friend</td>
+                        <td>shadow friend</td>
+                        <td>
+                            <button type="button" class="btn btn-primary">删除</button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>shadow friend</td>
+                        <td>shadow friend</td>
+                        <td>
+                            <button type="button" class="btn btn-primary">删除</button>
+                        </td>
+                    </tr>
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <h3 class="panel-title">课程信息编辑</h3>
+            </div>
+            <div class="panel-body">
+                <table class="table table-hover" data-toggle="table">
+                    <thead>
+                    <tr>
+                        <th>课程名称</th>
+                        <th>课程简介</th>
+                        <th>价格</th>
+                        <th>操作</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td>shadow friend</td>
+                        <td>shadow friend</td>
+                        <td>49.9</td>
+                        <td>
+                            <button type="button" class="btn btn-primary">删除</button>
+                            <button type="button" class="btn btn-primary">修改价格</button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>shadow friend</td>
+                        <td>shadow friend</td>
+                        <td>49.9</td>
+                        <td>
+                            <button type="button" class="btn btn-primary">删除</button>
+                            <button type="button" class="btn btn-primary">修改价格</button>
+                        </td>
+                    </tr>
+
+                    </tbody>
+                </table>
+
+            </div>
+        </div>
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <h3 class="panel-title">详细介绍编辑</h3>
+            </div>
+            <div class="panel-body">
+                <p id="mentor_detail_show">
+                    test
+                </p>
+
+                <div>
+                    <form action="/" method="post">
+                        {{ csrf_token }}
+                        <div class="form-group">
+                            {{ form }}
+                        </div>
+                        <div class="form-group">
+                            <button class="btn btn-primary" type="submit">保存</button>
+                        </div>
+                    </form>
+
+                </div>
+            </div>
+        </div>
 
     </div>
 {% endblock %}

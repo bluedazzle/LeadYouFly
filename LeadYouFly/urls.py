@@ -15,6 +15,8 @@ urlpatterns = patterns('',
     url(r'^js/(?P<path>.*)$', 'django.views.static.serve', {'document_root': settings.JS_DIR}),
     url(r'^fonts/(?P<path>.*)$', 'django.views.static.serve', {'document_root': settings.FONTS_DIR}),
     url(r'^static/(?P<path>.*)$', 'django.views.static.serve', {'document_root': settings.STATIC_DIR}),
+    url(r'^upload/(?P<path>.*)$', 'django.views.static.serve', {'document_root': settings.UPLOAD_DIR}),
     url(r'^', include(LYFSite.urls)),
     url(r'^admin/', include(LYFAdmin.urls)),
+    url(r'^ueditor/', include('DjangoUeditor.urls' )),
 )

@@ -1,20 +1,5 @@
-<!DOCTYPE html>
-<html>
-<head lang="en">
-    <meta charset="UTF-8">
-    {% block style %}
-    <link href="/css/bootstrap.min.css" rel="stylesheet">
-    <link href="/css/flat-ui.min.css" rel="stylesheet">
-    <link href="/css/LFYAdmin/main.css" rel="stylesheet">
-    {% endblock %}
-    <title>{% block title %}{{ blogtitle }}{% endblock %}</title>
-</head>
-<body style="font-family:microsoft YaHei;">
-{#<audio  controls="controls" id="music" src="/js/567.wav" loop="true" style="display:none;">#}
-{#    Your browser does not support the audio element.#}
-{#</audio>#}
-<ul class="demo-sidebar nav nav-pills nav-stacked col-md-2 col-sm-2 col-lg-1 text-center"
-    style="border-right:2px solid rgba(255,255,255,0.14);">
+{% extends "base_template.html" %}
+{% block menu %}
     <li style="padding-top: 1%;height: 53px;">
         <p style="font-size: 20px;padding-left: 10px">
 
@@ -74,26 +59,5 @@
             退出登录
         </a>
     </li>
-</ul>
-<nav class="navbar navbar-inverse navbar-embossed" role="navigation"
-     style="margin-bottom: 0;border-radius: 0">
-    <div class="navbar-header">
-          <a href="#" class="navbar-brand">带你飞管理</a>
-        </div>
-    <div class="collapse navbar-collapse" style="margin-left: 50%">
-        <p id="page_title" class="navbar-brand" style="padding-bottom: 0;margin-bottom: 0;color: #00BC9D;cursor: default;">
-            {% block page %}{% endblock %}</p>
-    </div>
-</nav>
-<!-- /navbar -->
-<div class="col-md-10 col-lg-11 col-sm-10" style="padding-top:1%;float: right;">
-    {% block content %}
-    {% endblock %}
-</div>
-{% block script %}
-<script src="/js/jquery.min.js"></script>
-<script src="/js/bootstrap.min.js"></script>
-<script src="/js/flat-ui.min.js"></script>
 {% endblock %}
-</body>
-</html>
+

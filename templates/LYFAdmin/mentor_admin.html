@@ -3,25 +3,25 @@
 {% block page %}导师管理{% endblock %}
 {% block content %}
     <div class="my_contianer">
-        <table class="table table-bordered">
+        <table class="table table-hover" data-toggle="table">
             <thead style="background-color: #1abc9c">
             <tr>
                 <th>注册时间</th>
                 <th>账户</th>
                 <th>名称</th>
-                <th>交易量</th>
-                <th>总收入</th>
-                <th>用户评分</th>
+                <th data-sortable="true">交易量</th>
+                <th data-sortable="true">总收入</th>
+                <th data-sortable="true">用户评分</th>
                 <th>工作状态</th>
                 <th>操作</th>
             </tr>
             </thead>
             <tbody>
             <tr>
-                <th>2015-07-08 19:28:20</th>
+                <td>2015-07-08 19:28:20</td>
                 <td>18215606355</td>
                 <td>rapo</td>
-                <td>29</td>
+                <td>19</td>
                 <td>400.0</td>
                 <td>4.9</td>
                 <td>休息中</td>
@@ -30,11 +30,11 @@
                 </td>
             </tr>
             <tr>
-                <th>2015-07-08 19:28:20</th>
+                <td>2015-07-08 19:28:20</td>
                 <td>18215606355</td>
                 <td>rapo</td>
-                <td>29</td>
-                <td>400.0</td>
+                <td>49</td>
+                <td>300.0</td>
                 <td>4.9</td>
                 <td>休息中</td>
                 <td>
@@ -42,11 +42,11 @@
                 </td>
             </tr>
             <tr>
-                <th>2015-07-08 19:28:20</th>
+                <td>2015-07-08 19:28:20</td>
                 <td>18215606355</td>
                 <td>rapo</td>
                 <td>29</td>
-                <td>400.0</td>
+                <td>200.0</td>
                 <td>4.9</td>
                 <td>休息中</td>
                 <td>
@@ -56,6 +56,5 @@
 
             </tbody>
         </table>
-
     </div>
 {% endblock %}

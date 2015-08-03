@@ -1,6 +1,9 @@
+# -*- coding: utf-8 -*-
 from django.shortcuts import render
 from django.shortcuts import render_to_response
 from django.http import HttpResponse, Http404
+
+from forms import MentorDetailContentForm
 
 # Create your views here.
 
@@ -29,7 +32,8 @@ def admin_pay(req):
 
 
 def admin_mentor_detail(req):
-    return render_to_response('mentor_detail_admin.html')
+    form = MentorDetailContentForm(initial={'Mentor_Detail': '测试'})
+    return render_to_response('mentor_detail_admin.html', {'form': form})
 
 
 def admin_mentor_info(req):

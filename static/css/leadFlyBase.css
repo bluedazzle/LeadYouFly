@@ -1,3 +1,10 @@
+p{
+    font-size: 16px;
+    color: #7f8c8d;
+}
+body{
+    background-color: rgb(26, 33, 41)
+}
 .lg-title{
     font-size: 18px;
 }
@@ -332,7 +339,7 @@
     top: 0;
     width: 2px;
     height: 100%;
-    background-color: #fff;
+    background: #fff repeat-y;
     overflow: hidden;
 }
 
@@ -414,4 +421,74 @@
     margin-left: -100px;
     color: #ffffff;
     position: absolute;
+}
+
+.user-host-nav{
+    height: 250px;
+    background: url(/img/2.jpg) center;
+    background-size: cover;
+    vertical-align:middle;
+    padding: 0;
+}
+
+.user-mes{
+    min-height: 400px;
+    background-color: #ffffff;
+}
+
+.complete-mes{
+    padding: 3% 25% 3% 25%;
+}
+
+.complete-mes input{
+    margin-bottom: 20px;
+}
+
+.my-order-host{
+    min-height: 600px;
+    background-color: #ffffff;
+}
+
+.my-order-table thead tr{
+    background-color: #000;
+    color: #ffffff
+}
+
+.my-order-table tr th{
+    font-size: 16px;
+    height: 50px;
+    padding: 0;
+}
+
+.my-order-table tbody tr td{
+    height: 60px;
+    padding-top: 20px;
+    vertical-align: middle;
+}
+
+.order-head{
+    background-color: rgb(237, 237, 237);
+}
+
+.order-head td{
+    font-size: 14px;
+    color: #1abc9c;
+}
+
+.order-buy-date{
+    color: #000;
+}
+
+.order-teacher-header{
+    height: 40px;
+    width: 40px;
+    border-radius: 50%;
+}
+
+.order-teacher-name{
+    margin: 0 15px;
+}
+
+.order-operation{
+    font-size: 16px;
 }

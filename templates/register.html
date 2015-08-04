@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+{% block css %}
+<link href="/css/LR.css" rel="stylesheet"/>
+{% endblock %}
+{% block base %}
+  <div class="container">
+    <div class="jumbotron input-group-box">
+      <p>登录</p>
+      <div class="form-control input-with-icon">
+        <span class="glyphicon glyphicon-user"></span>
+        <i class="input-ver">&nbsp;</i>
+        <input class="login-input" name="username" placeholder="用户名"/>
+      </div>
+      <div class="form-control input-with-icon">
+        <span class="glyphicon glyphicon-user"></span>
+        <i class="input-ver">&nbsp;</i>
+        <input class="login-input" name="phone" placeholder="手机号"/>
+      </div>
+      <div class="form-control input-with-icon">
+        <span class="glyphicon glyphicon-user"></span>
+        <i class="input-ver">&nbsp;</i>
+        <input class="login-input" name="password" placeholder="设置密码"/>
+      </div>
+      <div>
+        <span>
+          <button class="btn btn-default btn-verify">获取短信验证码</button>
+        </span>
+        <input class="input-verify" name="verify_code"/>
+      </div>
+      <button class="btn btn-warning btn-lg btn-block btn-login">登&nbsp;&nbsp;录</button>
+      <span class="register-footer">
+        已有账号？<a class="register-login" href="/login">登录</a>
+      </span>
+    </div>
+  </div>
+{% endblock %}

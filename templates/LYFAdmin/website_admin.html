@@ -1,0 +1,57 @@
+{% extends "admin_base.html" %}
+{% block title %}网站管理{% endblock %}
+{% block page %}网站管理{% endblock %}
+{% block content %}
+    <div class="my_contianer">
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <h3 class="panel-title">英雄管理</h3>
+            </div>
+            <div class="panel-body">
+                <table class="table table-bordered">
+                    <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>英雄名称</th>
+                        <th>英雄图标</th>
+                        <th>操作</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td>001</td>
+                        <td>影魔</td>
+                        <td><img src="/img/master.png" width="50px" height="50px" alt=""/></td>
+                        <td><a href="/" class="btn btn-warning">删除</a></td>
+                    </tr>
+                    </tbody>
+                </table>
+                <div>
+                    <button type="button" class="btn btn-primary" data-toggle="modal"
+                            data-target="#myModal">添加
+                    </button>
+
+                    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                                            aria-hidden="true">&times;</span></button>
+                                    <h4 class="modal-title" id="myModalLabel">添加新英雄</h4>
+                                </div>
+                                <div class="modal-body">
+                                    ...
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                                    <button type="button" class="btn btn-primary">确定</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+{% endblock %}

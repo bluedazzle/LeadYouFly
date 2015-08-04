@@ -11,6 +11,10 @@ def admin_index(req):
     return render_to_response('index_admin.html')
 
 
+def admin_website(req):
+    return render_to_response('website_admin.html')
+
+
 def admin_order(req):
     return render_to_response('order_admin.html')
 
@@ -28,7 +32,19 @@ def admin_audit(req):
 
 
 def admin_pay(req):
-    return render_to_response('pay_admin.html')
+    return render_to_response('pay_mentor_admin.html')
+
+
+def admin_pay_stu_rec(req):
+    return render_to_response('pay_stu_rec.html')
+
+
+def admin_pay_mentor_rec(req):
+    return render_to_response('pay_mentor_rec.html')
+
+
+def admin_pay_cash(req):
+    return render_to_response('pay_cash.html')
 
 
 def admin_mentor_detail(req):

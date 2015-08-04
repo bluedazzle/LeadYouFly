@@ -14,11 +14,13 @@
 {#<audio  controls="controls" id="music" src="/js/567.wav" loop="true" style="display:none;">#}
 {#    Your browser does not support the audio element.#}
 {#</audio>#}
-<ul class="demo-sidebar nav nav-pills nav-stacked col-md-2 col-sm-2 col-lg-1 text-center"
-    style="border-right:2px solid rgba(255,255,255,0.14);">
-    {% block menu %}
-    {% endblock %}
-</ul>
+
+<div class="row">
+    <ul class="demo-sidebar nav nav-pills nav-stacked col-md-2 col-lg-1 text-center"
+        style="border-right:2px solid rgba(255,255,255,0.14);">
+        {% block menu %}
+        {% endblock %}
+    </ul>
 <nav class="navbar navbar-inverse navbar-embossed" role="navigation"
      style="margin-bottom: 0;border-radius: 0">
     <div class="navbar-header">
@@ -30,14 +32,16 @@
             {% block page %}{% endblock %}</p>
     </div>
 </nav>
-<!-- /navbar -->
-<div class="col-md-10 col-lg-11 col-sm-10" style="padding-top:1%;float: right;">
-    {% block content %}
-    {% endblock %}
+    <!-- /navbar -->
+    <div class="col-md-10 col-lg-11" style="padding-top:1%;float: right;">
+        {% block content %}
+        {% endblock %}
+    </div>
 </div>
+
 {% block script %}
     <script src="/js/jquery.min.js"></script>
-    <script src="/js/bootstrap.min.js"></script>
+{#    <script src="/js/bootstrap.min.js"></script>#}
     <script src="/js/flat-ui.min.js"></script>
     <script src="/js/bootstrap-table.min.js"></script>
     <script src="//vjs.zencdn.net/4.7/video.js"></script>

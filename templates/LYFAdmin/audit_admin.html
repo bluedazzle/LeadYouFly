@@ -2,4 +2,69 @@
 {% block title %}视频审核{% endblock %}
 {% block page %}视频审核{% endblock %}
 {% block content %}
+    <div class="my_contianer text-center">
+        <h5>待审核视频</h5>
+        <table class="table table-hover" data-toggle="table">
+            <thead>
+            <tr>
+                <th>所属订单</th>
+                <th>导师</th>
+                <th>学员</th>
+                <th>课程名称</th>
+                <th>课程金额</th>
+                <th>下单时间</th>
+                <th>订单状态</th>
+                <th>视频名称</th>
+                <th>视频大小</th>
+                <th>操作</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>20150101010101</td>
+                <td><a href="/admin/student/info">18215606355</a></td>
+                <td><a href="/admin/mentor/info">18215606355</a></td>
+                <td>dota入门</td>
+                <td>40.0</td>
+                <td>2015-08-08 18:29:09</td>
+                <td>已完成</td>
+                <td>111.avi</td>
+                <td>11MB</td>
+                <td><a href="/" class="btn btn-primary">审核</a><a href="/" class="btn btn-success">通过</a><a href="/"
+                                                                                                           class="btn btn-warning">驳回</a>
+                </td>
+            </tr>
+            <tr>
+                <td>20150101010101</td>
+                <td><a href="/admin/student/info">18215606355</a></td>
+                <td><a href="/admin/mentor/info">18215606355</a></td>
+                <td>dota入门</td>
+                <td>40.0</td>
+                <td>2015-08-08 18:29:09</td>
+                <td>已完成</td>
+                <td>111.avi</td>
+                <td>34MB</td>
+                <td><a href="/" class="btn btn-primary">审核</a><a href="/" class="btn btn-success">通过</a><a href="/"
+                                                                                                           class="btn btn-warning">驳回</a>
+                </td>
+            </tr>
+            <tr>
+                <td>20150101010101</td>
+                <td><a href="/admin/student/info">18215606355</a></td>
+                <td><a href="/admin/mentor/info">18215606355</a></td>
+                <td>dota入门</td>
+                <td>40.0</td>
+                <td>2015-08-08 18:29:09</td>
+                <td>已完成</td>
+                <td>111.avi</td>
+                <td>1MB</td>
+                <td><a href="/" class="btn btn-primary">审核</a><a href="/" class="btn btn-success">通过</a><a href="/"
+                                                                                                           class="btn btn-warning">驳回</a>
+                </td>
+            </tr>
+
+
+            </tbody>
+        </table>
+    </div>
 {% endblock %}

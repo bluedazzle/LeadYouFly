@@ -1,0 +1,96 @@
+body{
+    background: url('/img/1.jpg');
+    background-size: cover;
+}
+
+.input-group-box{
+    float: right;
+    margin-top: 10%;
+    width: 400px;
+    background: #ffffff;
+}
+
+.container .input-group-box{
+    border-radius: 0;
+    padding: 30px;
+}
+
+.input-group-box .form-control{
+    border-radius: 3px;
+    border-width: 1px;
+}
+
+.input-group-box p{
+    font-size: 18px;
+    text-align: center;
+}
+
+.input-with-icon{
+    position: relative;
+    margin-bottom: 20px;
+    box-shadow: 0 0 10px #dddddd;
+}
+
+.input-with-icon span{
+    margin-left: 5px;
+    margin-right: 10px;
+}
+
+.input-ver{
+    width: 1px;
+    background: #dddddd;
+    display: inline-block;
+    height: 30px;
+    position: absolute;
+    margin-top: -3px;
+}
+
+.login-input,
+.login-input:focus,
+.login-input:active{
+    border: none;
+    box-shadow: none;
+    outline: none;
+    margin-left: 20px;
+}
+
+.btn-login{
+    border-radius: 0;
+    margin-top: 10px;
+}
+
+.input-herf{
+    font-size: 13px;
+    float: right;
+    margin-left: 10px;
+    margin-top: 10px;
+}
+
+.btn-verify{
+    margin-left: 3px;
+    background-color: #ffffff;
+    color: #555555;
+    border: 2px solid #dddddd;
+    font-size: 14px;
+    width: 135px;
+}
+
+.input-verify{
+    padding-bottom: 1px;
+    height: 41px;
+    width: 194px;
+}
+
+.input-verify,
+.input-verify:focus{
+    outline: 1px solid #dddddd;
+    -moz-outline-radius: 3px;
+}
+
+.register-footer{
+    font-size: 14px;
+}
+
+.register-to-login{
+
+}

@@ -11,31 +11,29 @@
                 <div class="row">
                     <div class="col-md-6 pull-left">
                         <div class="pull-left" style="margin-right: 10px;">
-                            <img src="/img/block.jpg" width="150px" height="150px" alt=""/>
-                            <div class="text-center">xxx<span class="label label-success" style="font-size: 5px;;">4级</span>
+                            <img src="{{ student.avatar }}" width="150px" height="150px" alt=""/>
+                            <div class="text-center">{{ student.nick }} <span class="label label-success" style="font-size: 5px;;">{{ student.rank }}级</span>
                             </div>
                         </div>
                         <div>
-                            <span>注册账号：18215606355</span>
+                            <span>注册账号：{{ student.account }}</span>
                             <br/>
-                            <span>注册时间：18215606355</span>
+                            <span>注册时间：{{ student.create_time }}</span>
                             <br/>
-                            <span>总消费额：18215606355</span>
+                            <span>总消费额：{{ student.total_expense }}</span>
                             <br/>
-                            <span>预存款：18215606355</span>
-                            <br/>
-                            <span>预存款：18215606355</span>
+                            <span>预存款：{{ student.money }}</span>
                             <br/>
                         </div>
                     </div>
                     <div class="col-md-6 pull-right">
                         <div><span>联系方式：</span></div>
                         <div>
-                            <span>手机号：18215606355</span>
+                            <span>手机号：{{ student.phone }}</span>
                             <br/>
-                            <span>QQ号：18215606355</span>
+                            <span>QQ号：{{ student.qq }}</span>
                             <br/>
-                            <span>YY号：18215606355</span>
+                            <span>YY号：{{ student.yy }}</span>
                         </div>
                     </div>
                 </div>

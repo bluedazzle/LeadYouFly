@@ -3,8 +3,8 @@
 {% block page %}账款中心{% endblock %}
 {% block content %}
     <div class="my_contianer">
-        <table class="table table-bordered">
-            <thead style="background-color: #1abc9c">
+        <table class="table table-hover" data-toggle="table">
+            <thead>
             <tr>
                 <th>导师账号</th>
                 <th>导师昵称</th>
@@ -17,38 +17,27 @@
             </tr>
             </thead>
             <tbody>
+            {% for mentor in mentor_list %}
             <tr>
-                <th>18215606355</th>
-                <td>大魔王</td>
-                <td>2015-08-08 19:28:09.0</td>
-                <td>1400</td>
-                <td>160000</td>
-                <td>200</td>
-                <td>正常</td>
-                <td><a href="/" class="btn btn-warning">冻结</a><a href="/" class="btn btn-primary">解冻</a></td>
+                <td>{{ mentor.account }}</td>
+                <td>{{ mentor.nick }}</td>
+                <td>{{ mentor.create_time }}</td>
+                <td>{{ mentor.cash_income }}</td>
+                <td>{{ mentor.total_income }}</td>
+                <td>{{ mentor.iden_income }}</td>
+                <td>{% ifequal mentor.freeze True %}
+                    冻结
+                    {% else %}
+                    正常
+                    {% endifequal %}
+                </td>
+                <td>{% ifequal mentor.freeze True %}
+                    <a href="/admin/pay/thaw/{{ mentor.id }}/" class="btn btn-primary">解冻</a>
+                    {% else %}
+                    <a href="/admin/pay/freeze/{{ mentor.id }}/" class="btn btn-warning">冻结</a>
+                    {% endifequal %}</td>
             </tr>
-            <tr>
-                <th>18215606355</th>
-                <td>大魔王</td>
-                <td>2015-08-08 19:28:09.0</td>
-                <td>1400</td>
-                <td>160000</td>
-                <td>200</td>
-                <td>正常</td>
-                <td><a href="/" class="btn btn-warning">冻结</a><a href="/" class="btn btn-primary">解冻</a></td>
-            </tr>
-            <tr>
-                <th>18215606355</th>
-                <td>大魔王</td>
-                <td>2015-08-08 19:28:09.0</td>
-                <td>1400</td>
-                <td>160000</td>
-                <td>200</td>
-                <td>正常</td>
-                <td><a href="/" class="btn btn-warning">冻结</a><a href="/" class="btn btn-primary">解冻</a></td>
-            </tr>
-
-
+            {% endfor %}
             </tbody>
         </table>
     </div>

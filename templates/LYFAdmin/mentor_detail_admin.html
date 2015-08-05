@@ -17,7 +17,7 @@
                         <div class="col-md-6">
                             <div>当前视频：</div>
                             <video class="video-js" preload="auto" poster="assets/img/video/poster.jpg" data-setup="{}">
-                                <source src="http://iurevych.github.com/Flat-UI-videos/big_buck_bunny.mp4"
+                                <source src="{{ mentor.intro_video }}"
                                         type="video/mp4">
                             </video>
                         </div>
@@ -50,23 +50,57 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <tr>
-                        <td>shadow friend</td>
-                        <td>shadow friend</td>
-                        <td>
-                            <button type="button" class="btn btn-primary">删除</button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>shadow friend</td>
-                        <td>shadow friend</td>
-                        <td>
-                            <button type="button" class="btn btn-primary">删除</button>
-                        </td>
-                    </tr>
-
+                    {% for hero in hero_list %}
+                        <tr>
+                            <td>{{ hero.hero_name }}</td>
+                            <td><img src="{{ hero.hero_picture }}" width="50px" height="50px" alt=""/></td>
+                            <td>
+                                <a href="/admin/mentor/detail/{{ mentor.id }}/del_hero/{{ hero.id }}/"
+                                   class="btn btn-default">删除</a>
+                            </td>
+                        </tr>
+                    {% endfor %}
                     </tbody>
                 </table>
+                <br/>
+
+                <div>
+                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#new_hero_modal">添加
+                    </button>
+                    <div class="modal fade" id="new_hero_modal" tabindex="-1" role="dialog"
+                         aria-labelledby="myModalLabel">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal"
+                                            aria-label="Close"><span
+                                            aria-hidden="true">&times;</span></button>
+                                    <h4 class="modal-title" id="myModalLabel">添加英雄</h4>
+                                </div>
+                                <div class="modal-body">
+                                    <form action="/admin/mentor/detail/{{ mentor.id }}/add_hero/" method="post">
+                                        <div class="form-group">
+                                            <label for="price">选择英雄</label>
+                                            <select id="rec_mentor_1" name="new_hero_select"
+                                                    class="form-control select select-primary select-block mbl">
+                                                {% for hero in hero_pool %}
+                                                    <option value="{{ hero.id }}">{{ hero.hero_name }}</option>
+                                                {% endfor %}
+                                            </select>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-default"
+                                                    data-dismiss="modal">关闭
+                                            </button>
+                                            <button type="submit" class="btn btn-primary">确定</button>
+                                        </div>
+                                    </form>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
         <div class="panel panel-primary">
@@ -84,25 +118,68 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <tr>
-                        <td>shadow friend</td>
-                        <td>shadow friend</td>
-                        <td>49.9</td>
-                        <td>
-                            <button type="button" class="btn btn-primary">删除</button>
-                            <button type="button" class="btn btn-primary">修改价格</button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>shadow friend</td>
-                        <td>shadow friend</td>
-                        <td>49.9</td>
-                        <td>
-                            <button type="button" class="btn btn-primary">删除</button>
-                            <button type="button" class="btn btn-primary">修改价格</button>
-                        </td>
-                    </tr>
+                    {% for course in course_list %}
+                        <tr>
+                            <td>{{ course.name }}</td>
+                            <td>{{ course.course_info }}</td>
+                            <td>{{ course.price }}</td>
+                            <td>
+                                <button type="button" class="btn btn-primary" data-toggle="modal"
+                                        data-target="#cPriceModel{{ course.id }}">修改价格
+                                </button>
+                                <div class="modal fade" id="cPriceModel{{ course.id }}" tabindex="-1" role="dialog"
+                                     aria-labelledby="myModalLabel">
+                                    <div class="modal-dialog" role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <button type="button" class="close" data-dismiss="modal"
+                                                        aria-label="Close"><span
+                                                        aria-hidden="true">&times;</span></button>
+                                                <h4 class="modal-title" id="myModalLabel">修改价格</h4>
+                                            </div>
+                                            <div class="modal-body">
+                                                <form action="/admin/mentor/detail/{{ mentor.id }}/change_price/{{ course.id }}/"
+                                                      method="get">
+                                                    <div class="form-group">
+                                                        <label for="price">新价格</label>
+                                                        <input type="number" class="form-control" name="new_price"
+                                                               placeholder="价格">
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-default"
+                                                                data-dismiss="modal">关闭
+                                                        </button>
+                                                        <button type="submit" class="btn btn-primary">确定</button>
+                                                    </div>
+                                                </form>
+                                            </div>
 
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="modal fade " id="" tabindex="-1" role="dialog"
+                                     aria-labelledby="myLargeModalLabel">
+                                    <div class="modal-dialog modal-lg">
+                                        <div class="modal-content">
+                                            <div>
+                                                {{ course.name }}
+                                            </div>
+                                            <form action="/" method="get">
+                                                <div class="form-group">
+                                                    <label for="price">新价格</label>
+                                                    <input type="text" class="form-control" name="new_price"
+                                                           placeholder="价格">
+                                                </div>
+                                                <div>
+                                                    <button type="submit" class="btn btn-primary">提交</button>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                    <a class="btn btn-defaults">删除</a>
+                            </td>
+                        </tr>
+                    {% endfor %}
                     </tbody>
                 </table>
 
@@ -110,15 +187,23 @@
         </div>
         <div class="panel panel-primary">
             <div class="panel-heading">
+                <h3 class="panel-title">详细介绍预览</h3>
+            </div>
+            <div class="panel-body">
+                <div class="my_contianer">
+                    <p id="mentor_detail_show">
+                        {{ mentor.intro_detail | safe }}
+                    </p>
+                </div>
+            </div>
+        </div>
+        <div class="panel panel-primary">
+            <div class="panel-heading">
                 <h3 class="panel-title">详细介绍编辑</h3>
             </div>
             <div class="panel-body">
-                <p id="mentor_detail_show">
-                    test
-                </p>
-
                 <div>
-                    <form action="/" method="post">
+                    <form action="/admin/mentor/detail/{{ mentor.id }}/update_detail/" method="post">
                         {{ csrf_token }}
                         <div class="form-group">
                             {{ form }}
@@ -133,4 +218,10 @@
         </div>
 
     </div>
+{% endblock %}
+{% block script %}
+    {{ block.super }}
+    <script>
+        $("select").select2({dropdownCssClass: 'dropdown-inverse'});
+    </script>
 {% endblock %}

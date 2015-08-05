@@ -3,8 +3,48 @@
 {% block page %}导师管理{% endblock %}
 {% block content %}
     <div class="my_contianer">
+        <div>
+            <button class="btn btn-primary" data-toggle="modal" data-target="#myModal">增加导师</button>
+            <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                                    aria-hidden="true">&times;</span></button>
+                            <h4 class="modal-title" id="myModalLabel">新导师</h4>
+                        </div>
+                        <div class="modal-body">
+                            <form action="/admin/mentor/new_mentor" method="post">
+                                <div class="form-group">
+                                    <label for="">账号：</label>
+                                    <input type="text" class="form-control" name="mentor_account" id="mentor_account"
+                                           placeholder="11位手机号">
+                                </div>
+                                <div class="form-group">
+                                    <label for="">昵称：</label>
+                                    <input type="text" class="form-control" name="mentor_nick" id="mentor_nick"
+                                           placeholder="昵称">
+                                </div>
+                                <div class="form-group">
+                                    <label for="">密码：</label>
+                                    <input type="text" class="form-control" name="mentor_passwd" id="mentor_passwd"
+                                           placeholder="密码">
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-default" data-dismiss="modal">关闭
+                                    </button>
+                                    <button type="submit" class="btn btn-primary">确定</button>
+                                </div>
+                            </form>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <br/>
         <table class="table table-hover" data-toggle="table">
-            <thead style="background-color: #1abc9c">
+            <thead>
             <tr>
                 <th>注册时间</th>
                 <th>账户</th>
@@ -17,43 +57,21 @@
             </tr>
             </thead>
             <tbody>
-            <tr>
-                <td>2015-07-08 19:28:20</td>
-                <td>18215606355</td>
-                <td>rapo</td>
-                <td>19</td>
-                <td>400.0</td>
-                <td>4.9</td>
-                <td>休息中</td>
-                <td>
-                    <a class="btn btn-primary btn-sm" href="/admin/mentor/info">详情</a>
-                </td>
-            </tr>
-            <tr>
-                <td>2015-07-08 19:28:20</td>
-                <td>18215606355</td>
-                <td>rapo</td>
-                <td>49</td>
-                <td>300.0</td>
-                <td>4.9</td>
-                <td>休息中</td>
-                <td>
-                    <button class="btn btn-primary btn-sm" type="button">详情</button>
-                </td>
-            </tr>
-            <tr>
-                <td>2015-07-08 19:28:20</td>
-                <td>18215606355</td>
-                <td>rapo</td>
-                <td>29</td>
-                <td>200.0</td>
-                <td>4.9</td>
-                <td>休息中</td>
-                <td>
-                    <button class="btn btn-primary btn-sm" type="button">详情</button>
-                </td>
-            </tr>
+            {% for mentor in mentor_list %}
+                <tr>
+                    <td>{{ mentor.create_time }}</td>
+                    <td>{{ mentor.account }}</td>
+                    <td>{{ mentor.nick }}</td>
+                    <td>{{ mentor.total_orders }}</td>
+                    <td>{{ mentor.total_income }}</td>
+                    <td>{{ mentor.mark }}</td>
+                    <td>{{ mentor.status }}</td>
 
+                    <td>
+                        <a class="btn btn-primary btn-sm" href="/admin/mentor/info/{{ mentor.id }}/">详情</a>
+                    </td>
+                </tr>
+            {% endfor %}
             </tbody>
         </table>
     </div>

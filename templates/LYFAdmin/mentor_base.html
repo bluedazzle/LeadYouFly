@@ -7,7 +7,11 @@
     </li>
     <li style="margin-top:2%;color: #16a085;padding-left: 10px">
         <p>
-            <span id="n_area"></span>
+            <span id="n_area">
+                <img src="{{ mentor.avatar }}" width="50px" height="50px" alt=""/>
+                {{ mentor.account }}
+                {{ mentor.nick }}
+            </span>
         </p>
     </li>
     <li id="notice" style="margin-top: 20%">
@@ -18,19 +22,19 @@
         </a>
     </li>
     <li id="new">
-        <a href="/admin/mentor/info">
+        <a href="/admin/mentor/info/{{ mentor.id }}/">
             <span class="glyphicon glyphicon-earphone" style="margin-right: 3%"></span>
             导师资料<span class="badge" id="appoint_new_count" style="margin-left: 2px;"></span>
         </a>
     </li>
     <li id="get">
-        <a href="/admin/mentor/order">
+        <a href="/admin/mentor/order/{{ mentor.id }}/">
             <span class="glyphicon glyphicon-folder-close" style="margin-right: 3%"></span>
             导师订单
         </a>
     </li>
     <li id="finish">
-        <a href="/admin/mentor/detail">
+        <a href="/admin/mentor/detail/{{ mentor.id }}/">
             <span class="glyphicon glyphicon-ok" style="margin-right: 3%"></span>
             导师详情
         </a>

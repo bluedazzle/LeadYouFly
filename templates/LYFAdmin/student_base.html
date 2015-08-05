@@ -6,7 +6,11 @@
     </li>
     <li style="margin-top:2%;color: #16a085;padding-left: 10px">
         <p>
-            <span id="n_area"></span>
+            <span id="n_area">
+                <img src="{{ student.avatar }}" width="50px" height="50px" alt=""/>
+                {{ student.account }}
+                {{ student.nick }}
+            </span>
         </p>
     </li>
     <li id="notice" style="margin-top: 20%">
@@ -17,13 +21,13 @@
         </a>
     </li>
     <li id="new">
-        <a href="/admin/student/info">
+        <a href="/admin/student/info/{{ student.id }}/">
             <span class="glyphicon glyphicon-earphone" style="margin-right: 3%"></span>
             学员资料<span class="badge" id="appoint_new_count" style="margin-left: 2px;"></span>
         </a>
     </li>
     <li id="get">
-        <a href="/admin/student/order">
+        <a href="/admin/student/order/{{ student.id }}/">
             <span class="glyphicon glyphicon-folder-close" style="margin-right: 3%"></span>
             消费记录
         </a>

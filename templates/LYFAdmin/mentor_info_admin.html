@@ -11,18 +11,18 @@
                 <div class="row">
                     <div class="col-md-6">
                         <div class="pull-left" style="margin-right: 20px;">
-                            <img src="/img/block.jpg" width="200px" height="200px" alt=""/>
-                            <h4 class="text-center">xxx</h4>
+                            <img src="{{ mentor.avatar }}" width="200px" height="200px" alt=""/>
+                            <h4 class="text-center">{{ mentor.nick }}</h4>
                         </div>
                         <div class="text-left" style="margin-top: 25px;">
-                            <div>手机号：18215606355</div>
-                            <div>QQ号：18215606355</div>
-                            <div>固定电话：18215606355</div>
-                            <div>注册时间：18215606355</div>
+                            <div>手机号：{{ mentor.phone }}</div>
+                            <div>QQ号：{{ mentor.qq }}</div>
+                            <div>YY号：{{ mentor.yy }}</div>
+                            <div>注册时间：{{ mentor.create_time }}</div>
                         </div>
                     </div>
                     <div class="col-md-6">
-                        <img src="/img/block.jpg" width="500px" height="250px" alt=""/>
+                        <img src="{{ mentor.id_picture }}" width="500px" height="250px" alt=""/>
                         <h6 class="text-center">身份证认证信息</h6>
                     </div>
                 </div>

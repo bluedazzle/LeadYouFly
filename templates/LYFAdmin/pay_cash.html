@@ -3,7 +3,7 @@
 {% block page %}导师提现{% endblock %}
 {% block content %}
     <div class="my_contianer">
-        <table class="table table-bordered">
+        <table class="table table-hover" data-toggle="table">
             <thead>
             <tr>
                 <th>流水号</th>
@@ -11,35 +11,28 @@
                 <th>申请时间</th>
                 <th>提现卡号</th>
                 <th>导师账号</th>
+                <th>是否处理</th>
+                <th>处理结果</th>
                 <th>操作</th>
             </tr>
             </thead>
             <tbody>
-            <tr>
-                <th>20150101010101</th>
-                <td>50.0</td>
-                <td>2015－08-08 19:09:00</td>
-                <td>18215606355</td>
-                <td>大魔王</td>
-                <td><a href="/" class="btn btn-primary">确定</a><a href="/" class="btn-warning btn">驳回</a></td>
-            </tr>
-            <tr>
-                <th>20150101010101</th>
-                <td>50.0</td>
-                <td>2015－08-08 19:09:00</td>
-                <td>18215606355</td>
-                <td>大魔王</td>
-                <td><a href="/" class="btn btn-primary">确定</a><a href="/" class="btn-warning btn">驳回</a></td>
-            </tr>
-            <tr>
-                <th>20150101010101</th>
-                <td>50.0</td>
-                <td>2015－08-08 19:09:00</td>
-                <td>18215606355</td>
-                <td>大魔王</td>
-                <td><a href="/" class="btn btn-primary">确定</a><a href="/" class="btn-warning btn">驳回</a></td>
-            </tr>
-
+            {% for record in cash_record %}
+                <tr>
+                    <td>{{ record.record_id }}</td>
+                    <td>{{ record.money }}</td>
+                    <td>{{ record.create_time }}</td>
+                    <td>{{ record.bank_id }}</td>
+                    <td>{{ record.belong.account }}</td>
+                    <td>{{ record.manage }}</td>
+                    <td>{{ record.agree }}</td>
+                    <td>{% ifequal record.manage False %}
+                        <a href="/admin/pay/cash/confirm/{{ record.id }}/" class="btn btn-primary">确定</a>
+                        <a href="/admin/pay/cash/rejected/{{ record.id }}/" class="btn-warning btn">驳回</a>
+                        {% endifequal %}
+                    </td>
+                </tr>
+            {% endfor %}
             </tbody>
         </table>
     </div>

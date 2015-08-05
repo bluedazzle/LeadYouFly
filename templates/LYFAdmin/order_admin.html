@@ -3,20 +3,21 @@
 {% block page %}订单管理{% endblock %}
 {% block content %}
     <div class="my_contianer">
+        <form action="/admin/order/search" method="post">
         <div class="row">
             <div class="col-md-4">
                 <span>订单状态：</span>
-                <select id="rec_select_2" class="form-control select select-primary select-block mbl">
-                    <option value="1" selected>所有订单</option>
-                    <option value="1">待支付</option>
-                    <option value="2">待确认</option>
-                    <option value="2">已完成</option>
-                    <option value="2">已撤销</option>
-                    <option value="2">已评价</option>
+                <select id="order_status" name="order_status" class="form-control select select-primary select-block mbl">
+                    <option value="0" selected>所有订单</option>
+                    <option value="1">待确认</option>
+                    <option value="2">已确认</option>
+                    <option value="3">已完成</option>
+                    <option value="4">已评价</option>
+                    <option value="5">已撤销</option>
                 </select>
             </div>
             <div class="col-md-6">
-                <input type="text" class="form-control" placeholder="搜索"/>
+                <input type="text" id="search_text" name="search_text" class="form-control" placeholder="搜索"/>
             </div>
             <div class="col-md-1 text-right">
                 <button class="btn-primary btn" type="submit">查询</button>
@@ -25,6 +26,7 @@
                 <button class="btn btn-primary" type="button">导出</button>
             </div>
         </div>
+        </form>
         <div>
             <table class="table table-bordered">
                 <thead style="background-color: #1abc9c">
@@ -40,36 +42,18 @@
                 </tr>
                 </thead>
                 <tbody>
+                {% for order in order_list %}
                 <tr>
-                    <th>2011010101010</th>
-                    <td>张建奇</td>
-                    <td>张建奇</td>
-                    <td>dota入门</td>
-                    <td>20.0</td>
-                    <td>2015-07-20 10:10:10</td>
-                    <td>已确认</td>
-                    <td>在线支付</td>
+                    <td>{{ order.order_id }}</td>
+                    <td>{{ order.belong.nick }}({{ order.belong.account }})</td>
+                    <td>{{ order.teach_by.nick }}({{ order.teach_by.account }})</td>
+                    <td>{{ order.course_name }}</td>
+                    <td>{{ order.order_price }}</td>
+                    <td>{{ order.create_time }}</td>
+                    <td>{{ order.status }}</td>
+                    <td>{{ order.pay_type }}</td>
                 </tr>
-                <tr>
-                    <th>2011010101010</th>
-                    <td>张建奇</td>
-                    <td>张建奇</td>
-                    <td>dota入门</td>
-                    <td>20.0</td>
-                    <td>2015-07-20 10:10:10</td>
-                    <td>已确认</td>
-                    <td>在线支付</td>
-                </tr>
-                <tr>
-                    <th>2011010101010</th>
-                    <td>张建奇</td>
-                    <td>张建奇</td>
-                    <td>dota入门</td>
-                    <td>20.0</td>
-                    <td>2015-07-20 10:10:10</td>
-                    <td>已确认</td>
-                    <td>在线支付</td>
-                </tr>
+                {% endfor %}
                 </tbody>
             </table>
         </div>

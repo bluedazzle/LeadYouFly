@@ -3,39 +3,28 @@
 {% block page %}收支纪录{% endblock %}
 {% block content %}
     <div class="my_contianer">
-        <table class="table table-bordered">
-            <thead style="background-color: #1abc9c">
+        <table class="table table-hover" data-toggle="table">
+            <thead>
             <tr>
                 <th>工单号</th>
                 <th>行为</th>
                 <th>收入</th>
-                <th>导师</th>
+                <th>导师账号</th>
+                <th>导师昵称</th>
                 <th>详情</th>
             </tr>
             </thead>
             <tbody>
-            <tr>
-                <th>20150101010101</th>
-                <td>收入</td>
-                <td>50.0</td>
-                <td>18215606355</td>
-                <td>来自订单23333</td>
-            </tr>
-            <tr>
-                <th>20150101010101</th>
-                <td>收入</td>
-                <td>50.0</td>
-                <td>18215606355</td>
-                <td>来自订单23333</td>
-            </tr>
-            <tr>
-                <th>20150101010101</th>
-                <td>收入</td>
-                <td>50.0</td>
-                <td>18215606355</td>
-                <td>来自订单23333</td>
-            </tr>
-
+            {% for record in record_list %}
+                <tr>
+                    <td>{{ record.record_id }}</td>
+                    <td>{{ record.action }}</td>
+                    <td>{{ record.income }}</td>
+                    <td>{{ record.belong.account }}</td>
+                    <td>{{ record.belong.nick }}</td>
+                    <td>{{ record.info }}</td>
+                </tr>
+            {% endfor %}
             </tbody>
         </table>
     </div>

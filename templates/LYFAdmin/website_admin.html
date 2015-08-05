@@ -18,12 +18,14 @@
                     </tr>
                     </thead>
                     <tbody>
+                    {% for hero in hero_list %}
                     <tr>
-                        <td>001</td>
-                        <td>影魔</td>
-                        <td><img src="/img/master.png" width="50px" height="50px" alt=""/></td>
-                        <td><a href="/" class="btn btn-warning">删除</a></td>
+                        <td>{{ hero.id }}</td>
+                        <td>{{ hero.hero_name }}</td>
+                        <td><img src="{{ hero.hero_picture }}" width="50px" height="50px" alt=""/></td>
+                        <td><a href="/admin/website/del_hero?hid={{ hero.id }}" class="btn btn-warning">删除</a></td>
                     </tr>
+                    {% endfor %}
                     </tbody>
                 </table>
                 <div>
@@ -40,12 +42,24 @@
                                     <h4 class="modal-title" id="myModalLabel">添加新英雄</h4>
                                 </div>
                                 <div class="modal-body">
-                                    ...
+                                    <form action="/admin/website/new_hero" method="post" enctype="multipart/form-data">
+                                        <div class="form-group">
+                                            <label for="">英雄名称：</label>
+                                            <input type="text" class="form-control" name="hero_name" id="hero_name"
+                                                   placeholder="英雄名称">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="InputFile">英雄图标(50X50)</label>
+                                            <input type="file" id="picture" name="picture" class="btn btn-primary">
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-default" data-dismiss="modal">关闭
+                                            </button>
+                                            <button type="submit" class="btn btn-primary">确定</button>
+                                        </div>
+                                    </form>
                                 </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-                                    <button type="button" class="btn btn-primary">确定</button>
-                                </div>
+
                             </div>
                         </div>
                     </div>

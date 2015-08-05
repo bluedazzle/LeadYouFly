@@ -2,61 +2,81 @@
 {% block title %}主页管理{% endblock %}
 {% block page %}主页管理{% endblock %}
 {% block content %}
-    <div class="my_container" xmlns="http://www.w3.org/1999/html">
+    <div class="my_container">
         <div>
-            <form action="/" method="post">
+            <form action="/admin/index/change_recommend" method="post">
                 <h5>推荐导师编辑：</h5>
 
                 <div class="row">
 
                     <div class="col-md-3 text-center">
                         <div><span>推荐导师1:</span></div>
-                        <img src="/img/master.png" width="100px" height="100px" alt=""/>
-                        <h5>xxx</h5>
+                        <img src="{{ index_admin.rec_mentor1.avatar }}" width="100px" height="100px" alt=""/>
+                        <h5>{{ index_admin.rec_mentor1.nick }}</h5>
 
                         <div><span>更改：</span>
-                            <select id="rec_select_1" class="form-control select select-primary select-block mbl">
-                                <option value="1">test</option>
-                                <option value="2">haha</option>
+                            <select id="rec_mentor_1" name="rec_mentor_1" class="form-control select select-primary select-block mbl">
+                                {% for mentor in mentor_list %}
+                                    {% ifequal index_admin.rec_mentor1.id mentor.id %}
+                                        <option value="{{ mentor.id }}" selected>{{ mentor.nick }}</option>
+                                    {% else %}
+                                        <option value="{{ mentor.id }}">{{ mentor.nick }}</option>
+                                    {% endifequal %}
+                                {% endfor %}
                             </select>
                         </div>
                     </div>
                     <div class="col-md-3 text-center">
                         <div><span>推荐导师2:</span></div>
 
-                        <img src="/img/master.png" width="100px" height="100px" alt=""/>
-                        <h5>xxx</h5>
+                        <img src="{{ index_admin.rec_mentor2.avatar }}" width="100px" height="100px" alt=""/>
+                        <h5>{{ index_admin.rec_mentor2.nick }}</h5>
 
                         <div><span>更改：</span>
-                            <select id="rec_select_2" class="form-control select select-primary select-block mbl">
-                                <option value="1">test</option>
-                                <option value="2">haha</option>
+                            <select id="rec_mentor_2" name="rec_mentor_2" class="form-control select select-primary select-block mbl">
+                                {% for mentor in mentor_list %}
+                                    {% ifequal index_admin.rec_mentor2.id mentor.id %}
+                                        <option value="{{ mentor.id }}" selected>{{ mentor.nick }}</option>
+                                    {% else %}
+                                        <option value="{{ mentor.id }}">{{ mentor.nick }}</option>
+                                    {% endifequal %}
+                                {% endfor %}
                             </select>
                         </div>
                     </div>
                     <div class="col-md-3 text-center">
                         <div><span>推荐导师3:</span></div>
 
-                        <img src="/img/master.png" width="100px" height="100px" alt=""/>
-                        <h5>xxx</h5>
+                        <img src="{{ index_admin.rec_mentor3.avatar }}" width="100px" height="100px" alt=""/>
+                        <h5>{{ index_admin.rec_mentor3.nick }}</h5>
 
                         <div><span>更改：</span>
-                            <select id="rec_select_3" class="form-control select select-primary select-block mbl">
-                                <option value="1">test</option>
-                                <option value="2">haha</option>
+                            <select id="rec_mentor_3" name="rec_mentor_3" class="form-control select select-primary select-block mbl">
+                                {% for mentor in mentor_list %}
+                                    {% ifequal index_admin.rec_mentor3.id mentor.id %}
+                                        <option value="{{ mentor.id }}" selected>{{ mentor.nick }}</option>
+                                    {% else %}
+                                        <option value="{{ mentor.id }}">{{ mentor.nick }}</option>
+                                    {% endifequal %}
+                                {% endfor %}
                             </select>
                         </div>
                     </div>
                     <div class="col-md-3 text-center">
                         <div><span>推荐导师4:</span></div>
 
-                        <img src="/img/master.png" width="100px" height="100px" alt=""/>
-                        <h5>xxx</h5>
+                        <img src="{{ index_admin.rec_mentor4.avatar }}" width="100px" height="100px" alt=""/>
+                        <h5>{{ index_admin.rec_mentor4.nick }}</h5>
 
                         <div><span>更改：</span>
-                            <select id="rec_select_4" class="form-control select select-primary select-block mbl">
-                                <option value="1">test</option>
-                                <option value="2">haha</option>
+                            <select id="rec_mentor_4" name="rec_mentor_4" class="form-control select select-primary select-block mbl">
+                                {% for mentor in mentor_list %}
+                                    {% ifequal index_admin.rec_mentor4.id mentor.id %}
+                                        <option value="{{ mentor.id }}" selected>{{ mentor.nick }}</option>
+                                    {% else %}
+                                        <option value="{{ mentor.id }}">{{ mentor.nick }}</option>
+                                    {% endifequal %}
+                                {% endfor %}
                             </select>
                         </div>
                     </div>
@@ -68,40 +88,40 @@
         </div>
         <div class="my_divider"></div>
         <div class="">
-            <form action="/" method="post">
+            <form action="/admin/index/change_picture" method="post" enctype="multipart/form-data">
                 <h5>轮播图片编辑：</h5>
 
                 <div class="row">
                     <div class="col-md-4 text-center">
                         <div><span>轮播图片1:</span></div>
-                        <img src="/img/block.jpg" width="500px" height="250px" alt=""/>
+                        <img src="{{ index_admin.index_pic1 }}" width="500px" height="250px" alt=""/>
 
                         <div class="form-inline" style="margin-top: 10px; margin-left: 5%;">
                             <div class="col-md-3"><span style="font-size: 1.2em;">更改：</span></div>
                             <div class="col-md-9">
-                                <input type="file" id="pic_choice_1" class="btn btn-primary"/>
+                                <input type="file" id="pic_choice_1" name="pic_choice_1" class="btn btn-primary"/>
                             </div>
                         </div>
                     </div>
                     <div class="col-md-4 text-center">
                         <div><span>轮播图片2:</span></div>
-                        <img src="/img/block.jpg" width="500px" height="250px" alt=""/>
+                        <img src="{{ index_admin.index_pic2 }}" width="500px" height="250px" alt=""/>
 
                         <div class="form-inline" style="margin-top: 10px; margin-left: 5%;">
                             <div class="col-md-3"><span style="font-size: 1.2em;">更改：</span></div>
                             <div class="col-md-9">
-                                <input type="file" id="pic_choice_2" class="btn btn-primary"/>
+                                <input type="file" id="pic_choice_2" name="pic_choice_2" class="btn btn-primary"/>
                             </div>
                         </div>
                     </div>
                     <div class="col-md-4 text-center">
                         <div><span>轮播图片3:</span></div>
-                        <img src="/img/block.jpg" width="500px" height="250px" alt=""/>
+                        <img src="{{ index_admin.index_pic3 }}" width="500px" height="250px" alt=""/>
 
                         <div class="form-inline" style="margin-top: 10px; margin-left: 5%;">
                             <div class="col-md-3"><span style="font-size: 1.2em;">更改：</span></div>
                             <div class="col-md-9">
-                                <input type="file" id="pic_choice_3" class="btn btn-primary"/>
+                                <input type="file" id="pic_choice_3" name="pic_choice_3" class="btn btn-primary"/>
                             </div>
                         </div>
                     </div>
@@ -132,7 +152,7 @@
                             <div class="input-group">
 
                                 <input type="text" class="form-control" placeholder="填入新视频url："/>
-                                <span class="input-group-btn" ><button class="btn btn-primary" type="submit">保存</button></span>
+                                <span class="input-group-btn"><button class="btn btn-primary" type="submit">保存</button></span>
                             </div>
                         </div>
                     </div>

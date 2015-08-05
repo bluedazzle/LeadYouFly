@@ -16,34 +16,17 @@
             </tr>
             </thead>
             <tbody>
+            {% for order in order_list %}
             <tr>
-                <td>20150101010101</td>
-                <td><a href="/admin/student/info">18215606355</a></td>
-                <td>rapo</td>
-                <td>dota入门</td>
-                <td>40.0</td>
-                <td>2015-08-08 18:29:09</td>
-                <td>待接受</td>
+                <td>{{ order.order_id }}</td>
+                <td><a href="/admin/student/info/{{ order.belong.id }}/">{{ order.belong.account }}</a></td>
+                <td>{{ order.belong.nick }}</td>
+                <td>{{ order.course_name }}</td>
+                <td>{{ order.order_price }}</td>
+                <td>{{ order.create_time }}</td>
+                <td>{{ order.status }}</td>
             </tr>
-            <tr>
-                <td>20150101010101</td>
-                <td><a href="/admin/student/info">18215606355</a></td>
-                <td>rapo</td>
-                <td>dota入门</td>
-                <td>40.0</td>
-                <td>2015-08-08 18:29:09</td>
-                <td>待接受</td>
-            </tr>
-            <tr>
-                <td>20150101010101</td>
-                <td><a href="/admin/student/info">18215606355</a></td>
-                <td>rapo</td>
-                <td>dota入门</td>
-                <td>40.0</td>
-                <td>2015-08-08 18:29:09</td>
-                <td>待接受</td>
-            </tr>
-
+            {% endfor %}
             </tbody>
         </table>
     </div>

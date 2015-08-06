@@ -271,3 +271,11 @@ class CashRecord(BaseModel):
 
     def __unicode__(self):
         return self.record_id
+
+
+class PhoneVerify(models.Model):
+    phone = models.CharField(max_length=11)
+    verify = models.IntegerField(default=0)
+
+    def __unicode__(self):
+        return self.phone

@@ -3,6 +3,8 @@ import os
 import time
 import random
 import hashlib
+import ujson
+import copy
 
 from django.shortcuts import render
 from django.shortcuts import render_to_response, HttpResponseRedirect, Http404
@@ -16,6 +18,7 @@ from LYFAdmin.models import Hero, Mentor, IndexAdmin, Order, Course, Student, Ch
 
 from forms import MentorDetailContentForm
 from utils import upload_picture, datetime_to_string
+from qn import upload_file_qn, list_file, QINIU_DOMAIN
 
 # Create your views here.
 
@@ -24,8 +27,42 @@ def admin_index(req):
     raw_index_admin = IndexAdmin.objects.all()[0]
     mentor_list = Mentor.objects.all()
     index_admin = serializer(raw_index_admin, deep=True)
+    res, data_list = list_file(('index', 'poster'))
+    print data_list
+    index_video_list = []
+    if res:
+        for itm in data_list:
+            items = {}
+            items['name'] = unicode(itm['key']).split('poster')[0][0:-1]
+            items['url'] = QINIU_DOMAIN + itm['key']
+            index_video_list.append(copy.copy(items))
     return render_to_response('index_admin.html', {'index_admin': index_admin,
-                                                   'mentor_list': mentor_list})
+                                                   'mentor_list': mentor_list,
+                                                   'video_list': index_video_list})
+
+
+#首页视频更改
+def admin_index_change_video(req):
+    video_name = req.POST.get('video_radio', '')
+    if video_name != '':
+        res, data_list = list_file((video_name,))
+        if res:
+            index_admin = IndexAdmin.objects.all()[0]
+            for itm in data_list:
+                if 'poster' in itm['key']:
+                    index_admin.video_poster = QINIU_DOMAIN + itm['key']
+                else:
+                    index_admin.index_video = QINIU_DOMAIN + itm['key']
+            index_admin.save()
+    return HttpResponseRedirect('/admin/index')
+
+
+#上传首页视频
+def admin_index_new_video(req):
+    video_data = req.FILES.get('new_video', None)
+    if video_data is not None:
+        print video_data.name()
+    return HttpResponseRedirect('/admin/index')
 
 
 #更改推荐导师
@@ -90,9 +127,10 @@ def admin_website_new_hero(req):
         return Http404
     hero_pic = req.FILES.get('picture')
     hero_name = req.POST.get('hero_name')
-    pic_path, full_path = upload_picture(hero_pic)
+    print upload_file_qn(hero_pic, "test.mp4", 'video')
+    # pic_path, full_path = upload_picture(hero_pic)
     new_hero = Hero(hero_name=hero_name,
-                    hero_picture=pic_path)
+                    hero_picture='test')
     new_hero.save()
     return HttpResponseRedirect('/admin/website')
 

@@ -15,7 +15,8 @@
                         <h5>{{ index_admin.rec_mentor1.nick }}</h5>
 
                         <div><span>更改：</span>
-                            <select id="rec_mentor_1" name="rec_mentor_1" class="form-control select select-primary select-block mbl">
+                            <select id="rec_mentor_1" name="rec_mentor_1"
+                                    class="form-control select select-primary select-block mbl">
                                 {% for mentor in mentor_list %}
                                     {% ifequal index_admin.rec_mentor1.id mentor.id %}
                                         <option value="{{ mentor.id }}" selected>{{ mentor.nick }}</option>
@@ -33,7 +34,8 @@
                         <h5>{{ index_admin.rec_mentor2.nick }}</h5>
 
                         <div><span>更改：</span>
-                            <select id="rec_mentor_2" name="rec_mentor_2" class="form-control select select-primary select-block mbl">
+                            <select id="rec_mentor_2" name="rec_mentor_2"
+                                    class="form-control select select-primary select-block mbl">
                                 {% for mentor in mentor_list %}
                                     {% ifequal index_admin.rec_mentor2.id mentor.id %}
                                         <option value="{{ mentor.id }}" selected>{{ mentor.nick }}</option>
@@ -51,7 +53,8 @@
                         <h5>{{ index_admin.rec_mentor3.nick }}</h5>
 
                         <div><span>更改：</span>
-                            <select id="rec_mentor_3" name="rec_mentor_3" class="form-control select select-primary select-block mbl">
+                            <select id="rec_mentor_3" name="rec_mentor_3"
+                                    class="form-control select select-primary select-block mbl">
                                 {% for mentor in mentor_list %}
                                     {% ifequal index_admin.rec_mentor3.id mentor.id %}
                                         <option value="{{ mentor.id }}" selected>{{ mentor.nick }}</option>
@@ -69,7 +72,8 @@
                         <h5>{{ index_admin.rec_mentor4.nick }}</h5>
 
                         <div><span>更改：</span>
-                            <select id="rec_mentor_4" name="rec_mentor_4" class="form-control select select-primary select-block mbl">
+                            <select id="rec_mentor_4" name="rec_mentor_4"
+                                    class="form-control select select-primary select-block mbl">
                                 {% for mentor in mentor_list %}
                                     {% ifequal index_admin.rec_mentor4.id mentor.id %}
                                         <option value="{{ mentor.id }}" selected>{{ mentor.nick }}</option>
@@ -138,26 +142,56 @@
         <div>
             <h5>首页视频编辑：</h5>
 
-            <form action="/" method="post">
+
                 <div class="row">
                     <div class="col-md-6">
                         <div>当前视频：</div>
-                        <video class="video-js" preload="auto" poster="assets/img/video/poster.jpg" data-setup="{}">
-                            <source src="http://iurevych.github.com/Flat-UI-videos/big_buck_bunny.mp4" type="video/mp4">
+                        <video class="video-js" preload="auto" poster="{{ index_admin.video_poster }}" data-setup="{}">
+                            <source src="{{ index_admin.index_video }}" type="video/mp4">
                         </video>
                     </div>
                     <div class="col-md-6">
                         <div>更改视频：</div>
-                        <div class="form-group">
-                            <div class="input-group">
+                        <div class="panel panel-default">
+                            <div class="panel-body">
+                                <form action="/admin/index/new_video" method="post">
+                                    <div class="form-group">
+                                        <label for="">上传新视频：</label>
 
-                                <input type="text" class="form-control" placeholder="填入新视频url："/>
-                                <span class="input-group-btn"><button class="btn btn-primary" type="submit">保存</button></span>
+                                        <div class="input-group">
+
+                                            <input type="file" class="form-control btn btn-primary"
+                                                   placeholder="填入新视频url："/>
+                                    <span class="input-group-btn"><button class="btn btn-primary" type="submit">保存
+                                    </button></span>
+                                        </div>
+                                    </div>
+                                </form>
                             </div>
                         </div>
+
+                        <div class="panel panel-default">
+                            <div class="panel-body">
+                                <label for="">选择现有视频：</label>
+
+                                <form action="/admin/index/change_video" method="post">
+                                    {% for video in video_list %}
+                                    <label class="radio-inline">
+                                        <input type="radio" name="video_radio" value="{{ video.name }}">
+                                        <img src="{{ video.url }}" width="200px" height="100px" alt=""/>
+
+                                        <div class="text-center">{{ video.name }}</div>
+                                    </label>
+                                    {% endfor %}
+                                    <div class="form-group text-right">
+                                        <button class="btn btn-primary" type="submit">提交</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+
                     </div>
                 </div>
-            </form>
         </div>
     </div>
 {% endblock %}

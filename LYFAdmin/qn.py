@@ -10,8 +10,8 @@ SECRET_KEY = 'U8EitYYdhQ4_9hxvQuR6z0mPjnj5IDzovo81pqN7'
 BUCKET_NAME = 'leadyoufly'
 QINIU_DOMAIN = 'http://7xkveq.com2.z0.glb.qiniucdn.com/'
 
-video_convert_param = 'avthumb/mp4'
-video_poster_param = 'vframe/jpg/offset/5/w/900/h/500'
+VIDEO_CONVERT_PARAM = 'avthumb/mp4'
+VIDEO_POSTER_PARAM = 'vframe/jpg/offset/5/w/900/h/500'
 
 
 def upload_file_qn(ufile, file_name, sign='default'):
@@ -50,4 +50,7 @@ def data_handle(file_name, saved_name, handle_method):
     ops = []
     ops.append(op)
     ret, info = pfop.execute(file_name, ops, 1)
-    print(info)
+    if info.status_code == 200:
+        return True, info.text_body
+    else:
+        return False, None

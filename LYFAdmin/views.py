@@ -18,7 +18,7 @@ from LYFAdmin.models import Hero, Mentor, IndexAdmin, Order, Course, Student, Ch
 
 from forms import MentorDetailContentForm
 from utils import upload_picture, datetime_to_string
-from qn import upload_file_qn, list_file, QINIU_DOMAIN
+from qn import upload_file_qn, list_file, QINIU_DOMAIN, VIDEO_CONVERT_PARAM, VIDEO_POSTER_PARAM, data_handle
 
 # Create your views here.
 
@@ -28,7 +28,6 @@ def admin_index(req):
     mentor_list = Mentor.objects.all()
     index_admin = serializer(raw_index_admin, deep=True)
     res, data_list = list_file(('index', 'poster'))
-    print data_list
     index_video_list = []
     if res:
         for itm in data_list:
@@ -59,9 +58,25 @@ def admin_index_change_video(req):
 
 #上传首页视频
 def admin_index_new_video(req):
+    video_format = ['mp4', 'flv', 'avi', 'rmvb', 'webm', 'ogg']
+    support_format = ['mp4', 'webm', 'ogg']
     video_data = req.FILES.get('new_video', None)
     if video_data is not None:
-        print video_data.name()
+        file_name, ext_name = unicode(video_data.name).split('.')
+        if ext_name in video_format:
+            upload_name = file_name + '_' + str(int(time.time())) + '.' + ext_name
+            res, sfile_name = upload_file_qn(video_data, upload_name, 'video_index')
+            if res:
+                poster_name = unicode(sfile_name).split('.')[0] + '_poster.png'
+                res, info = data_handle(sfile_name, poster_name, VIDEO_POSTER_PARAM)
+                if ext_name not in support_format:
+                    new_name = file_name + '.flv'
+                    res, info = data_handle(sfile_name, new_name, VIDEO_CONVERT_PARAM)
+                    sfile_name = new_name
+                index_admin = IndexAdmin.objects.all()[0]
+                index_admin.index_video = QINIU_DOMAIN + sfile_name
+                index_admin.video_poster = QINIU_DOMAIN + poster_name
+                index_admin.save()
     return HttpResponseRedirect('/admin/index')
 
 

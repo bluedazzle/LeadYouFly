@@ -18,7 +18,7 @@ from LYFAdmin.models import Hero, Mentor, IndexAdmin, Order, Course, Student, Ch
 
 from forms import MentorDetailContentForm
 from utils import upload_picture, datetime_to_string
-from qn import upload_file_qn, list_file, QINIU_DOMAIN, VIDEO_CONVERT_PARAM, VIDEO_POSTER_PARAM, data_handle
+from qn import upload_file_qn, list_file, QINIU_DOMAIN, VIDEO_CONVERT_PARAM, VIDEO_POSTER_PARAM, data_handle, delete_data
 
 # Create your views here.
 
@@ -62,16 +62,17 @@ def admin_index_new_video(req):
     support_format = ['mp4', 'webm', 'ogg']
     video_data = req.FILES.get('new_video', None)
     if video_data is not None:
-        file_name, ext_name = unicode(video_data.name).split('.')
+        file_name, ext_name = video_data.name.encode('utf-8').split('.')
         if ext_name in video_format:
             upload_name = file_name + '_' + str(int(time.time())) + '.' + ext_name
             res, sfile_name = upload_file_qn(video_data, upload_name, 'video_index')
             if res:
-                poster_name = unicode(sfile_name).split('.')[0] + '_poster.png'
+                poster_name = sfile_name.encode('utf-8').split('.')[0] + '_poster.jpg'
                 res, info = data_handle(sfile_name, poster_name, VIDEO_POSTER_PARAM)
                 if ext_name not in support_format:
-                    new_name = file_name + '.flv'
+                    new_name = sfile_name.encode('utf-8').split('.')[0] + '.mp4'
                     res, info = data_handle(sfile_name, new_name, VIDEO_CONVERT_PARAM)
+                    delete_data(sfile_name.encode('utf-8'))
                     sfile_name = new_name
                 index_admin = IndexAdmin.objects.all()[0]
                 index_admin.index_video = QINIU_DOMAIN + sfile_name

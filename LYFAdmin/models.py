@@ -224,11 +224,11 @@ class IndexAdmin(models.Model):
     rec_mentor2 = models.ForeignKey(Mentor, blank=True, null=True, related_name='ind_rec_2')
     rec_mentor3 = models.ForeignKey(Mentor, blank=True, null=True, related_name='ind_rec_3')
     rec_mentor4 = models.ForeignKey(Mentor, blank=True, null=True, related_name='ind_rec_4')
-    index_pic1 = models.CharField(max_length=100, default=' ')
-    index_pic2 = models.CharField(max_length=100, default=' ')
-    index_pic3 = models.CharField(max_length=100, default=' ')
-    index_video = models.CharField(max_length=100, default='')
-    video_poster = models.CharField(max_length=100, default='')
+    index_pic1 = models.CharField(max_length=500, default=' ')
+    index_pic2 = models.CharField(max_length=500, default=' ')
+    index_pic3 = models.CharField(max_length=500, default=' ')
+    index_video = models.CharField(max_length=500, default='')
+    video_poster = models.CharField(max_length=500, default='')
 
     def __unicode__(self):
         return unicode(self.id)

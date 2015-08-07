@@ -1,8 +1,15 @@
 import time
 import os
 import random
+import string
+import hashlib
+import ujson
+
+
 from PIL import Image
 from django.utils import timezone
+
+from LYFAdmin.models import Admin
 
 UPLOAD_PATH = os.path.dirname(os.path.dirname(__file__)) + '/static'
 
@@ -20,3 +27,30 @@ def datetime_to_string(datetimet, str_format='%Y-%m-%d %H:%M:%S'):
         return datetimet.strftime(str_format)
     time_str = datetimet.astimezone(timezone.get_current_timezone())
     return time_str.strftime(str_format)
+
+
+def create_token(count=32):
+    return string.join(
+        random.sample('ZYXWVUTSRQPONMLKJIHGFEDCBA1234567890zyxwvutsrqponmlkjihgfedcba+=', count)).replace(" ", "")
+
+
+def auth_admin(account, password):
+    admin = Admin.objects.filter(account=account)
+    if admin.exists():
+        admin = admin[0]
+        hash_passwd = hashlib.md5(password).hexdigest()
+        if admin.password == hash_passwd:
+            admin.token = create_token()
+            admin.save()
+            return admin
+        else:
+            return None
+    else:
+        return None
+
+
+def encodejson(status, body):
+    tmpjson={}
+    tmpjson['status'] = status
+    tmpjson['body'] = body
+    return ujson.dumps(tmpjson)

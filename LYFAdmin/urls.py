@@ -4,6 +4,9 @@ from LYFAdmin import views
 
 urlpatterns = patterns('',
     url(r'^index/$', views.admin_index),
+    url(r'^$', views.admin_login_page),
+    url(r'^login/$', views.admin_login),
+    url(r'^logout/$', views.admin_log_out),
     url(r'^index/change_video$', views.admin_index_change_video),
     url(r'^index/new_video', views.admin_index_new_video),
     url(r'^index/change_recommend$', views.admin_index_change_recommend),

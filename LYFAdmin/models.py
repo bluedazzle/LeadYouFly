@@ -39,6 +39,35 @@ class MentorManager(BaseUserManager):
         user.save(using=self._db)
         return user
 
+
+class AdminManager(BaseUserManager):
+    def create_user(self, email, phone, passwd=None):
+        if not email:
+            raise ValueError('Users must have an email address')
+
+        user = self.model(
+            email = MentorManager.normalize_email(email),
+            username = phone,
+        )
+
+        user.set_password(passwd)
+        user.save(using=self._db)
+        return user
+
+    def create_superuser(self, email, phone, passwd):
+
+        user = self.create_user(email,
+            username = phone,
+            password = passwd,
+
+        )
+        user.is_staff = True
+        user.is_active = True
+        user.is_admin = False
+        user.save(using=self._db)
+        return user
+
+
 class StudentManager(BaseUserManager):
     def create_user(self, email, phone, passwd=None):
         if not email:
@@ -73,6 +102,33 @@ class Hero(BaseModel):
 
     def __unicode__(self):
         return self.hero_name
+
+
+class Admin(AbstractBaseUser, BaseModel):
+    account = models.CharField(max_length=13, unique=True)
+    nick = models.CharField(max_length=20, default='admin')
+    token = models.CharField(max_length=64, unique=True)
+
+    USERNAME_FIELD = 'account'
+    REQUIRED_FIELDS = ['account']
+    objects = AdminManager()
+
+    def __unicode__(self):
+        return self.account
+
+    def is_authenticated(self):
+        return True
+
+    def hashed_password(self, password=None):
+        if not password:
+            return self.passwd
+        else:
+            return hashlib.md5(password).hexdigest()
+
+    def check_password(self, password):
+        if self.hashed_password(password) == self.password:
+            return True
+        return False
 
 
 class Mentor(AbstractBaseUser, BaseModel):
@@ -273,7 +329,7 @@ class CashRecord(BaseModel):
         return self.record_id
 
 
-class PhoneVerify(models.Model):
+class PhoneVerify(BaseModel):
     phone = models.CharField(max_length=11)
     verify = models.IntegerField(default=0)
 

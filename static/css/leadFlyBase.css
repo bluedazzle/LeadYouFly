@@ -52,6 +52,43 @@ body{
     text-decoration: none;
 }
 
+.navbar-nav>li>.dropdown-menu{
+    background: #FFFFFF;
+    border: 1px solid #DDDDDD;
+    box-shadow: 0 0 10px #dddddd;
+    min-width: 130px;
+}
+
+.dropdown-menu li{
+    text-align: center;
+}
+
+.user-mes-title{
+    position: relative;
+    text-align: center;
+}
+
+.user-mes-title span{
+    vertical-align: middle;
+    background: #FFFFFF;
+    padding: 0 5%;
+    margin-top: 5px;
+}
+
+.user-mes-title span:before{
+    position: absolute;
+    vertical-align: middle;
+    margin-top: 10px;
+    margin-left: 10%;
+    margin-right: 10%;
+    content: "";
+    width: 80%;
+    height: 2px;
+    display: block;
+    background: #DDDDDD;
+    z-index: -1;
+}
+
 /*导师页面*/
 .list-group-item{
     background-color: #222222;
@@ -437,7 +474,7 @@ body{
 }
 
 .complete-mes{
-    padding: 3% 25% 3% 25%;
+    padding: 3% 20% 3% 20%;
 }
 
 .complete-mes input{

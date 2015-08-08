@@ -36,28 +36,26 @@
       <ul class="nav navbar-nav navbar-right">
         <li><a href="#" class="lg-title">寻找导师</a></li>
         <li><a href="#" class="lg-title">在线客服</a></li>
+        {% if not is_login %}
         <li><a href="/login" class="sm-title">登录</a></li>
         <li><a href="/register" class="sm-title">注册</a></li>
+        {% else %}
         <li class="dropdown">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
             <img style="width: 30px;height: 30px;border-radius: 50%" src="/img/touxiang.jpg"/>
             <span class="caret"></span>
           </a>
           <ul class="dropdown-menu">
-            <li>
-              <span class="divider" style="width: 20%"></span>
-              资料
-              <span class="divider" style="width: 20%"></span>
+            <li class="user-mes-title">
+              <span>资料</span>
             </li>
-            <li><a href="/user/my_mes">我的档案</a></li>
+            <li><a href="/user/complete_mes">我的档案</a></li>
             <li><a href="/user/my_order">我的订单</a></li>
             <li><a href="/user/follow_teacher">关注导师</a></li>
             <li><a href="/user/comment">交流中心</a></li>
             <li><a href="/user/message">消息</a></li>
-            <li>
-              <span class="divider" style="width: 20%"></span>
-              服务
-              <span class="divider" style="width: 20%"></span>
+            <li class="user-mes-title">
+              <span>服务</span>
             </li>
             <li><a href="/user/recharge_withdrawal">充值提现</a></li>
             <li><a href="/user/security_center">安全中心</a></li>
@@ -65,12 +63,14 @@
             <li><a href="/user/logout">退出</a></li>
           </ul>
         </li>
+        {% endif %}
       </ul>
     </div><!-- /.navbar-collapse -->
   </div><!-- /.container-fluid -->
 </nav>
 {% block base %}
 {% endblock %}
+<script src="/js/common/common.js"></script>
 {% block script %}
 {% endblock %}
 </body>

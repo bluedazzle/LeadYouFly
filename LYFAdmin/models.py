@@ -1,7 +1,8 @@
 from django.db import models
 from django.contrib.auth.models import BaseUserManager, AbstractBaseUser
-
-
+import datetime
+import hashlib
+from django.contrib.auth.hashers import check_password as dj_check_password
 # Create your models here.
 
 class BaseModel(models.Model):
@@ -117,19 +118,14 @@ class Mentor(AbstractBaseUser, BaseModel):
         else:
             return hashlib.md5(password).hexdigest()
 
-    def check_password(self, password):
-        if self.hashed_password(password) == self.password:
-            return True
-        return False
-
 
 class Student(AbstractBaseUser, BaseModel):
     account = models.CharField(max_length=11, unique=True)
     nick = models.CharField(max_length=20, null=True, blank=True, default="Mentor")
     rank = models.IntegerField(default=1)
-    qq = models.CharField(max_length=20, default=' ')
-    yy = models.CharField(max_length=50, default=' ')
-    phone = models.CharField(max_length=11, default=' ')
+    qq = models.CharField(max_length=20, null=True, blank=True)
+    yy = models.CharField(max_length=50, null=True, blank=True)
+    phone = models.CharField(max_length=11, null=True, blank=True)
     avatar = models.CharField(max_length=200, default=' ')
     money = models.FloatField(default=0.0)
     follow = models.ManyToManyField(Mentor, related_name='my_students', null=True, blank=True)
@@ -151,11 +147,6 @@ class Student(AbstractBaseUser, BaseModel):
             return self.passwd
         else:
             return hashlib.md5(password).hexdigest()
-
-    def check_password(self, password):
-        if self.hashed_password(password) == self.password:
-            return True
-        return False
 
 
 class Message(BaseModel):
@@ -273,9 +264,31 @@ class CashRecord(BaseModel):
         return self.record_id
 
 
-class PhoneVerify(models.Model):
+class PhoneVerify(BaseModel):
     phone = models.CharField(max_length=11)
     verify = models.IntegerField(default=0)
 
     def __unicode__(self):
         return self.phone
+
+    def is_current(self, verify_code):
+        if int(verify_code) == self.verify:
+            return True
+        else:
+            return False
+
+    def is_get_again(self):
+        time_now = datetime.datetime.utcnow()
+        time_delta = datetime.timedelta(seconds=30)
+        if time_now - self.create_time.replace(tzinfo=None) >= time_delta:
+            return True
+        else:
+            return False
+
+    def is_expire(self):
+        time_now = datetime.datetime.utcnow()
+        time_delta = datetime.timedelta(minutes=10)
+        if time_now - self.create_time.replace(tzinfo=None) >= time_delta:
+            return True
+        else:
+            return False

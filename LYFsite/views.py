@@ -13,7 +13,6 @@ import datetime
 from models import *
 import json
 import utils
-from django.contrib.auth.hashers import check_password as dj_check_password
 
 
 def test(request):
@@ -21,11 +20,19 @@ def test(request):
     return render_to_response('test.html', {'test_list': test_list})
 
 
-def host(requset):
-    test_array = []
-    for i in range(0, 6):
-        test_array.append("测试数据!!!这个是测试数据" + str(i))
-    return render_to_response('host.html', {"test_array": test_array})
+def host(request):
+    return_content = utils.is_login(request)
+    if return_content:
+        return_content['is_login'] = True
+    else:
+        return_content = dict()
+    if request.method == 'GET':
+        test_array = []
+        for i in range(0, 6):
+            test_array.append("测试数据!!!这个是测试数据" + str(i))
+        return_content['test_array'] = test_array
+    return render_to_response('host.html',
+                              return_content)
 
 
 def login(request):
@@ -77,3 +84,15 @@ def register(request):
 
         return HttpResponse(json.dumps("success"))
 
+
+def search_teacher(request):
+    return_content = utils.is_login(request)
+    if return_content:
+        return_content['is_login'] = True
+    else:
+        return_content = dict()
+
+    return_content['test_list'] = range(0, 10)
+    if request.method == 'GET':
+        return render_to_response('search_teacher.html',
+                                  return_content)

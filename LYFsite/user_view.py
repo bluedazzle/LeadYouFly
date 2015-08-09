@@ -2,21 +2,31 @@ from views import *
 
 
 def user_message(request):
+    return_content = utils.is_login(request)
+    if not return_content:
+        return HttpResponseRedirect('/login')
+    return_content['is_login'] = True
+
     test_list = range(0, 3)
-    return render_to_response('user/message.html', {'test_list': test_list})
+    return_content['test_list'] = test_list
+    return render_to_response('user/message.html',
+                              return_content,
+                              context_instance=RequestContext(request))
 
 
 def complete_mes(request):
-    student_active = utils.is_login(request, "student")
-    if not student_active:
+    return_content = utils.is_login(request)
+    if not return_content:
         return HttpResponseRedirect('/login')
-    return_content = dict()
+    if not return_content['login_type'] == 'student':
+        raise Http404
     return_content['is_login'] = True
+    student_active = return_content['active_user']
+
     if request.method == 'GET':
         if student_active.qq and student_active.yy and student_active.phone:
             return HttpResponseRedirect('/user/my_orders')
         else:
-            return_content['student_active'] = student_active
             return render_to_response('user/complete_mes.html',
                                       return_content,
                                       context_instance=RequestContext(request))
@@ -33,10 +43,12 @@ def complete_mes(request):
 
 
 def my_orders(request):
-    student_active = utils.is_login(request, "student")
-    if not student_active:
+    return_content = utils.is_login(request)
+    if not return_content:
         return HttpResponseRedirect('/login')
-    return_content = dict()
+    if not return_content['login_type'] == 'student':
+        raise Http404
+
     return_content['is_login'] = True
     if request.method == 'GET':
         test_list = range(0, 3)

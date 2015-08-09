@@ -12,6 +12,7 @@ urlpatterns = patterns('',
                        url('^login$', login),
                        url('^register$', register),
                        url('^get_verify_sms$', utils.get_verify_code),
+                       url('^search_teacher$', search_teacher),
 
                        # teacher
 

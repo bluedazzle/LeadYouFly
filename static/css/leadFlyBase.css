@@ -90,6 +90,11 @@ body{
 }
 
 /*导师页面*/
+.hero-header{
+    height: 25px;
+    width: 25px;
+}
+
 .list-group-item{
     background-color: #222222;
     border: 0;
@@ -528,4 +533,16 @@ body{
 
 .order-operation{
     font-size: 16px;
+}
+
+.pagination li a{
+    border: 1px solid #DDDDDD;
+    color: #000000;
+    border-radius: 6px;
+    margin: 0 5px;
+}
+
+.pagination li:first-child>a,
+.pagination li:first-child>span{
+    border-left: 1px solid #DDDDDD;
 }

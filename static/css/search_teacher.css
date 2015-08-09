@@ -1,0 +1,61 @@
+.search-teacher-head{
+    height: 250px;
+    background: url('/img/2.jpg');
+}
+
+.search-teacher-body{
+    background: #FFFFFF;
+    min-height: 600px;
+    padding: 5%;
+}
+
+.teacher-info-panel{
+    height: 390px;
+    border: 1px #DDDDDD solid;
+    margin-bottom: 20px;
+    width: 240px;
+    border-radius: 6px;
+}
+
+.teacher-info-panel-head{
+    height: 180px;
+    background-size: cover;
+    border-top-right-radius: 6px;
+    border-top-left-radius: 6px;
+}
+
+.teacher-info-panel-body{
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+.teacher-info-introduce,
+.teacher-info-attribute{
+    font-size: 12px;
+    padding-left: 0;
+    padding-right: 0;
+    margin-top: 10px;
+    margin-bottom: 2px;
+}
+
+.teacher-info-introduce{
+    height: 42px;
+    text-after-overflow: ellipsis;
+    overflow: hidden;
+}
+
+.teacher-info-name{
+    font-size: 16px;
+    color: #000000;
+}
+
+.teacher-info-value{
+    font-size: 18px;
+    color: #1abc9c;
+    float: right;
+}
+
+.teacher-info-ver{
+    height: 1px;
+    background-color: #DDDDDD;
+}

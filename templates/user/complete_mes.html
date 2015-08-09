@@ -14,9 +14,9 @@
       <p>请认真填写以下资料，方便导师联系你</p>
       <form>
         {% csrf_token %}
-        <input class="form-control" id="qq" name="qq" value="{{ student_active.qq }}" placeholder="请填写联系qq..."/>
-        <input class="form-control" id="yy" name="yy" value="{{ student_active.yy }}" placeholder="请填写联系YY..."/>
-        <input class="form-control" id="phone" name="phone" value="{{ student_active.phone }}" placeholder="请填写手机号..."/>
+        <input class="form-control" id="qq" name="qq" value="{{ active_user.qq }}" placeholder="请填写联系qq..."/>
+        <input class="form-control" id="yy" name="yy" value="{{ active_user.yy }}" placeholder="请填写联系YY..."/>
+        <input class="form-control" id="phone" name="phone" value="{{ active_user.phone }}" placeholder="请填写手机号..."/>
       </form>
       <a type="button" id="complete_mes_submit" class="btn btn-primary btn-large btn-block">保&nbsp;&nbsp;存</a>
     </div>

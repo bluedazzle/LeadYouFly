@@ -49,14 +49,17 @@ def get_verify_code(request):
             return HttpResponse(json.dumps(u"错误的电话号码"))
 
 
-def is_login(request, account_type):
-    if account_type == "student":
-        student_account = request.session.get('student')
-        if student_account:
-            return Student.objects.get(account=request.session.get('student'))
-        else:
-            return False
+def is_login(request):
+    content = dict()
+    student_account = request.session.get('student')
+    teacher_account = request.session.get('teacher')
+    if student_account:
+        content['login_type'] = "student"
+        content['active_user'] = Student.objects.get(account=request.session.get('student'))
+        return content
+    elif teacher_account:
+        content['login_type'] = "teacher"
+        content['active_user'] = Mentor.objects.get(account=request.session.get('teacher'))
+        return content
     else:
-        teacher_account = request.session.get('teacher')
-        if teacher_account:
-            return Mentor.objects.get(account=request.session.get('teacher'))
+        return False

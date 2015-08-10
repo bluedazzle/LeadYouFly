@@ -2,6 +2,7 @@ from django.conf.urls import patterns, include, url
 from views import *
 import user_view
 import teacher_view
+import utils
 
 urlpatterns = patterns('',
                        url('^$', host),
@@ -10,6 +11,8 @@ urlpatterns = patterns('',
 
                        url('^login$', login),
                        url('^register$', register),
+                       url('^get_verify_sms$', utils.get_verify_code),
+                       url('^search_teacher$', search_teacher),
 
                        # teacher
 
@@ -24,6 +27,6 @@ urlpatterns = patterns('',
 
                        url('^user/message$', user_view.user_message),
                        url('^user/complete_mes$', user_view.complete_mes),
-                       url('^user/my_order$', user_view.my_order),
+                       url('^user/my_orders$', user_view.my_orders),
                        url('^test$', test)
                        )

@@ -1,0 +1,68 @@
+{% extends 'base.html' %}
+{% block css %}
+  <link href="/css/search_teacher.css" rel="stylesheet"/>
+{% endblock %}
+{% block define %}
+  <section class="col-lg-12 col-md-12 search-teacher-head">
+
+  </section>
+  <section class="col-lg-12 col-md-12 search-teacher-body">
+    <div class="container">
+      {% for item in test_list %}
+        <div class="col-lg-3 col-md-3">
+          <div class="teacher-info-panel">
+            <div class="teacher-info-panel-head" style="background: url('/img/0.jpg') center;">
+            </div>
+            <div class="teacher-info-panel-body">
+              <p class="teacher-info-introduce">
+                绝对强者，带你遨游带你飞;绝对强者，带你遨游带你飞;绝对强者，带你遨游带你飞;绝对强者，带你遨游带你飞;绝对强者，带你遨游带你飞
+              </p>
+              <p class="teacher-info-name">
+                测试导师
+                <span class="teacher-info-value">￥180</span>
+              </p>
+              <div class="teacher-info-ver col-sm-12"></div>
+              <p class="teacher-info-attribute col-sm-6">
+                段位：最强王者
+              </p>
+              <p class="teacher-info-attribute col-sm-6">
+                擅长位置：中单
+              </p>
+              <p class="teacher-info-attribute col-sm-12">
+                擅长英雄：
+                <img src="/img/heros/hero.jpg" class="hero-header"/>
+              </p>
+              <p class="teacher-info-attribute col-sm-8">
+                交易量：1122222
+              </p>
+              <p class="teacher-info-attribute col-sm-4">
+                评分：9.2
+              </p>
+            </div>
+          </div>
+        </div>
+      {% endfor %}
+      <nav class="col-md-12 col-lg-12 text-center">
+        <ul class="pagination">
+          <li>
+            <a href="#" aria-label="Previous">
+              <span aria-hidden="true">&laquo;</span>
+            </a>
+          </li>
+          <li><a href="#">1</a></li>
+          <li><a href="#">2</a></li>
+          <li><a href="#">3</a></li>
+          <li><a href="#">4</a></li>
+          <li><a href="#">5</a></li>
+          <li>
+            <a href="#" aria-label="Next">
+              <span aria-hidden="true">&raquo;</span>
+            </a>
+          </li>
+        </ul>
+      </nav>
+    </div>
+  </section>
+{% endblock %}
+{% block script %}
+{% endblock %}

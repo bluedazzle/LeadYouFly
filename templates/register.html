@@ -6,31 +6,37 @@
   <div class="container">
     <div class="jumbotron input-group-box">
       <p>登录</p>
+      <form id="register_form" action="/register" method="post">
+        {% csrf_token %}
       <div class="form-control input-with-icon">
         <span class="glyphicon glyphicon-user"></span>
         <i class="input-ver">&nbsp;</i>
-        <input class="login-input" name="username" placeholder="用户名"/>
+        <input type="text" class="login-input" id="username" name="username" placeholder="用户昵称"/>
       </div>
       <div class="form-control input-with-icon">
         <span class="glyphicon glyphicon-user"></span>
         <i class="input-ver">&nbsp;</i>
-        <input class="login-input" name="phone" placeholder="手机号"/>
+        <input type="text" class="login-input" id="phone" name="phone" placeholder="登录手机号"/>
       </div>
       <div class="form-control input-with-icon">
         <span class="glyphicon glyphicon-user"></span>
         <i class="input-ver">&nbsp;</i>
-        <input class="login-input" name="password" placeholder="设置密码"/>
+        <input type="password" class="login-input" id="password" name="password" placeholder="设置密码"/>
       </div>
       <div>
         <span>
-          <button class="btn btn-default btn-verify">获取短信验证码</button>
+          <a type="button" class="btn btn-default btn-verify" id="get_verify">获取短信验证码</a>
         </span>
-        <input class="input-verify" name="verify_code"/>
+        <input type="text" class="input-verify" id="verify_code" name="verify_code"/>
       </div>
-      <button class="btn btn-warning btn-lg btn-block btn-login">登&nbsp;&nbsp;录</button>
+      </form>
+      <a type="button" class="btn btn-warning btn-lg btn-block btn-login" id="submit_register">注&nbsp;&nbsp;册</a>
       <span class="register-footer">
         已有账号？<a class="register-login" href="/login">登录</a>
       </span>
     </div>
   </div>
+{% endblock %}
+{% block script %}
+  <script src="/js/common/register.js"></script>
 {% endblock %}

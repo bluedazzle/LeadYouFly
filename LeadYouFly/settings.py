@@ -47,12 +47,16 @@ INSTALLED_APPS = (
 MIDDLEWARE_CLASSES = (
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
-    # 'django.middleware.csrf.CsrfViewMiddleware',
+    'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.auth.middleware.SessionAuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 )
+
+PASSWORD_HASHERS = {
+    'django.contrib.auth.hashers.MD5PasswordHasher'
+}
 
 ROOT_URLCONF = 'LeadYouFly.urls'
 
@@ -67,9 +71,9 @@ DATABASES = {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME': 'leadyoufly',
         'USER': 'postgres',  # Not used with sqlite3.
-        'PASSWORD': '123456',  # Not used with sqlite3.
+        'PASSWORD': 'GDBDYL886',  # Not used with sqlite3.
         'HOST': 'localhost',  # Set to empty string for localhost. Not used with sqlite3.
-        'PORT': '5432',
+        'PORT': '5433',
     }
 }
 

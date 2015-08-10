@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 import time
 import os
 import random
@@ -54,3 +56,19 @@ def encodejson(status, body):
     tmpjson['status'] = status
     tmpjson['body'] = body
     return ujson.dumps(tmpjson)
+
+
+def hero_convert(type_str):
+    nstr = ''
+    for itm in type_str:
+        if itm == '1':
+            nstr += '上单 '
+        elif itm == '2':
+            nstr += '中单 '
+        elif itm == '3':
+            nstr += 'ADC'
+        elif itm == '4':
+            nstr += '打野 '
+        elif itm == '5':
+            nstr += '辅助 '
+    return nstr

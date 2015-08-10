@@ -11,20 +11,22 @@
                 <table class="table table-bordered">
                     <thead>
                     <tr>
-                        <th>ID</th>
                         <th>英雄名称</th>
                         <th>英雄图标</th>
+                        <th>英雄背景</th>
+                        <th>英雄类型</th>
                         <th>操作</th>
                     </tr>
                     </thead>
                     <tbody>
                     {% for hero in hero_list %}
-                    <tr>
-                        <td>{{ hero.id }}</td>
-                        <td>{{ hero.hero_name }}</td>
-                        <td><img src="{{ hero.hero_picture }}" width="50px" height="50px" alt=""/></td>
-                        <td><a href="/admin/website/del_hero?hid={{ hero.id }}" class="btn btn-warning">删除</a></td>
-                    </tr>
+                        <tr>
+                            <td>{{ hero.hero_name }}</td>
+                            <td><img src="{{ hero.hero_picture }}" width="50px" height="50px" alt=""/></td>
+                            <td><img src="{{ hero.hero_background }}" width="100px" height="50px" alt=""/></td>
+                            <td>{{ hero.hero_type }}</td>
+                            <td><a href="/admin/website/del_hero?hid={{ hero.id }}" class="btn btn-warning">删除</a></td>
+                        </tr>
                     {% endfor %}
                     </tbody>
                 </table>
@@ -51,6 +53,40 @@
                                         <div class="form-group">
                                             <label for="InputFile">英雄图标(50X50)</label>
                                             <input type="file" id="picture" name="picture" class="btn btn-primary">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="InputFile">英雄背景</label>
+                                            <input type="file" id="background" name="background"
+                                                   class="btn btn-primary">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="InputFile">英雄类型：</label>
+
+                                            <div class="checkbox-inline hero_type_selcet">
+                                                <label class="hero_type_selcet">
+                                                    <input type="checkbox" name="hero_type" value="1">中单
+                                                </label>
+                                            </div>
+                                            <div class="checkbox-inline hero_type_selcet">
+                                                <label class="hero_type_selcet">
+                                                    <input type="checkbox" name="hero_type" value="2">上单
+                                                </label>
+                                            </div>
+                                            <div class="checkbox-inline hero_type_selcet">
+                                                <label class="hero_type_selcet">
+                                                    <input type="checkbox" name="hero_type" value="3">ADC
+                                                </label>
+                                            </div>
+                                            <div class="checkbox-inline hero_type_selcet">
+                                                <label class="hero_type_selcet">
+                                                    <input type="checkbox" name="hero_type" value="4">打野
+                                                </label>
+                                            </div>
+                                            <div class="checkbox-inline hero_type_selcet">
+                                                <label class="hero_type_selcet">
+                                                    <input type="checkbox" name="hero_type" value="5">辅助
+                                                </label>
+                                            </div>
                                         </div>
                                         <div class="modal-footer">
                                             <button type="button" class="btn btn-default" data-dismiss="modal">关闭

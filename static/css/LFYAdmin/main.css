@@ -109,3 +109,7 @@ li>a{
 .mentor_info {
     font-size: 25px;
 }
+
+.hero_type_selcet {
+    cursor: pointer;
+}

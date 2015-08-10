@@ -14,18 +14,20 @@ from django.db.models import Q
 from PIL import Image
 from dss.Serializer import serializer
 
-from LYFAdmin.models import Hero, Mentor, IndexAdmin, Order, Course, Student, ChargeRecord, MoneyRecord, CashRecord, Admin
+from LYFAdmin.models import Hero, Mentor, IndexAdmin, Order, Course, Student, ChargeRecord, MoneyRecord, CashRecord, \
+    Admin
 
 from forms import MentorDetailContentForm
 from decorator import login_require
-from utils import upload_picture, datetime_to_string, auth_admin, encodejson
-from qn import upload_file_qn, list_file, QINIU_DOMAIN, VIDEO_CONVERT_PARAM, VIDEO_POSTER_PARAM, data_handle, delete_data
+from utils import upload_picture, datetime_to_string, auth_admin, hero_convert
+from qn import upload_file_qn, list_file, QINIU_DOMAIN, VIDEO_CONVERT_PARAM, VIDEO_POSTER_PARAM, data_handle, \
+    delete_data
 
 # Create your views here.
 
-#管理登录
+# 管理登录
 def admin_login(req):
-    body={}
+    body = {}
     account = req.POST.get('username')
     password = req.POST.get('password')
     user = auth_admin(account, password)
@@ -68,7 +70,7 @@ def admin_index(req):
                                                    'video_list': index_video_list})
 
 
-#首页视频更改
+# 首页视频更改
 @login_require
 def admin_index_change_video(req):
     video_name = req.POST.get('video_radio', '')
@@ -85,7 +87,7 @@ def admin_index_change_video(req):
     return HttpResponseRedirect('/admin/index')
 
 
-#上传首页视频
+# 上传首页视频
 @login_require
 def admin_index_new_video(req):
     video_format = ['mp4', 'flv', 'avi', 'rmvb', 'webm', 'ogg']
@@ -159,6 +161,8 @@ def admin_index_change_picture(req):
 @login_require
 def admin_website(req):
     hero_list = Hero.objects.all()
+    for itm in hero_list:
+        itm.hero_type = hero_convert(itm.hero_type)
     return render_to_response('website_admin.html', {'hero_list': hero_list})
 
 
@@ -177,10 +181,19 @@ def admin_website_new_hero(req):
         return Http404
     hero_pic = req.FILES.get('picture')
     hero_name = req.POST.get('hero_name')
-    print upload_file_qn(hero_pic, "test.mp4", 'video')
-    # pic_path, full_path = upload_picture(hero_pic)
+    hero_type = req.POST.getlist('hero_type')
+    h_type = ''
+    for itm in hero_type:
+        h_type += itm
+    if hero_type == '':
+        h_type = '1'
+    background = req.FILES.get('background')
+    pic_path, full_path = upload_picture(hero_pic)
+    back_path, full_path = upload_picture(background, 'hback/')
     new_hero = Hero(hero_name=hero_name,
-                    hero_picture='test')
+                    hero_picture=pic_path,
+                    hero_background=back_path,
+                    hero_type=h_type)
     new_hero.save()
     return HttpResponseRedirect('/admin/website')
 
@@ -259,6 +272,50 @@ def admin_mentor_new_mentor(req):
     return HttpResponseRedirect('/admin/mentor')
 
 
+#导师改变介绍视频
+def admin_mentor_change_video(req, mid):
+    video_name = req.POST.get('video_radio', '')
+    if video_name != '':
+        res, data_list = list_file((video_name,))
+        if res:
+            mentor = get_object_or_404(Mentor, id=mid)
+            for itm in data_list:
+                if 'poster' in itm['key']:
+                    mentor.video_poster = QINIU_DOMAIN + itm['key']
+                else:
+                    mentor.intro_video = QINIU_DOMAIN + itm['key']
+            mentor.save()
+    new_url = '/admin/mentor/detail/' + str(mid) + '/'
+    return HttpResponseRedirect(new_url)
+
+
+#导师添加新视频
+def admin_mentor_new_video(req, mid):
+    video_format = ['mp4', 'flv', 'avi', 'rmvb', 'webm', 'ogg']
+    support_format = ['mp4', 'webm', 'ogg']
+    video_data = req.FILES.get('new_video', None)
+    mentor = get_object_or_404(Mentor, id=mid)
+    if video_data is not None:
+        file_name, ext_name = video_data.name.encode('utf-8').split('.')
+        if ext_name in video_format:
+            upload_name = file_name + '_' + str(int(time.time())) + '.' + ext_name
+            sign = 'video_mentor_' + str(mid)
+            res, sfile_name = upload_file_qn(video_data, upload_name, sign)
+            if res:
+                poster_name = sfile_name.encode('utf-8').split('.')[0] + '_poster.jpg'
+                res, info = data_handle(sfile_name, poster_name, VIDEO_POSTER_PARAM)
+                if ext_name not in support_format:
+                    new_name = sfile_name.encode('utf-8').split('.')[0] + '.mp4'
+                    res, info = data_handle(sfile_name, new_name, VIDEO_CONVERT_PARAM)
+                    delete_data(sfile_name.encode('utf-8'))
+                    sfile_name = new_name
+                mentor.intro_video = QINIU_DOMAIN + sfile_name
+                mentor.video_poster = QINIU_DOMAIN + poster_name
+                mentor.save()
+    new_url = '/admin/mentor/detail/' + str(mid) + '/'
+    return HttpResponseRedirect(new_url)
+
+
 #导师课程价格变更
 @login_require
 def admin_mentor_change_price(req, mid, cid):
@@ -311,7 +368,6 @@ def admin_mentor_update_detail(req, mid):
         mentor.save()
     re_url = '/admin/mentor/detail/' + mid + '/'
     return HttpResponseRedirect(re_url)
-
 
 
 @login_require
@@ -412,8 +468,17 @@ def admin_mentor_detail(req, mid):
     hero_list = mentor.hero_list.all()
     hero_pool = Hero.objects.all()
     course_list = mentor.men_courses.all()
+    sign = 'video_mentor_' + str(mid)
+    res, data_list = list_file((sign, 'poster', ))
+    video_list = []
+    for itm in data_list:
+        items = {}
+        items['name'] = unicode(itm['key']).split('poster')[0][0:-1]
+        items['url'] = QINIU_DOMAIN + itm['key']
+        video_list.append(copy.copy(items))
     form = MentorDetailContentForm(initial={'Mentor_Detail': mentor.intro_detail})
     return render_to_response('mentor_detail_admin.html', {'form': form,
+                                                           'video_list': video_list,
                                                            'hero_list': hero_list,
                                                            'mentor': mentor,
                                                            'course_list': course_list,
@@ -449,7 +514,6 @@ def admin_student_info(req, sid):
     student = serializer(student)
     student['total_expense'] = total_expense
     return render_to_response('student_info_admin.html', {'student': student})
-
 
 
 #学员订单

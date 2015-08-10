@@ -100,6 +100,8 @@ class StudentManager(BaseUserManager):
 class Hero(BaseModel):
     hero_name = models.CharField(max_length=50)
     hero_picture = models.CharField(max_length=200, default=' ')
+    hero_background = models.CharField(max_length=200, default='')
+    hero_type = models.CharField(max_length=200, default='')
 
     def __unicode__(self):
         return self.hero_name
@@ -144,13 +146,14 @@ class Mentor(AbstractBaseUser, BaseModel):
     yy = models.CharField(max_length=50, default=' ')
     phone = models.CharField(max_length=11, default=' ')
     intro_detail = models.TextField(default=' ')
-    avatar = models.CharField(max_length=200, default=' ')
+    avatar = models.CharField(max_length=200, default='/img/default_mentor.jpg')
     intro_video = models.CharField(max_length=200, default=' ')
+    video_poster = models.CharField(max_length=200, default='')
     expert_hero1 = models.ForeignKey(Hero, related_name='who_expert1', null=True, blank=True)
     expert_hero2 = models.ForeignKey(Hero, related_name='who_expert2', null=True, blank=True)
     expert_hero3 = models.ForeignKey(Hero, related_name='who_expert3', null=True, blank=True)
     hero_list = models.ManyToManyField(Hero, related_name='who_uses', null=True, blank=True)
-    id_picture = models.CharField(max_length=100, default=' ')
+    id_picture = models.CharField(max_length=100, default='')
     total_income = models.FloatField(default=0.0)
     iden_income = models.FloatField(default=0.0)
     cash_income = models.FloatField(default=0.0)
@@ -182,7 +185,7 @@ class Student(AbstractBaseUser, BaseModel):
     qq = models.CharField(max_length=20, null=True, blank=True)
     yy = models.CharField(max_length=50, null=True, blank=True)
     phone = models.CharField(max_length=11, null=True, blank=True)
-    avatar = models.CharField(max_length=200, default=' ')
+    avatar = models.CharField(max_length=200, default='/img/default_stu.jpg')
     money = models.FloatField(default=0.0)
     follow = models.ManyToManyField(Mentor, related_name='my_students', null=True, blank=True)
 

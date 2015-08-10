@@ -31,6 +31,7 @@ def host(request):
         for i in range(0, 6):
             test_array.append("测试数据!!!这个是测试数据" + str(i))
         return_content['test_array'] = test_array
+        return_content['test_list'] = range(0, 4)
     return render_to_response('host.html',
                               return_content)
 

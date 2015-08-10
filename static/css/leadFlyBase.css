@@ -3,7 +3,12 @@ p{
     color: #7f8c8d;
 }
 body{
-    background-color: rgb(26, 33, 41)
+    background-color: #ffffff;
+    position: relative;
+}
+.host-title{
+    font-size: 20px;
+    margin-top: 40px;
 }
 .lg-title{
     font-size: 18px;
@@ -11,11 +16,9 @@ body{
 .sm-title{
     font-size: 14px;
 }
-.footer-one{
-    height: 100px;
-    padding-top: 50px;
-    padding-left: 15%;
-    padding-right: 15%;
+
+.footer{
+    background-color: rgb(34, 38, 41);
 }
 
 .footer-line{
@@ -24,30 +27,21 @@ body{
     padding-left: 10%;
     padding-right: 10%;
 }
-
-.footer-one>div>a {
-    color: #ffffff;
-    text-decoration: none;
-    font-size: 14px;
-}
-.footer-one>div>a:hover{
-    color: #a6e1ec;
-    text-decoration: none;
-}
 .footer-two{
     height: 40px;
-    padding-top: 10px;
-    padding-left: 32%;
-    padding-right: 32%;
+    padding-top: 5px;
+    padding-left: 15%;
+    padding-right: 15%;
+    margin-bottom: 10px;
 }
 .footer-two>div>a{
-    font-size: 8px;
+    font-size: 14px;
     color: #ffffff;
     text-decoration: none;
 }
 
 .footer-two>div>a:hover{
-    font-size: 8px;
+    font-size: 14px;
     color: #a6e1ec;
     text-decoration: none;
 }
@@ -109,8 +103,13 @@ body{
     border-radius: 0;
 }
 
+.table-host>tbody>tr{
+    position: relative;
+}
+
 .table-host>tbody>tr>td{
     border-top: 0;
+    line-height: 2;
 }
 
 .table-host>tbody>tr>td>a:link,
@@ -121,15 +120,66 @@ body{
 
 .table-host>tbody>tr>td>a{
     text-decoration:none;
-    color: #ffffff;
-    font-size: 14px;
+    color: #16a085;
+    font-size: 16px;
+    display: inline-block;
+    margin-left: 35px;
 }
 
 .table-host>tbody>tr>td>a:hover{
     text-decoration:none;
-    color: #a6e1ec;
-
+    color: #1abc9c;
 }
+
+.table-host-ver{
+    background: #16a085;
+    width: 1px;
+    height: 52px;
+    display: inline-block;
+    position: absolute;
+    margin-top: -6px;
+}
+
+.table-host>tbody>tr>td:hover .table-host-ver{
+    width: 6px;
+}
+
+.host-teacher-box{
+    height: 160px;
+    border: 1px solid #DDDDDD;
+    border-radius: 6px;
+    padding: 0;
+}
+
+.recommend-teacher-header{
+    width: 100px;
+    background-size: cover;
+    border-top-left-radius: 6px;
+    border-bottom-left-radius: 6px;
+    height: 100%;
+    display: inline-block;
+}
+
+.recommend-teacher-base{
+    width: 140px;
+    display: inline-block;
+    position: absolute;
+    padding-left: 20px;
+}
+
+.recommend-teacher-base h6{
+    font-size: 16px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.recommend-teacher-base p{
+    font-size: 14px;
+    line-height: 1.4;
+}
+
+
+/* teacher */
 
 .teacher-define{
     background-color: #ffffff;
@@ -138,13 +188,6 @@ body{
     min-height: 330px;
     padding-top: 25px;
     padding-bottom: 10px;
-}
-
-.title-line{
-    width: 200px;
-    height: 2px;
-    background-image:-webkit-linear-gradient(to right, rgb(51, 60, 69), rgb(26, 33, 41));
-    background-image:linear-gradient(to right,rgb(51, 60, 69),rgb(26, 33, 41));
 }
 
 .teacher-host-nav{

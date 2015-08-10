@@ -29,14 +29,11 @@
       </div>
     </div>
   </div>
-  <div class="container" style="color: #ffffff">
+  <div class="container">
     <div class="col-lg-6 col-md-6">
-      <h6>
+      <h6 class="host-title">
         平台介绍
       </h6>
-      <p class="title-line">
-        &nbsp;&nbsp;
-      </p>
       <div>
         <video class="video-js" preload="auto" poster="/img/poster.jpg" data-setup="{}">
           <source src="http://iurevych.github.com/Flat-UI-videos/big_buck_bunny.mp4" type="video/mp4">
@@ -45,20 +42,17 @@
       </div>
     </div>
     <div class="col-lg-6 col-md-6">
-      <h6>
-        游戏公告
+      <h6 class="host-title">
+        最新消息
       </h6>
-      <p class="title-line">
-        &nbsp;&nbsp;
-      </p>
       <table class="table table-host">
         <tbody>
         {% for test in test_array %}
           <tr>
             <td>
+              <div class="table-host-ver">&nbsp;</div>
               <a href="#">
                 {{ test }}
-                <span class="glyphicon glyphicon-menu-right" style="float:right;"></span>
               </a>
             </td>
           </tr>
@@ -67,20 +61,24 @@
       </table>
     </div>
   </div>
-  <div style="background-color: rgb(16, 19, 24)">
-    <div class="container" style="color: #ffffff;">
-      <h6>
-        推荐导师
-      </h6>
+  <div class="container">
+    <h6 class="host-title col-lg-12 col-md-12">
+      推荐导师
+      <a style="float: right;font-size: 14px" href="/search_teacher">(查看全部)</a>
+    </h6>
+    {% for item in test_list %}
       <div class="col-lg-3 col-md-3">
-        <img class="col-md-5 col-lg-5" src="/img/touxiang.jpg"/>
-        <div class="panel panel-default panel-black col-md-7 col-lg-7">
-          <div class="panel-body">
-            Basic panel example
+        <div class="host-teacher-box">
+          <div class="recommend-teacher-header" style="background: url('/img/0.jpg') center"></div>
+          <div class="recommend-teacher-base">
+            <h6>测试推荐导师</h6>
+            <p>擅长位置：中单</p>
+            <p>交易量：111111</p>
+            <p>用户评分：9.5</p>
           </div>
         </div>
       </div>
-    </div>
+    {% endfor %}
   </div>
 {% endblock %}
 {% block script %}

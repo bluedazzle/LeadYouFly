@@ -10,19 +10,20 @@ SECRET_KEY = 'U8EitYYdhQ4_9hxvQuR6z0mPjnj5IDzovo81pqN7'
 BUCKET_NAME = 'leadyoufly'
 QINIU_DOMAIN = 'http://7xkveq.com2.z0.glb.qiniucdn.com/'
 
-video_convert_param = 'avthumb/mp4'
-video_poster_param = 'vframe/jpg/offset/5/w/900/h/500'
+VIDEO_CONVERT_PARAM = 'avthumb/mp4'
+VIDEO_POSTER_PARAM = 'vframe/jpg/offset/5/w/900/h/500'
 
 
 def upload_file_qn(ufile, file_name, sign='default'):
     full_name = sign + '_' + file_name
+    full_name = full_name.decode('utf-8')
     q = Auth(ACCESS_KEY, SECRET_KEY)
     token = q.upload_token(BUCKET_NAME)
     ret, info = put_data(token, full_name, ufile)
     if info.status_code == 200:
         return True, ujson.loads(info.text_body)['key']
     else:
-        return False, None
+        return False, info
 
 
 def list_file(filter_str=()):
@@ -38,7 +39,7 @@ def list_file(filter_str=()):
         else:
             return True, file_list
     else:
-        return False, None
+        return False, info
 
 
 
@@ -50,4 +51,17 @@ def data_handle(file_name, saved_name, handle_method):
     ops = []
     ops.append(op)
     ret, info = pfop.execute(file_name, ops, 1)
-    print(info)
+    if info.status_code == 200:
+        return True, info.text_body
+    else:
+        return False, info
+
+
+def delete_data(file_name):
+    q = Auth(ACCESS_KEY, SECRET_KEY)
+    bucket = BucketManager(q)
+    ret, info = bucket.delete(BUCKET_NAME, file_name)
+    if info.status_code == 200:
+        return True, info.text_body
+    else:
+        return False, info.text_body

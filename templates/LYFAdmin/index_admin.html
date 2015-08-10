@@ -143,55 +143,53 @@
             <h5>首页视频编辑：</h5>
 
 
-                <div class="row">
-                    <div class="col-md-6">
-                        <div>当前视频：</div>
-                        <video class="video-js" preload="auto" poster="{{ index_admin.video_poster }}" data-setup="{}">
-                            <source src="{{ index_admin.index_video }}" type="video/mp4">
-                        </video>
-                    </div>
-                    <div class="col-md-6">
-                        <div>更改视频：</div>
-                        <div class="panel panel-default">
-                            <div class="panel-body">
-                                <form action="/admin/index/new_video" method="post">
-                                    <div class="form-group">
-                                        <label for="">上传新视频：</label>
-
-                                        <div class="input-group">
-
-                                            <input type="file" class="form-control btn btn-primary"
-                                                   placeholder="填入新视频url："/>
+            <div class="row">
+                <div class="col-md-6">
+                    <div>当前视频：</div>
+                    <video class="video-js" preload="auto" poster="{{ index_admin.video_poster }}" data-setup="{}">
+                        <source src="{{ index_admin.index_video }}" type="video/mp4">
+                    </video>
+                </div>
+                <div class="col-md-6">
+                    <div>更改视频：</div>
+                    <div class="panel panel-default">
+                        <div class="panel-body">
+                            <form action="/admin/index/new_video" method="post" enctype="multipart/form-data">
+                                <div class="form-group">
+                                    <label for="">上传新视频：</label>
+                                    <div class="input-group">
+                                        <input type="file" name="new_video" class="form-control btn btn-primary"
+                                               placeholder="填入新视频url："/>
                                     <span class="input-group-btn"><button class="btn btn-primary" type="submit">保存
                                     </button></span>
-                                        </div>
                                     </div>
-                                </form>
-                            </div>
+                                </div>
+                            </form>
                         </div>
+                    </div>
 
-                        <div class="panel panel-default">
-                            <div class="panel-body">
-                                <label for="">选择现有视频：</label>
+                    <div class="panel panel-default">
+                        <div class="panel-body">
+                            <label for="">选择现有视频：</label>
 
-                                <form action="/admin/index/change_video" method="post">
-                                    {% for video in video_list %}
+                            <form action="/admin/index/change_video" method="post">
+                                {% for video in video_list %}
                                     <label class="radio-inline">
                                         <input type="radio" name="video_radio" value="{{ video.name }}">
                                         <img src="{{ video.url }}" width="200px" height="100px" alt=""/>
 
                                         <div class="text-center">{{ video.name }}</div>
                                     </label>
-                                    {% endfor %}
-                                    <div class="form-group text-right">
-                                        <button class="btn btn-primary" type="submit">提交</button>
-                                    </div>
-                                </form>
-                            </div>
+                                {% endfor %}
+                                <div class="form-group text-right">
+                                    <button class="btn btn-primary" type="submit">提交</button>
+                                </div>
+                            </form>
                         </div>
-
                     </div>
+
                 </div>
+            </div>
         </div>
     </div>
 {% endblock %}

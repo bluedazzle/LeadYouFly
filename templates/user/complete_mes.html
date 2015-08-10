@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+{% block define %}
+  <div class="col-md-12 col-lg-12 user-host-nav">
+    <div class="teacher-host-head text-center">
+      <img class="teacher-head" src="/img/touxiang.jpg"/>
+      <p style="color: #ffffff;font-size: 16px;margin-top: 5px">测试用户</p>
+      <p style="color: #bdc3c7; font-size: 14px">
+        <span style="color: #fff;">2015/4/12</span>入学，已完成<span style="color: #fff;">13</span>堂课
+      </p>
+    </div>
+  </div>
+  <div class="col-md-12 col-lg-12 user-mes">
+    <div class="container complete-mes">
+      <p>请认真填写以下资料，方便导师联系你</p>
+      <form>
+        {% csrf_token %}
+        <input class="form-control" id="qq" name="qq" value="{{ active_user.qq }}" placeholder="请填写联系qq..."/>
+        <input class="form-control" id="yy" name="yy" value="{{ active_user.yy }}" placeholder="请填写联系YY..."/>
+        <input class="form-control" id="phone" name="phone" value="{{ active_user.phone }}" placeholder="请填写手机号..."/>
+      </form>
+      <a type="button" id="complete_mes_submit" class="btn btn-primary btn-large btn-block">保&nbsp;&nbsp;存</a>
+    </div>
+  </div>
+{% endblock %}
+{% block script %}
+  <script src="/js/student/complete_mes.js"></script>
+{% endblock %}

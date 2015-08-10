@@ -1,7 +1,8 @@
 from django.db import models
 from django.contrib.auth.models import BaseUserManager, AbstractBaseUser
-
-
+import datetime
+import hashlib
+from django.contrib.auth.hashers import check_password as dj_check_password
 # Create your models here.
 
 class BaseModel(models.Model):
@@ -39,6 +40,35 @@ class MentorManager(BaseUserManager):
         user.save(using=self._db)
         return user
 
+
+class AdminManager(BaseUserManager):
+    def create_user(self, email, phone, passwd=None):
+        if not email:
+            raise ValueError('Users must have an email address')
+
+        user = self.model(
+            email = MentorManager.normalize_email(email),
+            username = phone,
+        )
+
+        user.set_password(passwd)
+        user.save(using=self._db)
+        return user
+
+    def create_superuser(self, email, phone, passwd):
+
+        user = self.create_user(email,
+            username = phone,
+            password = passwd,
+
+        )
+        user.is_staff = True
+        user.is_active = True
+        user.is_admin = False
+        user.save(using=self._db)
+        return user
+
+
 class StudentManager(BaseUserManager):
     def create_user(self, email, phone, passwd=None):
         if not email:
@@ -73,6 +103,33 @@ class Hero(BaseModel):
 
     def __unicode__(self):
         return self.hero_name
+
+
+class Admin(AbstractBaseUser, BaseModel):
+    account = models.CharField(max_length=13, unique=True)
+    nick = models.CharField(max_length=20, default='admin')
+    token = models.CharField(max_length=64, unique=True)
+
+    USERNAME_FIELD = 'account'
+    REQUIRED_FIELDS = ['account']
+    objects = AdminManager()
+
+    def __unicode__(self):
+        return self.account
+
+    def is_authenticated(self):
+        return True
+
+    def hashed_password(self, password=None):
+        if not password:
+            return self.passwd
+        else:
+            return hashlib.md5(password).hexdigest()
+
+    def check_password(self, password):
+        if self.hashed_password(password) == self.password:
+            return True
+        return False
 
 
 class Mentor(AbstractBaseUser, BaseModel):
@@ -117,19 +174,14 @@ class Mentor(AbstractBaseUser, BaseModel):
         else:
             return hashlib.md5(password).hexdigest()
 
-    def check_password(self, password):
-        if self.hashed_password(password) == self.password:
-            return True
-        return False
-
 
 class Student(AbstractBaseUser, BaseModel):
     account = models.CharField(max_length=11, unique=True)
     nick = models.CharField(max_length=20, null=True, blank=True, default="Mentor")
     rank = models.IntegerField(default=1)
-    qq = models.CharField(max_length=20, default=' ')
-    yy = models.CharField(max_length=50, default=' ')
-    phone = models.CharField(max_length=11, default=' ')
+    qq = models.CharField(max_length=20, null=True, blank=True)
+    yy = models.CharField(max_length=50, null=True, blank=True)
+    phone = models.CharField(max_length=11, null=True, blank=True)
     avatar = models.CharField(max_length=200, default=' ')
     money = models.FloatField(default=0.0)
     follow = models.ManyToManyField(Mentor, related_name='my_students', null=True, blank=True)
@@ -151,11 +203,6 @@ class Student(AbstractBaseUser, BaseModel):
             return self.passwd
         else:
             return hashlib.md5(password).hexdigest()
-
-    def check_password(self, password):
-        if self.hashed_password(password) == self.password:
-            return True
-        return False
 
 
 class Message(BaseModel):
@@ -224,11 +271,11 @@ class IndexAdmin(models.Model):
     rec_mentor2 = models.ForeignKey(Mentor, blank=True, null=True, related_name='ind_rec_2')
     rec_mentor3 = models.ForeignKey(Mentor, blank=True, null=True, related_name='ind_rec_3')
     rec_mentor4 = models.ForeignKey(Mentor, blank=True, null=True, related_name='ind_rec_4')
-    index_pic1 = models.CharField(max_length=100, default=' ')
-    index_pic2 = models.CharField(max_length=100, default=' ')
-    index_pic3 = models.CharField(max_length=100, default=' ')
-    index_video = models.CharField(max_length=100, default='')
-    video_poster = models.CharField(max_length=100, default='')
+    index_pic1 = models.CharField(max_length=500, default=' ')
+    index_pic2 = models.CharField(max_length=500, default=' ')
+    index_pic3 = models.CharField(max_length=500, default=' ')
+    index_video = models.CharField(max_length=500, default='')
+    video_poster = models.CharField(max_length=500, default='')
 
     def __unicode__(self):
         return unicode(self.id)
@@ -271,3 +318,33 @@ class CashRecord(BaseModel):
 
     def __unicode__(self):
         return self.record_id
+
+
+class PhoneVerify(BaseModel):
+    phone = models.CharField(max_length=11)
+    verify = models.IntegerField(default=0)
+
+    def __unicode__(self):
+        return self.phone
+
+    def is_current(self, verify_code):
+        if int(verify_code) == self.verify:
+            return True
+        else:
+            return False
+
+    def is_get_again(self):
+        time_now = datetime.datetime.utcnow()
+        time_delta = datetime.timedelta(seconds=30)
+        if time_now - self.create_time.replace(tzinfo=None) >= time_delta:
+            return True
+        else:
+            return False
+
+    def is_expire(self):
+        time_now = datetime.datetime.utcnow()
+        time_delta = datetime.timedelta(minutes=10)
+        if time_now - self.create_time.replace(tzinfo=None) >= time_delta:
+            return True
+        else:
+            return False

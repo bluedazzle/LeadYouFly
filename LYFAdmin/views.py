@@ -14,21 +14,48 @@ from django.db.models import Q
 from PIL import Image
 from dss.Serializer import serializer
 
-from LYFAdmin.models import Hero, Mentor, IndexAdmin, Order, Course, Student, ChargeRecord, MoneyRecord, CashRecord
+from LYFAdmin.models import Hero, Mentor, IndexAdmin, Order, Course, Student, ChargeRecord, MoneyRecord, CashRecord, Admin
 
 from forms import MentorDetailContentForm
-from utils import upload_picture, datetime_to_string
-from qn import upload_file_qn, list_file, QINIU_DOMAIN
+from decorator import login_require
+from utils import upload_picture, datetime_to_string, auth_admin, encodejson
+from qn import upload_file_qn, list_file, QINIU_DOMAIN, VIDEO_CONVERT_PARAM, VIDEO_POSTER_PARAM, data_handle, delete_data
 
 # Create your views here.
 
+#管理登录
+def admin_login(req):
+    body={}
+    account = req.POST.get('username')
+    password = req.POST.get('password')
+    user = auth_admin(account, password)
+    if user is None:
+        return render_to_response('admin_login.html', {'fail': True})
+    req.session['token'] = user.token
+    return HttpResponseRedirect('/admin/index')
+
+
+def admin_login_page(req):
+    token = req.session.get('token', None)
+    if token is not None:
+        admin = Admin.objects.filter(token=token)
+        if admin.exists():
+            return HttpResponseRedirect('/admin/index')
+    return render_to_response('admin_login.html', {'fail': False})
+
+
+def admin_log_out(req):
+    req.session.set_expiry(1)
+    return render_to_response('admin_login.html', {'fail': False})
+
+
 # 首页逻辑
+@login_require
 def admin_index(req):
     raw_index_admin = IndexAdmin.objects.all()[0]
     mentor_list = Mentor.objects.all()
     index_admin = serializer(raw_index_admin, deep=True)
     res, data_list = list_file(('index', 'poster'))
-    print data_list
     index_video_list = []
     if res:
         for itm in data_list:
@@ -42,6 +69,7 @@ def admin_index(req):
 
 
 #首页视频更改
+@login_require
 def admin_index_change_video(req):
     video_name = req.POST.get('video_radio', '')
     if video_name != '':
@@ -58,14 +86,33 @@ def admin_index_change_video(req):
 
 
 #上传首页视频
+@login_require
 def admin_index_new_video(req):
+    video_format = ['mp4', 'flv', 'avi', 'rmvb', 'webm', 'ogg']
+    support_format = ['mp4', 'webm', 'ogg']
     video_data = req.FILES.get('new_video', None)
     if video_data is not None:
-        print video_data.name()
+        file_name, ext_name = video_data.name.encode('utf-8').split('.')
+        if ext_name in video_format:
+            upload_name = file_name + '_' + str(int(time.time())) + '.' + ext_name
+            res, sfile_name = upload_file_qn(video_data, upload_name, 'video_index')
+            if res:
+                poster_name = sfile_name.encode('utf-8').split('.')[0] + '_poster.jpg'
+                res, info = data_handle(sfile_name, poster_name, VIDEO_POSTER_PARAM)
+                if ext_name not in support_format:
+                    new_name = sfile_name.encode('utf-8').split('.')[0] + '.mp4'
+                    res, info = data_handle(sfile_name, new_name, VIDEO_CONVERT_PARAM)
+                    delete_data(sfile_name.encode('utf-8'))
+                    sfile_name = new_name
+                index_admin = IndexAdmin.objects.all()[0]
+                index_admin.index_video = QINIU_DOMAIN + sfile_name
+                index_admin.video_poster = QINIU_DOMAIN + poster_name
+                index_admin.save()
     return HttpResponseRedirect('/admin/index')
 
 
 #更改推荐导师
+@login_require
 def admin_index_change_recommend(req):
     if req.method != 'POST':
         return Http404
@@ -87,6 +134,7 @@ def admin_index_change_recommend(req):
 
 
 #更改轮播图片
+@login_require
 def admin_index_change_picture(req):
     if req.method != 'POST':
         return Http404
@@ -108,6 +156,7 @@ def admin_index_change_picture(req):
 
 
 #网站管理
+@login_require
 def admin_website(req):
     hero_list = Hero.objects.all()
     return render_to_response('website_admin.html', {'hero_list': hero_list})
@@ -122,6 +171,7 @@ def admin_website_del_hero(req):
 
 
 #添加英雄
+@login_require
 def admin_website_new_hero(req):
     if req.method != 'POST':
         return Http404
@@ -136,6 +186,7 @@ def admin_website_new_hero(req):
 
 
 #订单管理
+@login_require
 def admin_order(req):
     raw_order_list = Order.objects.all().order_by('-create_time')
     order_list = serializer(raw_order_list, deep=True, datetime_format='string')
@@ -143,6 +194,7 @@ def admin_order(req):
                                                    'select_code': 0})
 
 
+@login_require
 def admin_order_search(req):
     if req.method != 'POST':
         return Http404
@@ -176,6 +228,7 @@ def admin_order_search(req):
 
 
 #导师管理
+@login_require
 def admin_mentor(req):
     raw_mentor_list = Mentor.objects.all().order_by('-create_time')
     mentor_list = serializer(raw_mentor_list, datetime_format='string')
@@ -185,6 +238,7 @@ def admin_mentor(req):
 
 
 #添加导师
+@login_require
 def admin_mentor_new_mentor(req):
     if req.method != 'POST':
         return Http404
@@ -206,6 +260,7 @@ def admin_mentor_new_mentor(req):
 
 
 #导师课程价格变更
+@login_require
 def admin_mentor_change_price(req, mid, cid):
     mentor = get_object_or_404(Mentor, id=mid)
     course = get_object_or_404(Course, id=cid)
@@ -220,6 +275,7 @@ def admin_mentor_change_price(req, mid, cid):
 
 
 #导师英雄池删除英雄
+@login_require
 def admin_mentor_del_hero(req, mid, hid):
     mentor = get_object_or_404(Mentor, id=mid)
     hero = get_object_or_404(Hero, id=hid)
@@ -231,6 +287,7 @@ def admin_mentor_del_hero(req, mid, hid):
 
 
 #导师英雄池添加英雄
+@login_require
 def admin_mentor_add_hero(req, mid):
     new_hero_id = req.POST.get('new_hero_select', '')
     hero = get_object_or_404(Hero, id=new_hero_id)
@@ -244,6 +301,7 @@ def admin_mentor_add_hero(req, mid):
 
 
 #导师详情更新
+@login_require
 def admin_mentor_update_detail(req, mid):
     form = MentorDetailContentForm(req.POST)
     if form.is_valid():
@@ -256,6 +314,7 @@ def admin_mentor_update_detail(req, mid):
 
 
 
+@login_require
 def admin_student(req):
     raw_stu_list = Student.objects.all().order_by('-create_time')
     stu_list = serializer(raw_stu_list, datetime_format='string')
@@ -272,10 +331,12 @@ def admin_student(req):
     return render_to_response('student_admin.html', {'stu_list': stu_list})
 
 
+@login_require
 def admin_audit(req):
     return render_to_response('audit_admin.html')
 
 
+@login_require
 def admin_pay(req):
     mentor_list = Mentor.objects.all().order_by('-create_time')
     mentor_list = serializer(mentor_list, datetime_format='string')
@@ -283,6 +344,7 @@ def admin_pay(req):
 
 
 #解冻导师
+@login_require
 def admin_pay_thaw(req, mid):
     mentor = get_object_or_404(Mentor, id=mid)
     mentor.freeze = False
@@ -291,6 +353,7 @@ def admin_pay_thaw(req, mid):
 
 
 #冻结导师
+@login_require
 def admin_pay_freeze(req, mid):
     mentor = get_object_or_404(Mentor, id=mid)
     mentor.freeze = True
@@ -299,6 +362,7 @@ def admin_pay_freeze(req, mid):
 
 
 #学员充值纪录
+@login_require
 def admin_pay_stu_rec(req):
     charge_list = ChargeRecord.objects.all().order_by('-create_time')
     charge_list = serializer(charge_list, datetime_format='string', deep=True)
@@ -306,6 +370,7 @@ def admin_pay_stu_rec(req):
 
 
 #导师收支纪录
+@login_require
 def admin_pay_mentor_rec(req):
     money_rec_list = MoneyRecord.objects.all().order_by('-create_time')
     money_rec_list = serializer(money_rec_list, datetime_format='string', deep=True)
@@ -313,6 +378,7 @@ def admin_pay_mentor_rec(req):
 
 
 #同意提款
+@login_require
 def admin_pay_agree_cash(req, cid):
     record = get_object_or_404(CashRecord, id=cid)
     record.manage = True
@@ -322,6 +388,7 @@ def admin_pay_agree_cash(req, cid):
 
 
 #驳回提款
+@login_require
 def admin_pay_rejected_cash(req, cid):
     record = get_object_or_404(CashRecord, id=cid)
     record.manage = True
@@ -331,6 +398,7 @@ def admin_pay_rejected_cash(req, cid):
 
 
 #导师提现请求
+@login_require
 def admin_pay_cash(req):
     cash_list = CashRecord.objects.all().order_by('-create_time').order_by('manage')
     cash_list = serializer(cash_list, datetime_format='string', deep=True)
@@ -338,6 +406,7 @@ def admin_pay_cash(req):
 
 
 #导师详情
+@login_require
 def admin_mentor_detail(req, mid):
     mentor = get_object_or_404(Mentor, id=mid)
     hero_list = mentor.hero_list.all()
@@ -352,6 +421,7 @@ def admin_mentor_detail(req, mid):
 
 
 #导师信息
+@login_require
 def admin_mentor_info(req, mid):
     mentor = get_object_or_404(Mentor, id=mid)
     mentor = serializer(mentor, datetime_format='string')
@@ -359,6 +429,7 @@ def admin_mentor_info(req, mid):
 
 
 #导师订单
+@login_require
 def admin_mentor_order(req, mid):
     mentor = get_object_or_404(Mentor, id=mid)
     mentor_order_list = mentor.men_orders.all()
@@ -368,6 +439,7 @@ def admin_mentor_order(req, mid):
 
 
 #学员信息
+@login_require
 def admin_student_info(req, sid):
     student = get_object_or_404(Student, id=sid)
     order_list = student.stu_orders.all()
@@ -381,6 +453,7 @@ def admin_student_info(req, sid):
 
 
 #学员订单
+@login_require
 def admin_student_order(req, sid):
     student = get_object_or_404(Student, id=sid)
     order_list = student.stu_orders.all().order_by('-create_time')

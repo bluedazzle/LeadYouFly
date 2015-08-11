@@ -1,0 +1,93 @@
+.ver-line{
+    position: absolute;
+    left: 50%;
+    top: 0;
+    width: 2px;
+    height: 100%;
+    background: #fff repeat-y;
+    overflow: hidden;
+}
+
+
+.time-line {
+    width: 100%;
+    margin: 0 auto;
+    min-width: 800px;
+    background: url(/img/2.jpg);
+    position: relative;
+    height:100%;
+    overflow-y: auto
+}
+.time-line ul{
+    overflow:hidden;
+    padding: 0;
+    list-style: none;
+}
+.time-line li{
+    width: 50%;
+    height: 200px;
+}
+.time-line .in{
+    min-height: 300px;
+    /*background-color: #ddd;*/
+    margin-bottom: 40px;
+    position: relative;
+}
+
+.time-line .in div {
+    margin: 5%;
+}
+.time-line .in .panel{
+    width: 70%;
+    margin-left: 20%;
+}
+.time-line .a{
+    float: left;
+    margin-bottom: 200px;
+}
+.time-line .a1{
+    float: right;
+    color: #ffffff;
+    margin-left: 5%;
+}
+.time-line .b{
+    float: right;
+    margin-top: 200px;
+}
+
+.time-line .dot{
+    height: 10px;
+    width: 10px;
+    background-color: #fff;
+    border-radius: 50%;
+    overflow: hidden;
+    position: absolute;
+    top: 40px;
+}
+
+.time-line .a .dot{
+    right: 0;
+    margin-right: -5px;
+}
+
+.time-line .time-date{
+    color: #fff;
+    overflow: hidden;
+    position: absolute;
+    top: 30px;
+}
+
+.time-line .a .time-date{
+    right: 0;
+    margin-right: -100px;
+}
+
+.time-line .b .dot{
+    left: 0;
+    margin-left: -5px;
+}
+
+.time-line .b .time-date{
+    left: 0;
+    margin-left: -100px;
+}

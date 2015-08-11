@@ -7,7 +7,7 @@ def user_message(request):
         return HttpResponseRedirect('/login')
     return_content['is_login'] = True
 
-    test_list = range(0, 3)
+    test_list = range(0, 6)
     return_content['test_list'] = test_list
     return render_to_response('user/message.html',
                               return_content,

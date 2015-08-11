@@ -389,7 +389,9 @@ def admin_student(req):
 
 @login_require
 def admin_audit(req):
-    return render_to_response('audit_admin.html')
+    order_list = Order.objects.filter(if_upload_video=True, video_audit=False)
+    order_list = serializer(order_list, deep=True, datetime_format='string')
+    return render_to_response('audit_admin.html', {'video_list': order_list})
 
 
 @login_require

@@ -20,49 +20,47 @@
             </tr>
             </thead>
             <tbody>
-            <tr>
-                <td>20150101010101</td>
-                <td><a href="/admin/student/info">18215606355</a></td>
-                <td><a href="/admin/mentor/info">18215606355</a></td>
-                <td>dota入门</td>
-                <td>40.0</td>
-                <td>2015-08-08 18:29:09</td>
-                <td>已完成</td>
-                <td>111.avi</td>
-                <td>11MB</td>
-                <td><a href="/" class="btn btn-primary">审核</a><a href="/" class="btn btn-success">通过</a><a href="/"
-                                                                                                           class="btn btn-warning">驳回</a>
-                </td>
-            </tr>
-            <tr>
-                <td>20150101010101</td>
-                <td><a href="/admin/student/info">18215606355</a></td>
-                <td><a href="/admin/mentor/info">18215606355</a></td>
-                <td>dota入门</td>
-                <td>40.0</td>
-                <td>2015-08-08 18:29:09</td>
-                <td>已完成</td>
-                <td>111.avi</td>
-                <td>34MB</td>
-                <td><a href="/" class="btn btn-primary">审核</a><a href="/" class="btn btn-success">通过</a><a href="/"
-                                                                                                           class="btn btn-warning">驳回</a>
-                </td>
-            </tr>
-            <tr>
-                <td>20150101010101</td>
-                <td><a href="/admin/student/info">18215606355</a></td>
-                <td><a href="/admin/mentor/info">18215606355</a></td>
-                <td>dota入门</td>
-                <td>40.0</td>
-                <td>2015-08-08 18:29:09</td>
-                <td>已完成</td>
-                <td>111.avi</td>
-                <td>1MB</td>
-                <td><a href="/" class="btn btn-primary">审核</a><a href="/" class="btn btn-success">通过</a><a href="/"
-                                                                                                           class="btn btn-warning">驳回</a>
-                </td>
-            </tr>
+            {% for video in video_list %}
+                <tr>
+                    <td>{{ video.order_id }}</td>
+                    <td><a href="/admin/mentor/info/{{ video.teach_by.id }}">{{ video.teach_by.account }}</a></td>
+                    <td><a href="/admin/student/info/{{ video.belong.id }}/">{{ video.belong.account }}</a></td>
+                    <td>{{ video.course_name }}</td>
+                    <td>{{ video.order_price }}</td>
+                    <td>{{ video.create_time }}</td>
+                    <td>{{ video.status }}</td>
+                    <td>{{ video.video_name }}</td>
+                    <td>{{ video.video_size }}</td>
+                    <td><a class="btn btn-primary" data-toggle="modal" data-target="#auditModal{{ video.id }}" style="margin-right: 5px;">审核</a><a
+                            href="/admin/audit/pass/{{ video.id }}/"
+                            class="btn btn-success">通过</a>
+                        <a href="/admin/audit/reject/{{ video.id }}/"
+                           class="btn btn-warning">驳回</a>
+                    </td>
+                    <div class="modal fade" id="auditModal{{ video.id }}" tabindex="-1" role="dialog"
+                         aria-labelledby="myModalLabel">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                                            aria-hidden="true">&times;</span></button>
+                                    <h4 class="modal-title" id="myModalLabel">审核 {{ video.video_name }}</h4>
+                                </div>
+                                <div class="modal-body">
+                                    <div></div>
+                                    <div>
+                                        <video class="video-js" width="400px" height="300px;" preload="auto" poster=""
+                                           data-setup="{}">
+                                        <source src="{{ video.teach_video }}" type="video/mp4">
+                                    </video>
+                                    </div>
+                                </div>
 
+                            </div>
+                        </div>
+                    </div>
+                </tr>
+            {% endfor %}
 
             </tbody>
         </table>

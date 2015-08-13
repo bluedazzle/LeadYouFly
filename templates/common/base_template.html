@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+{% block define %}
+    <div class="col-md-12 col-lg-12 teacher-container">
+    <div class="container">
+      <div class="col-md-2 col-lg-2">
+        <div class="list-group list-group-select text-center">
+          <a class="list-select-item" id="about_us" href="/about_us">
+            <p>关于我们</p>
+          </a>
+          <a class="list-select-item" id="contact_us" href="/contact_us">
+            <p>联系我们</p>
+          </a>
+          <a class="list-select-item" id="become_manor" href="/become_manor">
+            <p>成为教练</p>
+          </a>
+          <a class="list-select-item" id="laws" href="/laws">
+            <p>法律声明</p>
+          </a>
+          <a class="list-select-item" id="problems" href="/problems">
+            <p>常见问题</p>
+          </a>
+          <a class="list-select-item" id="service" href="/service">
+            <p>服务指南</p>
+          </a>
+        </div>
+      </div>
+      <div class="col-md-10 col-lg-10">
+        {% block teacher_define %}
+        {% endblock %}
+      </div>
+    </div>
+  </div>
+
+{% endblock %}

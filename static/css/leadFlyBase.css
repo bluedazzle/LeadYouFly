@@ -18,6 +18,7 @@ html,body {
 #page {
     margin: 0 auto;
     padding-bottom: 105px;/*等于footer的高度*/
+    height: 100%;
 }
 
 #footer {
@@ -90,7 +91,7 @@ html,body {
     margin-top: 5px;
 }
 
-.user-mes-title span:before{
+.user-mes-title:before{
     position: absolute;
     vertical-align: middle;
     margin-top: 10px;
@@ -524,4 +525,35 @@ html,body {
 .pagination li:first-child>a,
 .pagination li:first-child>span{
     border-left: 1px solid #DDDDDD;
+}
+
+/*common template*/
+
+.list-select-item>p{
+    border-bottom: 1px solid #ecf0f1;
+    margin: 0;
+    padding: 15px 0 15px 0;
+    font-size: 14px;
+}
+
+.list-group-select>a{
+    background-color: #ffffff;
+    padding: 0;
+    margin-bottom: 0;
+}
+
+.list-group-select{
+    background-color: #ffffff;
+    border: 1px solid #ecf0f1;
+    box-shadow: 0 0 10px #ecf0f1;
+}
+
+.list-select-item-active{
+    background-color: #1abc9c;
+    color: #FFFFFF;
+}
+
+.list-select-item>p:hover{
+    background-color: #1abc9c;
+    color: #FFFFFF;
 }

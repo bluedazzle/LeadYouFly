@@ -128,10 +128,10 @@ class Admin(AbstractBaseUser, BaseModel):
         else:
             return hashlib.md5(password).hexdigest()
 
-    def check_password(self, password):
-        if self.hashed_password(password) == self.password:
-            return True
-        return False
+    # def check_password(self, password):
+    #     if self.hashed_password(password) == self.password:
+    #         return True
+    #     return False
 
 
 class Mentor(AbstractBaseUser, BaseModel):

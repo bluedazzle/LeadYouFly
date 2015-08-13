@@ -1,49 +1,73 @@
+#page{
+    position: fixed;
+    top: 60px;
+    bottom: 105px;
+    left: 0;
+    width: 100%;
+    overflow: auto;
+    height: auto;
+    margin: 0;
+    padding-bottom: 0;
+}
+
 .ver-line{
     position: absolute;
     left: 50%;
     top: 0;
-    width: 2px;
+    width: 3px;
     height: 100%;
-    background: #fff repeat-y;
+    background: #cccccc repeat-y;
     overflow: hidden;
 }
 
 
 .time-line {
-    width: 100%;
-    margin: 0 auto;
     min-width: 800px;
-    background: url(/img/2.jpg);
     position: relative;
-    height:100%;
-    overflow-y: auto
+    min-height: 100%;
 }
+
 .time-line ul{
     overflow:hidden;
     padding: 0;
     list-style: none;
+    margin-bottom: 0;
 }
 .time-line li{
     width: 50%;
-    height: 200px;
+    height: 110px;
 }
 .time-line .in{
-    min-height: 300px;
-    /*background-color: #ddd;*/
+    height: 50px;
     margin-bottom: 40px;
     position: relative;
 }
 
-.time-line .in div {
-    margin: 5%;
-}
 .time-line .in .panel{
+    height: 80px;
     width: 70%;
     margin-left: 20%;
+    padding: 0;
+    margin-top: 5%;
 }
+
+.time-line .in .panel-body{
+    padding: 20px 30px 5px 30px;
+    font-size: 20px;
+}
+
+.time-line .a .panel-body{
+    float: right;
+}
+
+.time-line .b .panel-body{
+    float: left;
+}
+
 .time-line .a{
     float: left;
-    margin-bottom: 200px;
+    margin-bottom: 90px;
+    padding-left: 15%;
 }
 .time-line .a1{
     float: right;
@@ -52,13 +76,14 @@
 }
 .time-line .b{
     float: right;
-    margin-top: 200px;
+    margin-top: 90px;
+    padding-right: 15%;
 }
 
 .time-line .dot{
-    height: 10px;
-    width: 10px;
-    background-color: #fff;
+    height: 15px;
+    width: 15px;
+    background-color: #cccccc;
     border-radius: 50%;
     overflow: hidden;
     position: absolute;
@@ -67,11 +92,10 @@
 
 .time-line .a .dot{
     right: 0;
-    margin-right: -5px;
+    margin-right: -8px;
 }
 
 .time-line .time-date{
-    color: #fff;
     overflow: hidden;
     position: absolute;
     top: 30px;
@@ -84,10 +108,21 @@
 
 .time-line .b .dot{
     left: 0;
-    margin-left: -5px;
+    margin-left: -7px;
 }
 
 .time-line .b .time-date{
     left: 0;
     margin-left: -100px;
+}
+
+.time-date{
+    font-size: 14px;
+    text-align: center;
+    color: #cccccc;
+}
+
+.time-date span{
+    font-size: 18px;
+    text-align: center;
 }

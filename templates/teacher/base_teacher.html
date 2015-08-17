@@ -2,12 +2,12 @@
 {% block define %}
   <div class="col-md-12 col-lg-12 teacher-host-nav">
     <div class="teacher-host-head text-center">
-      <img class="teacher-head" src="/img/touxiang.jpg"/>
-      <p style="color: #ffffff;font-size: 16px;margin-top: 5px">测试用户</p>
-      <p style="color: #ffffff; font-size: 12px">
-        授课<span style="color: red">100</span>堂
-        教过学员<span style="color: red">91</span>位
-        获得<span style="color: red">￥970</span>收入
+      <img class="teacher-head" src="{{ mentor.avatar }}"/>
+      <p style="color: #ffffff;font-size: 18px;margin-top: 3px">{{ mentor.nick }}</p>
+      <p style="color: #ffffff; font-size: 14px">
+        授课<span style="color: red">{{ teach_courses }}</span>堂
+        教过学员<span style="color: red">{{ teach_students }}</span>位
+        获得<span style="color: red">￥{{ mentor.total_income }}</span>收入
       </p>
     </div>
   </div>

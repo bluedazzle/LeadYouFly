@@ -53,6 +53,12 @@ def login(request):
         return HttpResponse(json.dumps("success"))
 
 
+def logout(request):
+    if request.method == 'GET':
+        request.session.clear()
+        return HttpResponseRedirect('common/teacher_login.html', context_instance=RequestContext(request))
+
+
 def register(request):
     if request.method == 'GET':
         return render_to_response('common/register.html', context_instance=RequestContext(request))
@@ -93,7 +99,8 @@ def search_teacher(request):
     else:
         return_content = dict()
 
-    return_content['test_list'] = range(0, 10)
+    mentorList = Mentor.objects.all()
+    return_content['mentorList'] = mentorList
     if request.method == 'GET':
         return render_to_response('common/search_teacher.html',
                                   return_content)

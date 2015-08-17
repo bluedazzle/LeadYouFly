@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from views import *
 
 
@@ -5,6 +6,8 @@ def user_message(request):
     return_content = utils.is_login(request)
     if not return_content:
         return HttpResponseRedirect('/login')
+    if not return_content['login_type'] == 'student':
+        raise Http404
     return_content['is_login'] = True
 
     test_list = range(0, 6)
@@ -24,14 +27,11 @@ def complete_mes(request):
     student_active = return_content['active_user']
 
     if request.method == 'GET':
-        if student_active.qq and student_active.yy and student_active.phone:
-            return HttpResponseRedirect('/user/my_orders')
-        else:
-            return render_to_response('user/complete_mes.html',
-                                      return_content,
-                                      context_instance=RequestContext(request))
+        return render_to_response('user/complete_mes.html',
+                                  return_content,
+                                  context_instance=RequestContext(request))
     if request.method == 'POST':
-        form = CompleteInfo(request.POST)
+        form = CompleteInfoForm(request.POST)
         if form.is_valid():
             form_data = form.cleaned_data
             student_active.qq = form_data['qq']

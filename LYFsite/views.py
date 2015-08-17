@@ -10,6 +10,7 @@ from django.core.paginator import PageNotAnInteger
 from django.core.paginator import EmptyPage
 from django.contrib.auth.decorators import login_required
 import datetime
+from django.db.models import Q
 from models import *
 import json
 import utils
@@ -98,10 +99,61 @@ def search_teacher(request):
         return_content['is_login'] = True
     else:
         return_content = dict()
+    heros = Hero.objects.all()
+    return_content['heros'] = heros
+    if not request.session.get('teach_area'):
+        request.session['teach_area'] = ''
+    if not request.session.get('teach_position'):
+        request.session['teach_position'] = ''
+    if not request.session.get('teach_hero'):
+        request.session['teach_hero'] = ''
 
-    mentorList = Mentor.objects.all()
-    return_content['mentorList'] = mentorList
     if request.method == 'GET':
+        teach_area = request.GET.get('teach_area')
+        teach_position = request.GET.get('teach_position')
+        teach_hero = request.GET.get('teach_hero')
+        if teach_area:
+            request.session['teach_area'] = teach_area
+
+        if teach_position:
+            request.session['teach_position'] = teach_position
+
+        if teach_hero:
+            request.session['teach_hero'] = teach_hero
+
+        teach_area = request.session.get('teach_area')
+        teach_position = request.session.get('teach_position')
+        teach_hero = request.session.get('teach_hero')
+        if teach_hero and not teach_hero == '0':
+            hero_to_teach = Hero.objects.get(id=teach_hero)
+        else:
+            hero_to_teach = None
+
+        mentors = Mentor.objects.all()
+        if teach_area and not teach_area == '0':
+            mentors = mentors.filter(teach_area__contains=teach_area)
+
+        if teach_position and not teach_position == '0':
+            mentors = mentors.filter(good_at=teach_position)
+
+        if hero_to_teach:
+            mentors = mentors.filter(Q(expert_hero1=hero_to_teach) |
+                                     Q(expert_hero2=hero_to_teach) |
+                                     Q(expert_hero3=hero_to_teach))
+
+        return_content['mentors'] = mentors
+        paginator = Paginator(mentors, 12)
+        try:
+            page_num = request.GET.get('page_num')
+            mentors = paginator.page(page_num)
+        except PageNotAnInteger:
+            mentors = paginator.page(1)
+        except EmptyPage:
+            mentors = paginator.page(paginator.num_pages)
+        return_content['mentors'] = mentors
+        return_content['teach_area'] = teach_area
+        return_content['teach_hero'] = hero_to_teach
+        return_content['teach_position'] = teach_position
         return render_to_response('common/search_teacher.html',
                                   return_content)
 

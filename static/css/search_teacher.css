@@ -59,3 +59,48 @@
     height: 1px;
     background-color: #DDDDDD;
 }
+
+.btn-select{
+    margin-top: 20px;
+    background-color: rgba(0, 0, 0, 0);
+    color: #FFFFFF;
+    border-bottom: 1px solid #FFFFFF;
+    padding-bottom: 0;
+    text-align: center;
+}
+
+.btn-select:hover{
+    background-color: rgba(0, 0, 0, 0);
+    color: #FFFFFF;
+    border-bottom: 1px solid #FFFFFF;
+}
+
+.btn-select span{
+    margin-left: 20px;
+}
+
+.study-text{
+    padding-right: 0;
+}
+
+.study-text p{
+    margin-top: 27px;
+    float: right;
+    font-size: 16px;
+    color: #ffffff;
+}
+
+.pagination li.disabled>a,
+.pagination li.disabled>a:hover
+{
+    color: #DDDDDD;
+    cursor: not-allowed;
+    background-color: rgba(255,255,255,.3);
+    border-right-color: #dfe2e5;
+}
+
+.pagination li.active>a:hover{
+    color: #fff;
+    background-color: #1abc9c;
+    border-color: #dfe2e5;
+}

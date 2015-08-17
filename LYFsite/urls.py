@@ -13,6 +13,12 @@ urlpatterns = patterns('',
                        url('^register$', register),
                        url('^get_verify_sms$', utils.get_verify_code),
                        url('^search_teacher$', search_teacher),
+                       url('^about_us$', about_us),
+                       url('^contact_us$', contact_us),
+                       url('^become_manor$', become_teacher),
+                       url('^laws$', laws),
+                       url('^problems$', problems),
+                       url('^service$', service),
 
                        # teacher
 

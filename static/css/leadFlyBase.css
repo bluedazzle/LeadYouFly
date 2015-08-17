@@ -2,9 +2,31 @@ p{
     font-size: 16px;
     color: #7f8c8d;
 }
-body{
+html,body {
     background-color: #ffffff;
     position: relative;
+    margin: 0;
+    padding:0;
+    height: 100%;
+}
+#container {
+    min-height:100%;
+    height: auto !important;
+    position: relative;
+}
+
+#page {
+    margin: 0 auto;
+    padding-bottom: 105px;/*等于footer的高度*/
+    height: 100%;
+}
+
+#footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 105px;/*脚部的高度*/
+    clear:both;
 }
 .host-title{
     font-size: 20px;
@@ -69,7 +91,7 @@ body{
     margin-top: 5px;
 }
 
-.user-mes-title span:before{
+.user-mes-title:before{
     position: absolute;
     vertical-align: middle;
     margin-top: 10px;
@@ -151,6 +173,10 @@ body{
     padding: 0;
 }
 
+.recommend-teacher-container{
+    margin-bottom: 20px;
+}
+
 .recommend-teacher-header{
     width: 100px;
     background-size: cover;
@@ -180,6 +206,10 @@ body{
 
 
 /* teacher */
+.teacher-container{
+    padding-top: 30px;
+    margin-bottom: 30px;
+}
 
 .teacher-define{
     background-color: #ffffff;
@@ -415,99 +445,6 @@ body{
 
 
 
-
-/*time-line*/
-
-.ver-line{
-    position: absolute;
-    left: 50%;
-    top: 0;
-    width: 2px;
-    height: 100%;
-    background: #fff repeat-y;
-    overflow: hidden;
-}
-
-
-.time-line {
-    width: 100%;
-    margin: 0 auto;
-    min-width: 800px;
-    background: url(/img/2.jpg);
-}
-.time-line ul{
-    overflow:hidden;
-    padding: 0;
-    list-style: none;
-}
-.time-line li{
-    width: 50%;
-    height: 200px;
-}
-.time-line .in{
-    min-height: 300px;
-    /*background-color: #ddd;*/
-    margin-bottom: 40px;
-    position: relative;
-}
-
-.time-line .in div {
-    margin: 5%;
-}
-.time-line .in .panel{
-    width: 70%;
-    margin-left: 20%;
-}
-.time-line .a{
-    float: left;
-    margin-bottom: 100px;
-}
-.time-line .a1{
-    float: right;
-    color: #ffffff;
-    margin-left: 5%;
-}
-.time-line .b{
-    float: right;
-    margin-top: 100px;
-}
-
-.time-line .dot{
-    height: 10px;
-    width: 10px;
-    background-color: #fff;
-    border-radius: 50%;
-    overflow: hidden;
-    position: absolute;
-    top: 30px;
-}
-
-.time-line .a .dot{
-    right: 0;
-    margin-right: -5px;
-}
-
-.time-line .a .time-date{
-    right: 0;
-    top: 25px;
-    margin-right: -100px;
-    color: #ffffff;
-    position: absolute;
-}
-
-.time-line .b .dot{
-    left: 0;
-    margin-left: -5px;
-}
-
-.time-line .b .time-date{
-    left: 0;
-    top: 25px;
-    margin-left: -100px;
-    color: #ffffff;
-    position: absolute;
-}
-
 .user-host-nav{
     height: 250px;
     background: url(/img/2.jpg) center;
@@ -588,4 +525,35 @@ body{
 .pagination li:first-child>a,
 .pagination li:first-child>span{
     border-left: 1px solid #DDDDDD;
+}
+
+/*common template*/
+
+.list-select-item>p{
+    border-bottom: 1px solid #ecf0f1;
+    margin: 0;
+    padding: 15px 0 15px 0;
+    font-size: 14px;
+}
+
+.list-group-select>a{
+    background-color: #ffffff;
+    padding: 0;
+    margin-bottom: 0;
+}
+
+.list-group-select{
+    background-color: #ffffff;
+    border: 1px solid #ecf0f1;
+    box-shadow: 0 0 10px #ecf0f1;
+}
+
+.list-select-item-active{
+    background-color: #1abc9c;
+    color: #FFFFFF;
+}
+
+.list-select-item>p:hover{
+    background-color: #1abc9c;
+    color: #FFFFFF;
 }

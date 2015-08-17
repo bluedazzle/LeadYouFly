@@ -32,13 +32,13 @@ def host(request):
             test_array.append("测试数据!!!这个是测试数据" + str(i))
         return_content['test_array'] = test_array
         return_content['test_list'] = range(0, 4)
-    return render_to_response('host.html',
+    return render_to_response('common/host.html',
                               return_content)
 
 
 def login(request):
     if request.method == 'GET':
-        return render_to_response('login.html', context_instance=RequestContext(request))
+        return render_to_response('common/login.html', context_instance=RequestContext(request))
     if request.method == 'POST':
         form = LoginForm(request.POST)
         if not form.is_valid():
@@ -55,7 +55,7 @@ def login(request):
 
 def register(request):
     if request.method == 'GET':
-        return render_to_response('register.html', context_instance=RequestContext(request))
+        return render_to_response('common/register.html', context_instance=RequestContext(request))
     if request.method == 'POST':
 
         form = RegisterForm(request.POST)
@@ -95,5 +95,29 @@ def search_teacher(request):
 
     return_content['test_list'] = range(0, 10)
     if request.method == 'GET':
-        return render_to_response('search_teacher.html',
+        return render_to_response('common/search_teacher.html',
                                   return_content)
+
+
+def about_us(request):
+    return render_to_response('common/about_us.html')
+
+
+def contact_us(request):
+    return render_to_response('common/contact_us.html')
+
+
+def laws(request):
+    return render_to_response('common/laws.html')
+
+
+def problems(request):
+    return render_to_response('common/problems.html')
+
+
+def service(request):
+    return render_to_response('common/service.html')
+
+
+def become_teacher(request):
+    return render_to_response('common/become_teacher.html')

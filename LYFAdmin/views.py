@@ -20,9 +20,9 @@ from LYFAdmin.models import Hero, Mentor, IndexAdmin, Order, Course, Student, Ch
 from forms import MentorDetailContentForm
 from decorator import login_require
 from utils import upload_picture, datetime_to_string, auth_admin, hero_convert, order_status_convert, \
-    mentor_status_convert, order_search, output_data
+    mentor_status_convert, order_search, output_data, UPLOAD_PATH
 from qn import upload_file_qn, list_file, QINIU_DOMAIN, VIDEO_CONVERT_PARAM, VIDEO_POSTER_PARAM, data_handle, \
-    delete_data
+    delete_data, put_block_data
 
 # Create your views here.
 
@@ -104,7 +104,9 @@ def admin_index_new_video(req):
         file_name, ext_name = video_data.name.encode('utf-8').split('.')
         if ext_name in video_format:
             upload_name = file_name + '_' + str(int(time.time())) + '.' + ext_name
-            res, sfile_name = upload_file_qn(video_data, upload_name, 'video_index')
+            progress_handler = lambda progress, total: progress
+            res, sfile_name = put_block_data(upload_name, video_data, progress_handler=progress_handler,
+                                             sign='video_index')
             if res:
                 poster_name = sfile_name.encode('utf-8').split('.')[0] + '_poster.jpg'
                 res, info = data_handle(sfile_name, poster_name, VIDEO_POSTER_PARAM)
@@ -117,7 +119,9 @@ def admin_index_new_video(req):
                 index_admin.index_video = QINIU_DOMAIN + sfile_name
                 index_admin.video_poster = QINIU_DOMAIN + poster_name
                 index_admin.save()
-    return HttpResponseRedirect('/admin/index')
+    message = {'status': True}
+    return HttpResponse(ujson.dumps(message), content_type='application/json')
+
 
 
 #更改推荐导师

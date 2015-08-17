@@ -19,7 +19,7 @@ from LYFAdmin.models import Hero, Mentor, IndexAdmin, Order, Course, Student, Ch
 
 from forms import MentorDetailContentForm
 from decorator import login_require
-from utils import upload_picture, datetime_to_string, auth_admin, hero_convert
+from utils import upload_picture, datetime_to_string, auth_admin, hero_convert, UPLOAD_PATH
 from qn import upload_file_qn, list_file, QINIU_DOMAIN, VIDEO_CONVERT_PARAM, VIDEO_POSTER_PARAM, data_handle, \
     delete_data
 

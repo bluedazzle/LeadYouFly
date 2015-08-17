@@ -15,13 +15,15 @@ urlpatterns = patterns('',
                        url('^search_teacher$', search_teacher),
                        url('^about_us$', about_us),
                        url('^contact_us$', contact_us),
-                       url('^become_manor$', become_teacher),
+                       url('^become_mentor$', become_teacher),
                        url('^laws$', laws),
                        url('^problems$', problems),
                        url('^service$', service),
+                       url('^logout$', logout),
 
                        # teacher
 
+                       url('^teacher/login$', teacher_view.teacher_login),
                        url('^teacher/host$', teacher_view.teacher_host),
                        url('^teacher/contact$', teacher_view.teacher_contact),
                        url('^teacher/indemnity$', teacher_view.teacher_indemnity),

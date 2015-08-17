@@ -2,7 +2,6 @@ from django.db import models
 from django.contrib.auth.models import BaseUserManager, AbstractBaseUser
 import datetime
 import hashlib
-from django.contrib.auth.hashers import check_password as dj_check_password
 # Create your models here.
 
 class BaseModel(models.Model):
@@ -177,6 +176,10 @@ class Mentor(AbstractBaseUser, BaseModel):
         else:
             return hashlib.md5(password).hexdigest()
 
+    def check_password(self, password):
+        if self.hashed_password(password) == self.password:
+            return True
+        return False
 
 class Student(AbstractBaseUser, BaseModel):
     account = models.CharField(max_length=11, unique=True)

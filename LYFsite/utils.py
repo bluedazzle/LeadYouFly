@@ -59,7 +59,20 @@ def is_login(request):
         return content
     elif teacher_account:
         content['login_type'] = "teacher"
-        content['active_user'] = Mentor.objects.get(account=request.session.get('teacher'))
+        content['mentor'] = Mentor.objects.get(account=request.session.get('teacher'))
+        finish_course = Order.objects.filter(teach_by=content['mentor'],
+                                             status=3)
+        appraise_course = Order.objects.filter(teach_by=content['mentor'],
+                                               status=4)
+        content['teach_courses'] = finish_course.count() + appraise_course.count()
+        teach_student = list()
+        for course in finish_course:
+            if course.belong not in teach_student:
+                teach_student.append(course.belong)
+        for course in appraise_course:
+            if course.belong not in teach_student:
+                teach_student.append(course.belong)
+        content['teach_students'] = len(teach_student)
         return content
     else:
         return False

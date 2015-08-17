@@ -17,13 +17,13 @@
                 </select>
             </div>
             <div class="col-md-6">
-                <input type="text" id="search_text" name="search_text" class="form-control" placeholder="搜索"/>
+                <input type="text" id="search_text" name="search_text" class="form-control" placeholder="搜索" value="{{ search_text }}"/>
             </div>
             <div class="col-md-1 text-right">
                 <button class="btn-primary btn" type="submit">查询</button>
             </div>
             <div class="col-md-1 text-right">
-                <button class="btn btn-primary" type="button">导出</button>
+                <button class="btn btn-primary" id="out_data" type="button">导出</button>
             </div>
         </div>
         </form>
@@ -37,7 +37,7 @@
                     <th>课程名称</th>
                     <th>金额</th>
                     <th>下单时间</th>
-                    <th>是否接单</th>
+                    <th>订单状态</th>
                     <th>支付方式</th>
                 </tr>
                 </thead>
@@ -64,5 +64,27 @@
     <script>
         $("select").select2({dropdownCssClass: 'dropdown-inverse'});
     </script>
+    <script>
+          $('#out_data').click(function(){
+              var order_status = $("#order_status").val();
+              var search_text = $("#search_text").val();
+              var message = {'order_status': order_status,
+                             'search_text': search_text};
+              $.ajax({
+                  type: 'POST',
+                  url: '/admin/order/output',
+                  data: message,
+                  success: function (data) {
+                      if (data) {
+                          window.location.href = data
+                      }
+                      else {
+                          alert("导出失败！")
+                      }
+                  },
+                  dataType: 'json'
+              });
+          })
+      </script>
     <script src="//vjs.zencdn.net/4.7/video.js"></script>
 {% endblock %}

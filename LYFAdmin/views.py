@@ -15,15 +15,21 @@ from PIL import Image
 from dss.Serializer import serializer
 
 from LYFAdmin.models import Hero, Mentor, IndexAdmin, Order, Course, Student, ChargeRecord, MoneyRecord, CashRecord, \
-    Admin
+    Admin, Notice
 
 from forms import MentorDetailContentForm
 from decorator import login_require
-from utils import upload_picture, datetime_to_string, auth_admin, hero_convert, UPLOAD_PATH
+from utils import upload_picture, datetime_to_string, auth_admin, hero_convert, order_status_convert, \
+    mentor_status_convert, order_search, output_data, UPLOAD_PATH
 from qn import upload_file_qn, list_file, QINIU_DOMAIN, VIDEO_CONVERT_PARAM, VIDEO_POSTER_PARAM, data_handle, \
-    delete_data
+    delete_data, put_block_data
 
 # Create your views here.
+
+
+def test(req):
+    return render_to_response('LYFAdmin/test.html')
+
 
 # 管理登录
 def admin_login(req):
@@ -93,11 +99,14 @@ def admin_index_new_video(req):
     video_format = ['mp4', 'flv', 'avi', 'rmvb', 'webm', 'ogg']
     support_format = ['mp4', 'webm', 'ogg']
     video_data = req.FILES.get('new_video', None)
+    print video_data.name
     if video_data is not None:
         file_name, ext_name = video_data.name.encode('utf-8').split('.')
         if ext_name in video_format:
             upload_name = file_name + '_' + str(int(time.time())) + '.' + ext_name
-            res, sfile_name = upload_file_qn(video_data, upload_name, 'video_index')
+            progress_handler = lambda progress, total: progress
+            res, sfile_name = put_block_data(upload_name, video_data, progress_handler=progress_handler,
+                                             sign='video_index')
             if res:
                 poster_name = sfile_name.encode('utf-8').split('.')[0] + '_poster.jpg'
                 res, info = data_handle(sfile_name, poster_name, VIDEO_POSTER_PARAM)
@@ -110,7 +119,9 @@ def admin_index_new_video(req):
                 index_admin.index_video = QINIU_DOMAIN + sfile_name
                 index_admin.video_poster = QINIU_DOMAIN + poster_name
                 index_admin.save()
-    return HttpResponseRedirect('/admin/index')
+    message = {'status': True}
+    return HttpResponse(ujson.dumps(message), content_type='application/json')
+
 
 
 #更改推荐导师
@@ -161,12 +172,39 @@ def admin_index_change_picture(req):
 @login_require
 def admin_website(req):
     hero_list = Hero.objects.all()
+    notice_list = Notice.objects.all()
     for itm in hero_list:
         itm.hero_type = hero_convert(itm.hero_type)
-    return render_to_response('website_admin.html', {'hero_list': hero_list})
+    notice_list = serializer(notice_list, datetime_format='string')
+    for notice in notice_list:
+        notice['content'] = notice['content'][0:50]
+    return render_to_response('website_admin.html', {'hero_list': hero_list,
+                                                     'notice_list': notice_list})
+
+
+#删除公告
+def admin_website_del_notice(req, nid):
+    notice = get_object_or_404(Notice, id=nid)
+    notice.delete()
+    return HttpResponseRedirect('/admin/website')
+
+
+#新公告
+@login_require
+def admin_website_new_notice(req):
+    title = req.POST.get('notice_title', None)
+    content = req.POST.get('notice_content', None)
+    print title
+    print content
+    if title is not None and content is not None:
+        new_notice = Notice(title=title,
+                            content=content)
+        new_notice.save()
+    return HttpResponseRedirect('/admin/website')
 
 
 #删除英雄
+@login_require
 def admin_website_del_hero(req):
     hid = req.GET.get('hid')
     hero = get_object_or_404(Hero, id=hid)
@@ -203,41 +241,37 @@ def admin_website_new_hero(req):
 def admin_order(req):
     raw_order_list = Order.objects.all().order_by('-create_time')
     order_list = serializer(raw_order_list, deep=True, datetime_format='string')
+    for itm in order_list:
+        itm['status'] = order_status_convert(itm['status'])
     return render_to_response('order_admin.html', {'order_list': order_list,
                                                    'select_code': 0})
 
 
+#订单查询
 @login_require
 def admin_order_search(req):
     if req.method != 'POST':
         return Http404
     search_text = req.POST.get('search_text', '')
     order_status = int(req.POST.get('order_status', 0))
-    if search_text == '' or search_text is None:
-        if order_status == 0:
-            raw_order_list = Order.objects.all()
-        else:
-            raw_order_list = Order.objects.filter(status=order_status)
-    else:
-        if order_status == 0:
-            raw_order_list = Order.objects.filter(Q(order_price__icontains=search_text) |
-                                                  Q(course_name__icontains=search_text) |
-                                                  Q(belong__account__icontains=search_text) |
-                                                  Q(belong__nick__icontains=search_text) |
-                                                  Q(teach_by__account__icontains=search_text) |
-                                                  Q(teach_by__nick__icontains=search_text))
-        else:
-            raw_order_list = Order.objects.filter(status=order_status).filter(Q(order_price__icontains=search_text) |
-                                                                              Q(course_name__icontains=search_text) |
-                                                                              Q(
-                                                                                  belong__account__icontains=search_text) |
-                                                                              Q(belong__nick__icontains=search_text) |
-                                                                              Q(
-                                                                                  teach_by__account__icontains=search_text) |
-                                                                              Q(teach_by__nick__icontains=search_text))
+    raw_order_list = order_search(order_status, search_text)
     order_list = serializer(raw_order_list, deep=True)
+    for itm in order_list:
+        itm['status'] = order_status_convert(itm['status'])
     return render_to_response('order_admin.html', {'order_list': order_list,
-                                                   'select_code': order_status})
+                                                   'select_code': order_status,
+                                                   'search_text': search_text})
+
+
+#订单导出
+@login_require
+def admin_order_output(req):
+    search_text = req.POST.get('search_text', '')
+    order_status = int(req.POST.get('order_status', 0))
+    raw_order_list = order_search(order_status, search_text)
+    file_name = 'order_list_' + str(time.time()) + '.xls'
+    output_path = output_data(file_name, raw_order_list)
+    return HttpResponse(ujson.dumps(output_path))
 
 
 #导师管理
@@ -247,6 +281,7 @@ def admin_mentor(req):
     mentor_list = serializer(raw_mentor_list, datetime_format='string')
     for i, mentor in enumerate(raw_mentor_list):
         mentor_list[i]['total_orders'] = mentor.men_orders.all().count()
+        mentor_list[i]['status'] = mentor_status_convert(mentor.status)
     return render_to_response('mentor_admin.html', {'mentor_list': mentor_list})
 
 
@@ -273,6 +308,7 @@ def admin_mentor_new_mentor(req):
 
 
 #导师改变介绍视频
+@login_require
 def admin_mentor_change_video(req, mid):
     video_name = req.POST.get('video_radio', '')
     if video_name != '':
@@ -290,6 +326,7 @@ def admin_mentor_change_video(req, mid):
 
 
 #导师添加新视频
+@login_require
 def admin_mentor_new_video(req, mid):
     video_format = ['mp4', 'flv', 'avi', 'rmvb', 'webm', 'ogg']
     support_format = ['mp4', 'webm', 'ogg']
@@ -500,7 +537,9 @@ def admin_mentor_info(req, mid):
 def admin_mentor_order(req, mid):
     mentor = get_object_or_404(Mentor, id=mid)
     mentor_order_list = mentor.men_orders.all()
-    mentor_order_list = serializer(mentor_order_list, deep=True)
+    mentor_order_list = serializer(mentor_order_list, deep=True, datetime_format='string')
+    for order in mentor_order_list:
+        order['status'] = order_status_convert(order['status'])
     return render_to_response('mentor_order_admin.html', {'order_list': mentor_order_list,
                                                           'mentor': mentor})
 
@@ -524,6 +563,8 @@ def admin_student_order(req, sid):
     student = get_object_or_404(Student, id=sid)
     order_list = student.stu_orders.all().order_by('-create_time')
     order_list = serializer(order_list, deep=True, datetime_format='string')
+    for order in order_list:
+        order['status'] = order_status_convert(order['status'])
     return render_to_response('student_order_admin.html', {'student': student,
                                                            'order_list': order_list})
 

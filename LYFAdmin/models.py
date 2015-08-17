@@ -137,7 +137,7 @@ class Admin(AbstractBaseUser, BaseModel):
 class Mentor(AbstractBaseUser, BaseModel):
     account = models.CharField(max_length=11, unique=True)
     nick = models.CharField(max_length=20, null=True, blank=True, default="Mentor")
-    status = models.IntegerField(default=1)
+    status = models.IntegerField(default=0)
     intro = models.CharField(max_length=100, default=' ')
     good_at = models.IntegerField(default=1)
     game_level = models.CharField(max_length=8, default=' ')
@@ -354,3 +354,11 @@ class PhoneVerify(BaseModel):
             return True
         else:
             return False
+
+
+class Notice(BaseModel):
+    title = models.CharField(max_length=100)
+    content = models.TextField(default='')
+
+    def __unicode__(self):
+        return self.title

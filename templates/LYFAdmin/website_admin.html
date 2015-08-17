@@ -102,6 +102,68 @@
                 </div>
             </div>
         </div>
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <h3 class="panel-title">公告管理</h3>
+            </div>
+            <div class="panel-body">
+                <table class="table table-bordered" data-toggle="table">
+                    <thead>
+                    <th>标题</th>
+                    <th>发布时间</th>
+                    <th>内容预览</th>
+                    <th>操作</th>
+                    </thead>
+                    <tbody>
+                    {% for notice in notice_list %}
+                        <tr>
+                            <td>{{ notice.title }}</td>
+                            <td>{{ notice.create_time }}</td>
+                            <td>{{ notice.content }}</td>
+                            <td><a href="/admin/website/del_notice/{{ notice.id }}/" class="btn btn-warning">删除</a></td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+                <br/>
+                <div>
+                    <button type="button" class="btn btn-primary" data-toggle="modal"
+                            data-target="#noticeModal">新公告
+                    </button>
+                    <div class="modal fade" id="noticeModal" tabindex="-1" role="dialog"
+                         aria-labelledby="noticeModalLabel">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                                            aria-hidden="true">&times;</span></button>
+                                    <h4 class="modal-title" id="noticeModalLabel">新公告</h4>
+                                </div>
+                                <div class="modal-body">
+                                    <form action="/admin/website/new_notice" method="post">
+                                        <div class="form-group">
+                                            <label for="">公告标题：</label>
+                                            <input type="text" class="form-control" name="notice_name" id="notice_title"
+                                                   placeholder="标题">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="">公告内容：</label>
+                                            <textarea name="notice_content" id="" cols="53" rows="10" placeholder="公告内容 "></textarea>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-default" data-dismiss="modal">关闭
+                                            </button>
+                                            <button type="submit" class="btn btn-primary">确定</button>
+                                        </div>
+                                    </form>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
 
     </div>
 {% endblock %}

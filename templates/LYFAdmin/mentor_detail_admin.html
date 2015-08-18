@@ -29,6 +29,7 @@
                             <div class="panel panel-default">
                                 <div class="panel-body">
                                     <form action="/admin/mentor/detail/{{ mentor.id }}/new_video" method="post" enctype="multipart/form-data">
+                                        {% csrf_token %}
                                         <div class="form-group">
                                             <label for="">上传新视频：</label>
 
@@ -48,6 +49,7 @@
                                     <label for="">选择现有视频：</label>
 
                                     <form action="/admin/mentor/detail/{{ mentor.id }}/change_video" method="post">
+                                    {% csrf_token %}
                                         {% for video in video_list %}
                                             <label class="radio-inline">
                                                 <input type="radio" name="video_radio" value="{{ video.name }}">
@@ -111,6 +113,7 @@
                                 </div>
                                 <div class="modal-body">
                                     <form action="/admin/mentor/detail/{{ mentor.id }}/add_hero/" method="post">
+                                    {% csrf_token %}
                                         <div class="form-group">
                                             <label for="price">选择英雄</label>
                                             <select id="rec_mentor_1" name="new_hero_select"
@@ -171,6 +174,7 @@
                                             </div>
                                             <div class="modal-body">
                                                 <form action="/admin/mentor/detail/{{ mentor.id }}/change_price/{{ course.id }}/"
+                                                      {% csrf_token %}
                                                       method="get">
                                                     <div class="form-group">
                                                         <label for="price">新价格</label>
@@ -197,6 +201,7 @@
                                                 {{ course.name }}
                                             </div>
                                             <form action="/" method="get">
+                                                {% csrf_token %}
                                                 <div class="form-group">
                                                     <label for="price">新价格</label>
                                                     <input type="text" class="form-control" name="new_price"
@@ -236,6 +241,7 @@
             <div class="panel-body">
                 <div>
                     <form action="/admin/mentor/detail/{{ mentor.id }}/update_detail/" method="post">
+                        {% csrf_token %}
                         {{ csrf_token }}
                         <div class="form-group">
                             {{ form }}

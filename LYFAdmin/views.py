@@ -10,6 +10,7 @@ from django.shortcuts import render
 from django.shortcuts import render_to_response, HttpResponseRedirect, Http404
 from django.shortcuts import get_object_or_404
 from django.http import HttpResponse, Http404
+from django.template import RequestContext
 from django.db.models import Q
 from PIL import Image
 from dss.Serializer import serializer
@@ -38,7 +39,7 @@ def admin_login(req):
     password = req.POST.get('password')
     user = auth_admin(account, password)
     if user is None:
-        return render_to_response('admin_login.html', {'fail': True})
+        return render_to_response('admin_login.html', {'fail': True}, context_instance=RequestContext(req))
     req.session['token'] = user.token
     return HttpResponseRedirect('/admin/index')
 
@@ -49,12 +50,12 @@ def admin_login_page(req):
         admin = Admin.objects.filter(token=token)
         if admin.exists():
             return HttpResponseRedirect('/admin/index')
-    return render_to_response('admin_login.html', {'fail': False})
+    return render_to_response('admin_login.html', {'fail': False}, context_instance=RequestContext(req))
 
 
 def admin_log_out(req):
     req.session.set_expiry(1)
-    return render_to_response('admin_login.html', {'fail': False})
+    return render_to_response('admin_login.html', {'fail': False}, context_instance=RequestContext(req))
 
 
 # 首页逻辑
@@ -73,7 +74,7 @@ def admin_index(req):
             index_video_list.append(copy.copy(items))
     return render_to_response('index_admin.html', {'index_admin': index_admin,
                                                    'mentor_list': mentor_list,
-                                                   'video_list': index_video_list})
+                                                   'video_list': index_video_list}, context_instance=RequestContext(req))
 
 
 # 首页视频更改
@@ -179,7 +180,7 @@ def admin_website(req):
     for notice in notice_list:
         notice['content'] = notice['content'][0:50]
     return render_to_response('website_admin.html', {'hero_list': hero_list,
-                                                     'notice_list': notice_list})
+                                                     'notice_list': notice_list}, context_instance=RequestContext(req))
 
 
 #删除公告
@@ -192,7 +193,7 @@ def admin_website_del_notice(req, nid):
 #新公告
 @login_require
 def admin_website_new_notice(req):
-    title = req.POST.get('notice_title', None)
+    title = req.POST.get('notice_name', None)
     content = req.POST.get('notice_content', None)
     print title
     print content
@@ -244,7 +245,7 @@ def admin_order(req):
     for itm in order_list:
         itm['status'] = order_status_convert(itm['status'])
     return render_to_response('order_admin.html', {'order_list': order_list,
-                                                   'select_code': 0})
+                                                   'select_code': 0}, context_instance=RequestContext(req))
 
 
 #订单查询
@@ -260,7 +261,7 @@ def admin_order_search(req):
         itm['status'] = order_status_convert(itm['status'])
     return render_to_response('order_admin.html', {'order_list': order_list,
                                                    'select_code': order_status,
-                                                   'search_text': search_text})
+                                                   'search_text': search_text}, context_instance=RequestContext(req))
 
 
 #订单导出
@@ -282,7 +283,7 @@ def admin_mentor(req):
     for i, mentor in enumerate(raw_mentor_list):
         mentor_list[i]['total_orders'] = mentor.men_orders.all().count()
         mentor_list[i]['status'] = mentor_status_convert(mentor.status)
-    return render_to_response('mentor_admin.html', {'mentor_list': mentor_list})
+    return render_to_response('mentor_admin.html', {'mentor_list': mentor_list}, context_instance=RequestContext(req))
 
 
 #添加导师
@@ -421,21 +422,21 @@ def admin_student(req):
                 total_expense += float(itm.order_price)
         stu_list[i]['total_expense'] = total_expense
         stu_list[i]['last_order_time'] = last_time
-    return render_to_response('student_admin.html', {'stu_list': stu_list})
+    return render_to_response('student_admin.html', {'stu_list': stu_list}, context_instance=RequestContext(req))
 
 
 @login_require
 def admin_audit(req):
     order_list = Order.objects.filter(if_upload_video=True, video_audit=False)
     order_list = serializer(order_list, deep=True, datetime_format='string')
-    return render_to_response('audit_admin.html', {'video_list': order_list})
+    return render_to_response('audit_admin.html', {'video_list': order_list}, context_instance=RequestContext(req))
 
 
 @login_require
 def admin_pay(req):
     mentor_list = Mentor.objects.all().order_by('-create_time')
     mentor_list = serializer(mentor_list, datetime_format='string')
-    return render_to_response('pay_mentor_admin.html', {'mentor_list': mentor_list})
+    return render_to_response('pay_mentor_admin.html', {'mentor_list': mentor_list}, context_instance=RequestContext(req))
 
 
 #解冻导师
@@ -461,7 +462,7 @@ def admin_pay_freeze(req, mid):
 def admin_pay_stu_rec(req):
     charge_list = ChargeRecord.objects.all().order_by('-create_time')
     charge_list = serializer(charge_list, datetime_format='string', deep=True)
-    return render_to_response('pay_stu_rec.html', {'charge_list': charge_list})
+    return render_to_response('pay_stu_rec.html', {'charge_list': charge_list}, context_instance=RequestContext(req))
 
 
 #导师收支纪录
@@ -469,7 +470,7 @@ def admin_pay_stu_rec(req):
 def admin_pay_mentor_rec(req):
     money_rec_list = MoneyRecord.objects.all().order_by('-create_time')
     money_rec_list = serializer(money_rec_list, datetime_format='string', deep=True)
-    return render_to_response('pay_mentor_rec.html', {'record_list': money_rec_list})
+    return render_to_response('pay_mentor_rec.html', {'record_list': money_rec_list}, context_instance=RequestContext(req))
 
 
 #同意提款
@@ -497,7 +498,7 @@ def admin_pay_rejected_cash(req, cid):
 def admin_pay_cash(req):
     cash_list = CashRecord.objects.all().order_by('-create_time').order_by('manage')
     cash_list = serializer(cash_list, datetime_format='string', deep=True)
-    return render_to_response('pay_cash.html', {'cash_record': cash_list})
+    return render_to_response('pay_cash.html', {'cash_record': cash_list}, context_instance=RequestContext(req))
 
 
 #导师详情
@@ -521,7 +522,7 @@ def admin_mentor_detail(req, mid):
                                                            'hero_list': hero_list,
                                                            'mentor': mentor,
                                                            'course_list': course_list,
-                                                           'hero_pool': hero_pool})
+                                                           'hero_pool': hero_pool}, context_instance=RequestContext(req))
 
 
 #导师信息
@@ -529,7 +530,7 @@ def admin_mentor_detail(req, mid):
 def admin_mentor_info(req, mid):
     mentor = get_object_or_404(Mentor, id=mid)
     mentor = serializer(mentor, datetime_format='string')
-    return render_to_response('mentor_info_admin.html', {'mentor': mentor})
+    return render_to_response('mentor_info_admin.html', {'mentor': mentor}, context_instance=RequestContext(req))
 
 
 #导师订单
@@ -541,7 +542,7 @@ def admin_mentor_order(req, mid):
     for order in mentor_order_list:
         order['status'] = order_status_convert(order['status'])
     return render_to_response('mentor_order_admin.html', {'order_list': mentor_order_list,
-                                                          'mentor': mentor})
+                                                          'mentor': mentor}, context_instance=RequestContext(req))
 
 
 #学员信息
@@ -554,7 +555,7 @@ def admin_student_info(req, sid):
         total_expense += float(itm.order_price)
     student = serializer(student)
     student['total_expense'] = total_expense
-    return render_to_response('student_info_admin.html', {'student': student})
+    return render_to_response('student_info_admin.html', {'student': student}, context_instance=RequestContext(req))
 
 
 #学员订单
@@ -566,7 +567,7 @@ def admin_student_order(req, sid):
     for order in order_list:
         order['status'] = order_status_convert(order['status'])
     return render_to_response('student_order_admin.html', {'student': student,
-                                                           'order_list': order_list})
+                                                           'order_list': order_list}, context_instance=RequestContext(req))
 
 
 

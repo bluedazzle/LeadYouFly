@@ -4,6 +4,7 @@
 {% block content %}
     <div class="my_contianer">
         <form action="/admin/order/search" method="post">
+            {% csrf_token %}
         <div class="row">
             <div class="col-md-4">
                 <span>订单状态：</span>

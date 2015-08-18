@@ -45,6 +45,7 @@
                                 </div>
                                 <div class="modal-body">
                                     <form action="/admin/website/new_hero" method="post" enctype="multipart/form-data">
+                                        {% csrf_token %}
                                         <div class="form-group">
                                             <label for="">英雄名称：</label>
                                             <input type="text" class="form-control" name="hero_name" id="hero_name"
@@ -141,6 +142,7 @@
                                 </div>
                                 <div class="modal-body">
                                     <form action="/admin/website/new_notice" method="post">
+                                        {% csrf_token %}
                                         <div class="form-group">
                                             <label for="">公告标题：</label>
                                             <input type="text" class="form-control" name="notice_name" id="notice_title"

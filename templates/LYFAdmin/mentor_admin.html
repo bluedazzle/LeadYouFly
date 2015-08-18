@@ -15,6 +15,7 @@
                         </div>
                         <div class="modal-body">
                             <form action="/admin/mentor/new_mentor" method="post">
+                                {% csrf_token %}
                                 <div class="form-group">
                                     <label for="">账号：</label>
                                     <input type="text" class="form-control" name="mentor_account" id="mentor_account"

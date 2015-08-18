@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from django.db import models
 from django.contrib.auth.models import BaseUserManager, AbstractBaseUser
 import datetime
@@ -226,6 +227,7 @@ class Course(BaseModel):
         return self.name
 
 
+#导师账款纪录
 class MoneyRecord(BaseModel):
     record_id = models.CharField(max_length=30, unique=True)
     action = models.CharField(max_length=8, default='')
@@ -249,7 +251,7 @@ class Comment(BaseModel):
 
 
 class Order(BaseModel):
-    order_id = models.CharField(max_length=22, unique=True)
+    order_id = models.CharField(max_length=28, unique=True)
     order_price = models.FloatField(default=0.0)
     pay_type = models.IntegerField(default=1)
     course_name = models.CharField(max_length=50, default='')
@@ -263,7 +265,8 @@ class Order(BaseModel):
     video_size = models.FloatField(default=0)
     if_upload_video = models.BooleanField(default=False)
     video_audit = models.BooleanField(default=False)
-    teach_time = models.DateTimeField()
+    teach_long = models.FloatField(default=1.5)
+    teach_end_time = models.DateTimeField()
     belong = models.ForeignKey(Student, related_name='stu_orders')
     teach_by = models.ForeignKey(Mentor, related_name='men_orders')
     comment = models.ForeignKey(Comment, related_name='comment_order', null=True, blank=True)
@@ -286,7 +289,7 @@ class IndexAdmin(models.Model):
     def __unicode__(self):
         return unicode(self.id)
 
-
+#投诉
 class Report(BaseModel):
     reporter = models.ForeignKey(Student, related_name='stu_reports')
     name = models.CharField(max_length=100)
@@ -303,7 +306,7 @@ class Report(BaseModel):
     def __unicode__(self):
         return self.name
 
-
+#学生充值纪录
 class ChargeRecord(BaseModel):
     record_id = models.CharField(max_length=30, unique=True)
     charge_number = models.FloatField(default=0.0)
@@ -313,7 +316,7 @@ class ChargeRecord(BaseModel):
     def __unicode__(self):
         return self.record_id
 
-
+#导师提现请求纪录
 class CashRecord(BaseModel):
     record_id = models.CharField(max_length=30, unique=True)
     money = models.FloatField(default=0.0)

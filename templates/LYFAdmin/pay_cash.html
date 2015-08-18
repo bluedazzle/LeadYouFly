@@ -11,6 +11,7 @@
                 <th>申请时间</th>
                 <th>提现卡号</th>
                 <th>导师账号</th>
+                <th>是否冻结</th>
                 <th>是否处理</th>
                 <th>处理结果</th>
                 <th>操作</th>
@@ -24,10 +25,11 @@
                     <td>{{ record.create_time }}</td>
                     <td>{{ record.bank_id }}</td>
                     <td>{{ record.belong.account }}</td>
+                    <td>{{ record.belong.freeze }}</td>
                     <td>{{ record.manage }}</td>
                     <td>{{ record.agree }}</td>
                     <td>{% ifequal record.manage False %}
-                        <a href="/admin/pay/cash/confirm/{{ record.id }}/" class="btn btn-primary">确定</a>
+                        <a href="/admin/pay/cash/confirm/{{ record.id }}/" class="btn btn-primary">同意</a>
                         <a href="/admin/pay/cash/rejected/{{ record.id }}/" class="btn-warning btn">驳回</a>
                         {% endifequal %}
                     </td>

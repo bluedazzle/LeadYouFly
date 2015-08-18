@@ -4,63 +4,175 @@
 {% endblock %}
 {% block define %}
   <section class="col-lg-12 col-md-12 search-teacher-head">
+    <div class="container">
+      <div class="btn-group col-lg-12 col-md-12">
+        <button type="button" class="btn dropdown-toggle btn-select" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          {% if not teach_area or teach_area == '0' %}
+            全区
+          {% elif teach_area == '1' %}
+            电信
+          {% elif teach_area == '2' %}
+            网通
+          {% endif %}
+          <span class="glyphicon glyphicon-menu-down"></span>
+        </button>
+        <ul class="dropdown-menu">
+          <li><a href="/search_teacher?teach_area=0">全区</a></li>
+          <li><a href="/search_teacher?teach_area=1">电信</a></li>
+          <li><a href="/search_teacher?teach_area=2">网通</a></li>
+        </ul>
+      </div>
+      <div class="btn-group col-lg-12 col-md-12">
+        <div class="col-lg-1 col-md-1 study-text">
+          <p>学习</p>
+        </div>
+        <div class="col-lg-11 col-md-11">
+          <button type="button" class="btn dropdown-toggle btn-select" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            {% if not teach_position or teach_position == '0' %}
+              全部位置
+            {% elif teach_position == '1' %}
+              中单
+            {% elif teach_position == '2' %}
+              上单
+            {% elif teach_position == '3' %}
+              ADC
+            {% elif teach_position == '4' %}
+              打野
+            {% elif teach_position == '5' %}
+              辅助
+            {% endif %}
+            <span class="glyphicon glyphicon-menu-down"></span>
+          </button>
+          <ul class="dropdown-menu">
+            <li><a href="/search_teacher?teach_position=0">全部位置</a></li>
+            <li><a href="/search_teacher?teach_position=1">中单</a></li>
+            <li><a href="/search_teacher?teach_position=2">上单</a></li>
+            <li><a href="/search_teacher?teach_position=3">ADC</a></li>
+            <li><a href="/search_teacher?teach_position=4">打野</a></li>
+            <li><a href="/search_teacher?teach_position=5">辅助</a></li>
+          </ul>
+        </div>
+      </div>
 
+      <div class="btn-group col-lg-10 col-md-10" style="float: right;">
+        <button type="button" class="btn dropdown-toggle btn-select" style="margin-top: 0" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          {% if not teach_hero or teach_hero == '0' %}
+            全部英雄
+          {% else %}
+            {{ teach_hero.hero_name }}
+          {% endif %}
+          <span class="glyphicon glyphicon-menu-down"></span>
+        </button>
+        <ul class="dropdown-menu">
+          <li><a href="/search_teacher?teach_hero=0">所有英雄</a></li>
+          {% for hero in heros %}
+            {% if teach_position and hero.hero_type == teach_position %}
+              <li><a href="/search_teacher?teach_hero={{ hero.id }}">{{ hero.hero_name }}</a></li>
+            {% elif not teach_position %}
+              <li><a href="/search_teacher?teach_hero={{ hero.id }}">{{ hero.hero_name }}</a></li>
+            {% endif %}
+          {% endfor %}
+        </ul>
+      </div>
+
+    </div>
   </section>
   <section class="col-lg-12 col-md-12 search-teacher-body">
     <div class="container">
-      {% for item in test_list %}
+      {% for mentor in mentors %}
         <div class="col-lg-3 col-md-3">
           <div class="teacher-info-panel">
-            <div class="teacher-info-panel-head" style="background: url('/img/0.jpg') center;">
+            <div class="teacher-info-panel-head" style="background: url('{{ mentor.avatar }}') center;">
             </div>
             <div class="teacher-info-panel-body">
               <p class="teacher-info-introduce">
-                绝对强者，带你遨游带你飞;绝对强者，带你遨游带你飞;绝对强者，带你遨游带你飞;绝对强者，带你遨游带你飞;绝对强者，带你遨游带你飞
+                {{ mentor.intro }}
               </p>
               <p class="teacher-info-name">
-                测试导师
-                <span class="teacher-info-value">￥180</span>
+                <a href="/mentor_detail?mentor_id={{ mentor.id }}">{{ mentor.nick }}</a>
+                <span class="teacher-info-value">￥{{ mentor.men_courses.first.price }}</span>
               </p>
               <div class="teacher-info-ver col-sm-12"></div>
               <p class="teacher-info-attribute col-sm-6">
-                段位：最强王者
+                段位：{{ mentor.game_level }}
               </p>
               <p class="teacher-info-attribute col-sm-6">
-                擅长位置：中单
+                擅长位置：
+                {% if mentor.good_at == 1 %}
+                  中单
+                {% elif mentor.good_at == 2 %}
+                  上单
+                {% elif mentor.good_at == 3 %}
+                  ADC
+                {% elif mentor.good_at == 4 %}
+                  打野
+                {% elif mentor.good_at == 5 %}
+                  辅助
+                {% endif %}
               </p>
               <p class="teacher-info-attribute col-sm-12">
                 擅长英雄：
-                <img src="/img/heros/hero.jpg" class="hero-header"/>
+                {% if mentor.expert_hero1 %}
+                  <img src="{{ mentor.expert_hero1.hero_picture }}" class="hero-header"/>
+                {% endif %}
+                {% if mentor.expert_hero2 %}
+                  <img src="{{ mentor.expert_hero2.hero_picture }}" class="hero-header"/>
+                {% endif %}
+                {% if mentor.expert_hero3 %}
+                  <img src="{{ mentor.expert_hero3.hero_picture }}" class="hero-header"/>
+                {% endif %}
               </p>
               <p class="teacher-info-attribute col-sm-8">
-                交易量：1122222
+                交易量：{{ mentor.men_orders.count }}
               </p>
               <p class="teacher-info-attribute col-sm-4">
-                评分：9.2
+                评分：{{ mentor.mark }}
               </p>
             </div>
           </div>
         </div>
       {% endfor %}
+    {% if mentors.num_pages > 1 %}
       <nav class="col-md-12 col-lg-12 text-center">
         <ul class="pagination">
-          <li>
-            <a href="#" aria-label="Previous">
-              <span aria-hidden="true">&laquo;</span>
-            </a>
-          </li>
-          <li><a href="#">1</a></li>
-          <li><a href="#">2</a></li>
-          <li><a href="#">3</a></li>
-          <li><a href="#">4</a></li>
-          <li><a href="#">5</a></li>
-          <li>
-            <a href="#" aria-label="Next">
-              <span aria-hidden="true">&raquo;</span>
-            </a>
-          </li>
+          {% if mentors.has_previous %}
+            <li>
+              <a href="/search_teacher?page_num={{ mentors.previous_page_number }}" aria-label="Previous">
+                <span aria-hidden="true" class="glyphicon glyphicon-menu-left"></span>
+              </a>
+            </li>
+          {% else %}
+            <li class="disabled">
+              <a href="#" aria-label="Previous">
+                <span aria-hidden="true" class="glyphicon glyphicon-menu-left"></span>
+              </a>
+            </li>
+          {% endif %}
+
+          {% for page in mentors.paginator.page_range %}
+            {% if page == mentors.number %}
+              <li class="active"><a href="#">{{ page }}</a></li>
+            {% else %}
+              <li><a href="/search_teacher?page_num={{ page }}">{{ page }}</a></li>
+            {% endif %}
+          {% endfor %}
+
+          {% if mentors.has_next %}
+            <li>
+              <a href="/search_teacher?page_num={{ mentors.next_page_number }}" aria-label="Next">
+                <span aria-hidden="true" class="glyphicon glyphicon-menu-right"></span>
+              </a>
+            </li>
+          {% else %}
+            <li class="disabled">
+              <a href="#" aria-label="Next">
+                <span aria-hidden="true" class="glyphicon glyphicon-menu-right"></span>
+              </a>
+            </li>
+          {% endif %}
         </ul>
       </nav>
+    {% endif %}
     </div>
   </section>
 {% endblock %}

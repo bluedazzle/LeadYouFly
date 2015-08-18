@@ -1,31 +1,34 @@
 {% extends 'teacher/base_teacher.html' %}
 {% block teacher_define %}
   <div class="col-md-12 col-lg-12 teacher-define">
-    {% for item in test_list %}
+    {% for item in mentor.men_courses.all %}
       <div class="col-md-4 col-lg-4 course-box">
         <div>
-          <span class="course-title">课程教学</span>
-          <span class="course-value">￥30</span>
+          <span class="course-title">{{ item.name }}</span>
+          <span class="course-value">￥{{ item.price }}</span>
           <br/>
           <div class="course-content">
-            *计时单大优惠* ♥．累计60局 或者 累计40小 时任何模式、小游戏，送歌单2首会员均一次 性付款）
-            <a href="#" style="font-size: 10px;float: right;margin-top: 10px">修改价格</a>
+            {{ item.course_info }}
+            <a href="#" style="font-size: 10px;float: right;margin-top: 10px" onclick="updateCourse({{ item.id }}, '{{ item.name }}', {{ item.price }}, '{{ item.course_info }}')">修改</a>
           </div>
         </div>
       </div>
     {% endfor %}
     <div class="col-md-4 col-lg-4 course-box">
       <div class="course-add text-center">
-        <span class="glyphicon glyphicon-plus"></span>
+        <span class="glyphicon glyphicon-plus" onclick="addCourse()"></span>
       </div>
     </div>
-    <div class="col-md-12 col-lg-12" style="margin-top: 40px">
-      <form action="#" method="post" id="">
-        <input class="form-control course-input" name="course_name" placeholder="课程名称..."/>
-        <input class="form-control course-input" name="course_value" placeholder="课程价格..."/>
-        <textarea class="form-control course-text" name="course_content" rows="5" placeholder="课程说明..."></textarea>
+    <div id="course_info" class="col-md-12 col-lg-12" style="margin-top: 40px;display: none">
+      <form>
+        {% csrf_token %}
+        <input name="course_id" id="course_id" style="display: none"/>
+        <input class="form-control course-input" id="course_name" name="course_name" placeholder="课程名称..."/>
+        <input class="form-control course-input" id="course_price" name="course_price" placeholder="课程价格..." onkeyup="value=value.replace(/[^\d]/g,'')"
+        onbeforepaste="clipboardData.setData('text',clipboardData.getData('text').replace(/[^\d]/g,''))"/>
+        <textarea class="form-control course-text" id="course_content" name="course_info" rows="5" placeholder="课程说明..."></textarea>
       </form>
-      <button type="submit" class="btn btn-primary btn-lg" style="margin-top: 10px;">
+      <button id="submit_course" class="btn btn-primary btn-lg" style="margin-top: 10px;">
         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;保&nbsp;&nbsp;&nbsp;存&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
       </button>
     </div>

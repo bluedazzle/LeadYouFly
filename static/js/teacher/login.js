@@ -1,23 +1,23 @@
+/**
+ * Created by wushengyu on 15/8/8.
+ */
 $(document).ready(function(){
-  $('#teacher_contact').addClass('list-group-item-active');
-  $('#submit_contact').click(function(){
-    var qq = $('#qq').val();
-    var yy = $('#yy').val();
-    var phone = $('#phone').val();
-    if (qq && yy && phone && phone.length == 11){
+  $('#login_submit').click(function(){
+    var account = $('#username').val();
+    var password = $('#password').val();
+    if (account && password){
       $.ajax({
-            url: "/teacher/contact",
+            url: "/teacher/login",
             type: "post",
             data: {
-              "qq": qq,
-              "yy": yy,
-              "phone": phone,
+              "username": account,
+              "password": password,
               "csrfmiddlewaretoken": $("input[name=csrfmiddlewaretoken]").val()
             },
             dataType: "json",
             success: function(data, status){
               if(data === "success"){
-                window.location = "/teacher/contact"
+                window.location = "/teacher/host"
               } else{
                 Notify(data);
               }

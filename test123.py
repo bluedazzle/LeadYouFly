@@ -1,3 +1,3 @@
-import hashlib
+import urllib2
 
-print hashlib.md5("123456").hexdigest()
+res = urllib2.urlopen("https://www.baidu.com")

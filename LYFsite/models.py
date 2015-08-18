@@ -15,7 +15,20 @@ class LoginForm(forms.Form):
     password = forms.CharField(max_length=20)
 
 
-class CompleteInfo(forms.Form):
+class CompleteInfoForm(forms.Form):
     qq = forms.CharField(max_length=20)
     yy = forms.CharField(max_length=50)
     phone = forms.CharField(max_length=11)
+
+
+class MentorContactForm(forms.Form):
+    qq = forms.CharField(max_length=20)
+    yy = forms.CharField(max_length=50)
+    phone = forms.CharField(max_length=11)
+
+
+class UpdateCourseForm(forms.Form):
+    id = forms.IntegerField(required=False)
+    course_name = forms.CharField(max_length=50)
+    course_price = forms.IntegerField()
+    course_info = forms.CharField(max_length=500)

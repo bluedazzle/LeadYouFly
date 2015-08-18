@@ -1,37 +1,62 @@
 {% extends 'teacher/base_teacher.html' %}
 {% block teacher_define %}
-  {% for item in test_list %}
+  {% csrf_token %}
+  {% for order in mentor.men_orders.all %}
   <div class="panel-order col-lg-12 col-md-12">
     <div class="col-lg-12 col-md-12">
       <div class="col-lg-2 col-md-2">
-        <img src="/img/touxiang.jpg" style="height: 50px;width: 50px;border-radius: 30px"/>
-        <span>&nbsp;&nbsp;张建奇</span>
+        <img src="{{ order.belong.avatar }}" style="height: 50px;width: 50px;border-radius: 30px"/>
+        <span>&nbsp;&nbsp;{{ order.belong.nick }}</span>
+      </div>
+      <div class="col-lg-4 col-md-4 panel-order-item-head">
+        <span>订单号：{{ order.order_id }}</span>
       </div>
       <div class="col-lg-3 col-md-3 panel-order-item-head">
-        <span>订单号：20133341944</span>
-      </div>
-      <div class="col-lg-3 col-md-3 panel-order-item-head">
-        <span>订单时间：2015-10-9</span>
+        <span>订单时间：{{ order.create_time | date:"Y-m-d" }}</span>
       </div>
       <div class="col-lg-3 col-md-3 panel-order-start">
-        <span>开课时间：<span style="color: #f39c12">06/15 16:30</span></span>
+        <span>开课时间：
+          <span style="color: #f39c12">{{ order.teach_time | date:"m/d H:i" }}</span>
+        </span>
       </div>
     </div>
     <div class="col-lg-12 col-md-12">
       <div class="col-lg-3 col-md-3 panel-order-detail">
-        <p>学习区域：电信区</p>
+        <p>学习区域：{{ order.learn_area }}</p>
         <p>联系QQ：123456789</p>
       </div>
       <div class="col-lg-3 col-md-3 panel-order-detail">
-        <p>学习位置：中单</p>
+        <p>学习位置：
+          {% if order.learn_type == 1 %}
+            中单
+          {% elif order.learn_type == 2 %}
+            上单
+          {% elif order.learn_type == 3 %}
+            打野
+          {% elif order.learn_type == 4 %}
+            ADC
+          {% elif order.learn_type == 5 %}
+            辅助
+          {% endif %}
+        </p>
         <p>联系YY：123456789</p>
       </div>
       <div class="col-lg-3 col-md-3 panel-order-detail">
-        <p>学习英雄：卡牌大师</p>
+        <p>学习英雄：{{ order.learn_hero }}</p>
         <p>联系电话：12345678901</p>
       </div>
       <div class="col-lg-3 col-md-3 text-right">
-        <button class="btn btn-primary btn-hg" style="font-size: 18px;">确认接单</button>
+        {% if order.status == 1 %}
+          <button class="btn btn-primary btn-hg" style="font-size: 18px;" onclick="acceptOrder({{ order.order_id }})">确认接单</button>
+        {% elif order.status == 2 %}
+          <button class="btn btn-default btn-hg disabled" style="font-size: 18px;">已接单</button>
+        {% elif order.status == 3 %}
+          <button class="btn btn-success btn-hg disabled" style="font-size: 18px;">已完成</button>
+        {% elif order.status == 4 %}
+          <button class="btn btn-success btn-hg disabled" style="font-size: 18px;">已评价</button>
+        {% elif order.status == 5 %}
+          <button class="btn btn-default btn-hg disabled" style="font-size: 18px;">已关闭</button>
+        {% endif %}
       </div>
     </div>
   </div>

@@ -1,0 +1,159 @@
+.teacher-detail-box{
+    min-height: 500px;
+    background-color: #1A2228;
+    padding-top: 30px;
+}
+
+.intro-content{
+    color: #FFFFFF;
+}
+
+.status-box{
+    height: 40px;
+    font-size: 16px;
+    padding-top: 7px;
+    text-align: center;
+    color: #FFFFFF;
+    background-color: #1abc9c;
+    max-width: 120px;
+}
+
+.status-waring{
+    background-color: #f1c40f;
+}
+
+.intro-content p{
+    color: #FFFFFF;
+    font-size: 14px;
+}
+
+.intro-content .intro-msg{
+    color: #DDDDDD;
+    margin-top: 30px;
+    font-size: 12px;
+}
+
+.detail-course-box{
+    height: 130px;
+    background-color: #101318;
+    padding: 5px 20px 5px 20px;
+    margin-bottom: 20px;
+    position: relative;
+}
+
+.detail-course-box p,
+.detail-course-box h6{
+    color: #FFFFFF;
+}
+
+.detail-course-box h6{
+    font-size: 20px;
+}
+
+.detail-course-box p{
+    font-size: 14px;
+}
+
+.course-price{
+    float: right;
+    font-size: 16px;
+    color: #1abc9c;
+}
+
+.hero-header{
+    margin-right: 5px;
+}
+
+.buy-box{
+    display: none;
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 130px;
+    width: 100%;
+    background-color: #1abc9c;
+    opacity: 0.9;
+    color: #FFFFFF;
+    text-align: center;
+    cursor: pointer;
+}
+
+.detail-course-box:hover .buy-box{
+    display: block;
+}
+
+.detail-navbar{
+    padding: 0;
+}
+
+.nav-detail{
+    height: 80px;
+    box-shadow: 0 2px 2px #dddddd;
+    padding-left: 10%;
+}
+
+.nav-detail li{
+    float: left;
+}
+
+.nav-detail li a{
+    line-height: 3.2;
+}
+
+.nav-detail li a:hover{
+    border-bottom: 3px solid #1abc9c;
+    background-color: #FFFFFF;
+}
+
+.nav-detail .active{
+    border-bottom: 3px solid #1abc9c;
+    background-color: #FFFFFF;
+}
+
+.nav-detail .active a:hover,
+.nav-detail .active a:focus{
+    background-color: #FFFFFF;
+    border: 0;
+}
+
+.comment-box{
+    min-height: 100px;
+    margin-top: 30px;
+    border-bottom: 2px solid #DDDDDD;
+}
+
+.student-header{
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+}
+
+.tab-content{
+    margin-bottom: 50px;
+}
+
+.comment-by-name{
+    color: #1abc9c;
+}
+
+.comment-by-name span{
+    font-size: 14px;
+    margin-left: 20px;
+}
+
+.comment-content{
+    font-size: 14px;
+}
+
+.heroes-list{
+    margin-top: 20px;
+}
+
+.heroes-list img{
+    height: 50px;
+    width: 50px;
+    border-radius: 50%;
+}
+#mentor-intro{
+    margin-top: 20px;
+}

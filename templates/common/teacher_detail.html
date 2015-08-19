@@ -7,7 +7,7 @@
     <div class="container">
       <div class="col-md-7 col-lg-7 intro-vedio">
         <video class="video-js" preload="auto" poster="{{ mentor_detail.video_poster }}" data-setup="{}">
-          <source src="{{ mentor_detail.intro_vedio }}" type="video/mp4">
+          <source src="{{ mentor_detail.intro_video }}" type="video/mp4">
           {#          <source src="http://iurevych.github.com/Flat-UI-videos/big_buck_bunny.webm" type="video/webm">#}
         </video>
       </div>
@@ -112,7 +112,7 @@
       <!-- Tab panes -->
       <div class="tab-content container">
         <div role="tabpanel" class="tab-pane active" id="mentor-intro">
-          <p>{{ mentor_detail.intro_detail }}</p>
+          <p>{{ mentor_detail.intro_detail | safe }}</p>
         </div>
         <div role="tabpanel" class="tab-pane" id="comment">
           {% for comment in mentor_detail.men_comments.all %}

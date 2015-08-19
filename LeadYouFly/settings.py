@@ -79,12 +79,13 @@ DATABASES = {
 
 UEDITOR_SETTINGS = {
     "config": {
-        'initialFrameWidth': 800,
+        'initialFrameWidth': 1200,
         'initialFrameHeight': 500,
         'minFrameWidth': 800,
     },
     "upload": {
         'imagePathFormat': 'img/%(basename)s_%(datetime)s.%(extname)s',
+        'imageUrlPrefix': '/',
     }
 }
 
@@ -121,4 +122,4 @@ FONTS_DIR = './static/fonts/'
 STATIC_DIR = './static/'
 STATIC_ROOT = './static/'
 MEDIA_ROOT = './static/upload/'
-MEDIA_URL = './static/upload/'
+MEDIA_URL = './upload/'

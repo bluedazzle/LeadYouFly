@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 {% block css %}
-<link href="/css/LR.css" rel="stylesheet"/>
+  <link href="/css/LR.css" rel="stylesheet"/>
 {% endblock %}
 {% block define %}
   <div class="container">
@@ -8,20 +8,23 @@
       <p>登录</p>
       <form>
         {% csrf_token %}
-      <div class="form-control input-with-icon">
-        <span class="glyphicon glyphicon-user"></span>
-        <i class="input-ver">&nbsp;</i>
-        <input type="text" class="login-input" id="username" name="username" placeholder="手机号"/>
-      </div>
-      <div class="form-control input-with-icon">
-        <span class="glyphicon glyphicon-user"></span>
-        <i class="input-ver">&nbsp;</i>
-        <input type="password" class="login-input" id="password" name="password" placeholder="用户密码"/>
-      </div>
+        <div class="form-control input-with-icon">
+          <span class="glyphicon glyphicon-user"></span>
+          <i class="input-ver">&nbsp;</i>
+          <input type="text" class="login-input" id="username" name="username" placeholder="手机号"/>
+        </div>
+        <div class="form-control input-with-icon">
+          <span class="glyphicon glyphicon-user"></span>
+          <i class="input-ver">&nbsp;</i>
+          <input type="password" class="login-input" id="password" name="password" placeholder="用户密码"/>
+        </div>
       </form>
       <a type="button" id="login_submit" class="btn btn-primary btn-lg btn-block btn-login">登&nbsp;&nbsp;录</a>
       <a class="input-herf" href="/forget_password">忘记密码</a>
       <a class="input-herf" href="/register">注册</a>
+      <div class="col-sm-12" style="padding-right: 0">
+        <a class="input-herf" href="/teacher/login">导师登录</a>
+      </div>
     </div>
   </div>
 {% endblock %}

@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% block define %}
+  <div class="container">
+    <h4 class="text-center">确认订单</h4>
+    <div class="jumbotron">
+      <h5 class="text-center">{{ course.name }}</h5>
+      <p>课程介绍：{{ course.course_info }}</p>
+      <p>价格：￥{{ course.price }}</p>
+      <p>导师：{{ course.belong.nick }}</p>
+      <p class="text-right">
+        <a class="btn btn-primary btn-lg" href="#" role="button">立即支付</a>
+      </p>
+    </div>
+  </div>
+{% endblock %}

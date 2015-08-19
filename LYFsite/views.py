@@ -57,7 +57,7 @@ def login(request):
 def logout(request):
     if request.method == 'GET':
         request.session.clear()
-        return HttpResponseRedirect('common/teacher_login.html', context_instance=RequestContext(request))
+        return HttpResponseRedirect('/login')
 
 
 def register(request):
@@ -96,6 +96,8 @@ def register(request):
 def search_teacher(request):
     return_content = utils.is_login(request)
     if return_content:
+        if return_content['login_type'] == 'teacher':
+            return HttpResponseRedirect('/login')
         return_content['is_login'] = True
     else:
         return_content = dict()
@@ -156,6 +158,50 @@ def search_teacher(request):
         return_content['teach_position'] = teach_position
         return render_to_response('common/search_teacher.html',
                                   return_content)
+
+
+def teacher_detail(request):
+    return_content = utils.is_login(request)
+    if return_content:
+        if return_content['login_type'] == 'teacher':
+            return HttpResponseRedirect('/login')
+        return_content['is_login'] = True
+    else:
+        return_content = dict()
+
+    if request.method == 'GET':
+        mentor_id = request.GET.get('mentor_id')
+        if not mentor_id:
+            raise Http404
+        try:
+            mentor = Mentor.objects.get(id=mentor_id)
+        except Mentor.DoesNotExist:
+            raise Http404
+        return_content['mentor_detail'] = mentor
+        return render_to_response('common/teacher_detail.html',
+                                  return_content,
+                                  context_instance=RequestContext(request))
+
+
+def confirm_order(request):
+    return_content = utils.is_login(request)
+    if return_content and return_content['login_type'] == 'student':
+        return_content['is_login'] = True
+    else:
+        return HttpResponseRedirect('/login')
+
+    if request.method == 'GET':
+        course_id = request.GET.get('course_id')
+        if not course_id:
+            raise Http404
+        try:
+            course = Course.objects.get(id=course_id)
+        except Course.DoesNotExist:
+            raise Http404
+        return_content['course'] = course
+        return render_to_response('common/confirm_order.html',
+                                  return_content,
+                                  context_instance=RequestContext(request))
 
 
 def about_us(request):

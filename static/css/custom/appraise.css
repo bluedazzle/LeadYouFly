@@ -1,0 +1,43 @@
+.star1,
+.star2,
+.star3,
+.star4,
+.star5{
+    font-size: 28px;
+    font-weight: 100;
+    color: #f1c40f;
+    margin-right: 5px;
+    cursor: pointer;
+}
+
+.star-list{
+    padding-left: 0;
+    margin-left: -2%;
+}
+
+.star-list p{
+    font-size: 14px;
+}
+
+.appraise-content{
+    padding-left: 0;
+    margin-left: -2%;
+}
+
+.appraise-type{
+    margin-bottom: 20px;
+    padding-right: 0;
+}
+
+.appraise-content-title{
+    margin-top: 20px;
+}
+
+.btn-confirm{
+    margin-top: 20px;
+}
+
+.container .col-lg-12,
+.container .col-md-12{
+    padding-left: 0;
+}

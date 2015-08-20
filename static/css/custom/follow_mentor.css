@@ -1,0 +1,42 @@
+.mentor-head img{
+    height: 100%;
+    width: 100%;
+    border-radius: 100%;
+}
+
+.mentor-head{
+    padding: 0;
+    position: relative;
+}
+
+.mentor-head-list{
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.mentor-cancel{
+    display: none;
+    height: 20px;
+    width: 20px;
+    border-radius: 50%;
+    background-color: #f1c40f;
+    color: #FFFFFF;
+    position: absolute;
+    top: 8%;
+    right: 4%;
+    text-align: center;
+    cursor: pointer;
+}
+
+.mentor-cancel span{
+    display: none;
+    font-size: 14px;
+    position: absolute;
+    right: 32%;
+    top: -15%;
+}
+
+.mentor-head:hover .mentor-cancel,
+.mentor-head:hover .mentor-cancel span{
+    display: block;
+}

@@ -1,164 +1,177 @@
 {% extends 'base.html' %}
 {% block css %}
-    <link href="/css/teacher_detail.css" rel="stylesheet"/>
+  <link href="/css/custom/teacher_detail.css" rel="stylesheet"/>
 {% endblock %}
 {% block define %}
-    <div class="col-lg-12 col-md-12 teacher-detail-box">
-        <div class="container">
-            <div class="col-md-7 col-lg-7 intro-vedio">
-                <video class="video-js" preload="auto" poster="{{ mentor_detail.video_poster }}" data-setup="{}">
-                    <source src="{{ mentor_detail.intro_video }}" type="video/mp4">
-                    {#          <source src="http://iurevych.github.com/Flat-UI-videos/big_buck_bunny.webm" type="video/webm">#}
-                </video>
-            </div>
-            <div class="col-md-5 col-lg-5 intro-content text-left">
-                <h4>{{ mentor_detail.nick }}</h4>
-                {% if mentor_detail.status == 1 %}
-                    <div class="status-box status-success">
-                        可立即授课
-                    </div>
-                {% else %}
-                    <div class="status-box status-warning">
-                        暂时无法授课
-                    </div>
-                {% endif %}
-                <p class="intro-msg">{{ mentor_detail.intro }}</p>
+  <div class="col-lg-12 col-md-12 teacher-detail-box">
+    <div class="container">
+      <div class="col-md-7 col-lg-7 intro-vedio">
+        <video class="video-js" preload="auto" poster="{{ mentor_detail.video_poster }}" data-setup="{}">
+          <source src="{{ mentor_detail.intro_video }}" type="video/mp4">
+          {#          <source src="http://iurevych.github.com/Flat-UI-videos/big_buck_bunny.webm" type="video/webm">#}
+        </video>
+      </div>
+      <div class="col-md-5 col-lg-5 intro-content text-left">
+        <h4>{{ mentor_detail.nick }}</h4>
+        {% if mentor_detail.status == 1 %}
+          <div class="status-box status-success col-lg-4 col-md-4">
+            可立即授课
+          </div>
+        {% else %}
+          <div class="status-box status-warning col-lg-4 col-md-4">
+            暂时无法授课
+          </div>
+        {% endif %}
+        {% if active_user %}
+          <div class="col-lg-8 col-md-8" id="followMentor">
+            {% if mentor_detail in active_user.follow.all %}
+              <button class="btn btn-warning" onclick="cancelFollow('{{ mentor_detail.id }}')">取消关注</button>
+            {% else %}
+              <button class="btn btn-warning" onclick="followMentor('{{ mentor_detail.id }}')">关注</button>
+            {% endif %}
+          </div>
+        {% endif %}
+        <div class="col-lg-12 col-md-12">
 
-                <p>交易量：{{ mentor_detail.men_orders.count }}</p>
+          <p class="intro-msg">{{ mentor_detail.intro }}</p>
 
-                <p>评分：{{ mentor_detail.mark }}</p>
-                <br/>
+          <p>交易量：{{ mentor_detail.men_orders.count }}</p>
 
-                <p>
-                    擅长位置：
-                    {% if mentor_detail.good_at == 1 %}
-                        中单
-                    {% elif mentor_detail.good_at == 2 %}
-                        上单
-                    {% elif mentor_detail.good_at == 3 %}
-                        ADC
-                    {% elif mentor_detail.good_at == 4 %}
-                        打野
-                    {% elif mentor_detail.good_at == 5 %}
-                        辅助
-                    {% endif %}
-                </p>
+          <p>评分：{{ mentor_detail.mark }}</p>
+          <br/>
 
-                <p>
-                    擅长英雄：
-                    {% if mentor_detail.expert_hero1 %}
-                        <img src="{{ mentor_detail.expert_hero1.hero_picture }}" class="hero-header"/>
-                    {% endif %}
-                    {% if mentor_detail.expert_hero2 %}
-                        <img src="{{ mentor_detail.expert_hero2.hero_picture }}" class="hero-header"/>
-                    {% endif %}
-                    {% if mentor_detail.expert_hero3 %}
-                        <img src="{{ mentor_detail.expert_hero3.hero_picture }}" class="hero-header"/>
-                    {% endif %}
-                </p>
+          <p>
+            擅长位置：
+            {% if mentor_detail.good_at == 1 %}
+              中单
+            {% elif mentor_detail.good_at == 2 %}
+              上单
+            {% elif mentor_detail.good_at == 3 %}
+              ADC
+            {% elif mentor_detail.good_at == 4 %}
+              打野
+            {% elif mentor_detail.good_at == 5 %}
+              辅助
+            {% endif %}
+          </p>
 
-                <p>
-                    游戏段位：{{ mentor_detail.game_level }}
-                </p>
+          <p>
+            擅长英雄：
+            {% if mentor_detail.expert_hero1 %}
+              <img src="{{ mentor_detail.expert_hero1.hero_picture }}" class="hero-header"/>
+            {% endif %}
+            {% if mentor_detail.expert_hero2 %}
+              <img src="{{ mentor_detail.expert_hero2.hero_picture }}" class="hero-header"/>
+            {% endif %}
+            {% if mentor_detail.expert_hero3 %}
+              <img src="{{ mentor_detail.expert_hero3.hero_picture }}" class="hero-header"/>
+            {% endif %}
+          </p>
 
-                <p>
-                    可教学大区：
-                    {% if mentor_detail.teach_area == '0' %}
-                        全区
-                    {% elif mentor_detail.teach_area == '1' %}
-                        电信
-                    {% elif mentor_detail.teach_area == '2' %}
-                        网通
-                    {% endif %}
-                </p>
-            </div>
-            <div class="col-lg-12 col-md-12">
-                {% for course in mentor_detail.men_courses.all %}
-                    <div class="col-lg-4 col-md-4">
-                        <div class="detail-course-box">
-                            <h6>
-                                {{ course.name }}
-                                <span class="course-price">￥{{ course.price }}</span>
-                            </h6>
+          <p>
+            游戏段位：{{ mentor_detail.game_level }}
+          </p>
 
-                            <p>
-                                {{ course.course_info }}
-                            </p>
-
-                            <div class="buy-box" onclick="toConfirmOrder({{ course.id }})">
-                                <h2>
-                                    立即购买
-                                </h2>
-                            </div>
-                        </div>
-                    </div>
-                {% endfor %}
-            </div>
+          <p>
+            可教学大区：
+            {% if mentor_detail.teach_area == '0' %}
+              全区
+            {% elif mentor_detail.teach_area == '1' %}
+              电信
+            {% elif mentor_detail.teach_area == '2' %}
+              网通
+            {% endif %}
+          </p>
         </div>
-    </div>
-    <div class="col-lg-12 col-mg-12 detail-navbar">
-        <div>
-            <!-- Nav tabs -->
-            <ul class="nav nav-detail" role="tablist">
-                <li role="presentation" class="active">
-                    <a href="#mentor-intro" aria-controls="mentor-intro" role="tab" data-toggle="tab">
-                        <span>导师介绍</span>
-                    </a>
-                </li>
-                <li role="presentation">
-                    <a href="#comment" aria-controls="comment" role="tab" data-toggle="tab">
-                        <span>教学评价</span>
-                    </a>
-                </li>
-                <li role="presentation">
-                    <a href="#heroes-list" aria-controls="heroes-list" role="tab" data-toggle="tab">
-                        <span>英雄池</span>
-                    </a>
-                </li>
-            </ul>
 
-            <!-- Tab panes -->
-            <div class="tab-content container">
-                <div role="tabpanel" class="tab-pane active" id="mentor-intro">
-                    <p>{{ mentor_detail.intro_detail | safe }}</p>
-                </div>
-                <div role="tabpanel" class="tab-pane" id="comment">
-                    {% for comment in mentor_detail.men_comments.all %}
-                        <div class="col-lg-12 col-md-12 comment-box">
-                            <div class="col-lg-1 col-md-1">
-                                <img src="{{ comment.comment_by.avatar }}" class="student-header"/>
-                            </div>
-                            <div class="col-lg-11 col-md-11">
-                                <div class="col-lg-5 col-md-5">
-                                    <h5 class="comment-by-name">
-                                        {{ comment.comment_by.nick }}
-                                        <span>{{ comment.comment_by.rank }}级学员</span>
-                                    </h5>
-                                </div>
-                                <div class="col-lg-7 col-md-7 text-right">
-                                    <p>{{ comment.create_time | date:'m-d' }}&nbsp;&nbsp;&nbsp;评分：{{ comment.mark }}</p>
-                                </div>
-                                <div class="col-lg-12 col-md-12">
-                                    <p class="comment-content">{{ comment.content }}</p>
-                                </div>
-                            </div>
-                        </div>
-                    {% endfor %}
-                </div>
-                <div role="tabpanel" class="tab-pane" id="heroes-list">
-                    <div class="heroes-list">
-                        {% for hero in mentor_detail.hero_list.all %}
-                            <div class="col-lg-1 col-md-1">
-                                <img src="{{ hero.hero_picture }}"/>
-                            </div>
-                        {% endfor %}
-                    </div>
-                </div>
+      </div>
+      <div class="col-lg-12 col-md-12">
+        {% for course in mentor_detail.men_courses.all %}
+          <div class="col-lg-4 col-md-4">
+            <div class="detail-course-box">
+              <h6>
+                {{ course.name }}
+                <span class="course-price">￥{{ course.price }}</span>
+              </h6>
+
+              <p>
+                {{ course.course_info }}
+              </p>
+
+              <div class="buy-box" onclick="toConfirmOrder({{ course.id }})">
+                <h2>
+                  立即购买
+                </h2>
+              </div>
             </div>
-        </div>
+          </div>
+        {% endfor %}
+      </div>
     </div>
+  </div>
+  <div class="col-lg-12 col-mg-12 detail-navbar">
+    <div>
+      <!-- Nav tabs -->
+      <ul class="nav nav-detail" role="tablist">
+        <li role="presentation" class="active">
+          <a href="#mentor-intro" aria-controls="mentor-intro" role="tab" data-toggle="tab">
+            <span>导师介绍</span>
+          </a>
+        </li>
+        <li role="presentation">
+          <a href="#comment" aria-controls="comment" role="tab" data-toggle="tab">
+            <span>教学评价</span>
+          </a>
+        </li>
+        <li role="presentation">
+          <a href="#heroes-list" aria-controls="heroes-list" role="tab" data-toggle="tab">
+            <span>英雄池</span>
+          </a>
+        </li>
+      </ul>
+
+      <!-- Tab panes -->
+      <div class="tab-content container">
+        <div role="tabpanel" class="tab-pane active" id="mentor-intro">
+          <p>{{ mentor_detail.intro_detail | safe }}</p>
+        </div>
+        <div role="tabpanel" class="tab-pane" id="comment">
+          {% for comment in mentor_detail.men_comments.all %}
+            <div class="col-lg-12 col-md-12 comment-box">
+              <div class="col-lg-1 col-md-1">
+                <img src="{{ comment.comment_by.avatar }}" class="student-header"/>
+              </div>
+              <div class="col-lg-11 col-md-11">
+                <div class="col-lg-5 col-md-5">
+                  <h5 class="comment-by-name">
+                    {{ comment.comment_by.nick }}
+                    <span>{{ comment.comment_by.rank }}级学员</span>
+                  </h5>
+                </div>
+                <div class="col-lg-7 col-md-7 text-right">
+                  <p>{{ comment.create_time | date:'m-d' }}&nbsp;&nbsp;&nbsp;评分：{{ comment.mark }}</p>
+                </div>
+                <div class="col-lg-12 col-md-12">
+                  <p class="comment-content">{{ comment.content }}</p>
+                </div>
+              </div>
+            </div>
+          {% endfor %}
+        </div>
+        <div role="tabpanel" class="tab-pane" id="heroes-list">
+          <div class="heroes-list">
+            {% for hero in mentor_detail.hero_list.all %}
+              <div class="col-lg-1 col-md-1">
+                <img src="{{ hero.hero_picture }}"/>
+              </div>
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 {% endblock %}
 {% block script %}
-    <script src="/js/common/teacher_detail.js"></script>
-    <script src="//vjs.zencdn.net/4.7/video.js"></script>
+  <script src="/js/common/teacher_detail.js"></script>
+  <script src="//vjs.zencdn.net/4.7/video.js"></script>
 {% endblock %}

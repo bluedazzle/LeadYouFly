@@ -1,0 +1,76 @@
+{% extends 'base.html' %}
+{% block css %}
+  <link href="/css/custom/appraise.css" rel="stylesheet"/>
+{% endblock %}
+
+{% block define %}
+  <div class="col-lg-12 col-md-12 my-order-host">
+    <div class="container" style="margin-top: 20px">
+      <table class="table my-order-table">
+        <tbody>
+        <tr class="order-head">
+          <td>
+            订单号：{{ order.order_id }}
+          </td>
+          <td>
+            购买时间：<span class="order-buy-date">{{ order.create_time | date:"Y/m/d" }}</span>
+          </td>
+          <td></td>
+          <td></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td>
+            <img src="/img/touxiang.jpg" class="order-teacher-header">
+            <span class="order-teacher-name">{{ order.teach_by.nick }}</span>
+            <span><a href="#">查看联系方式</a></span>
+          </td>
+          <td>
+            教学模式
+          </td>
+          <td>
+            ￥{{ order.order_price }}
+          </td>
+          <td>
+            {{ order.teach_end_time | date:"m月d号H:i开课" }}
+          </td>
+          <td class="order-operation">
+            <a href="#">确认付款</a>
+            <a href="#">正在评价</a>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+      <div class="col-lg-12 col-md-12">
+        <div class="col-lg-1 col-md-1 appraise-type">
+          <p>评分：</p>
+        </div>
+        <div class="col-lg-11 col-md-11 star-list">
+          <span class="glyphicon glyphicon-star-empty star1"></span>
+          <span class="glyphicon glyphicon-star-empty star2"></span>
+          <span class="glyphicon glyphicon-star-empty star3"></span>
+          <span class="glyphicon glyphicon-star-empty star4"></span>
+          <span class="glyphicon glyphicon-star-empty star5"></span>
+          <br/>
+          <p>5星：非常满意；4星：满意；3星：感觉一般；2星：感觉有些不足；1星：非常糟糕</p>
+        </div>
+      </div>
+      <form>
+        {% csrf_token %}
+      <div class="col-lg-12 col-md-12">
+        <div class="col-lg-1 col-md-1 appraise-type appraise-content-title">
+          <p>心得：</p>
+        </div>
+        <div class="col-lg-10 col-md-10 appraise-content">
+          <textarea class="form-control course-text" id="appraise_content" name="appraise_content" rows="10" placeholder="老师教学是否给力？都有哪些收获？快来分享你的心得"></textarea>
+          <a type="button" class="btn btn-primary btn-lg btn-confirm" onclick="submitAppraise('{{ order.id }}')">确认评价</a>
+        </div>
+      </div>
+      </form>
+    </div>
+  </div>
+{% endblock %}
+
+{% block script %}
+  <script src="/js/student/appraise.js"></script>
+{% endblock %}

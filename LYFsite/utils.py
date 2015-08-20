@@ -56,6 +56,7 @@ def is_login(request):
     if student_account:
         content['login_type'] = "student"
         content['active_user'] = Student.objects.get(account=request.session.get('student'))
+        content['is_login'] = True
         return content
     elif teacher_account:
         content['login_type'] = "teacher"
@@ -73,6 +74,7 @@ def is_login(request):
             if course.belong not in teach_student:
                 teach_student.append(course.belong)
         content['teach_students'] = len(teach_student)
+        content['is_login'] = True
         return content
     else:
         return False

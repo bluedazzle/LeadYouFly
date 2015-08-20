@@ -102,7 +102,7 @@ def search_teacher(request):
     else:
         return_content = dict()
     heros = Hero.objects.all()
-    return_content['heros'] = heros
+    return_content['hero'] = heros
     if not request.session.get('teach_area'):
         request.session['teach_area'] = ''
     if not request.session.get('teach_position'):
@@ -165,7 +165,6 @@ def teacher_detail(request):
     if return_content:
         if return_content['login_type'] == 'teacher':
             return HttpResponseRedirect('/login')
-        return_content['is_login'] = True
     else:
         return_content = dict()
 
@@ -183,46 +182,67 @@ def teacher_detail(request):
                                   context_instance=RequestContext(request))
 
 
-def confirm_order(request):
+def about_us(request):
     return_content = utils.is_login(request)
-    if return_content and return_content['login_type'] == 'student':
-        return_content['is_login'] = True
-    else:
-        return HttpResponseRedirect('/login')
+    if not return_content:
+        return_content = dict()
 
     if request.method == 'GET':
-        course_id = request.GET.get('course_id')
-        if not course_id:
-            raise Http404
-        try:
-            course = Course.objects.get(id=course_id)
-        except Course.DoesNotExist:
-            raise Http404
-        return_content['course'] = course
-        return render_to_response('common/confirm_order.html',
+        return render_to_response('common/about_us.html',
                                   return_content,
                                   context_instance=RequestContext(request))
 
 
-def about_us(request):
-    return render_to_response('common/about_us.html')
-
-
 def contact_us(request):
-    return render_to_response('common/contact_us.html')
+    return_content = utils.is_login(request)
+    if not return_content:
+        return_content = dict()
+
+    if request.method == 'GET':
+        return render_to_response('common/contact_us.html',
+                                  return_content,
+                                  context_instance=RequestContext(request))
 
 
 def laws(request):
-    return render_to_response('common/laws.html')
+    return_content = utils.is_login(request)
+    if not return_content:
+        return_content = dict()
+
+    if request.method == 'GET':
+        return render_to_response('common/laws.html',
+                                  return_content,
+                                  context_instance=RequestContext(request))
 
 
 def problems(request):
-    return render_to_response('common/problems.html')
+    return_content = utils.is_login(request)
+    if not return_content:
+        return_content = dict()
+
+    if request.method == 'GET':
+        return render_to_response('common/problems.html',
+                                  return_content,
+                                  context_instance=RequestContext(request))
 
 
 def service(request):
-    return render_to_response('common/service.html')
+    return_content = utils.is_login(request)
+    if not return_content:
+        return_content = dict()
+
+    if request.method == 'GET':
+        return render_to_response('common/service.html',
+                                  return_content,
+                                  context_instance=RequestContext(request))
 
 
 def become_teacher(request):
-    return render_to_response('common/become_teacher.html')
+    return_content = utils.is_login(request)
+    if not return_content:
+        return_content = dict()
+
+    if request.method == 'GET':
+        return render_to_response('common/become_teacher.html',
+                                  return_content,
+                                  context_instance=RequestContext(request))

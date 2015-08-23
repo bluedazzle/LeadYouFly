@@ -31,6 +31,7 @@ urlpatterns = patterns('',
                        url('^teacher/order_accept$', teacher_view.order_accept),
                        url('^teacher/manage_courses$', teacher_view.manage_courses),
                        url('^teacher/upload_video$', teacher_view.teacher_video_upload),
+                       url('^teacher/change_status$', teacher_view.change_mentor_status),
 
                        # user
 
@@ -42,5 +43,8 @@ urlpatterns = patterns('',
                        url('^user/cancel_follow$', user_view.cancel_follow),
                        url('^user/my_follow_mentors$', user_view.my_follow_mentors),
                        url('^user/appraise_order$', user_view.appraise_order),
+                       url('^user/complain$', user_view.complain),
+                       url('^user/upload_complain_pic$', user_view.upload_complain_pic),
+                       url('^user/security_center$', user_view.security_center),
                        url('^test$', test),
                        )

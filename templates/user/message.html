@@ -7,37 +7,37 @@
     <div class="ver-line">
     </div>
     <ul>
-      {% for item in test_list %}
-        <li class="a">
+      {% for message in active_user.stu_messages.all %}
+        <li>
           <div class="in">
             <i class="dot"></i>
             <span class="time-date">
-              <span>06-06</span>
+              <span>{{ message.create_time | date:"m-d"}}</span>
               <br/>
-              2015
+              {{ message.create_time | date:"Y" }}
             </span>
             <div class="panel panel-primary">
               <div class="panel-body">
-                asdlkfjlsakjdflsadj
+                {{ message.content }}
               </div>
             </div>
           </div>
         </li>
-        <li class="b">
-          <div class="in">
-            <i class="dot"></i>
-            <span class="time-date">
-              <span>06-06</span>
-              <br/>
-              2015
-            </span>
-            <div class="panel panel-primary">
-              <div class="panel-body">
-                asdlkfjlsakjdflsadj
-              </div>
-            </div>
-          </div>
-        </li>
+{#        <li class="b">#}
+{#          <div class="in">#}
+{#            <i class="dot"></i>#}
+{#            <span class="time-date">#}
+{#              <span>06-06</span>#}
+{#              <br/>#}
+{#              2015#}
+{#            </span>#}
+{#            <div class="panel panel-primary">#}
+{#              <div class="panel-body">#}
+{#                asdlkfjlsakjdflsadj#}
+{#              </div>#}
+{#            </div>#}
+{#          </div>#}
+{#        </li>#}
       {% endfor %}
     </ul>
   </div>

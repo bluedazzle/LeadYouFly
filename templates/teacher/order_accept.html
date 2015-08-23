@@ -16,7 +16,7 @@
       </div>
       <div class="col-lg-3 col-md-3 panel-order-start">
         <span>开课时间：
-          <span style="color: #f39c12">{{ order.teach_time | date:"m/d H:i" }}</span>
+          <span style="color: #f39c12">{{ order.create_time | date:"m/d H:i" }}</span>
         </span>
       </div>
     </div>
@@ -45,7 +45,7 @@
         <p>学习英雄：{{ order.learn_hero }}</p>
         <p>联系电话：12345678901</p>
       </div>
-      <div class="col-lg-3 col-md-3 text-right">
+      <div class="col-lg-3 col-md-3 text-right" id="option{{ order.order_id }}">
         {% if order.status == 1 %}
           <button class="btn btn-primary btn-hg" style="font-size: 18px;" onclick="acceptOrder({{ order.order_id }})">确认接单</button>
         {% elif order.status == 2 %}

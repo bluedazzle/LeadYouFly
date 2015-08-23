@@ -6,6 +6,7 @@
 
 .mentor-head{
     padding: 0;
+    max-width: 100px;
     position: relative;
 }
 

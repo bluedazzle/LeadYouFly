@@ -101,8 +101,8 @@ def search_teacher(request):
         return_content['is_login'] = True
     else:
         return_content = dict()
-    heros = Hero.objects.all()
-    return_content['hero'] = heros
+    heroes = Hero.objects.all()
+    return_content['heroes'] = heroes
     if not request.session.get('teach_area'):
         request.session['teach_area'] = ''
     if not request.session.get('teach_position'):

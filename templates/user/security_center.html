@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+{% block css %}
+  <link href="/css/custom/complain.css" rel="stylesheet"/>
+{% endblock %}
+{% block define %}
+  <div class="container">
+    <div class="complain-form">
+      {% csrf_token %}
+      <div class="col-lg-12 col-md-12 complain-line">
+        <div class="col-lg-2 col-md-2">
+          <p class="text-right">*原始密码：</p>
+        </div>
+        <div class="col-lg-7 col-md-7">
+          <input type="password" class="form-control" id="origin_password" name="new_password" placeholder="请填写原始密码"/>
+        </div>
+      </div>
+
+      <div class="col-lg-12 col-md-12 complain-line">
+        <div class="col-lg-2 col-md-2">
+          <p class="text-right">*新密码：</p>
+        </div>
+        <div class="col-lg-7 col-md-7">
+          <input type="password" class="form-control" id="new_password" name="new_password" placeholder="请填写新密码"/>
+        </div>
+      </div>
+
+      <div class="col-lg-12 col-md-12 complain-line">
+        <div class="col-lg-2 col-md-2">
+          <p class="text-right">*确认密码：</p>
+        </div>
+        <div class="col-lg-7 col-md-7">
+          <input type="password" class="form-control" id="password_again" name="password_again" placeholder="请再次填写新密码"/>
+        </div>
+      </div>
+
+      <div class="col-lg-12 col-md-12 complain-line">
+        <div class="col-lg-10 col-md-10" style="float: right">
+          <a type="button" class="btn btn-lg btn-primary" onclick="submitChangePassword()">确认修改</a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+{% endblock %}
+
+{% block script %}
+  <script src="/js/student/security_center.js"></script>
+{% endblock %}

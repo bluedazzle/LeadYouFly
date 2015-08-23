@@ -38,3 +38,19 @@ class AppraiseOrder(forms.Form):
     order_id = forms.IntegerField()
     stars = forms.IntegerField()
     content = forms.CharField(max_length=100)
+
+
+class ComplainForm(forms.Form):
+    name = forms.CharField(max_length=50)
+    qq = forms.CharField(max_length=20)
+    phone = forms.CharField(max_length=11)
+    mentor_name = forms.CharField(max_length=50)
+    complain_content = forms.CharField(max_length=100, required=False)
+    check_id = forms.CharField(max_length=10)
+    image_list = forms.CharField(max_length=100)
+
+
+class ChangePasswordForm(forms.Form):
+    origin_password = forms.CharField(max_length=20)
+    new_password = forms.CharField(max_length=20)
+    password_again = forms.CharField(max_length=20)

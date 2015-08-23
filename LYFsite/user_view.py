@@ -1,5 +1,11 @@
 # -*- coding: utf-8 -*-
 from views import *
+import os
+import time
+import random
+from PIL import Image
+
+BASE = os.path.dirname(os.path.dirname(__file__))
 
 
 def user_message(request):
@@ -179,3 +185,93 @@ def confirm_order(request):
         return render_to_response('common/confirm_order.html',
                                   return_content,
                                   context_instance=RequestContext(request))
+
+
+def complain(request):
+    return_content = utils.is_login(request)
+    if return_content and return_content['login_type'] == 'student':
+        return_content['is_login'] = True
+    else:
+        return HttpResponseRedirect('/login')
+
+    if request.method == 'GET':
+        return render_to_response('user/complain.html',
+                                  return_content,
+                                  context_instance=RequestContext(request))
+
+    if request.method == 'POST':
+        form = ComplainForm(request.POST)
+        print request.POST
+        if form.is_valid():
+            form_data = form.cleaned_data
+            new_report = Report()
+            new_report.reporter = return_content['active_user']
+            new_report.name = form_data['name']
+            new_report.phone = form_data['phone']
+            new_report.qq = form_data['qq']
+            new_report.reported = form_data['mentor_name']
+            new_report.content = form_data['complain_content']
+            new_report.type = int(form_data['check_id'][-1])
+            image_list = json.loads(form_data['image_list'])
+            for i in range(0, len(image_list)):
+                if i == 0:
+                    new_report.pic1 = image_list[i]
+                if i == 1:
+                    new_report.pic2 = image_list[i]
+                if i == 2:
+                    new_report.pic3 = image_list[i]
+                if i == 3:
+                    new_report.pic4 = image_list[i]
+
+            new_report.save()
+            return HttpResponse(json.dumps("success"))
+        else:
+            return HttpResponse(json.dumps("failed"))
+
+
+def upload_complain_pic(request):
+    return_content = utils.is_login(request)
+    if return_content and return_content['login_type'] == 'student':
+        return_content['is_login'] = True
+    else:
+        return HttpResponse(json.dumps("failed"))
+
+    if request.method == 'POST':
+        upload_pic = request.FILES.get('upload_pic', None)
+        number_pic = request.POST.get('number')
+        if number_pic and int(number_pic) <= 4:
+            file_name = str(int(time.time())) + upload_pic.name
+            file_full_path = BASE + '/static/tmp/' + file_name
+            Image.open(upload_pic).save(file_full_path)
+            return HttpResponse(json.dumps('/tmp/' + file_name))
+        else:
+            return HttpResponse(json.dumps("failed"))
+
+
+def security_center(request):
+    return_content = utils.is_login(request)
+    if return_content and return_content['login_type'] == 'student':
+        return_content['is_login'] = True
+    else:
+        return HttpResponseRedirect('/login')
+
+    if request.method == 'GET':
+        return render_to_response('user/security_center.html',
+                                  return_content,
+                                  context_instance=RequestContext(request))
+
+    if request.method == 'POST':
+        form = ChangePasswordForm(request.POST)
+        if form.is_valid():
+            form_data = form.cleaned_data
+            user_active = return_content['active_user']
+            if user_active.check_password(form_data['origin_password']) and form_data['new_password'] == \
+                    form_data['password_again']:
+                user_active.set_password(form_data['new_password'])
+                user_active.save()
+                request.session.clear()
+                return HttpResponse(json.dumps('success'))
+            else:
+                return HttpResponse(json.dumps('failed'))
+        else:
+            return HttpResponse(json.dumps('wrong form'))

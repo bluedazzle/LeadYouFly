@@ -1,0 +1,51 @@
+.complain-form{
+    margin-top: 20px;
+}
+
+.complain-line p{
+    padding-top: 7px;
+}
+
+.complain-line{
+    margin-bottom: 20px;
+}
+
+.complain-line .position-text{
+    font-size: 14px;
+}
+
+.checkbox-show{
+    display: block;
+}
+
+.checkbox-hide{
+    display: none;
+}
+
+.type-list{
+    margin-top: 5px;
+}
+
+.complain-content{
+    margin-top: 5px;
+    resize: none;
+}
+
+.btn-upload{
+    position: relative;
+}
+
+.btn-upload input{
+    opacity:0;
+    filter:alpha(opacity=0);
+    position: absolute;
+    top: 0;
+    right: 0;
+    height: 100%;
+    cursor: pointer;
+}
+
+.upload-pic-view{
+    max-width: 100px;
+    margin-right: 10px;
+}

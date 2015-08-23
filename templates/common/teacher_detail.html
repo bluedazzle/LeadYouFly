@@ -13,13 +13,17 @@
       </div>
       <div class="col-md-5 col-lg-5 intro-content text-left">
         <h4>{{ mentor_detail.nick }}</h4>
-        {% if mentor_detail.status == 1 %}
+        {% if mentor_detail.status == 0 %}
+          <div class="status-box status-danger col-lg-4 col-md-4">
+            不接单
+          </div>
+        {% elif mentor_detail.status == 1 %}
           <div class="status-box status-success col-lg-4 col-md-4">
             可立即授课
           </div>
-        {% else %}
+        {% elif mentor_detail.status == 2 %}
           <div class="status-box status-warning col-lg-4 col-md-4">
-            暂时无法授课
+            上课中
           </div>
         {% endif %}
         {% if active_user %}

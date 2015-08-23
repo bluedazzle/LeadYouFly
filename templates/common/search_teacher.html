@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 {% block css %}
-  <link href="/css/search_teacher.css" rel="stylesheet"/>
+  <link href="/css/custom/search_teacher.css" rel="stylesheet"/>
 {% endblock %}
 {% block define %}
   <section class="col-lg-12 col-md-12 search-teacher-head">
@@ -65,7 +65,7 @@
         </button>
         <ul class="dropdown-menu">
           <li><a href="/search_teacher?teach_hero=0">所有英雄</a></li>
-          {% for hero in heros %}
+          {% for hero in heroes %}
             {% if teach_position and hero.hero_type == teach_position %}
               <li><a href="/search_teacher?teach_hero={{ hero.id }}">{{ hero.hero_name }}</a></li>
             {% elif not teach_position %}

@@ -1,0 +1,136 @@
+{% extends 'base.html' %}
+{% block css %}
+  <link href="/css/custom/complain.css" rel="stylesheet"/>
+{% endblock %}
+{% block define %}
+  <div class="container">
+    <div class="complain-form">
+      {% csrf_token %}
+      <div class="col-lg-12 col-md-12 complain-line">
+        <div class="col-lg-2 col-md-2">
+          <p class="text-right">*我的姓名：</p>
+        </div>
+        <div class="col-lg-7 col-md-7">
+          <input class="form-control" id="name" name="name" placeholder="请填写您的姓名"/>
+        </div>
+      </div>
+
+      <div class="col-lg-12 col-md-12 complain-line">
+        <div class="col-lg-2 col-md-2">
+          <p class="text-right">*我的联系QQ：</p>
+        </div>
+        <div class="col-lg-7 col-md-7">
+          <input class="form-control" id="qq" name="qq" placeholder="请填写您的QQ"/>
+        </div>
+      </div>
+
+      <div class="col-lg-12 col-md-12 complain-line">
+        <div class="col-lg-2 col-md-2">
+          <p class="text-right">*我的联系电话：</p>
+        </div>
+        <div class="col-lg-7 col-md-7">
+          <input class="form-control" id="phone" name="phone" placeholder="请填写您的联系电话"/>
+        </div>
+      </div>
+
+      <div class="col-lg-12 col-md-12 complain-line">
+        <div class="col-lg-2 col-md-2">
+          <p class="text-right">*要举报的大神名称：</p>
+        </div>
+        <div class="col-lg-7 col-md-7">
+          <input class="form-control" id="mentor_name" name="mentor_name" placeholder="请填写要举报的大神的姓名"/>
+        </div>
+      </div>
+
+      <div class="col-lg-12 col-md-12 complain-line">
+        <div class="col-lg-2 col-md-2">
+          <p class="text-right">*举报类型：</p>
+        </div>
+
+        <div class="type-list">
+          <div class="col-lg-2 col-md-2">
+            <input type="checkbox" name="type1" id="type1" class="checkbox"/>
+            <div class="checkbox-wrapper" onclick="type_check('type1')">
+              <label class="checkbox-label" id="checkbox-type1-label">
+                <div class="checkbox-div" id="checkbox-type1-div"></div>
+              </label>
+            </div>
+            <div class="position-text">非本站交易（核查属实奖励50元）</div>
+          </div>
+          <div class="col-lg-2 col-md-2">
+            <input type="checkbox" name="type2" id="type2" class="checkbox"/>
+            <div class="checkbox-wrapper" onclick="type_check('type2')">
+              <label class="checkbox-label" id="checkbox-type2-label">
+                <div class="checkbox-div" id="checkbox-type2-div"></div>
+              </label>
+            </div>
+            <div class="position-text">订单未完成要求先确认付款</div>
+          </div>
+          <div class="col-lg-2 col-md-2">
+            <input type="checkbox" name="type3" id="type3" class="checkbox"/>
+            <div class="checkbox-wrapper" onclick="type_check('type3')">
+              <label class="checkbox-label" id="checkbox-type3-label">
+                <div class="checkbox-div" id="checkbox-type3-div"></div>
+              </label>
+            </div>
+            <div class="position-text">语音不雅</div>
+          </div>
+          <div class="col-lg-2 col-md-2">
+            <input type="checkbox" name="type4" id="type4" class="checkbox"/>
+            <div class="checkbox-wrapper" onclick="type_check('type4')">
+              <label class="checkbox-label" id="checkbox-type4-label">
+                <div class="checkbox-div" id="checkbox-type4-div"></div>
+              </label>
+            </div>
+            <div class="position-text">购买后无法联系</div>
+          </div>
+          <div class="col-lg-2 col-md-2">
+            <input type="checkbox" name="type5" id="type5" class="checkbox"/>
+            <div class="checkbox-wrapper" onclick="type_check('type5')">
+              <label class="checkbox-label" id="checkbox-type5-label">
+                <div class="checkbox-div" id="checkbox-type5-div"></div>
+              </label>
+            </div>
+            <div class="position-text">其他</div>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="col-lg-12 col-md-12 complain-line">
+        <div class="col-lg-2 col-md-2">
+          <p class="text-right">举报内容：</p>
+        </div>
+        <div class="col-lg-10 col-md-10">
+          <textarea class="form-control complain-content" id="complain_content" name="complain_content" rows="5" placeholder="请填写举报内容"></textarea>
+        </div>
+      </div>
+
+      <div class="col-lg-12 col-md-12 complain-line">
+        <div class="col-lg-2 col-md-2">
+          <p class="text-right">*上传截图证明：</p>
+        </div>
+        <div class="col-lg-10 col-md-10">
+          <a type="button" class="btn btn-upload" style="position: relative">
+            添加图片
+            <input type="file" id="upload_pic" accept="image/jpg,image/jpeg" name="upload_pic"/>
+          </a>
+          <p>最多上传4张，支持JPG、JPEG格式，大小限制为500K</p>
+          <div class="upload-pic-list">
+
+          </div>
+        </div>
+      </div>
+
+      <div class="col-lg-10 col-md-10 complain-line" style="float: right">
+        <button class="btn btn-lg btn-primary" style="margin-left: 5px" onclick="submitComplain()">提交信息</button>
+      </div>
+    </div>
+  </div>
+{% endblock %}
+
+{% block script %}
+  <script src="/js/common/jquery.ajaxfileupload.js"></script>
+  <script src="/js/student/complain.js"></script>
+{% endblock %}
+

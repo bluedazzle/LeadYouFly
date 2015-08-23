@@ -28,6 +28,11 @@ html,body {
     height: 105px;/*脚部的高度*/
     clear:both;
 }
+
+.mentor-status{
+    font-size: 14px;
+}
+
 .host-title{
     font-size: 20px;
     margin-top: 40px;

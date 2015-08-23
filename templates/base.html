@@ -41,29 +41,50 @@
               <li><a href="/login" class="sm-title">登录</a></li>
               <li><a href="/register" class="sm-title">注册</a></li>
             {% else %}
-              <li class="dropdown">
-                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-                  <img style="width: 30px;height: 30px;border-radius: 50%" src="/img/touxiang.jpg"/>
-                  <span class="caret"></span>
-                </a>
-                <ul class="dropdown-menu">
-                  <li class="user-mes-title">
-                    <span>资料</span>
-                  </li>
-                  <li><a href="/user/complete_mes">我的档案</a></li>
-                  <li><a href="/user/my_orders">我的订单</a></li>
-                  <li><a href="/user/my_follow_mentors">关注导师</a></li>
-{#                  <li><a href="/user/comment">交流中心</a></li>#}
-                  <li><a href="/user/message">消息</a></li>
-                  <li class="user-mes-title">
-                    <span>服务</span>
-                  </li>
-                  <li><a href="/user/recharge_withdrawal">充值提现</a></li>
-                  <li><a href="/user/security_center">安全中心</a></li>
-                  <li><a href="/user/complain">投诉</a></li>
-                  <li><a href="/logout">退出</a></li>
-                </ul>
-              </li>
+              {% if login_type == 'student' %}
+                <li class="dropdown">
+                  <a href="#" class="dropdown-toggle" id="student-route" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                    <img style="width: 30px;height: 30px;border-radius: 50%" src="/img/touxiang.jpg"/>
+                    <span class="caret"></span>
+                  </a>
+                  <ul class="dropdown-menu">
+                    <li class="user-mes-title">
+                      <span>资料</span>
+                    </li>
+                    <li><a href="/user/complete_mes">我的档案</a></li>
+                    <li><a href="/user/my_orders">我的订单</a></li>
+                    <li><a href="/user/my_follow_mentors">关注导师</a></li>
+                    {#                  <li><a href="/user/comment">交流中心</a></li>#}
+                    <li><a href="/user/message">消息</a></li>
+                    <li class="user-mes-title">
+                      <span>服务</span>
+                    </li>
+                    <li><a href="/user/recharge_withdrawal">充值提现</a></li>
+                    <li><a href="/user/security_center">安全中心</a></li>
+                    <li><a href="/user/complain">投诉</a></li>
+                    <li><a href="/logout">退出</a></li>
+                  </ul>
+                </li>
+              {% elif login_type == 'teacher' %}
+                <li class="dropdown">
+                  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                    <span id="mentor-status" class="mentor-status">
+                      {% if mentor.status == 1 %}
+                        可立即授课
+                      {% elif mentor.status == 0 %}
+                        休息中
+                      {% elif mentor.status == 2%}
+                        上课中
+                      {% endif %}
+                    </span>
+                    <span class="caret"></span>
+                  </a>
+                  <ul class="dropdown-menu">
+                    <li><a href="#" onclick="changeMentorStatus(1)">可立即授课</a></li>
+                    <li><a href="#" onclick="changeMentorStatus(0)">休息中</a></li>
+                  </ul>
+                </li>
+              {% endif %}
             {% endif %}
           </ul>
         </div><!-- /.navbar-collapse -->

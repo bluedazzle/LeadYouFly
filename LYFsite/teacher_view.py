@@ -32,6 +32,32 @@ def teacher_host(request):
                                   context_instance=RequestContext(request))
 
 
+def change_mentor_status(request):
+    return_content = utils.is_login(request)
+    if not return_content:
+        return HttpResponseRedirect('/login')
+    if not return_content['login_type'] == 'teacher':
+        raise Http404
+
+    if request.method == 'GET':
+        status = request.GET.get('status')
+        mentor = return_content['mentor']
+        if int(status) == 1:
+            if mentor.status == 0 or mentor.status == 1:
+                mentor.status = 1
+                mentor.save()
+                return HttpResponse(json.dumps("success"))
+            else:
+                return HttpResponse(json.dumps("failed"))
+        elif int(status) == 0:
+            if mentor.status == 2:
+                return HttpResponse(json.dumps('failed'))
+            else:
+                mentor.status = 0
+                mentor.save()
+                return HttpResponse(json.dumps("success"))
+
+
 def teacher_contact(request):
     return_content = utils.is_login(request)
     if not return_content:
@@ -78,9 +104,28 @@ def order_accept(request):
         return HttpResponseRedirect('/login')
     if not return_content['login_type'] == 'teacher':
         raise Http404
-    return render_to_response('teacher/order_accept.html',
-                              return_content,
-                              context_instance=RequestContext(request))
+
+    if request.method == 'GET':
+        return render_to_response('teacher/order_accept.html',
+                                  return_content,
+                                  context_instance=RequestContext(request))
+    if request.method == 'POST':
+        order_id = request.POST.get('order_id')
+        mentor = return_content['mentor']
+        if not mentor.status == 1:
+            return HttpResponse(json.dumps(u'请先更改状态为可立即授课'))
+        try:
+            order = Order.objects.get(order_id=order_id)
+            if order.status == 1:
+                order.status = 2
+                order.save()
+                return HttpResponse(json.dumps('success'))
+            else:
+                return HttpResponse(json.dumps('failed'))
+        except Order.DoesNotExist:
+            raise Http404
+        except:
+            return HttpResponse(json.dumps('wrong form'))
 
 
 def manage_courses(request):
@@ -117,8 +162,6 @@ def manage_courses(request):
             new_course.belong = mentor_active
             new_course.save()
             return HttpResponse(json.dumps('success'))
-
-
 
 
 def teacher_video_upload(request):

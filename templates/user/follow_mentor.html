@@ -1,15 +1,18 @@
 {% extends 'base.html' %}
 {% block css %}
-<link href="/css/custom/follow_mentor.css" rel="stylesheet"/>
+  <link href="/css/custom/follow_mentor.css" rel="stylesheet"/>
 {% endblock %}
 
 {% block define %}
   <div class="container mentor-head-list">
     {% for mentor in active_user.follow.all %}
-      <div class="col-lg-1 col-md-1 mentor-head" id="mentor{{ mentor.id }}">
-        <img src="{{ mentor.avatar }}">
-        <div class="mentor-cancel" onclick="cancelFollow('{{ mentor.id }}')">
-          <span>x</span>
+      <div class="col-lg-2 col-md-2" id="mentor{{ mentor.id }}">
+        <div class="mentor-head">
+          <img src="{{ mentor.avatar }}">
+          <p class="text-center">{{ mentor.nick }}</p>
+          <div class="mentor-cancel" onclick="cancelFollow('{{ mentor.id }}')">
+            <span>x</span>
+          </div>
         </div>
       </div>
     {% endfor %}

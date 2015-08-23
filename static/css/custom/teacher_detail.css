@@ -18,8 +18,12 @@
     max-width: 120px;
 }
 
-.status-waring{
+.status-warning{
     background-color: #f1c40f;
+}
+
+.status-danger{
+    background-color: #e74c3c;
 }
 
 .intro-content p{

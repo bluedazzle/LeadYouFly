@@ -191,8 +191,8 @@ class Student(AbstractBaseUser, BaseModel):
     phone = models.CharField(max_length=11, null=True, blank=True)
     avatar = models.CharField(max_length=200, default='/img/default_stu.jpg')
     money = models.FloatField(default=0.0)
+    exp = models.IntegerField(default=0)
     follow = models.ManyToManyField(Mentor, related_name='my_students', null=True, blank=True)
-
 
 
     USERNAME_FIELD = 'account'

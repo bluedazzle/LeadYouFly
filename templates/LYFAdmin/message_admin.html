@@ -1,0 +1,80 @@
+{% extends "admin_base.html" %}
+{% block title %}消息中心{% endblock %}
+{% block page %}消息中心{% endblock %}
+{% block content %}
+    <div class="my_contianer">
+        <div>
+            <button class="btn btn-primary" data-toggle="modal" data-target="#myModal">新信息</button>
+            <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                                    aria-hidden="true">&times;</span></button>
+                            <h4 class="modal-title" id="myModalLabel">新信息</h4>
+                        </div>
+                        <div class="modal-body">
+                            <form action="/admin/message/new_message" method="post">
+                                {% csrf_token %}
+                                <div class="form-group">
+                                    <label for="">内容：</label>
+                                    <textarea name="new_mes" class="form-control" id="" cols="53" rows="10" placeholder="内容"></textarea>
+                                </div>
+                                <div class="form-group">
+                                    <label for="">类型：</label>
+                                    <select name="mes_type" class="form-control select select-primary select-block mbl" id="">
+                                        <option value="1">普通消息</option>
+                                        <option value="2">全体消息</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="">发送至</label>
+                                    <textarea name="send_to" class="form-control" id="" cols="53" rows="5" placeholder="学员账号，多个请用逗号隔开，全体消息此处不填"></textarea>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-default" data-dismiss="modal">关闭
+                                    </button>
+                                    <button type="submit" class="btn btn-primary">确定</button>
+                                </div>
+                            </form>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <br/>
+        <table class="table table-hover" data-toggle="table">
+            <thead>
+            <tr>
+                <th data-sortable="true">发送时间</th>
+                <th>接收人</th>
+                <th>内容</th>
+                <th>是否阅读</th>
+                <th>是否全体消息</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for message in message_list %}
+                <tr>
+                    <td>{{ message.create_time }}</td>
+                    {% ifequal message.send_all True %}
+                    <td>全体学员</td>
+                    {% else %}
+                    <td>{{ message.belong.account }}</td>
+                    {% endifequal %}
+                    <td>{{ message.content }}</td>
+                    <td>{{ message.read }}</td>
+                    <td>{{ message.send_all }}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}
+{% block script %}
+    {{ block.super }}
+    <script>
+        $("select").select2({dropdownCssClass: 'dropdown-inverse'});
+    </script>
+{% endblock %}

@@ -214,7 +214,9 @@ class Student(AbstractBaseUser, BaseModel):
 
 class Message(BaseModel):
     content = models.CharField(max_length=500)
-    belong = models.ForeignKey(Student, related_name='stu_messages')
+    belong = models.ForeignKey(Student, related_name='stu_messages', null=True, blank=True)
+    read = models.BooleanField(default=False)
+    send_all = models.BooleanField(default=False)
 
     def __unicode__(self):
         return self.content

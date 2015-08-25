@@ -1,0 +1,32 @@
+{% extends "admin_base.html" %}
+{% block title %}网站管理{% endblock %}
+{% block page %}网站管理{% endblock %}
+{% block style %}
+    {{ block.super }}
+    {{ form.media }}
+{% endblock %}
+{% block content %}
+    <div class="my_contianer">
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <h3 class="panel-title">英雄管理</h3>
+            </div>
+            <div class="panel-body">
+                <form action="/admin/website/notice/modify/{{ notice.id }}/" method="post">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <label for="">公告标题：</label>
+                        <input type="text" class="form-control" name="notice_name" id="notice_title"
+                               placeholder="标题" value="{{ notice.title }}">
+
+                    </div>
+                    <div class="form-group">
+                        {{ form }}
+                    </div>
+                    <div class="form-group">
+                        <button class="btn btn-primary" type="submit">保存</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+{% endblock %}

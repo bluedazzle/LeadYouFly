@@ -16,14 +16,15 @@ from PIL import Image
 from dss.Serializer import serializer
 
 from LYFAdmin.models import Hero, Mentor, IndexAdmin, Order, Course, Student, ChargeRecord, MoneyRecord, CashRecord, \
-    Admin, Notice
+    Admin, Notice, Message
 
-from forms import MentorDetailContentForm
+from forms import MentorDetailContentForm, NoticeContentForm
 from decorator import login_require
 from utils import upload_picture, datetime_to_string, auth_admin, hero_convert, order_status_convert, \
     mentor_status_convert, order_search, output_data, UPLOAD_PATH
 from qn import upload_file_qn, list_file, QINIU_DOMAIN, VIDEO_CONVERT_PARAM, VIDEO_POSTER_PARAM, data_handle, \
     delete_data, put_block_data
+from message import push_custom_message
 
 # Create your views here.
 
@@ -178,8 +179,11 @@ def admin_website(req):
         itm.hero_type = hero_convert(itm.hero_type)
     notice_list = serializer(notice_list, datetime_format='string')
     for notice in notice_list:
+        notice['form'] = NoticeContentForm(initial={'Notice_Content': notice['content']})
         notice['content'] = notice['content'][0:50]
+    form = NoticeContentForm()
     return render_to_response('website_admin.html', {'hero_list': hero_list,
+                                                     'form': form,
                                                      'notice_list': notice_list}, context_instance=RequestContext(req))
 
 
@@ -190,14 +194,37 @@ def admin_website_del_notice(req, nid):
     return HttpResponseRedirect('/admin/website')
 
 
+def admin_website_modify_page(req, nid):
+    notice = get_object_or_404(Notice, id=nid)
+    form = NoticeContentForm(initial={'Notice_Content': notice.content})
+    return render_to_response('website_modify_notice.html', {'notice': notice,
+                                                             'form': form}, context_instance=RequestContext(req))
+
+
+def admin_website_modify(req, nid):
+    title = req.POST.get('notice_name', None)
+    notice = get_object_or_404(Notice, id=nid)
+    form = NoticeContentForm(req.POST)
+    if form.is_valid():
+        content = form.cleaned_data['Notice_Content']
+    if title:
+        notice.title = title
+        notice.content = content
+        notice.save()
+    return HttpResponseRedirect('/admin/website')
+
+
+
+
 #新公告
 @login_require
 def admin_website_new_notice(req):
     title = req.POST.get('notice_name', None)
-    content = req.POST.get('notice_content', None)
-    print title
-    print content
-    if title is not None and content is not None:
+    # content = req.POST.get('notice_content', None)
+    form = NoticeContentForm(req.POST)
+    if form.is_valid():
+        content = form.cleaned_data['Notice_Content']
+    if title:
         new_notice = Notice(title=title,
                             content=content)
         new_notice.save()
@@ -324,6 +351,35 @@ def admin_mentor_change_video(req, mid):
             mentor.save()
     new_url = '/admin/mentor/detail/' + str(mid) + '/'
     return HttpResponseRedirect(new_url)
+
+
+#新增导师课程
+@login_require
+def admin_mentor_new_course(req, mid):
+    new_name = req.POST.get('new_name', None)
+    new_price = float(req.POST.get('new_price', None))
+    new_intro = req.POST.get('new_intro', None)
+    if new_name and new_price and new_intro:
+        mentor = get_object_or_404(Mentor, id=mid)
+        new_course = Course(name=new_name,
+                            price=new_price,
+                            course_info=new_intro,
+                            belong=mentor)
+        new_course.save()
+    new_url = '/admin/mentor/detail/' + str(mid) + '/'
+    return HttpResponseRedirect(new_url)
+
+
+#删除导师课程
+@login_require
+def admin_mentor_del_course(req, mid, cid):
+    mentor = get_object_or_404(Mentor, id=mid)
+    course = get_object_or_404(Course, id=cid)
+    if course.belong == mentor:
+        course.delete()
+    new_url = '/admin/mentor/detail/' + str(mid) + '/'
+    return HttpResponseRedirect(new_url)
+
 
 
 #导师添加新视频
@@ -568,6 +624,36 @@ def admin_student_order(req, sid):
         order['status'] = order_status_convert(order['status'])
     return render_to_response('student_order_admin.html', {'student': student,
                                                            'order_list': order_list}, context_instance=RequestContext(req))
+
+
+#消息中心
+@login_require
+def admin_message(req):
+    message_list = Message.objects.all()
+    message_list = serializer(message_list, datetime_format='string', deep=True)
+    return render_to_response('message_admin.html', {'message_list': message_list}, context_instance=RequestContext(req))
+
+
+#新消息
+@login_require
+def admin_message_new(req):
+    content = req.POST.get('new_mes', None)
+    mes_type = int(req.POST.get('mes_type', None))
+    send_to = str(req.POST.get('send_to', None))
+    if content and mes_type:
+        if mes_type == 1:
+            if ',' in send_to:
+                send_list = tuple(send_to.split(','))
+            elif '，' in send_to:
+                send_list = tuple(send_to.split('，'))
+            else:
+                send_list = (send_to, )
+            push_custom_message(content, send_list)
+        elif mes_type == 2:
+            push_custom_message(content, send_all=True)
+    return HttpResponseRedirect('/admin/message')
+
+
 
 
 

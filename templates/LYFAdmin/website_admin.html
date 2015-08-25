@@ -1,6 +1,10 @@
 {% extends "admin_base.html" %}
 {% block title %}网站管理{% endblock %}
 {% block page %}网站管理{% endblock %}
+{% block style %}
+    {{ block.super }}
+    {{ form.media }}
+{% endblock %}
 {% block content %}
     <div class="my_contianer">
         <div class="panel panel-primary">
@@ -120,13 +124,18 @@
                         <tr>
                             <td>{{ notice.title }}</td>
                             <td>{{ notice.create_time }}</td>
-                            <td>{{ notice.content }}</td>
-                            <td><a href="/admin/website/del_notice/{{ notice.id }}/" class="btn btn-warning">删除</a></td>
+                            <td title="test">{{ notice.content | safe }}</td>
+                            <td>
+                                <a href="/admin/website/modify_notice/{{ notice.id }}/" class="btn btn-primary">修改</a>
+                                <a href="/admin/website/del_notice/{{ notice.id }}/" class="btn btn-warning">删除</a>
+                            </td>
+                            
                         </tr>
                     {% endfor %}
                     </tbody>
                 </table>
                 <br/>
+
                 <div>
                     <button type="button" class="btn btn-primary" data-toggle="modal"
                             data-target="#noticeModal">新公告
@@ -149,8 +158,7 @@
                                                    placeholder="标题">
                                         </div>
                                         <div class="form-group">
-                                            <label for="">公告内容：</label>
-                                            <textarea name="notice_content" id="" cols="53" rows="10" placeholder="公告内容 "></textarea>
+                                            {{ form }}
                                         </div>
                                         <div class="modal-footer">
                                             <button type="button" class="btn btn-default" data-dismiss="modal">关闭

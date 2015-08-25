@@ -49,5 +49,6 @@ urlpatterns = patterns('',
     url(r'^mentor/info/(?P<mid>(\d)+)/$', views.admin_mentor_info),
     url(r'^mentor/order/(?P<mid>(\d)+)/$', views.admin_mentor_order),
     url(r'^student/info/(?P<sid>(\d)+)/$', views.admin_student_info),
+    url(r'^student/info/(?P<sid>(\d)+)/modify_exp/$', views.admin_student_modify_exp),
     url(r'^student/order/(?P<sid>(\d)+)/$', views.admin_student_order),
 )

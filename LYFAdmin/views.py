@@ -635,6 +635,17 @@ def admin_student_info(req, sid):
     return render_to_response('student_info_admin.html', {'student': student}, context_instance=RequestContext(req))
 
 
+@login_require
+def admin_student_modify_exp(req, sid):
+    new_exp = req.POST.get('new_exp', None)
+    if new_exp:
+        student = get_object_or_404(Student, id=sid)
+        student.exp = new_exp
+        student.save()
+    new_url = '/admin/student/info/' + str(sid) + '/'
+    return HttpResponseRedirect(new_url)
+
+
 #学员订单
 @login_require
 def admin_student_order(req, sid):

@@ -14,7 +14,7 @@ from django.utils import timezone
 from django.db.models import Q
 
 
-from LYFAdmin.models import Admin, Order
+from LYFAdmin.models import Admin, Order, Student
 
 UPLOAD_PATH = os.path.dirname(os.path.dirname(__file__)) + '/static'
 
@@ -127,14 +127,21 @@ def order_search(order_status, search_text):
         else:
             raw_order_list = Order.objects.filter(status=order_status).filter(Q(order_price__icontains=search_text) |
                                                                               Q(course_name__icontains=search_text) |
-                                                                              Q(
-                                                                                  belong__account__icontains=search_text) |
+                                                                              Q(belong__account__icontains=search_text) |
                                                                               Q(belong__nick__icontains=search_text) |
-                                                                              Q(
-                                                                                  teach_by__account__icontains=search_text) |
+                                                                              Q(teach_by__account__icontains=search_text) |
                                                                               Q(teach_by__nick__icontains=search_text))
     return raw_order_list
 
+
+def student_search(search_text):
+    raw_stu_list = Student.objects.filter(Q(account__icontains=search_text) |
+                                          Q(nick__icontains=search_text) |
+                                          Q(qq__icontains=search_text) |
+                                          Q(yy__icontains=search_text) |
+                                          Q(phone__icontains=search_text) |
+                                          Q(money__icontains=search_text))
+    return raw_stu_list
 
 def output_data(file_name, order_list):
     wb = xlwt.Workbook(encoding='utf-8')

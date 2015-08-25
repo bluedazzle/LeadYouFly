@@ -3,15 +3,27 @@
 {% block page %}学员管理{% endblock %}
 {% block content %}
     <div class="my_contianer">
+        <div>
+            <form action="/admin/student/search/" method="post">
+                {% csrf_token %}
+                <div class="input-group">
+                    <input type="text" name="search_text" id="s_text" class="form-control"/>
+                                    <span class="input-group-btn"><button class="btn btn-primary"
+                                                                          type="submit">搜索
+                                    </button></span>
+                </div>
+            </form>
+        </div>
+        <br/>
         <table class="table table-hover" data-toggle="table">
             <thead style="">
             <tr>
                 <th>注册时间</th>
                 <th>账户</th>
                 <th>名称</th>
-                <th>等级</th>
+                <th data-sortable="true">等级</th>
                 <th data-sortable="true">总消费额</th>
-                <th>预存款</th>
+                <th data-sortable="true">预存款</th>
                 <th>最后消费时间</th>
                 <th>操作</th>
             </tr>

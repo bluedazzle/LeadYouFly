@@ -21,7 +21,7 @@ from LYFAdmin.models import Hero, Mentor, IndexAdmin, Order, Course, Student, Ch
 from forms import MentorDetailContentForm, NoticeContentForm
 from decorator import login_require
 from utils import upload_picture, datetime_to_string, auth_admin, hero_convert, order_status_convert, \
-    mentor_status_convert, order_search, output_data, UPLOAD_PATH
+    mentor_status_convert, order_search, output_data, student_search
 from qn import upload_file_qn, list_file, QINIU_DOMAIN, VIDEO_CONVERT_PARAM, VIDEO_POSTER_PARAM, data_handle, \
     delete_data, put_block_data
 from message import push_custom_message
@@ -479,6 +479,27 @@ def admin_student(req):
         stu_list[i]['total_expense'] = total_expense
         stu_list[i]['last_order_time'] = last_time
     return render_to_response('student_admin.html', {'stu_list': stu_list}, context_instance=RequestContext(req))
+
+@login_require
+def admin_student_search(req):
+    search_text = req.POST.get('search_text', None)
+    if search_text:
+        raw_stu_list = student_search(search_text)
+    else:
+        raw_stu_list = Student.objects.all()
+    stu_list = serializer(raw_stu_list, datetime_format='string')
+    for i, stu in enumerate(raw_stu_list):
+        total_expense = 0.0
+        last_time = ''
+        order_list = stu.stu_orders.all().order_by('-create_time')
+        if order_list.exists():
+            last_time = datetime_to_string(order_list[0].create_time)
+            for itm in order_list:
+                total_expense += float(itm.order_price)
+        stu_list[i]['total_expense'] = total_expense
+        stu_list[i]['last_order_time'] = last_time
+    return render_to_response('student_admin.html', {'stu_list': stu_list}, context_instance=RequestContext(req))
+
 
 
 @login_require

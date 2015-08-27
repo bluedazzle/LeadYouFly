@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 from django.db import models
 from django.contrib.auth.models import BaseUserManager, AbstractBaseUser
+from django.utils.timezone import get_current_timezone
 import datetime
 import hashlib
 # Create your models here.
@@ -186,10 +187,10 @@ class Student(AbstractBaseUser, BaseModel):
     account = models.CharField(max_length=11, unique=True)
     nick = models.CharField(max_length=20, null=True, blank=True, default="Mentor")
     rank = models.IntegerField(default=1)
-    qq = models.CharField(max_length=20, null=True, blank=True)
-    yy = models.CharField(max_length=50, null=True, blank=True)
-    phone = models.CharField(max_length=11, null=True, blank=True)
-    avatar = models.CharField(max_length=200, default='/img/default_stu.jpg')
+    qq = models.CharField(max_length=20, null=True, blank=True, default='')
+    yy = models.CharField(max_length=50, null=True, blank=True, default='')
+    phone = models.CharField(max_length=11, null=True, blank=True, default='')
+    avatar = models.CharField(max_length=200, default='/img/avatar/1.png')
     money = models.FloatField(default=0.0)
     exp = models.IntegerField(default=0)
     follow = models.ManyToManyField(Mentor, related_name='my_students', null=True, blank=True)
@@ -348,17 +349,17 @@ class PhoneVerify(BaseModel):
             return False
 
     def is_get_again(self):
-        time_now = datetime.datetime.utcnow()
+        time_now = datetime.datetime.now(tz=get_current_timezone())
         time_delta = datetime.timedelta(seconds=30)
-        if time_now - self.create_time.replace(tzinfo=None) >= time_delta:
+        if time_now - self.modify_time >= time_delta:
             return True
         else:
             return False
 
     def is_expire(self):
-        time_now = datetime.datetime.utcnow()
+        time_now = datetime.datetime.now(tz=get_current_timezone())
         time_delta = datetime.timedelta(minutes=10)
-        if time_now - self.create_time.replace(tzinfo=None) >= time_delta:
+        if time_now - self.modify_time >= time_delta:
             return True
         else:
             return False

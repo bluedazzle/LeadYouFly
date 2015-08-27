@@ -2,10 +2,10 @@
 {% block define %}
   <div class="col-md-12 col-lg-12 user-host-nav">
     <div class="teacher-host-head text-center">
-      <img class="teacher-head" src="/img/touxiang.jpg"/>
-      <p style="color: #ffffff;font-size: 16px;margin-top: 5px">测试用户</p>
+      <img class="teacher-head" src="{{ active_user.avatar }}"/>
+      <p style="color: #ffffff;font-size: 16px;margin-top: 5px">{{ active_user.nick }}</p>
       <p style="color: #bdc3c7; font-size: 14px">
-        <span style="color: #fff;">2015/4/12</span>入学，已完成<span style="color: #fff;">13</span>堂课
+        <span style="color: #fff;">{{ active_user.create_time }}</span>入学，已完成<span style="color: #fff;">13</span>堂课
       </p>
     </div>
   </div>

@@ -20,6 +20,7 @@ from LYFAdmin.models import Hero, Mentor, IndexAdmin, Order, Course, Student, Ch
 
 from forms import MentorDetailContentForm, NoticeContentForm
 from decorator import login_require
+from message import REG_MES, create_new_message
 from utils import upload_picture, datetime_to_string, auth_admin, hero_convert, order_status_convert, \
     mentor_status_convert, order_search, output_data, student_search
 from qn import upload_file_qn, list_file, QINIU_DOMAIN, VIDEO_CONVERT_PARAM, VIDEO_POSTER_PARAM, data_handle, \

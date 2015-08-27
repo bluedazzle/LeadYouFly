@@ -2,6 +2,7 @@
 <html>
 <head lang="en">
     <meta charset="UTF-8">
+    <link href="/img/shortcut.png" rel="shortcut icon"/>
     <link href="/css/bootstrap.min.css" rel="stylesheet">
     <link href="/css/flat-ui.min.css" rel="stylesheet">
     <link href="/css/LFYAdmin/main.css" rel="stylesheet">
@@ -10,9 +11,9 @@
 </head>
 <body style="background-color: #eee; font-family:microsoft YaHei;">
 {% ifequal fail True %}
-<div class="alert alert-danger text-center" role="alert" style="text-align: center;height: 50px;margin-top: 0;">
-    <strong>用户名或密码错误</strong>
-</div>
+    <div class="alert alert-danger text-center" role="alert" style="text-align: center;height: 50px;margin-top: 0;">
+        <strong>用户名或密码错误</strong>
+    </div>
 {% endifequal %}
 <div class="container">
     <div class="login">

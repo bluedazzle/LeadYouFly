@@ -11,6 +11,8 @@ from django.core.paginator import EmptyPage
 from django.contrib.auth.decorators import login_required
 import datetime
 from django.db.models import Q
+from LYFAdmin.utils import create_random_avatar
+from LYFAdmin.message import REG_MES, create_new_message
 from models import *
 import json
 import utils
@@ -87,9 +89,11 @@ def register(request):
         new_user.account = form_data['phone']
         new_user.nick = form_data['username']
         new_user.set_password(form_data['password'])
+        new_user.avatar = create_random_avatar()
         new_user.save()
         phone_verify[0].delete()
-
+        reg_mes = REG_MES % form_data['username'].encode('utf-8')
+        create_new_message(reg_mes, new_user)
         return HttpResponse(json.dumps("success"))
 
 

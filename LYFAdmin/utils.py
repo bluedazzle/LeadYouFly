@@ -182,3 +182,9 @@ def output_data(file_name, order_list):
     output_path = "static/output/" + file_name
     wb.save(output_path)
     return '/output/' + file_name
+
+
+def create_random_avatar():
+    r_num = random.randint(1, 73)
+    file_name = '/img/avatar/%i.png' % r_num
+    return file_name

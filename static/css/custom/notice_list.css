@@ -1,0 +1,22 @@
+.notices-list{
+    margin-top: 10px;
+    width: 600px;
+    display: inline-block;
+    text-align: left;
+}
+
+.notices-list>h6>a{
+    font-size: 18px;
+}
+
+.notices-list>h6{
+    border-bottom: 1px solid #1abc9c;
+    padding-bottom: 10px;
+}
+
+.notices-list>h6>span{
+    float: right;
+    font-size: 14px;
+    color: #DDDDDD;
+    padding-top: 7px;
+}

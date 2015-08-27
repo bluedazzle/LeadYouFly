@@ -1,0 +1,13 @@
+.notice-content{
+    text-align: left;
+}
+
+.notice-detail{
+    min-width: 600px;
+    max-width: 1000px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    display: inline-block;
+    padding: 20px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}

@@ -1,139 +1,142 @@
 <!DOCTYPE html>
 <html>
 <head lang="en">
-    <meta charset="UTF-8">
-    <link href="/img/shortcut.png" rel="shortcut icon"/>
-    <title>带你飞</title>
-    <link href="/css/bootstrap.min.css" rel="stylesheet"/>
-    <link href="/css/flat-ui.min.css" rel="stylesheet">
-    <link href="/css/custom/leadFlyBase.css" rel="stylesheet"/>
-    {% block css %}
-    {% endblock %}
-    <script src="http://cdn.bootcss.com/jquery/1.11.2/jquery.min.js"></script>
-    <script src="/js/bootstrap.min.js"></script>
+  <meta charset="UTF-8">
+  <link href="/img/shortcut.png" rel="shortcut icon"/>
+  <title>带你飞</title>
+  <link href="/css/bootstrap.min.css" rel="stylesheet"/>
+  <link href="/css/flat-ui.min.css" rel="stylesheet">
+  <link href="/css/custom/leadFlyBase.css" rel="stylesheet"/>
+  {% block css %}
+  {% endblock %}
+  <script src="http://cdn.bootcss.com/jquery/1.11.2/jquery.min.js"></script>
+  <script src="/js/bootstrap.min.js"></script>
 </head>
 <body>
 <div id="container">
-    <div id="header">
-        <nav class="navbar navbar-default" style="margin-bottom: 0;border-radius: 0;padding: 0 5% 0 5%">
-            <div class="container-fluid">
-                <!-- Brand and toggle get grouped for better mobile display -->
-                <div class="navbar-header">
-                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
-                            data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
-                        <span class="sr-only">Toggle navigation</span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                    </button>
-                    <a class="navbar-brand" href="/">带你飞</a>
-                </div>
+  <div id="header">
+    <nav class="navbar navbar-default" style="margin-bottom: 0;border-radius: 0;padding: 0 5% 0 5%">
+      <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
+                  data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a href="/">
+            <img class="nav-logo" src="/img/logo.png"/>
+          </a>
+        </div>
 
-                <!-- Collect the nav links, forms, and other content for toggling -->
-                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                    <form class="navbar-form navbar-left" role="search">
-                        <div class="form-group">
-                            <input type="text" class="form-control" placeholder="Search">
-                        </div>
-                        <button type="submit" class="btn btn-default">Submit</button>
-                    </form>
-                    <ul class="nav navbar-nav navbar-right">
-                        <li><a href="/search_teacher" class="lg-title">寻找导师</a></li>
-                        {% if not is_login %}
-                            <li><a href="/login" class="sm-title">登录</a></li>
-                            <li><a href="/register" class="sm-title">注册</a></li>
-                        {% else %}
-                            {% if login_type == 'student' %}
-                                <li class="dropdown">
-                                    <a href="#" class="dropdown-toggle" id="student-route" data-toggle="dropdown"
-                                       role="button" aria-haspopup="true" aria-expanded="false">
-                                        <img style="width: 30px;height: 30px;border-radius: 50%"
-                                             src="{{ active_user.avatar }}"/>
-                                        <span class="caret"></span>
-                                    </a>
-                                    <ul class="dropdown-menu">
-                                        <li class="user-mes-title">
-                                            <span>资料</span>
-                                        </li>
-                                        <li><a href="/user/complete_mes">我的档案</a></li>
-                                        <li><a href="/user/my_orders">我的订单</a></li>
-                                        <li><a href="/user/my_follow_mentors">关注导师</a></li>
-                                        {#                  <li><a href="/user/comment">交流中心</a></li>#}
-                                        <li><a href="/user/message">消息</a></li>
-                                        <li class="user-mes-title">
-                                            <span>服务</span>
-                                        </li>
-                                        <li><a href="/user/recharge_withdrawal">充值提现</a></li>
-                                        <li><a href="/user/security_center">安全中心</a></li>
-                                        <li><a href="/user/complain">投诉</a></li>
-                                        <li><a href="/logout">退出</a></li>
-                                    </ul>
-                                </li>
-                            {% elif login_type == 'teacher' %}
-                                <li class="dropdown">
-                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
-                                       aria-haspopup="true" aria-expanded="false">
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+          <form class="navbar-form navbar-left" role="search">
+            <div class="form-group">
+              <input type="text" class="form-control" placeholder="Search">
+            </div>
+            <button type="submit" class="btn btn-default">Submit</button>
+          </form>
+          <ul class="nav navbar-nav navbar-right">
+            <li><a href="/search_teacher" class="lg-title">寻找导师</a></li>
+            {% if not is_login %}
+              <li><a href="/login" class="sm-title">登录</a></li>
+              <li><a href="/register" class="sm-title">注册</a></li>
+            {% else %}
+              {% if login_type == 'student' %}
+                <li class="dropdown">
+                  <a href="#" class="dropdown-toggle" id="student-route" data-toggle="dropdown"
+                     role="button" aria-haspopup="true" aria-expanded="false">
+                    <img style="width: 30px;height: 30px;border-radius: 50%"
+                         src="{{ active_user.avatar }}"/>
+                    <span class="caret"></span>
+                  </a>
+                  <ul class="dropdown-menu">
+                    <li class="user-mes-title">
+                      <span>资料</span>
+                    </li>
+                    <li><a href="/user/complete_mes">我的档案</a></li>
+                    <li><a href="/user/my_orders">我的订单</a></li>
+                    <li><a href="/user/my_follow_mentors">关注导师</a></li>
+                    {#                  <li><a href="/user/comment">交流中心</a></li>#}
+                    <li><a href="/user/message">消息</a></li>
+                    <li class="user-mes-title">
+                      <span>服务</span>
+                    </li>
+                    <li><a href="/user/recharge_withdrawal">充值提现</a></li>
+                    <li><a href="/user/security_center">安全中心</a></li>
+                    <li><a href="/user/complain">投诉</a></li>
+                    <li><a href="/logout">退出</a></li>
+                  </ul>
+                </li>
+              {% elif login_type == 'teacher' %}
+                <li class="dropdown">
+                  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
+                     aria-haspopup="true" aria-expanded="false">
                     <span id="mentor-status" class="mentor-status">
                       {% if mentor.status == 1 %}
-                          可立即授课
+                        可立即授课
                       {% elif mentor.status == 0 %}
-                          休息中
+                        休息中
                       {% elif mentor.status == 2 %}
-                          上课中
+                        上课中
                       {% endif %}
                     </span>
-                                        <span class="caret"></span>
-                                    </a>
-                                    <ul class="dropdown-menu">
-                                        <li><a href="#" onclick="changeMentorStatus(1)">可立即授课</a></li>
-                                        <li><a href="#" onclick="changeMentorStatus(0)">休息中</a></li>
-                                    </ul>
-                                </li>
-                            {% endif %}
-                        {% endif %}
-                    </ul>
-                </div>
-                <!-- /.navbar-collapse -->
-            </div>
-            <!-- /.container-fluid -->
-        </nav>
-    </div>
-    <div id="page" class="clearfix">
-        {% block define %}
-        {% endblock %}
-    </div>
-    <div id="footer">
-        <div class="col-md-12 col-lg-12 footer">
-            <div class="container">
-                <p class="footer-line">&nbsp;</p>
-            </div>
-            <div class="container">
-                <div class="footer-two">
-                    <div class="col-lg-2 col-md-2">
-                        <a href="/about_us">关于我们</a>
-                    </div>
-                    <div class="col-lg-2 col-md-2">
-                        <a href="/contact_us">联系我们</a>
-                    </div>
-                    <div class="col-lg-2 col-md-2">
-                        <a href="/become_mentor">成为教练</a>
-                    </div>
-                    <div class="col-lg-2 col-md-2">
-                        <a href="/laws">法律声明</a>
-                    </div>
-                    <div class="col-lg-2 col-md-2">
-                        <a href="/problem">常见问题</a>
-                    </div>
-                    <div class="col-lg-2 col-md-2">
-                        <a href="/service">服务指南</a>
-                    </div>
-                </div>
-                <div class="text-center">
-                    <p style="color: #95a5a6;font-size: 14px">Copyright© 带你飞.com 版权所有&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;京公安网备案号11010502026831</p>
-                </div>
-            </div>
+                    <span class="caret"></span>
+                  </a>
+                  <ul class="dropdown-menu">
+                    <li><a href="#" onclick="changeMentorStatus(1)">可立即授课</a></li>
+                    <li><a href="#" onclick="changeMentorStatus(0)">休息中</a></li>
+                    <li><a href="/logout">退出</a></li>
+                  </ul>
+                </li>
+              {% endif %}
+            {% endif %}
+          </ul>
         </div>
+        <!-- /.navbar-collapse -->
+      </div>
+      <!-- /.container-fluid -->
+    </nav>
+  </div>
+  <div id="page" class="clearfix">
+    {% block define %}
+    {% endblock %}
+  </div>
+  <div id="footer">
+    <div class="col-md-12 col-lg-12 footer">
+      <div class="container">
+        <p class="footer-line">&nbsp;</p>
+      </div>
+      <div class="container">
+        <div class="footer-two">
+          <div class="col-lg-2 col-md-2">
+            <a href="/about_us">关于我们</a>
+          </div>
+          <div class="col-lg-2 col-md-2">
+            <a href="/contact_us">联系我们</a>
+          </div>
+          <div class="col-lg-2 col-md-2">
+            <a href="/become_mentor">成为教练</a>
+          </div>
+          <div class="col-lg-2 col-md-2">
+            <a href="/laws">法律声明</a>
+          </div>
+          <div class="col-lg-2 col-md-2">
+            <a href="/problem">常见问题</a>
+          </div>
+          <div class="col-lg-2 col-md-2">
+            <a href="/service">服务指南</a>
+          </div>
+        </div>
+        <div class="text-center">
+          <p style="color: #95a5a6;font-size: 14px">Copyright© 带你飞.com 版权所有&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;京公安网备案号11010502026831</p>
+        </div>
+      </div>
     </div>
+  </div>
 </div>
 <script src="/js/common/common.js"></script>
 {% block script %}

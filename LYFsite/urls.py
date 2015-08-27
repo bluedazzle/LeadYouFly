@@ -8,7 +8,6 @@ urlpatterns = patterns('',
                        url('^$', host),
 
                        # common
-
                        url('^login$', login),
                        url('^register$', register),
                        url('^get_verify_sms$', utils.get_verify_code),
@@ -21,6 +20,8 @@ urlpatterns = patterns('',
                        url('^problems$', problems),
                        url('^service$', service),
                        url('^logout$', logout),
+                       url('^notices_list$', notices_list),
+                       url('^notice_detail$', notice_detail),
 
                        # teacher
 

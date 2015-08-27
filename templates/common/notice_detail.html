@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+
+{% block css %}
+  <link href="/css/custom/notice_detail.css" rel="stylesheet"/>
+{% endblock %}
+
+{% block define %}
+  <div class="container text-center">
+    <div class="notice-detail">
+      <h6>
+        {{ notice.title }}
+        <span>{{ notice.create_time | date:"Y-m-d" }}</span>
+      </h6>
+      <div class="notice-content">
+        {{ notice.content | safe }}
+      </div>
+    </div>
+  </div>
+{% endblock %}

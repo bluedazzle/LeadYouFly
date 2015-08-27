@@ -3,30 +3,45 @@
   <div id="carousel-example-generic" class="carousel slide container" data-ride="carousel">
     <!-- Indicators -->
     <ol class="carousel-indicators">
+      {% if index_data.index_pic1 %}
       <li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
+      {% endif %}
+      {% if index_data.index_pic2 %}
       <li data-target="#carousel-example-generic" data-slide-to="1"></li>
+      {% endif %}
+      {% if index_data.index_pic3 %}
       <li data-target="#carousel-example-generic" data-slide-to="2"></li>
+      {% endif %}
     </ol>
     <!-- Wrapper for slides -->
     <div class="carousel-inner" role="listbox">
+      {% if index_data.index_pic1 %}
       <div class="item active">
-        <img src="/img/index.jpg" alt="...">
+        <img src="{{ index_data.index_pic1 }}" alt="...">
         <div class="carousel-caption" style="padding-bottom: 25%">
-          <button class="btn btn-default btn-lg">寻找导师</button>
+          <button class="btn btn-find-mentor">
+            寻找导师<br/>
+            <span style="font-size: 12px">Find a mentor</span>
+          </button>
         </div>
       </div>
+      {% endif %}
+      {% if index_data.index_pic2 %}
       <div class="item">
-        <img src="/img/index.jpg" alt="...">
+        <img src="{{ index_data.index_pic2 }}" alt="...">
         <div class="carousel-caption">
 
         </div>
       </div>
+      {% endif %}
+      {% if index_data.index_pic3 %}
       <div class="item">
-        <img src="/img/index.jpg" alt="...">
+        <img src="{{ index_data.index_pic3 }}" alt="...">
         <div class="carousel-caption">
 
         </div>
       </div>
+      {% endif %}
     </div>
   </div>
   <div class="container">
@@ -35,24 +50,25 @@
         平台介绍
       </h6>
       <div>
-        <video class="video-js" preload="auto" poster="/img/poster.jpg" data-setup="{}">
-          <source src="http://iurevych.github.com/Flat-UI-videos/big_buck_bunny.mp4" type="video/mp4">
-          <source src="http://iurevych.github.com/Flat-UI-videos/big_buck_bunny.webm" type="video/webm">
+        <video class="video-js" preload="auto" poster="{{ index_data.video_poster }}" data-setup="{}">
+          <source src="{{ index_data.index_video }}" type="video/mp4">
+{#          <source src="http://iurevych.github.com/Flat-UI-videos/big_buck_bunny.webm" type="video/webm">#}
         </video>
       </div>
     </div>
     <div class="col-lg-6 col-md-6">
       <h6 class="host-title">
         最新消息
+        <a class="more-notices" href="/notices_list">more</a>
       </h6>
       <table class="table table-host">
         <tbody>
-        {% for test in test_array %}
+        {% for notice in notices %}
           <tr>
             <td>
               <div class="table-host-ver">&nbsp;</div>
               <a href="#">
-                {{ test }}
+                {{ notice.title }}
               </a>
             </td>
           </tr>
@@ -64,20 +80,37 @@
   <div class="container recommend-teacher-container">
     <h6 class="host-title col-lg-12 col-md-12">
       推荐导师
-      <a style="float: right;font-size: 14px" href="/search_teacher">(查看全部)</a>
     </h6>
-    {% for item in test_list %}
+    {% for mentor in recommend %}
+      {% if mentor %}
       <div class="col-lg-3 col-md-3">
         <div class="host-teacher-box">
           <div class="recommend-teacher-header" style="background: url('/img/0.jpg') center"></div>
           <div class="recommend-teacher-base">
-            <h6>测试推荐导师</h6>
-            <p>擅长位置：中单</p>
-            <p>交易量：111111</p>
-            <p>用户评分：9.5</p>
+            <h6>
+              <a href="/mentor_detail?mentor_id={{ mentor.id }}" target="_blank">
+                {{ mentor.nick }}
+              </a>
+            </h6>
+            <p>擅长位置：
+                {% if mentor.good_at == 1 %}
+                  中单
+                {% elif mentor.good_at == 2 %}
+                  上单
+                {% elif mentor.good_at == 3 %}
+                  ADC
+                {% elif mentor.good_at == 4 %}
+                  打野
+                {% elif mentor.good_at == 5 %}
+                  辅助
+                {% endif %}
+            </p>
+            <p>交易量：{{ mentor.men_orders.count }}</p>
+            <p>用户评分：{{ mentor.mark }}</p>
           </div>
         </div>
       </div>
+      {% endif %}
     {% endfor %}
   </div>
 {% endblock %}

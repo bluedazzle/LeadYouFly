@@ -73,6 +73,7 @@ body{
     border: 2px solid #dddddd;
     font-size: 14px;
     width: 135px;
+    margin-bottom: 1px;
 }
 
 .input-verify{

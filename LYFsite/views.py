@@ -29,14 +29,61 @@ def host(request):
         return_content['is_login'] = True
     else:
         return_content = dict()
+
     if request.method == 'GET':
-        test_array = []
-        for i in range(0, 6):
-            test_array.append("测试数据!!!这个是测试数据" + str(i))
-        return_content['test_array'] = test_array
-        return_content['test_list'] = range(0, 4)
-    return render_to_response('common/host.html',
-                              return_content)
+        index_data = IndexAdmin.objects.all().first()
+        return_content['index_data'] = index_data
+        recommend = list()
+        recommend.append(index_data.rec_mentor1)
+        recommend.append(index_data.rec_mentor2)
+        recommend.append(index_data.rec_mentor3)
+        recommend.append(index_data.rec_mentor4)
+        return_content['recommend'] = recommend
+        notices = Notice.objects.order_by('-create_time').all()[:7]
+        return_content['notices'] = notices
+        return render_to_response('common/host.html',
+                                  return_content)
+
+
+def notices_list(request):
+    return_content = utils.is_login(request)
+    if return_content:
+        return_content['is_login'] = True
+    else:
+        return_content = dict()
+    if request.method == 'GET':
+        page = request.GET.get('page')
+        notices = Notice.objects.order_by('-create_time').all()
+        paginator = Paginator(notices, 20)
+        try:
+            notices = paginator.page(page)
+        except PageNotAnInteger:
+            notices = paginator.page(1)
+        except EmptyPage:
+            notices = paginator.page(paginator.num_pages)
+
+        return_content['notices'] = notices
+        return render_to_response('common/notices_list.html',
+                                  return_content)
+
+
+def notice_detail(request):
+    return_content = utils.is_login(request)
+    if return_content:
+        return_content['is_login'] = True
+    else:
+        return_content = dict()
+
+    if request.method == 'GET':
+        notice_id = request.GET.get('id')
+        try:
+            notice = Notice.objects.get(id=notice_id)
+            return_content['notice'] = notice
+        except Notice.DoesNotExist:
+            raise Http404
+
+        return render_to_response('common/notice_detail.html',
+                                  return_content)
 
 
 def login(request):
@@ -105,6 +152,7 @@ def search_teacher(request):
         return_content['is_login'] = True
     else:
         return_content = dict()
+
     heroes = Hero.objects.all()
     return_content['heroes'] = heroes
     if not request.session.get('teach_area'):
@@ -147,7 +195,6 @@ def search_teacher(request):
                                      Q(expert_hero2=hero_to_teach) |
                                      Q(expert_hero3=hero_to_teach))
 
-        return_content['mentors'] = mentors
         paginator = Paginator(mentors, 12)
         try:
             page_num = request.GET.get('page_num')

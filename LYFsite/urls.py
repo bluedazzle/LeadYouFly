@@ -22,6 +22,7 @@ urlpatterns = patterns('',
                        url('^logout$', logout),
                        url('^notices_list$', notices_list),
                        url('^notice_detail$', notice_detail),
+                       url('^test_pay$', test_pay),
 
                        # teacher
 

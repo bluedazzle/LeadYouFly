@@ -85,6 +85,11 @@ def notice_detail(request):
         return render_to_response('common/notice_detail.html',
                                   return_content)
 
+from LYFAdmin.online_pay import create_alipay_order
+def test_pay(req):
+    url = create_alipay_order('test', 'test', 'test')
+    return HttpResponseRedirect(url)
+
 
 def login(request):
     if request.method == 'GET':

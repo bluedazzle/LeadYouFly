@@ -53,6 +53,7 @@
                 <th data-sortable="true">交易量</th>
                 <th data-sortable="true">总收入</th>
                 <th data-sortable="true">用户评分</th>
+                <th data-sortable="true">排名优先级</th>
                 <th data-sortable="true">工作状态</th>
                 <th>操作</th>
             </tr>
@@ -66,10 +67,49 @@
                     <td>{{ mentor.total_orders }}</td>
                     <td>{{ mentor.total_income }}</td>
                     <td>{{ mentor.mark }}</td>
+                    <td>{{ mentor.priority }}</td>
                     <td>{{ mentor.status }}</td>
-
                     <td>
                         <a class="btn btn-primary btn-sm" href="/admin/mentor/info/{{ mentor.id }}/">详情</a>
+                        <a class="btn btn-primary btn-sm" data-toggle="modal"
+                           data-target="#priorityModal{{ mentor.id }}">更改优先级</a>
+
+                        <div class="modal fade" id="priorityModal{{ mentor.id }}" tabindex="-1" role="dialog"
+                             aria-labelledby="priorityModalLabel">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <button type="button" class="close" data-dismiss="modal"
+                                                aria-label="Close"><span
+                                                aria-hidden="true">&times;</span></button>
+                                        <h4 class="modal-title" id="noticeModalLabel">更改优先级</h4>
+                                    </div>
+                                    <div class="modal-body">
+                                        <form action="/admin/mentor/info/{{ mentor.id }}/change_priority/"
+                                              method="post">
+                                            {% csrf_token %}
+                                            <div class="form-group">
+                                                <label for="">优先级：</label>
+                                                <select name="new_priority" class="form-control select select-primary select-block mbl" id="">
+                                                    <option value="0">0</option>
+                                                    <option value="1">1</option>
+                                                    <option value="2">2</option>
+                                                    <option value="3">3</option>
+                                                    <option value="4">4</option>
+                                                    <option value="5">5</option>
+                                                </select>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-default" data-dismiss="modal">关闭
+                                                </button>
+                                                <button type="submit" class="btn btn-primary">确定</button>
+                                            </div>
+                                        </form>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
                     </td>
                 </tr>
             {% endfor %}

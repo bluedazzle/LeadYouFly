@@ -181,11 +181,14 @@ def admin_website(req):
     notice_list = serializer(notice_list, datetime_format='string')
     for notice in notice_list:
         notice['form'] = NoticeContentForm(initial={'Notice_Content': notice['content']})
-        notice['content'] = notice['content'][0:50]
     form = NoticeContentForm()
     return render_to_response('website_admin.html', {'hero_list': hero_list,
                                                      'form': form,
                                                      'notice_list': notice_list}, context_instance=RequestContext(req))
+
+def admin_website_notice_detail(req, nid):
+    notice = get_object_or_404(Notice, id=nid)
+    return render_to_response('wesite_admin_notice.html', {'notice': notice})
 
 
 #删除公告
@@ -308,10 +311,12 @@ def admin_order_output(req):
 def admin_mentor(req):
     raw_mentor_list = Mentor.objects.all().order_by('-create_time')
     mentor_list = serializer(raw_mentor_list, datetime_format='string')
+    priority_list = [{'index': 0}, {'index': 1}, {'index': 2}, {'index': 3}, {'index': 4}, {'index': 5}]
     for i, mentor in enumerate(raw_mentor_list):
         mentor_list[i]['total_orders'] = mentor.men_orders.all().count()
         mentor_list[i]['status'] = mentor_status_convert(mentor.status)
-    return render_to_response('mentor_admin.html', {'mentor_list': mentor_list}, context_instance=RequestContext(req))
+    return render_to_response('mentor_admin.html', {'mentor_list': mentor_list,
+                                                    'priority_list': priority_list}, context_instance=RequestContext(req))
 
 
 #添加导师
@@ -424,6 +429,18 @@ def admin_mentor_change_price(req, mid, cid):
     course.save()
     re_url = '/admin/mentor/detail/' + mid + '/'
     return HttpResponseRedirect(re_url)
+
+
+#更改导师优先级
+@login_require
+def admin_mentor_change_priority(req, mid):
+    mentor = get_object_or_404(Mentor, id=mid)
+    n_p = req.POST.get('new_priority', None)
+    if n_p:
+        mentor.priority = n_p
+        mentor.save()
+    return HttpResponseRedirect('/admin/mentor')
+
 
 
 #导师英雄池删除英雄

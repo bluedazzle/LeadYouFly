@@ -116,7 +116,7 @@
                     <thead>
                     <th>标题</th>
                     <th>发布时间</th>
-                    <th>内容预览</th>
+                    <th>内容</th>
                     <th>操作</th>
                     </thead>
                     <tbody>
@@ -124,7 +124,7 @@
                         <tr>
                             <td>{{ notice.title }}</td>
                             <td>{{ notice.create_time }}</td>
-                            <td title="test">{{ notice.content | safe }}</td>
+                            <td><a href="/admin/website/notice/{{ notice.id }}/">点击查看详细</a></td>
                             <td>
                                 <a href="/admin/website/modify_notice/{{ notice.id }}/" class="btn btn-primary">修改</a>
                                 <a href="/admin/website/del_notice/{{ notice.id }}/" class="btn btn-warning">删除</a>
@@ -137,8 +137,7 @@
                 <br/>
 
                 <div>
-                    <button type="button" class="btn btn-primary" data-toggle="modal"
-                            >新公告
+                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#noticeModal">新公告
                     </button>
                     <div class="modal fade" id="noticeModal" tabindex="-1" role="dialog"
                          aria-labelledby="noticeModalLabel">

@@ -160,6 +160,7 @@ class Mentor(AbstractBaseUser, BaseModel):
     cash_income = models.FloatField(default=0.0)
     mark = models.FloatField(default=0.0)
     freeze = models.BooleanField(default=False)
+    priority = models.IntegerField(default=0)
 
 
     USERNAME_FIELD = 'account'

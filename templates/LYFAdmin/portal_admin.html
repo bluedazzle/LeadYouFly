@@ -1,0 +1,37 @@
+{% extends "admin_base.html" %}
+{% block title %}个人信息{% endblock %}
+{% block page %}个人信息{% endblock %}
+{% block content %}
+    {% if status == 1 %}
+        <script>alert('修改密码成功！')</script>
+    {% elif status == 2 %}
+        <script>alert('原密码错误！')</script>
+    {% endif %}
+    <div class="my_contianer">
+        <div class="text-center">
+            <h5>{{ admin.nick }}</h5>
+
+            <div>注册时间：{{ admin.create_time | date:"Y-m-d H:i:s"  }}</div>
+            <div>注册账号：{{ admin.account }}</div>
+            <br/>
+
+            <div style="padding-left: 30%; padding-right: 30%;" class="text-left">
+                <div>修改密码：</div>
+                <form action="/admin/portal/change_password/" method="post">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <label for="">旧密码：</label>
+                        <input type="password" class="form-control" name="old_password" id="old_password"
+                               placeholder="旧密码">
+                    </div>
+                    <div class="form-group">
+                        <label for="">新密码：</label>
+                        <input type="text" class="form-control" name="new_password" id="new_password"
+                               placeholder="新密码">
+                    </div>
+                    <button type="submit" class="btn btn-primary">保存</button>
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}

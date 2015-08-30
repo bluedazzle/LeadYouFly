@@ -171,6 +171,39 @@ def admin_index_change_picture(req):
     return HttpResponseRedirect('/admin/index')
 
 
+#个人信息
+@login_require
+def admin_portal(req):
+    token = req.session.get('token', None)
+    if token:
+        admin = get_object_or_404(Admin, token=token)
+        return render_to_response('portal_admin.html', {'admin': admin,
+                                                        'status': 0}, context_instance=RequestContext(req))
+
+
+#管理员更改密码
+@login_require
+def admin_portal_change_password(req):
+    old_password = req.POST.get('old_password', None)
+    new_password = req.POST.get('new_password', None)
+    token = req.session.get('token', None)
+    admin = get_object_or_404(Admin, token=token)
+    if old_password and new_password:
+        hs_pas = hashlib.md5(old_password).hexdigest()
+        if admin.password == hs_pas:
+            admin.password = hashlib.md5(new_password).hexdigest()
+            admin.save()
+            return render_to_response('portal_admin.html', {'admin': admin,
+                                                            'status': 1}, context_instance=RequestContext(req))
+        else:
+            return render_to_response('portal_admin.html', {'admin': admin,
+                                                            'status': 2}, context_instance=RequestContext(req))
+    return render_to_response('portal_admin.html', {'admin': admin,
+                                                    'status': 2}, context_instance=RequestContext(req))
+
+
+
+
 #网站管理
 @login_require
 def admin_website(req):

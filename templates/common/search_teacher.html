@@ -44,10 +44,10 @@
 
       <div class="btn-group col-lg-10 col-md-10" style="float: right;">
         <button type="button" class="btn btn-select" style="margin-top: 0" onclick="openSelectScreen(3)">
-          {% if not teach_hero or teach_hero == '0' %}
-            全部英雄
-          {% else %}
+          {% if teach_hero %}
             {{ teach_hero.hero_name }}
+          {% else %}
+            全部英雄
           {% endif %}
           <span class="glyphicon glyphicon-menu-down"></span>
         </button>
@@ -200,13 +200,15 @@
         <a href="/search_teacher?teach_hero=0">所有英雄</a>
         <br/>
         {% for hero in heroes %}
-          {% if teach_position and teach_position != '0' and hero.hero_type == teach_position %}
-            <a href="/search_teacher?teach_hero={{ hero.id }}">{{ hero.hero_name }}</a>
-            <br/>
-          {% elif not teach_position or teach_position == '0' %}
-            <a href="/search_teacher?teach_hero={{ hero.id }}">{{ hero.hero_name }}</a>
-            <br/>
-          {% endif %}
+          {#          {% if teach_position and teach_position != '0' and hero.hero_type == teach_position %}#}
+          {#            <a href="/search_teacher?teach_hero={{ hero.id }}">{{ hero.hero_name }}</a>#}
+          {#            <br/>#}
+          {#          {% elif not teach_position or teach_position == '0' %}#}
+          {#            <a href="/search_teacher?teach_hero={{ hero.id }}">{{ hero.hero_name }}</a>#}
+          {#            <br/>#}
+          {#          {% endif %}#}
+          <a href="/search_teacher?teach_hero={{ hero.id }}">{{ hero.hero_name }}</a>
+          <br/>
         {% endfor %}
       </div>
     </div>
@@ -214,4 +216,13 @@
 {% endblock %}
 {% block script %}
   <script src="/js/common/search_teacher.js"></script>
+  <script>
+    $(document).ready(function(){
+      {% if teach_hero %}
+        $('.search-teacher-head').css('background', 'url({{ teach_hero.hero_background }})');
+      {% else %}
+        $('.search-teacher-head').css('background', 'url(/img/2.jpg)');
+      {% endif %}
+    });
+  </script>
 {% endblock %}

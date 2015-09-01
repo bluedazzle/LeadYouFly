@@ -11,6 +11,7 @@ from django.shortcuts import render_to_response, HttpResponseRedirect, Http404
 from django.shortcuts import get_object_or_404
 from django.http import HttpResponse, Http404
 from django.template import RequestContext
+from django.views.decorators.csrf import csrf_exempt
 from django.db.models import Q
 from PIL import Image
 from dss.Serializer import serializer
@@ -102,7 +103,6 @@ def admin_index_new_video(req):
     video_format = ['mp4', 'flv', 'avi', 'rmvb', 'webm', 'ogg']
     support_format = ['mp4', 'webm', 'ogg']
     video_data = req.FILES.get('new_video', None)
-    print video_data.name
     if video_data is not None:
         file_name, ext_name = video_data.name.encode('utf-8').split('.')
         if ext_name in video_format:

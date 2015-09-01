@@ -11,3 +11,7 @@
     margin-top: 20px;
     margin-bottom: 20px;
 }
+
+.notice-content img{
+    max-width: 100%;
+}

@@ -35,8 +35,35 @@ html,body {
     clear:both;
 }
 
+.search-form{
+    margin-left: 30px;
+}
+
+.btn-search,
+.btn-search:hover{
+    background-color: #FFFFFF;
+    color: #000000;
+}
+
+
+.btn-search>span{
+    font-size: 20px;
+}
+
+.nav-base-host{
+    position: relative;
+}
+
+.divide-line{
+    position: absolute;
+    height: 100%;
+    width: 1px;
+    background-color: #1abc9c;
+    left: 90px;
+}
+
 .nav-logo{
-    width: 60px;
+    width: 53px;
     display: inline-block;
 }
 
@@ -65,8 +92,8 @@ html,body {
 
 .carousel-indicators li {
   display: inline-block;
-  width: 20px;
-  height: 20px;
+  width: 14px;
+  height: 14px;
   margin: 1px 1px 1px 10px;
   text-indent: -999px;
   cursor: pointer;
@@ -78,8 +105,8 @@ html,body {
 
 .carousel-indicators .active {
   display: inline-block;
-  width: 20px;
-  height: 20px;
+  width: 14px;
+  height: 14px;
   margin: 1px 1px 1px 10px;
   text-indent: -999px;
   cursor: pointer;
@@ -89,11 +116,16 @@ html,body {
   border-radius: 50%;
 }
 
+.nav .lg-title,
 .lg-title{
     font-size: 18px;
+    font-weight: 100;
 }
+
+.nav .sm-title,
 .sm-title{
     font-size: 14px;
+    font-weight: 100;
 }
 
 .more-notices{
@@ -229,14 +261,18 @@ html,body {
 }
 
 .host-teacher-box{
-    height: 160px;
+    /*height: 50%;*/
     border: 1px solid #DDDDDD;
     border-radius: 6px;
     padding: 0;
+    cursor: pointer;
 }
 
 .recommend-teacher-container{
     margin-bottom: 20px;
+    position: relative;
+    display: block;
+    height: 30%;
 }
 
 .recommend-teacher-header{
@@ -252,18 +288,19 @@ html,body {
     width: 54.901961%;
     display: inline-block;
     position: absolute;
-    padding-left: 20px;
+    padding-left: 5px;
 }
 
 .recommend-teacher-base h6{
-    font-size: 16px;
-    margin-top: 20px;
-    margin-bottom: 20px;
+    font-size: 1em;
+    margin-top: 15px;
+    margin-bottom: 15px;
+    color: rgb(60, 60, 60);
 }
 
 .recommend-teacher-base p{
-    font-size: 14px;
-    line-height: 1.4;
+    font-size: 0.5em;
+    line-height: 0.7;
 }
 
 

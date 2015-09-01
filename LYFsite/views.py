@@ -171,6 +171,7 @@ def search_teacher(request):
         teach_area = request.GET.get('teach_area')
         teach_position = request.GET.get('teach_position')
         teach_hero = request.GET.get('teach_hero')
+        hero_name = request.GET.get('hero_name')
         if teach_area:
             request.session['teach_area'] = teach_area
 
@@ -200,6 +201,7 @@ def search_teacher(request):
                                      Q(expert_hero2=hero_to_teach) |
                                      Q(expert_hero3=hero_to_teach))
 
+        mentors.order_by('status').order_by('-priority')
         paginator = Paginator(mentors, 12)
         try:
             page_num = request.GET.get('page_num')

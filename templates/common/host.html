@@ -29,16 +29,22 @@
       {% if index_data.index_pic2 %}
       <div class="item">
         <img src="{{ index_data.index_pic2 }}" alt="...">
-        <div class="carousel-caption">
-
+        <div class="carousel-caption" style="padding-bottom: 25%">
+          <button class="btn btn-find-mentor">
+            寻找导师<br/>
+            <span style="font-size: 12px">Find a mentor</span>
+          </button>
         </div>
       </div>
       {% endif %}
       {% if index_data.index_pic3 %}
       <div class="item">
         <img src="{{ index_data.index_pic3 }}" alt="...">
-        <div class="carousel-caption">
-
+        <div class="carousel-caption" style="padding-bottom: 25%">
+          <button class="btn btn-find-mentor">
+            寻找导师<br/>
+            <span style="font-size: 12px">Find a mentor</span>
+          </button>
         </div>
       </div>
       {% endif %}
@@ -67,7 +73,7 @@
           <tr>
             <td>
               <div class="table-host-ver">&nbsp;</div>
-              <a href="#">
+              <a href="/notice_detail?id={{ notice.id }}">
                 {{ notice.title }}
               </a>
             </td>
@@ -84,13 +90,11 @@
     {% for mentor in recommend %}
       {% if mentor %}
       <div class="col-lg-3 col-md-3">
-        <div class="host-teacher-box">
-          <div class="recommend-teacher-header" style="background: url('/img/0.jpg') center"></div>
+        <div class="host-teacher-box" onclick="recommendTeacher('{{ mentor.id }}')">
+          <div class="recommend-teacher-header" style="background: url('{{ mentor.avatar }}') center"></div>
           <div class="recommend-teacher-base">
             <h6>
-              <a href="/mentor_detail?mentor_id={{ mentor.id }}" target="_blank">
                 {{ mentor.nick }}
-              </a>
             </h6>
             <p>擅长位置：
                 {% if mentor.good_at == 1 %}
@@ -115,6 +119,6 @@
   </div>
 {% endblock %}
 {% block script %}
-  <script src="/js/host.js"></script>
+  <script src="/js/common/host.js"></script>
   <script src="//vjs.zencdn.net/4.7/video.js"></script>
 {% endblock %}

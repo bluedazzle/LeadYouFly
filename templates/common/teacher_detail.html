@@ -43,7 +43,6 @@
 
           <p>评分：{{ mentor_detail.mark }}</p>
           <br/>
-
           <p>
             擅长位置：
             {% if mentor_detail.good_at == 1 %}
@@ -78,12 +77,12 @@
 
           <p>
             可教学大区：
-            {% if mentor_detail.teach_area == '0' %}
-              全区
-            {% elif mentor_detail.teach_area == '1' %}
+            {% if mentor_detail.teach_area == '1' %}
               电信
             {% elif mentor_detail.teach_area == '2' %}
               网通
+            {% else %}
+              全区
             {% endif %}
           </p>
         </div>

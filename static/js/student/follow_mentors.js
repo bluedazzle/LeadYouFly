@@ -16,3 +16,7 @@ function cancelFollow(teacherId){
       }
   )
 }
+
+function toMentorDetail(id){
+  window.location = "/mentor_detail?mentor_id=" + id;
+}

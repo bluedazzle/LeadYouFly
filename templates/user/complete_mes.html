@@ -5,7 +5,7 @@
       <img class="teacher-head" src="{{ active_user.avatar }}"/>
       <p style="color: #ffffff;font-size: 16px;margin-top: 5px">{{ active_user.nick }}</p>
       <p style="color: #bdc3c7; font-size: 14px">
-        <span style="color: #fff;">{{ active_user.create_time }}</span>入学，已完成<span style="color: #fff;">13</span>堂课
+        <span style="color: #fff;">{{ active_user.create_time | date:"Y/m/d" }}</span>入学，已完成<span style="color: #fff;">13</span>堂课
       </p>
     </div>
   </div>

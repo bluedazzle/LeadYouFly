@@ -54,6 +54,12 @@ $(document).ready(function(){
   });
 
 
+  $("body").keydown(function() {
+    if (event.keyCode == "13") {//keyCode=13是回车键
+      $('#submit_register').click();
+    }
+  });
+
   $('#submit_register').click(function(){
     var phone = $('#phone').val();
     var account = $('#username').val();

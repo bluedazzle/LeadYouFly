@@ -152,14 +152,15 @@ def register(request):
 def search_teacher(request):
     return_content = utils.is_login(request)
     if return_content:
-        if return_content['login_type'] == 'teacher':
-            return HttpResponseRedirect('/login')
+        # if return_content['login_type'] == 'teacher':
+        #     return HttpResponseRedirect('/login')
         return_content['is_login'] = True
     else:
         return_content = dict()
 
     heroes = Hero.objects.all()
     return_content['heroes'] = heroes
+    return_content['test_list'] = range(1, 150)
     if not request.session.get('teach_area'):
         request.session['teach_area'] = ''
     if not request.session.get('teach_position'):
@@ -168,10 +169,12 @@ def search_teacher(request):
         request.session['teach_hero'] = ''
 
     if request.method == 'GET':
+        search = request.GET.get('search')
         teach_area = request.GET.get('teach_area')
         teach_position = request.GET.get('teach_position')
         teach_hero = request.GET.get('teach_hero')
         hero_name = request.GET.get('hero_name')
+
         if teach_area:
             request.session['teach_area'] = teach_area
 
@@ -180,6 +183,9 @@ def search_teacher(request):
 
         if teach_hero:
             request.session['teach_hero'] = teach_hero
+
+        if search:
+            request.session['search'] = search
 
         teach_area = request.session.get('teach_area')
         teach_position = request.session.get('teach_position')

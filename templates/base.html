@@ -34,12 +34,12 @@
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse nav-base-host" id="bs-example-navbar-collapse-1">
           <i class="divide-line"></i>
-          <form class="navbar-form navbar-left search-form" action="/search_teacher" role="search">
+          <form class="navbar-form navbar-left search-form" action="/search_teacher" method="get" role="search">
             <button type="submit" class="btn btn-default btn-search">
               <span class="glyphicon glyphicon-search"></span>
             </button>
             <div class="form-group">
-              <input type="text" class="form-control" name="hero_name" placeholder="搜索...">
+              <input type="text" class="form-control" name="search" placeholder="搜索...">
             </div>
           </form>
           <ul class="nav navbar-nav navbar-right">
@@ -136,12 +136,15 @@
         </div>
         <div class="text-center">
           <p style="color: #95a5a6;font-size: 14px">Copyright© 带你飞.com 版权所有&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;京公安网备案号11010502026831<script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1256220804'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s11.cnzz.com/z_stat.php%3Fid%3D1256220804%26show%3Dpic1' type='text/javascript'%3E%3C/script%3E"));</script>
-</p>
+          </p>
         </div>
       </div>
     </div>
   </div>
+{% block select_screen %}
+{% endblock %}
 </div>
+
 <script src="/js/common/common.js"></script>
 {% block script %}
 {% endblock %}

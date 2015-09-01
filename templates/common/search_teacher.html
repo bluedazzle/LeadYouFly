@@ -6,7 +6,7 @@
   <section class="col-lg-12 col-md-12 search-teacher-head">
     <div class="container">
       <div class="btn-group col-lg-12 col-md-12">
-        <button type="button" class="btn dropdown-toggle btn-select" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        <button type="button" class="btn btn-select" onclick="openSelectScreen(1)">
           {% if not teach_area or teach_area == '0' %}
             全区
           {% elif teach_area == '1' %}
@@ -16,18 +16,13 @@
           {% endif %}
           <span class="glyphicon glyphicon-menu-down"></span>
         </button>
-        <ul class="dropdown-menu">
-          <li><a href="/search_teacher?teach_area=0">全区</a></li>
-          <li><a href="/search_teacher?teach_area=1">电信</a></li>
-          <li><a href="/search_teacher?teach_area=2">网通</a></li>
-        </ul>
       </div>
       <div class="btn-group col-lg-12 col-md-12">
         <div class="col-lg-1 col-md-1 study-text">
           <p>学习</p>
         </div>
         <div class="col-lg-11 col-md-11">
-          <button type="button" class="btn dropdown-toggle btn-select" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          <button type="button" class="btn btn-select" onclick="openSelectScreen(2)">
             {% if not teach_position or teach_position == '0' %}
               全部位置
             {% elif teach_position == '1' %}
@@ -43,19 +38,12 @@
             {% endif %}
             <span class="glyphicon glyphicon-menu-down"></span>
           </button>
-          <ul class="dropdown-menu">
-            <li><a href="/search_teacher?teach_position=0">全部位置</a></li>
-            <li><a href="/search_teacher?teach_position=1">中单</a></li>
-            <li><a href="/search_teacher?teach_position=2">上单</a></li>
-            <li><a href="/search_teacher?teach_position=3">ADC</a></li>
-            <li><a href="/search_teacher?teach_position=4">打野</a></li>
-            <li><a href="/search_teacher?teach_position=5">辅助</a></li>
-          </ul>
+
         </div>
       </div>
 
       <div class="btn-group col-lg-10 col-md-10" style="float: right;">
-        <button type="button" class="btn dropdown-toggle btn-select" style="margin-top: 0" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        <button type="button" class="btn btn-select" style="margin-top: 0" onclick="openSelectScreen(3)">
           {% if not teach_hero or teach_hero == '0' %}
             全部英雄
           {% else %}
@@ -63,16 +51,6 @@
           {% endif %}
           <span class="glyphicon glyphicon-menu-down"></span>
         </button>
-        <ul class="dropdown-menu">
-          <li><a href="/search_teacher?teach_hero=0">所有英雄</a></li>
-          {% for hero in heroes %}
-            {% if teach_position and hero.hero_type == teach_position %}
-              <li><a href="/search_teacher?teach_hero={{ hero.id }}">{{ hero.hero_name }}</a></li>
-            {% elif not teach_position %}
-              <li><a href="/search_teacher?teach_hero={{ hero.id }}">{{ hero.hero_name }}</a></li>
-            {% endif %}
-          {% endfor %}
-        </ul>
       </div>
 
     </div>
@@ -81,8 +59,27 @@
     <div class="container">
       {% for mentor in mentors %}
         <div class="col-lg-3 col-md-3">
-          <div class="teacher-info-panel">
+          <div class="teacher-info-panel" onclick="toMentorDetail('{{ mentor.id }}')">
             <div class="teacher-info-panel-head" style="background: url('{{ mentor.avatar }}') center no-repeat;">
+              {% if mentor.status == 1 %}
+                <div class="tag-status tag-status-success">
+                  <i class="triangle-top-right-success"></i>
+                  <i class="triangle-bottom-left-success"></i>
+                  <p class="status-text">可立即授课</p>
+                </div>
+              {% elif mentor.status == 2 %}
+                <div class="tag-status tag-status-warning">
+                  <i class="triangle-top-right-warning"></i>
+                  <i class="triangle-bottom-left-warning"></i>
+                  <p class="status-text">需排队</p>
+                </div>
+              {% elif mentor.status == 3 %}
+                <div class="tag-status tag-status-failed">
+                  <i class="triangle-top-right-failed"></i>
+                  <i class="triangle-bottom-left-failed"></i>
+                  <p class="status-text">休息中</p>
+                </div>
+              {% endif %}
             </div>
             <div class="teacher-info-panel-body">
               <p class="teacher-info-introduce">
@@ -132,49 +129,89 @@
           </div>
         </div>
       {% endfor %}
-    {% if mentors.has_other_pages %}
-      <nav class="col-md-12 col-lg-12 text-center">
-        <ul class="pagination">
-          {% if mentors.has_previous %}
-            <li>
-              <a href="/search_teacher?page_num={{ mentors.previous_page_number }}" aria-label="Previous">
-                <span aria-hidden="true" class="glyphicon glyphicon-menu-left"></span>
-              </a>
-            </li>
-          {% else %}
-            <li class="disabled">
-              <a href="#" aria-label="Previous">
-                <span aria-hidden="true" class="glyphicon glyphicon-menu-left"></span>
-              </a>
-            </li>
-          {% endif %}
-
-          {% for page in mentors.paginator.page_range %}
-            {% if page == mentors.number %}
-              <li class="active"><a href="#">{{ page }}</a></li>
+      {% if mentors.has_other_pages %}
+        <nav class="col-md-12 col-lg-12 text-center">
+          <ul class="pagination">
+            {% if mentors.has_previous %}
+              <li>
+                <a href="/search_teacher?page_num={{ mentors.previous_page_number }}" aria-label="Previous">
+                  <span aria-hidden="true" class="glyphicon glyphicon-menu-left"></span>
+                </a>
+              </li>
             {% else %}
-              <li><a href="/search_teacher?page_num={{ page }}">{{ page }}</a></li>
+              <li class="disabled">
+                <a href="#" aria-label="Previous">
+                  <span aria-hidden="true" class="glyphicon glyphicon-menu-left"></span>
+                </a>
+              </li>
             {% endif %}
-          {% endfor %}
 
-          {% if mentors.has_next %}
-            <li>
-              <a href="/search_teacher?page_num={{ mentors.next_page_number }}" aria-label="Next">
-                <span aria-hidden="true" class="glyphicon glyphicon-menu-right"></span>
-              </a>
-            </li>
-          {% else %}
-            <li class="disabled">
-              <a href="#" aria-label="Next">
-                <span aria-hidden="true" class="glyphicon glyphicon-menu-right"></span>
-              </a>
-            </li>
-          {% endif %}
-        </ul>
-      </nav>
-    {% endif %}
+            {% for page in mentors.paginator.page_range %}
+              {% if page == mentors.number %}
+                <li class="active"><a href="#">{{ page }}</a></li>
+              {% else %}
+                <li><a href="/search_teacher?page_num={{ page }}">{{ page }}</a></li>
+              {% endif %}
+            {% endfor %}
+
+            {% if mentors.has_next %}
+              <li>
+                <a href="/search_teacher?page_num={{ mentors.next_page_number }}" aria-label="Next">
+                  <span aria-hidden="true" class="glyphicon glyphicon-menu-right"></span>
+                </a>
+              </li>
+            {% else %}
+              <li class="disabled">
+                <a href="#" aria-label="Next">
+                  <span aria-hidden="true" class="glyphicon glyphicon-menu-right"></span>
+                </a>
+              </li>
+            {% endif %}
+          </ul>
+        </nav>
+      {% endif %}
     </div>
   </section>
 {% endblock %}
+{% block select_screen %}
+  <div class="select-screen" onclick="closeSelectScreen()">
+    <div class="container">
+      <div class="col-lg-12 col-md-12 select-screen-area">
+        <a href="/search_teacher?teach_area=0">全区</a>
+        <br/>
+        <a href="/search_teacher?teach_area=1">电信</a>
+        <br/>
+        <a href="/search_teacher?teach_area=2">网通</a>
+      </div>
+      <div class="col-lg-11 col-md-11 select-screen-position">
+        <a href="/search_teacher?teach_position=0">全部位置</a>
+        <br/>
+        <a href="/search_teacher?teach_position=1">中单</a>
+        <br/>
+        <a href="/search_teacher?teach_position=2">上单</a>
+        <br/>
+        <a href="/search_teacher?teach_position=3">ADC</a>
+        <br/>
+        <a href="/search_teacher?teach_position=4">打野</a>
+        <br/>
+        <a href="/search_teacher?teach_position=5">辅助</a>
+      </div>
+      <div class="col-lg-10 col-md-10 select-screen-hero">
+        <a href="/search_teacher?teach_hero=0">所有英雄</a>
+        <br/>
+        {% for hero in heroes %}
+          {% if teach_position and teach_position != '0' and hero.hero_type == teach_position %}
+            <a href="/search_teacher?teach_hero={{ hero.id }}">{{ hero.hero_name }}</a>
+            <br/>
+          {% elif not teach_position or teach_position == '0' %}
+            <a href="/search_teacher?teach_hero={{ hero.id }}">{{ hero.hero_name }}</a>
+            <br/>
+          {% endif %}
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+{% endblock %}
 {% block script %}
+  <script src="/js/common/search_teacher.js"></script>
 {% endblock %}

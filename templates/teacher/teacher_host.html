@@ -1,4 +1,7 @@
 {% extends 'teacher/base_teacher.html' %}
+{% block css %}
+  <link href="/css/custom/mentor.css" rel="stylesheet">
+{% endblock %}
 {% block teacher_define %}
   <div class="teacher-define col-lg-12 col-md-12">
     <form action="#" method="post">
@@ -74,10 +77,66 @@
 
       <div class="col-lg-12 col-md-12">
         <label class="col-md-2 col-lg-2 teacher-host-label">擅长英雄：</label>
+        <div class="col-lg-10 col-md-10 heroes-list">
+          {% if mentor.expert_hero1 %}
+            <div class="col-lg-1 col-md-1" id="expert_hero{{ mentor.expert_hero1.id }}">
+              <div class="hero-img">
+                <img src="{{ mentor.expert_hero1.hero_picture }}">
+                <span class="hero-remove" onclick="removeHero('expert_hero{{ mentor.expert_hero1.id }}')">
+                  <i class="glyphicon glyphicon-remove"></i>
+                </span>
+              </div>
+            </div>
+          {% endif %}
+          {% if mentor.expert_hero2 %}
+            <div class="col-lg-1 col-md-1" id="expert_hero{{ mentor.expert_hero2.id }}">
+              <div class="hero-img">
+                <img src="{{ mentor.expert_hero2.hero_picture }}">
+                <span class="hero-remove" onclick="removeHero('expert_hero{{ mentor.expert_hero2.id }}')">
+                  <i class="glyphicon glyphicon-remove"></i>
+                </span>
+              </div>
+            </div>
+          {% endif %}
+          {% if mentor.expert_hero3 %}
+            <div class="col-lg-1 col-md-1" id="expert_hero{{ mentor.expert_hero3.id }}">
+              <div class="hero-img">
+                <img src="{{ mentor.expert_hero3.hero_picture }}">
+                <span class="hero-remove" onclick="removeHero('expert_hero{{ mentor.expert_hero3.id }}')">
+                  <i class="glyphicon glyphicon-remove"></i>
+                </span>
+              </div>
+            </div>
+          {% endif %}
+          <div class="col-lg-1 col-md-1">
+            <div class="add-box-sm" onclick="initAddHero(1)">
+              <i class="cross-horizontal"></i>
+              <i class="cross-vertical"></i>
+            </div>
+          </div>
+        </div>
       </div>
 
       <div class="col-lg-12 col-md-12">
         <label class="col-md-2 col-lg-2 teacher-host-label">教学英雄：</label>
+        <div class="col-lg-10 col-md-10 heroes-list">
+          {% for hero in mentor.hero_list.all %}
+            <div class="col-lg-1 col-md-1" id="good_at_{{ hero.id }}">
+              <div class="hero-img">
+                <img src="{{ hero.hero_picture }}">
+                <span class="hero-remove" onclick="removeHero('good_at_{{ hero.id }}')">
+                  <i class="glyphicon glyphicon-remove"></i>
+                </span>
+              </div>
+            </div>
+          {% endfor %}
+          <div class="col-lg-1 col-md-1">
+            <div class="add-box-sm" onclick="initAddHero(2)">
+              <i class="cross-horizontal"></i>
+              <i class="cross-vertical"></i>
+            </div>
+          </div>
+        </div>
       </div>
 
       <div class="col-lg-12 col-md-12">
@@ -131,6 +190,50 @@
         </button>
       </div>
     </form>
+  </div>
+
+  <div class="modal fade" id="editExpertHero" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog modal-lg" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <h4 class="modal-title" id="myModalLabel">编辑擅长英雄</h4>
+        </div>
+        <div class="modal-body">
+          <select id="select-expert-heroes" multiple="multiple" class="form-control multiselect multiselect-info">
+            {% for hero in mentor.hero_list.all %}
+              <option value="{{ hero.id }}">{{ hero.hero_name}}</option>
+            {% endfor %}
+          </select>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+          <button type="button" class="btn btn-primary">确定</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal fade" id="editTeacherHero" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog modal-lg" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <h4 class="modal-title" id="myModalLabel">编辑教学英雄</h4>
+        </div>
+        <div class="modal-body">
+          <select id="select-teacher-heroes" multiple="multiple" class="form-control multiselect multiselect-info">
+            {% for hero in all_heroes %}
+              <option value="{{ hero.id }}">{{ hero.hero_name}}</option>
+            {% endfor %}
+          </select>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+          <button type="button" class="btn btn-primary">确定</button>
+        </div>
+      </div>
+    </div>
   </div>
 {% endblock %}
 

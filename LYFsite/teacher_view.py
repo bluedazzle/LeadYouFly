@@ -28,6 +28,7 @@ def teacher_host(request):
     if not return_content['login_type'] == 'teacher':
         raise Http404
     if request.method == 'GET':
+        return_content['all_heroes'] = Hero.objects.all()
         return render_to_response('teacher/teacher_host.html',
                                   return_content,
                                   context_instance=RequestContext(request))

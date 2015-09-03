@@ -1,5 +1,7 @@
 $(document).ready(function(){
   $('#teacher_host').addClass('list-group-item-active');
+  $("#select-expert-heroes").select2({dropdownCssClass: 'dropdown-inverse'});
+  $("#select-teacher-heroes").select2({dropdownCssClass: 'dropdown-inverse'});
 });
 
 /* teacher_host checkbox*/
@@ -16,5 +18,17 @@ function position_check(term_id){
     checkbox_input.attr('checked', 'true');
     checkbox_label.show();
     checkbox_div.show();
+  }
+}
+
+function removeHero(id){
+  $('#'+id).remove();
+}
+
+function initAddHero(option){
+  if(option === 1){
+    $('#editExpertHero').modal('show');
+  } else{
+    $('#editTeacherHero').modal('show');
   }
 }

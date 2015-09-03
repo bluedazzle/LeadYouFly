@@ -1,28 +1,65 @@
 {% extends 'teacher/base_teacher.html' %}
+{% block css %}
+  <link href="/css/custom/mentor.css" rel="stylesheet"/>
+{% endblock %}
 {% block teacher_define %}
   <div class="col-md-12 col-lg-12 teacher-define">
-    {% for item in test_list %}
-      <div class="col-md-4 col-lg-4 course-box">
-        <div>
+    {% for order in mentor.men_orders.all %}
+      {% if order.if_upload_video %}
+        <div class="col-md-4 col-lg-4">
+          <div class="video-box" style="background: url('{{ order.video_poster }}');background-size: cover" onclick="viewVideo('{{ order.video_url }}', '{{ order.video_poster }}')">
+            <div class="video-play-box">
+              <span class="glyphicon glyphicon-play"></span>
+            </div>
+          </div>
+          <p class="text-center order-number">订单：{{ order.order_id }}</p>
         </div>
-      </div>
+      {% endif %}
     {% endfor %}
-    <div class="col-md-4 col-lg-4 course-box">
-      <div class="course-add text-center">
-        <span class="glyphicon glyphicon-plus"></span>
+    <div class="col-md-4 col-lg-4" onclick="initAddNewVideo()">
+      <div class="video-add">
+        <i class="cross-vertical"></i>
+        <i class="cross-horizontal"></i>
       </div>
     </div>
-    <div class="col-md-12 col-lg-12" style="margin-top: 40px">
+    <div class="col-md-12 col-lg-12 add-new-video" style="margin-top: 40px">
       <form action="#" method="post" id="">
-        <input type="file"/>
-        <input class="form-control course-input" name="order_number" placeholder="订单号..."/>
+        {% csrf_token %}
+        <a type="button" class="btn btn-upload" style="position: relative">
+          视频上传
+          <input type="file" id="new_video" name="upload_video" onchange="fileSelected()"/>
+        </a>
+        <span id="fileName"></span>
+        <span id="fileSize"></span>
+        <span id="fileStatus"></span>
+        <span id="progressNumber"></span>
+        <input class="form-control course-input" name="order_number" id="order_id" placeholder="订单号..."/>
       </form>
-      <button type="submit" class="btn btn-primary btn-lg" style="margin-top: 10px;">
+      <button class="btn btn-primary btn-lg" style="margin-top: 10px;" onclick="submitAddNewVideoForm()">
         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;保&nbsp;&nbsp;&nbsp;存&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
       </button>
     </div>
   </div>
+
+  {# modal to play video #}
+  <div class="modal fade bs-example-modal-lg" id="view-video" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <h4 class="modal-title" id="myModalLabel">视频预览</h4>
+        </div>
+        <div class="modal-body">
+          <video class="video-js" preload="none" poster="" data-setup="{}">
+            <source src="" type="video/mp4">
+          </video>
+        </div>
+      </div>
+    </div>
+
+  </div>
 {% endblock %}
 {% block script %}
+  <script src="//vjs.zencdn.net/4.7/video.js"></script>
   <script src="/js/teacher/video_upload.js"></script>
 {% endblock %}

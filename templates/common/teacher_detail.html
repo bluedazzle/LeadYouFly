@@ -77,12 +77,12 @@
 
           <p>
             可教学大区：
-            {% if mentor_detail.teach_area == '1' %}
+            {% if '1' == mentor_detail.teach_area %}
               电信
-            {% elif mentor_detail.teach_area == '2' %}
+            {% elif '2' == mentor_detail.teach_area %}
               网通
             {% else %}
-              全区
+              {{ mentor_detail.teach_area }}
             {% endif %}
           </p>
         </div>

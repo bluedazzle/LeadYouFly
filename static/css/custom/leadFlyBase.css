@@ -523,14 +523,6 @@ html,body {
     background-color: #ffffff;
 }
 
-.course-add .glyphicon-plus{
-    font-size: 36px;
-}
-
-.course-add span{
-    cursor: pointer;
-}
-
 .course-input{
     border: 1px solid #bdc3c7;
     width: 40%;

@@ -40,6 +40,7 @@ function uploadProgress(evt) {
 }
 function uploadComplete(evt) {
     /* 服务器端返回响应时候触发event事件*/
+    console.log(evt);
     alert('上传成功！');
     document.getElementById('fileStatus').innerHTML = '上传成功！';
     location.reload();

@@ -9,7 +9,9 @@
         <span>&nbsp;&nbsp;{{ order.belong.nick }}</span>
       </div>
       <div class="col-lg-4 col-md-4 panel-order-item-head">
-        <span>订单号：{{ order.order_id }}</span>
+        <span>订单号：
+          <span style="font-size: 12px">{{ order.order_id }}</span>
+        </span>
       </div>
       <div class="col-lg-3 col-md-3 panel-order-item-head">
         <span>订单时间：{{ order.create_time | date:"Y-m-d" }}</span>
@@ -26,18 +28,7 @@
         <p>联系QQ：123456789</p>
       </div>
       <div class="col-lg-3 col-md-3 panel-order-detail">
-        <p>学习位置：
-          {% if order.learn_type == 1 %}
-            中单
-          {% elif order.learn_type == 2 %}
-            上单
-          {% elif order.learn_type == 3 %}
-            打野
-          {% elif order.learn_type == 4 %}
-            ADC
-          {% elif order.learn_type == 5 %}
-            辅助
-          {% endif %}
+        <p>学习位置：{{ order.learn_type }}
         </p>
         <p>联系YY：123456789</p>
       </div>

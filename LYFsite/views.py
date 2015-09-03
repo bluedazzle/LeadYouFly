@@ -155,14 +155,13 @@ def search_teacher(request):
         return_content = dict()
 
     heroes = Hero.objects.all()
-    return_content['heroes'] = heroes
     return_content['test_list'] = range(1, 150)
     if not request.session.get('teach_area'):
-        request.session['teach_area'] = ''
+        request.session['teach_area'] = None
     if not request.session.get('teach_position'):
-        request.session['teach_position'] = ''
+        request.session['teach_position'] = None
     if not request.session.get('teach_hero'):
-        request.session['teach_hero'] = ''
+        request.session['teach_hero'] = None
 
     if request.method == 'GET':
         search = request.GET.get('search')
@@ -176,6 +175,7 @@ def search_teacher(request):
 
         if teach_position:
             request.session['teach_position'] = teach_position
+            del request.session['teach_hero']
 
         if teach_hero:
             request.session['teach_hero'] = teach_hero
@@ -197,6 +197,7 @@ def search_teacher(request):
 
         if teach_position and not teach_position == '0':
             mentors = mentors.filter(good_at=teach_position)
+            heroes = heroes.filter(hero_type__contains=teach_position)
 
         if hero_to_teach:
             mentors = mentors.filter(Q(expert_hero1=hero_to_teach) |
@@ -216,6 +217,7 @@ def search_teacher(request):
         return_content['teach_area'] = teach_area
         return_content['teach_hero'] = hero_to_teach
         return_content['teach_position'] = teach_position
+        return_content['heroes'] = heroes
         return render_to_response('common/search_teacher.html',
                                   return_content)
 

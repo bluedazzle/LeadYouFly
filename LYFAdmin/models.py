@@ -270,6 +270,8 @@ class Order(BaseModel):
     teach_video = models.CharField(max_length=200, default='')
     video_name = models.CharField(max_length=200, default='')
     video_size = models.FloatField(default=0)
+    video_url = models.CharField(max_length=200, default='')
+    video_poster = models.CharField(max_length=200, default='')
     if_upload_video = models.BooleanField(default=False)
     video_audit = models.BooleanField(default=False)
     teach_long = models.FloatField(default=1.5)

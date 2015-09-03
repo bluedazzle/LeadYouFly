@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 from views import *
+from LYFAdmin.qn import *
 
 
 def teacher_login(request):
@@ -89,13 +90,12 @@ def teacher_indemnity(request):
         return HttpResponseRedirect('/login')
     if not return_content['login_type'] == 'teacher':
         raise Http404
-    test_list = []
-    for i in range(0, 5):
-        test_dic = {'test_date': datetime.datetime.utcnow(),
-                    'test_number': 290,
-                    'test_pay': 356}
-        test_list.append(test_dic)
-    return render_to_response('teacher/indemnity.html', {'test_list': test_list})
+    if request.method == 'GET':
+        mentor = return_content['mentor']
+        return_content['money_records'] = mentor.men_money_records.order_by('-create_time').all()
+    return render_to_response('teacher/indemnity.html',
+                              return_content,
+                              context_instance=RequestContext(request))
 
 
 def order_accept(request):
@@ -170,5 +170,54 @@ def teacher_video_upload(request):
         return HttpResponseRedirect('/login')
     if not return_content['login_type'] == 'teacher':
         raise Http404
-    test_list = range(0, 3)
-    return render_to_response('teacher/video_upload.html', {'test_list': test_list})
+    if request.method == 'GET':
+        return render_to_response('teacher/video_upload.html',
+                                  return_content,
+                                  context_instance=RequestContext(request))
+    if request.method == 'POST':
+        video_format = ['mp4', 'flv', 'avi', 'rmvb', 'webm', 'ogg']
+        support_format = ['mp4', 'webm', 'ogg']
+        video_data = request.FILES.get('new_video', None)
+        order_id = request.POST.get('order_id')
+        try:
+            order = Order.objects.get(order_id=order_id)
+            t = order.id
+        except Order.DoesNotExist:
+            return HttpResponse(json.dumps('wrong order id'))
+
+        if video_data is not None:
+            res = utils_upload_video(video_data, video_format, order_id, support_format)
+            if res:
+                order.if_upload_video = True
+                order.video_url = QINIU_DOMAIN + res['sfile_name']
+                order.video_poster = QINIU_DOMAIN + res['poster_name']
+                order.video_name = res['sfile_name']
+                order.video_size = video_data.size
+                order.save()
+                return HttpResponse(json.dumps('success'))
+            else:
+                return HttpResponse(json.dumps('failed'))
+        else:
+            return HttpResponse(json.dumps('no video'))
+
+
+def utils_upload_video(video_data, video_format, order_id, support_format):
+    file_name, ext_name = video_data.name.encode('utf-8').split('.')
+    if ext_name in video_format:
+        upload_name = file_name + '_' + str(order_id) + '.' + ext_name
+        progress_handler = lambda progress, total: progress
+        sign = 'video_order' + str(order_id)
+        res, sfile_name = put_block_data(upload_name, video_data, progress_handler=progress_handler,
+                                         sign=sign)
+        if res:
+            poster_name = sfile_name.encode('utf-8').split('.')[0] + '_poster.jpg'
+            res, info = data_handle(sfile_name, poster_name, VIDEO_POSTER_PARAM)
+            if ext_name not in support_format:
+                new_name = sfile_name.encode('utf-8').split('.')[0] + '.mp4'
+                res, info = data_handle(sfile_name, new_name, VIDEO_CONVERT_PARAM)
+                delete_data(sfile_name.encode('utf-8'))
+                sfile_name = new_name
+                return {'poster_name': poster_name,
+                        'sfile_name': sfile_name}
+
+        return False

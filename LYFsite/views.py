@@ -13,6 +13,7 @@ import datetime
 from django.db.models import Q
 from LYFAdmin.utils import create_random_avatar
 from LYFAdmin.message import REG_MES, create_new_message
+from LYFAdmin.online_pay import create_alipay_order
 from models import *
 import json
 import utils
@@ -85,9 +86,9 @@ def notice_detail(request):
         return render_to_response('common/notice_detail.html',
                                   return_content)
 
-from LYFAdmin.online_pay import create_alipay_order
+import random
 def test_pay(req):
-    url = create_alipay_order('test', 'test', 'test')
+    url = create_alipay_order(random.randint(1000000, 99999999), 'test', 0.01)
     return HttpResponseRedirect(url)
 
 

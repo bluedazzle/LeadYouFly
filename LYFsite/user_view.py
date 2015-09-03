@@ -1,4 +1,6 @@
 # -*- coding: utf-8 -*-
+from django.shortcuts import get_object_or_404
+from LYFAdmin.order_operation import create_order_id
 from views import *
 import os
 import time
@@ -181,10 +183,47 @@ def confirm_order(request):
             course = Course.objects.get(id=course_id)
         except Course.DoesNotExist:
             raise Http404
+        mentor = course.belong
+        return_content['hero_list'] = mentor.hero_list.all()
         return_content['course'] = course
         return render_to_response('common/confirm_order.html',
                                   return_content,
                                   context_instance=RequestContext(request))
+
+
+def create_order(req):
+    return_content = utils.is_login(req)
+    if not return_content:
+        return HttpResponseRedirect('/login')
+    if not return_content['login_type'] == 'student':
+        raise Http404
+    cid = req.POST.get('course_id', None)
+    learn_area = req.POST.get('learn_area', None)
+    learn_type = req.POST.get('learn_type', None)
+    learn_hero = req.POST.get('learn_hero', None)
+    course = get_object_or_404(Course, id=cid)
+    mentor = course.belong
+    student = return_content['active_user']
+    order_id = create_order_id(student.id, mentor.id)
+    pay_url = create_alipay_order(order_id, course.name, course.price)
+    now_time = datetime.datetime.now(tz=get_current_timezone())
+    pre_time = now_time.replace(hour=0, minute=0, second=0)
+    order_num = Order.objects.filter(create_time__range=(pre_time, now_time), status=2, teach_by=mentor).count()
+    wait_hours = order_num * 1.5
+    delta_hours = datetime.timedelta(hours=wait_hours)
+    wait_time = now_time + delta_hours
+    new_order = Order(order_id=order_id,
+                      order_price=course.price,
+                      course_name=course.name,
+                      course_intro=course.course_info,
+                      learn_area=learn_area,
+                      learn_hero=learn_hero,
+                      learn_type=learn_type,
+                      belong=student,
+                      teach_end_time=wait_time,
+                      teach_by=mentor)
+    new_order.save()
+    return HttpResponseRedirect(pay_url)
 
 
 def complain(request):

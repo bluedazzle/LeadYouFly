@@ -264,9 +264,9 @@ class Order(BaseModel):
     course_name = models.CharField(max_length=50, default='')
     course_intro = models.CharField(max_length=500, default='')
     learn_area = models.CharField(max_length=30, default='')
-    learn_type = models.IntegerField(default=1)
+    learn_type = models.CharField(max_length=10, default='')
     learn_hero = models.CharField(max_length=20, default='')
-    status = models.IntegerField(default=-1)
+    status = models.IntegerField(default=6)
     teach_video = models.CharField(max_length=200, default='')
     video_name = models.CharField(max_length=200, default='')
     video_size = models.FloatField(default=0)
@@ -277,9 +277,21 @@ class Order(BaseModel):
     belong = models.ForeignKey(Student, related_name='stu_orders')
     teach_by = models.ForeignKey(Mentor, related_name='men_orders')
     comment = models.ForeignKey(Comment, related_name='comment_order', null=True, blank=True)
+    if_pay = models.BooleanField(default=False)
 
     def __unicode__(self):
         return self.order_id
+
+
+class PayInfo(BaseModel):
+    order = models.OneToOneField(Order, related_name='info_order')
+    pay_id = models.CharField(max_length=64, default='')
+    buyer_email = models.CharField(max_length=100, default='')
+    status_info = models.CharField(max_length=30, default='')
+    price = models.FloatField(default=0)
+
+    def __unicode__(self):
+        return self.pay_id
 
 
 class IndexAdmin(models.Model):

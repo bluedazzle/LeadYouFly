@@ -8,7 +8,7 @@ HOST = 'http://www.fibar.cn/'
 
 RETURN_URL = '%suser/my_orders' % HOST
 
-NOTIFY_URL = '%salipay_notify' % HOST
+NOTIFY_URL = '%salipay_notify/' % HOST
 
 def create_alipay_order(order_id, subject, fee):
     alipay = Alipay(pid=ALIPAY_PID, key=ALIPAY_KEY, seller_email=ALIPAY_EML)

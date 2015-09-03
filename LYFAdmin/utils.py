@@ -61,6 +61,21 @@ def encodejson(status, body):
     return ujson.dumps(tmpjson)
 
 
+def report_convert(status_type):
+    n_str = ''
+    if status_type == 1:
+        n_str = '非本站交易（核查属实奖励50元）'
+    elif status_type == 2:
+        n_str = '未授课便完成订单'
+    elif status_type == 3:
+        n_str = '语音不雅'
+    elif status_type == 4:
+        n_str = '购买后无法联系'
+    elif status_type == 5:
+        n_str = '其他'
+    return n_str
+
+
 def hero_convert(type_str):
     nstr = ''
     for itm in type_str:

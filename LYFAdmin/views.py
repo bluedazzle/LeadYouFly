@@ -17,13 +17,13 @@ from PIL import Image
 from dss.Serializer import serializer
 
 from LYFAdmin.models import Hero, Mentor, IndexAdmin, Order, Course, Student, ChargeRecord, MoneyRecord, CashRecord, \
-    Admin, Notice, Message
+    Admin, Notice, Message, Report
 
 from forms import MentorDetailContentForm, NoticeContentForm
 from decorator import login_require
 from message import REG_MES, create_new_message
 from utils import upload_picture, datetime_to_string, auth_admin, hero_convert, order_status_convert, \
-    mentor_status_convert, order_search, output_data, student_search
+    mentor_status_convert, order_search, output_data, student_search, report_convert
 from qn import upload_file_qn, list_file, QINIU_DOMAIN, VIDEO_CONVERT_PARAM, VIDEO_POSTER_PARAM, data_handle, \
     delete_data, put_block_data
 from message import push_custom_message
@@ -179,6 +179,32 @@ def admin_portal(req):
         admin = get_object_or_404(Admin, token=token)
         return render_to_response('portal_admin.html', {'admin': admin,
                                                         'status': 0}, context_instance=RequestContext(req))
+
+
+#投诉处理
+@login_require
+def admin_complain(req):
+    raw_report_list = Report.objects.all()
+    for report in raw_report_list:
+        report.type = report_convert(report.type)
+    report_list = serializer(raw_report_list, datetime_format='string')
+    return render_to_response('complain_admin.html', {'report_list': report_list}, context_instance=RequestContext(req))
+
+
+#投诉图片
+@login_require
+def admin_complain_picture(req, rid):
+    report = get_object_or_404(Report, id=rid)
+    return render_to_response('complain_pic_admin.html', {'report': report})
+
+
+#投诉处理
+@login_require
+def admin_complain_finish(req, rid):
+    report = get_object_or_404(Report, id=rid)
+    report.finish = True
+    report.save()
+    return HttpResponseRedirect('/admin/complain')
 
 
 #管理员更改密码

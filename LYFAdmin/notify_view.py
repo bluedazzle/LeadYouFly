@@ -2,6 +2,7 @@ from django.http import HttpResponse
 from django.views.decorators.csrf import csrf_exempt
 
 from LYFAdmin.models import Order, PayInfo
+from LYFAdmin.order_operation import create_charge_record
 
 
 @csrf_exempt
@@ -23,6 +24,7 @@ def alipay_notify(req):
             new_pay_info.save()
             if status == 'TRADE_SUCCESS':
                 order.status = 1
+                create_charge_record(order.belong, price, order_id=order_id)
             elif status == 'TRADE_FINISHED':
                 order.status = 3
             order.if_pay = True

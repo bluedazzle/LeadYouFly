@@ -316,6 +316,7 @@ class Report(BaseModel):
     qq = models.CharField(max_length=30, null=True, blank=True)
     reported = models.CharField(max_length=30)
     type = models.IntegerField(default=0)
+    finish = models.BooleanField(default=False)
     content = models.CharField(max_length=1000, default='')
     pic1 = models.CharField(max_length=200, default='')
     pic2 = models.CharField(max_length=200, default='')

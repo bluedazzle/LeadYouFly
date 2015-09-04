@@ -18,6 +18,7 @@ from dss.Serializer import serializer
 
 from LYFAdmin.models import Hero, Mentor, IndexAdmin, Order, Course, Student, ChargeRecord, MoneyRecord, CashRecord, \
     Admin, Notice, Message, Report
+from LYFAdmin.online_pay import create_batch_trans
 
 from forms import MentorDetailContentForm, NoticeContentForm
 from decorator import login_require
@@ -631,10 +632,17 @@ def admin_pay_mentor_rec(req):
 @login_require
 def admin_pay_agree_cash(req, cid):
     record = get_object_or_404(CashRecord, id=cid)
+    batch_list = ({'account': record.alipay_account,
+                   'name': record.real_name,
+                   'fee': record.money,
+                   'note': u'导师提款'},)
+    url = create_batch_trans(batch_list=batch_list, account_name=u'济南江山如画网络科技有限责任公司', batch_no=record.record_id)
+    print url
     record.manage = True
     record.agree = True
+    record.success = False
     record.save()
-    return HttpResponseRedirect('/admin/pay/cash/')
+    return HttpResponseRedirect(url)
 
 
 #驳回提款

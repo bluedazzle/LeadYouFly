@@ -1,8 +1,11 @@
+# -*- coding: utf-8 -*-
+
 from django.http import HttpResponse
 from django.views.decorators.csrf import csrf_exempt
 
-from LYFAdmin.models import Order, PayInfo
-from LYFAdmin.order_operation import create_charge_record
+from LYFAdmin.models import Order, PayInfo, CashRecord, MoneyRecord
+from LYFAdmin.online_pay import check_notify_id
+from LYFAdmin.order_operation import create_charge_record, create_money_record
 
 
 @csrf_exempt
@@ -34,3 +37,23 @@ def alipay_notify(req):
             return HttpResponse('no exist')
     else:
         return HttpResponse('success')
+
+
+@csrf_exempt
+def alipay_batch_notify(req):
+    check_id = req.POST.get('notify_id', None)
+    res_code = check_notify_id(check_id)
+    if res_code == 'true':
+        c_id = req.POST.get('batch_no', None)
+        s_detail = req.POST.get('success_details', None)
+        if s_detail and s_detail != '':
+            cash_rec = CashRecord.objects.get(id=c_id)
+            cash_rec.success = True
+            cash_rec.save()
+            mentor = cash_rec.belong
+            create_money_record(mentor, '支出',
+                                cash_rec.money,
+                                '提款到支付宝%s' % cash_rec.alipay_account)
+        return HttpResponse('success')
+    else:
+        return HttpResponse('fail')

@@ -23,6 +23,7 @@ urlpatterns = patterns('',
                        url('^notices_list$', notices_list),
                        url('^notice_detail$', notice_detail),
                        url('^test_pay$', test_pay),
+                       url('^get_all_heroes$', utils.get_all_heroes),
 
                        # teacher
 

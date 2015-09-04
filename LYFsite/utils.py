@@ -78,3 +78,17 @@ def is_login(request):
         return content
     else:
         return False
+
+
+def get_all_heroes(request):
+    if request.method == 'GET':
+        heroes = Hero.objects.all()
+        hero_list = []
+        for hero in heroes:
+            hero_list.append({
+                'id': hero.id,
+                'hero_name': hero.hero_name,
+                'hero_pic': hero.hero_picture
+            })
+
+        return HttpResponse(json.dumps(hero_list))

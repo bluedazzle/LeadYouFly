@@ -1,3 +1,4 @@
 import urllib2
 
-res = urllib2.urlopen("https://www.baidu.com")
+for i in range(0, 2):
+    print i

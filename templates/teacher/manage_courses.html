@@ -1,20 +1,21 @@
 {% extends 'teacher/base_teacher.html' %}
+{% block css %}
+  <link href="/css/custom/mentor.css" rel="stylesheet"/>
+{% endblock %}
 {% block teacher_define %}
   <div class="col-md-12 col-lg-12 teacher-define">
     {% for item in mentor.men_courses.all %}
-      <div class="col-md-4 col-lg-4 course-box">
-        <div>
+      <div class="col-md-4 col-lg-4">
+        <div class="course-box">
           <span class="course-title">{{ item.name }}</span>
           <span class="course-value">￥{{ item.price }}</span>
           <br/>
-          <div class="course-content">
-            <p>{{ item.course_info }}</p>
-            <a href="#" style="font-size: 10px;float: right;margin-top: 10px" onclick="updateCourse({{ item.id }}, '{{ item.name }}', {{ item.price }}, '{{ item.course_info }}')">修改</a>
-          </div>
+          <p class="course-content">{{ item.course_info }}</p>
+          <a href="#" style="font-size: 12px;float: right;margin-top: 2px" onclick="updateCourse({{ item.id }}, '{{ item.name }}', {{ item.price }}, '{{ item.course_info }}')">修改</a>
         </div>
       </div>
     {% endfor %}
-    <div class="col-md-4 col-lg-4 course-box">
+    <div class="col-md-4 col-lg-4">
       <div class="course-add text-center" onclick="addCourse()">
         <i class="cross-vertical"></i>
         <i class="cross-horizontal"></i>
@@ -26,7 +27,7 @@
         <input name="course_id" id="course_id" style="display: none"/>
         <input class="form-control course-input" id="course_name" name="course_name" placeholder="课程名称..."/>
         <input class="form-control course-input" id="course_price" name="course_price" placeholder="课程价格..." onkeyup="value=value.replace(/[^\d]/g,'')"
-        onbeforepaste="clipboardData.setData('text',clipboardData.getData('text').replace(/[^\d]/g,''))"/>
+               onbeforepaste="clipboardData.setData('text',clipboardData.getData('text').replace(/[^\d]/g,''))"/>
         <textarea class="form-control course-text" id="course_content" name="course_info" rows="5" placeholder="课程说明..."></textarea>
       </form>
       <button id="submit_course" class="btn btn-primary btn-lg" style="margin-top: 10px;">

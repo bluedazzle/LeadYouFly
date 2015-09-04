@@ -1,15 +1,19 @@
 {% extends 'teacher/base_teacher.html' %}
+{% block css %}
+  <link href="/css/custom/mentor.css" rel="stylesheet">
+{% endblock %}
 {% block teacher_define %}
   <div class="teacher-define col-lg-12 col-md-12">
     <form action="#" method="post">
+      {% csrf_token %}
       <div class="col-lg-12 col-md-12">
         <label class="col-md-2 col-lg-2 teacher-host-label">名字：</label>
-        <input class="col-md-10 col-lg-10 teacher-host-input" name="name"/>
+        <input class="col-md-10 col-lg-10 teacher-host-input" name="name" value="{{ mentor.nick }}"/>
       </div>
 
       <div class="col-lg-12 col-md-12">
         <label class="col-md-2 col-lg-2 teacher-host-label">简介：</label>
-        <input class="col-md-10 col-lg-10 teacher-host-input" name="name"/>
+        <input class="col-md-10 col-lg-10 teacher-host-input" name="intro" value="{{ mentor.intro }}"/>
       </div>
 
       <div class="col-lg-12 col-md-12">
@@ -34,15 +38,6 @@
             <div class="position-text">中单</div>
           </div>
           <div class="col-lg-2 col-md-2">
-            <input type="checkbox" name="position_jungle" id="checkbox-jungle" class="checkbox"/>
-            <div class="checkbox-wrapper" onclick="position_check('checkbox-jungle')">
-              <label class="checkbox-label" id="checkbox-jungle-label">
-                <div class="checkbox-div" id="checkbox-jungle-div"></div>
-              </label>
-            </div>
-            <div class="position-text">打野</div>
-          </div>
-          <div class="col-lg-2 col-md-2">
             <input type="checkbox" name="position_top" id="checkbox-top" class="checkbox"/>
             <div class="checkbox-wrapper" onclick="position_check('checkbox-top')">
               <label class="checkbox-label" id="checkbox-top-label">
@@ -61,6 +56,15 @@
             <div class="position-text">ADC</div>
           </div>
           <div class="col-lg-2 col-md-2">
+            <input type="checkbox" name="position_jungle" id="checkbox-jungle" class="checkbox"/>
+            <div class="checkbox-wrapper" onclick="position_check('checkbox-jungle')">
+              <label class="checkbox-label" id="checkbox-jungle-label">
+                <div class="checkbox-div" id="checkbox-jungle-div"></div>
+              </label>
+            </div>
+            <div class="position-text">打野</div>
+          </div>
+          <div class="col-lg-2 col-md-2">
             <input type="checkbox" name="position_support" id="checkbox-support" class="checkbox"/>
             <div class="checkbox-wrapper" onclick="position_check('checkbox-support')">
               <label class="checkbox-label" id="checkbox-support-label">
@@ -74,15 +78,79 @@
 
       <div class="col-lg-12 col-md-12">
         <label class="col-md-2 col-lg-2 teacher-host-label">擅长英雄：</label>
+        <div class="col-lg-10 col-md-10 heroes-list" id="expert-heroes">
+          {% if mentor.expert_hero1 %}
+            <div class="col-lg-1 col-md-1 expert-hero" id="expert_hero{{ mentor.expert_hero1.id }}">
+              <span class="hero-id">{{ mentor.expert_hero1.id }}</span>
+              <span class="hero-name">{{ mentor.expert_hero1.hero_name }}</span>
+              <div class="hero-img">
+                <img src="{{ mentor.expert_hero1.hero_picture }}">
+                <span class="hero-remove" onclick="removeHero('{{ mentor.expert_hero1.id }}', 1)">
+                  <i class="glyphicon glyphicon-remove"></i>
+                </span>
+              </div>
+            </div>
+          {% endif %}
+          {% if mentor.expert_hero2 %}
+            <div class="col-lg-1 col-md-1 expert-hero" id="expert_hero{{ mentor.expert_hero2.id }}">
+              <span class="hero-id">{{ mentor.expert_hero2.id }}</span>
+              <span class="hero-name">{{ mentor.expert_hero2.hero_name }}</span>
+              <div class="hero-img">
+                <img src="{{ mentor.expert_hero2.hero_picture }}">
+                <span class="hero-remove" onclick="removeHero('{{ mentor.expert_hero2.id }}', 1)">
+                  <i class="glyphicon glyphicon-remove"></i>
+                </span>
+              </div>
+            </div>
+          {% endif %}
+          {% if mentor.expert_hero3 %}
+            <div class="col-lg-1 col-md-1 expert-hero" id="expert_hero{{ mentor.expert_hero3.id }}">
+              <span class="hero-id">{{ mentor.expert_hero3.id }}</span>
+              <span class="hero-name">{{ mentor.expert_hero3.hero_name }}</span>
+              <div class="hero-img">
+                <img src="{{ mentor.expert_hero3.hero_picture }}">
+                <span class="hero-remove" onclick="removeHero('{{ mentor.expert_hero3.id }}', 1)">
+                  <i class="glyphicon glyphicon-remove"></i>
+                </span>
+              </div>
+            </div>
+          {% endif %}
+          <div class="col-lg-1 col-md-1">
+            <div class="add-box-sm" onclick="initAddHero(1)">
+              <i class="cross-horizontal"></i>
+              <i class="cross-vertical"></i>
+            </div>
+          </div>
+        </div>
       </div>
 
       <div class="col-lg-12 col-md-12">
         <label class="col-md-2 col-lg-2 teacher-host-label">教学英雄：</label>
+        <div class="col-lg-10 col-md-10 heroes-list" id="teach-heroes">
+          {% for hero in mentor.hero_list.all %}
+            <div class="col-lg-1 col-md-1 teach-hero" id="teach_hero{{ hero.id }}">
+              <span class="hero-id">{{ hero.id }}</span>
+              <span class="hero-name">{{ hero.hero_name }}</span>
+              <div class="hero-img">
+                <img src="{{ hero.hero_picture }}">
+                <span class="hero-remove" onclick="removeHero('{{ hero.id }}', 2)">
+                  <i class="glyphicon glyphicon-remove"></i>
+                </span>
+              </div>
+            </div>
+          {% endfor %}
+          <div class="col-lg-1 col-md-1">
+            <div class="add-box-sm" onclick="initAddHero(2)">
+              <i class="cross-horizontal"></i>
+              <i class="cross-vertical"></i>
+            </div>
+          </div>
+        </div>
       </div>
 
       <div class="col-lg-12 col-md-12">
         <label class="col-md-2 col-lg-2 teacher-host-label">游戏段位：</label>
-        <input class="col-md-10 col-lg-10 teacher-host-input" name="level"/>
+        <input class="col-md-10 col-lg-10 teacher-host-input" name="level" value="{{ mentor.game_level }}"/>
       </div>
 
       <div class="col-lg-12 col-md-12">
@@ -119,21 +187,92 @@
       </div>
 
       <div class="col-lg-12 col-md-12">
-        <div class="col-lg-2 col-md-2 teacher-host-label">视频上传</div>
+        <div class="col-lg-2 col-md-2 teacher-host-label">视频上传：</div>
         <div class="col-lg-10 col-md-10" style="margin-left: -9%">
-          <a type="button" class="btn btn-upload">视频上传</a>
+          <a type="button" class="btn btn-upload" style="position: relative">
+            选择视频
+            <input type="file" id="new_video" name="upload_video" onchange="fileSelected()"/>
+          </a>
+          <span id="fileName"></span>
+          <span id="fileSize"></span>
         </div>
       </div>
 
       <div class="col-lg-11 col-md-11" style="float: right;margin-left: 2.5%">
-        <button type="submit" class="btn btn-primary btn-lg">
+        <a type="button" class="btn btn-primary btn-lg" onclick="submitUpdateForm()">
           &nbsp;&nbsp;保&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;存&nbsp;&nbsp;
-        </button>
+        </a>
+        <span id="fileStatus"></span>
+        <span id="progressNumber"></span>
       </div>
     </form>
+  </div>
+
+  <div class="modal fade" id="editExpertHero" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog modal-lg" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <h4 class="modal-title" id="myModalLabel">编辑擅长英雄</h4>
+        </div>
+        <div class="modal-body">
+          <select id="select-expert-heroes" multiple="multiple" class="form-control multiselect multiselect-info">
+            {#            {% for hero in mentor.hero_list.all %}#}
+            {#              <option value="{{ hero.id }}">{{ hero.hero_name}}</option>#}
+            {#            {% endfor %}#}
+          </select>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+          <button type="button" class="btn btn-primary" onclick="changeHeroesList(1)">确定</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal fade" id="editTeachHero" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog modal-lg" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <h4 class="modal-title" id="myModalLabel">编辑教学英雄</h4>
+        </div>
+        <div class="modal-body">
+          <select id="select-teach-heroes" multiple="multiple" class="form-control multiselect multiselect-info">
+            {% for hero in all_heroes %}
+              <option value="{{ hero.id }}">{{ hero.hero_name}}</option>
+            {% endfor %}
+          </select>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+          <button type="button" class="btn btn-primary" onclick="changeHeroesList(2)">确定</button>
+        </div>
+      </div>
+    </div>
   </div>
 {% endblock %}
 
 {% block script %}
   <script src="/js/teacher/teacher_host.js"></script>
+  <script>
+    var expert_position = "{{ mentor.good_at }}";
+    if(expert_position.indexOf('1') != -1) change_check('checkbox-mid');
+    if(expert_position.indexOf('2') != -1) change_check('checkbox-top');
+    if(expert_position.indexOf('3') != -1) change_check('checkbox-ADC');
+    if(expert_position.indexOf('4') != -1) change_check('checkbox-jungle');
+    if(expert_position.indexOf('5') != -1) change_check('checkbox-support');
+    if(expert_position === '12345') position_check('checkbox-all');
+
+    var teach_area = "{{ mentor.teach_area }}";
+    if(teach_area === "1") {
+      change_check('checkbox-telecom')
+    } else if(teach_area === "2"){
+      change_check('checkbox-netcom')
+    } else if(teach_area === "0"){
+      change_check('checkbox-telecom');
+      change_check('checkbox-netcom');
+      change_check('checkbox-area-all')
+    }
+  </script>
 {% endblock %}

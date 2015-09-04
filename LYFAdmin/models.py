@@ -140,7 +140,7 @@ class Mentor(AbstractBaseUser, BaseModel):
     nick = models.CharField(max_length=20, null=True, blank=True, default="Mentor")
     status = models.IntegerField(default=0)
     intro = models.CharField(max_length=100, default=' ')
-    good_at = models.IntegerField(default=1)
+    good_at = models.CharField(max_length=5, default='')
     game_level = models.CharField(max_length=8, default=' ')
     teach_area = models.CharField(max_length=20, default=' ')
     qq = models.CharField(max_length=20, default=' ')

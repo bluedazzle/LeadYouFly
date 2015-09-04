@@ -32,6 +32,59 @@ def teacher_host(request):
         return render_to_response('teacher/teacher_host.html',
                                   return_content,
                                   context_instance=RequestContext(request))
+    if request.method == 'POST':
+        video_format = ['mp4', 'flv', 'avi', 'rmvb', 'webm', 'ogg']
+        support_format = ['mp4', 'webm', 'ogg']
+        form = MentorInfoForm(request.POST, request.FILES)
+        if form.is_valid():
+            form_data = form.cleaned_data
+        else:
+            return HttpResponse(json.dumps("wrong forms"))
+
+        mentor = return_content['mentor']
+        video_data = form_data['new_video']
+        print "test"
+        if video_data is not None:
+            res = utils_upload_video(video_data, video_format, mentor.id, support_format)
+            if not res:
+                return HttpResponse(json.dumps('failed'))
+        else:
+            res = None
+
+        mentor.nick = form_data['name']
+        mentor.intro = form_data['intro']
+        mentor.good_at = form_data['good_at']
+        mentor.teach_area = str(form_data['teach_area'])
+        if res:
+            mentor.intro_video = QINIU_DOMAIN + res['sfile_name']
+            mentor.video_poster = QINIU_DOMAIN + res['poster_name']
+        expert_heroes = json.loads(form_data['expert_heroes'])
+        expert_length = len(expert_heroes)
+        mentor.expert_hero1 = None
+        mentor.expert_hero2 = None
+        mentor.expert_hero3 = None
+        try:
+            for i in range(0, expert_length):
+                if i == 0:
+                    mentor.expert_hero1 = Hero.objects.get(id=expert_heroes[i])
+                elif i == 1:
+                    mentor.expert_hero2 = Hero.objects.get(id=expert_heroes[i])
+                elif i == 2:
+                    mentor.expert_hero3 = Hero.objects.get(id=expert_heroes[i])
+        except Hero.DoesNotExist:
+            raise Http404
+
+        teach_heroes = ujson.loads(form_data['teach_heroes'])
+        for hero in mentor.hero_list.all():
+            mentor.hero_list.remove(hero)
+        try:
+            for hero_id in teach_heroes:
+                hero = Hero.objects.get(id=hero_id)
+                mentor.hero_list.add(hero)
+        except Hero.DoesNotExist:
+            raise Http404
+        mentor.save()
+        return HttpResponse(json.dumps('success'))
 
 
 def change_mentor_status(request):

@@ -54,3 +54,14 @@ class ChangePasswordForm(forms.Form):
     origin_password = forms.CharField(max_length=20)
     new_password = forms.CharField(max_length=20)
     password_again = forms.CharField(max_length=20)
+
+
+class MentorInfoForm(forms.Form):
+    name = forms.CharField(max_length=20)
+    intro = forms.CharField(max_length=50)
+    good_at = forms.CharField(max_length=5)
+    expert_heroes = forms.CharField(max_length=100)
+    teach_heroes = forms.CharField(max_length=100)
+    game_level = forms.CharField(max_length=10)
+    teach_area = forms.CharField(max_length=5)
+    new_video = forms.FileField(required=False)

@@ -177,3 +177,13 @@
 .hero-img:hover .hero-remove{
     display: block;
 }
+
+#s2id_select-expert-heroes,
+#s2id_select-teach-heroes{
+    width: 840px;
+}
+
+.hero-id,
+.hero-name{
+    display: none;
+}

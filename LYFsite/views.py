@@ -225,8 +225,9 @@ def search_teacher(request):
 def teacher_detail(request):
     return_content = utils.is_login(request)
     if return_content:
-        if return_content['login_type'] == 'teacher':
-            return HttpResponseRedirect('/login')
+        # if return_content['login_type'] == 'teacher':
+        #     return HttpResponseRedirect('/login')
+        return_content['is_login'] = True
     else:
         return_content = dict()
 

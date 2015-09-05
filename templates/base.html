@@ -10,6 +10,8 @@
     {% block css %}
     {% endblock %}
     <script src="http://cdn.bootcss.com/jquery/1.11.2/jquery.min.js"></script>
+    <script src="/js/flat-ui.min.js"></script>
+
 </head>
 <body>
 <div id="container">
@@ -81,74 +83,75 @@
                                        aria-haspopup="true" aria-expanded="false">
                     <span id="mentor-status" class="mentor-status">
                       {% if mentor.status == 1 %}
-                          可立即授课
-                      {% elif mentor.status == 0 %}
+                          立即授课
+                      {% elif mentor.status == 3 %}
                           休息中
                       {% elif mentor.status == 2 %}
                           上课中
                       {% endif %}
                     </span>
-                    <span class="caret"></span>
-                  </a>
-                  <ul class="dropdown-menu">
-                    <li><a href="#" onclick="changeMentorStatus(1)">立即授课</a></li>
-                    <li><a href="#" onclick="changeMentorStatus(0)">休息中</a></li>
-                    <li><a href="/teacher/host">个人中心</a></li>
-                    <li><a href="/logout">退出</a></li>
-                  </ul>
-                </li>
-              {% endif %}
-            {% endif %}
-          </ul>
-        </div>
-        <!-- /.navbar-collapse -->
-      </div>
-      <!-- /.container-fluid -->
-    </nav>
-  </div>
-  <div id="page" class="clearfix">
-    {% block define %}
-    {% endblock %}
-  </div>
-  <div id="footer">
-    <div class="col-md-12 col-lg-12 footer">
-      <div class="container">
-        <p class="footer-line">&nbsp;</p>
-      </div>
-      <div class="container">
-        <div class="footer-two">
-          <div class="col-lg-2 col-md-2">
-            <a href="/about_us">关于我们</a>
-          </div>
-          <div class="col-lg-2 col-md-2">
-            <a href="/contact_us">联系我们</a>
-          </div>
-          <div class="col-lg-2 col-md-2">
-            <a href="/become_mentor">成为教练</a>
-          </div>
-          <div class="col-lg-2 col-md-2">
-            <a href="/laws">法律声明</a>
-          </div>
-          <div class="col-lg-2 col-md-2">
-            <a href="/problem">常见问题</a>
-          </div>
-          <div class="col-lg-2 col-md-2">
-            <a href="/service">服务指南</a>
-          </div>
-        </div>
-        <div class="text-center">
-          <p style="color: #95a5a6;font-size: 14px">Copyright© 带你飞.com 版权所有&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;京公安网备案号11010502026831<script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1256220804'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s11.cnzz.com/z_stat.php%3Fid%3D1256220804%26show%3Dpic1' type='text/javascript'%3E%3C/script%3E"));</script>
-          </p>
-        </div>
+                                        <span class="caret"></span>
+                                    </a>
+                                    <ul class="dropdown-menu">
+                                        <li><a href="#" onclick="changeMentorStatus(1)">立即授课</a></li>
+                                        <li><a href="#" onclick="changeMentorStatus(0)">休息中</a></li>
+                                        <li><a href="/teacher/host">个人中心</a></li>
+                                        <li><a href="/logout">退出</a></li>
+                                    </ul>
+                                </li>
+                            {% endif %}
+                        {% endif %}
+                    </ul>
+                </div>
+                <!-- /.navbar-collapse -->
+            </div>
+            <!-- /.container-fluid -->
+        </nav>
     </div>
-    {% block select_screen %}
-    {% endblock %}
-</div>
+    <div id="page" class="clearfix">
+        {% block define %}
+        {% endblock %}
+    </div>
+    <div id="footer">
+        <div class="col-md-12 col-lg-12 footer">
+            <div class="container">
+                <p class="footer-line">&nbsp;</p>
+            </div>
+            <div class="container">
+                <div class="footer-two">
+                    <div class="col-lg-2 col-md-2">
+                        <a href="/about_us">关于我们</a>
+                    </div>
+                    <div class="col-lg-2 col-md-2">
+                        <a href="/contact_us">联系我们</a>
+                    </div>
+                    <div class="col-lg-2 col-md-2">
+                        <a href="/become_mentor">成为教练</a>
+                    </div>
+                    <div class="col-lg-2 col-md-2">
+                        <a href="/laws">法律声明</a>
+                    </div>
+                    <div class="col-lg-2 col-md-2">
+                        <a href="/problem">常见问题</a>
+                    </div>
+                    <div class="col-lg-2 col-md-2">
+                        <a href="/service">服务指南</a>
+                    </div>
+                </div>
+                <div class="text-center">
+                    <p style="color: #95a5a6;font-size: 14px">Copyright© 带你飞.com 版权所有&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;京公安网备案号11010502026831
+                        <script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+                        document.write(unescape("%3Cspan id='cnzz_stat_icon_1256220804'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s11.cnzz.com/z_stat.php%3Fid%3D1256220804%26show%3Dpic1' type='text/javascript'%3E%3C/script%3E"));</script>
+                    </p>
+                </div>
+            </div>
+            {% block select_screen %}
+            {% endblock %}
+        </div>
 
-<script src="/js/common/common.js"></script>
-<script src="/js/flat-ui.min.js"></script>
+        <script src="/js/common/common.js"></script>
 
-{% block script %}
-{% endblock %}
+        {% block script %}
+        {% endblock %}
 </body>
 </html>

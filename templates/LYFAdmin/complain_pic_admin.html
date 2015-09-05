@@ -3,9 +3,15 @@
 {% block page %}投诉处理{% endblock %}
 {% block content %}
     <div class="my_contianer">
-        <img src="{{ report.pic1 }}" alt=""/>
-        <img src="{{ report.pic2 }}" alt=""/>
-        <img src="{{ report.pic3 }}" alt=""/>
-        <img src="{{ report.pic4 }}" alt=""/>
+        <div>
+            <span>举报详情：</span>
+            {{ report.content }}</div>
+        <div>
+            <span>举报图片：</span>
+            <img src="{{ report.pic1 }}" alt=""/>
+            <img src="{{ report.pic2 }}" alt=""/>
+            <img src="{{ report.pic3 }}" alt=""/>
+            <img src="{{ report.pic4 }}" alt=""/>
+        </div>
     </div>
 {% endblock %}

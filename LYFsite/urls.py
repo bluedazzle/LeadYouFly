@@ -25,6 +25,7 @@ urlpatterns = patterns('',
                        url('^logout$', logout),
                        url('^notices_list$', notices_list),
                        url('^notice_detail$', notice_detail),
+                       url('^get_all_heroes$', utils.get_all_heroes),
 
                        # teacher
 

@@ -90,14 +90,7 @@
                                             {% csrf_token %}
                                             <div class="form-group">
                                                 <label for="">优先级：</label>
-                                                <select name="new_priority" class="form-control select select-primary select-block mbl" id="">
-                                                    <option value="0">0</option>
-                                                    <option value="1">1</option>
-                                                    <option value="2">2</option>
-                                                    <option value="3">3</option>
-                                                    <option value="4">4</option>
-                                                    <option value="5">5</option>
-                                                </select>
+                                                <input type="number" placeholder="数字" name="new_priority" value="{{ mentor.priority }}" />
                                             </div>
                                             <div class="modal-footer">
                                                 <button type="button" class="btn btn-default" data-dismiss="modal">关闭

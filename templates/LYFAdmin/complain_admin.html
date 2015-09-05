@@ -13,7 +13,6 @@
                 <th data-sortable="true">投诉人电话</th>
                 <th data-sortable="true">举报类型</th>
                 <th data-sortable="true">举报内容</th>
-                <th data-sortable="true">举报图片</th>
                 <th data-sortable="true">是否处理</th>
                 <th>操作</th>
             </tr>
@@ -23,11 +22,10 @@
                 <tr>
                     <td>{{ report.create_time }}</td>
                     <td>{{ report.reported }}</td>
-                    <td>{{ report.reporter }}</td>
+                    <td>{{ report.reporter.nick }}</td>
                     <td>{{ report.qq }}</td>
                     <td>{{ report.phone }}</td>
                     <td>{{ report.type }}</td>
-                    <td>{{ report.content }}</td>
                     <td><a href="/admin/complain/image/{{ report.id }}/">点击产看</a></td>
                     <td>{{ report.finish }}</td>
                     <td>

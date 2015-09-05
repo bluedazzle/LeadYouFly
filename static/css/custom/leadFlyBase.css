@@ -493,35 +493,29 @@ html,body {
 
 /*courses manage*/
 .course-box{
-    min-height: 100px;
+    height: 140px;
     padding: 10px;
-}
-
-.course-box div{
-    min-height: 80px;
     background-color: rgb(242, 242, 242);
-    padding: 10px;
 }
 
 .course-title{
-    font-size: 16px;
+    margin-top: -2px;
+    font-size: 20px;
 }
 
 .course-content{
-    font-size: 14px;
+    font-size: 12px;
+    height: 55px;
+    overflow: hidden;
 }
 
 .course-value{
     font-size: 17px;
-    color: #f1c40f;
+    color: #1abc9c;
     float: right;
     margin-top: -2px;
 }
 
-.course-box .course-add{
-    border: 3px dashed rgb(242, 242, 242);
-    background-color: #ffffff;
-}
 
 .course-input{
     border: 1px solid #bdc3c7;

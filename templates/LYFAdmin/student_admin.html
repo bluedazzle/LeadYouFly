@@ -24,7 +24,6 @@
                 <th data-sortable="true">等级</th>
                 <th data-sortable="true">积分</th>
                 <th data-sortable="true">总消费额</th>
-                <th data-sortable="true">预存款</th>
                 <th data-sortable="true">最后消费时间</th>
                 <th>操作</th>
             </tr>
@@ -38,7 +37,6 @@
                     <td>{{ stu.rank }}</td>
                     <td>{{ stu.exp }}</td>
                     <td>{{ stu.total_expense }}</td>
-                    <td>{{ stu.money }}</td>
                     <td>{{ stu.last_order_time }}</td>
                     <td>
                         <a class="btn btn-primary btn-sm" href="/admin/student/info/{{ stu.id }}/">详情</a>

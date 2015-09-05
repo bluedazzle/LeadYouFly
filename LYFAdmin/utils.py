@@ -104,6 +104,8 @@ def order_status_convert(status_type):
         n_str = '已评价'
     elif status_type == 5:
         n_str = '已撤单'
+    elif status_type == 6:
+        n_str = '待支付'
     return n_str
 
 

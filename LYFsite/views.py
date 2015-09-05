@@ -13,9 +13,22 @@ import datetime
 from django.db.models import Q
 from LYFAdmin.utils import create_random_avatar
 from LYFAdmin.message import REG_MES, create_new_message
+from LYFAdmin.online_pay import create_alipay_order
 from models import *
 import json
 import utils
+
+
+position_dic = {'0': u'全部位置',
+                '1': u'中单',
+                '2': u'上单',
+                '3': u'ADC',
+                '4': u'打野',
+                '5': u'辅助'}
+
+area_dic = {'0': u'全区',
+            '1': u'电信',
+            '2': u'网通'}
 
 
 def test(request):
@@ -84,11 +97,6 @@ def notice_detail(request):
 
         return render_to_response('common/notice_detail.html',
                                   return_content)
-
-from LYFAdmin.online_pay import create_alipay_order
-def test_pay(req):
-    url = create_alipay_order('test', 'test', 'test')
-    return HttpResponseRedirect(url)
 
 
 def login(request):
@@ -159,54 +167,49 @@ def search_teacher(request):
         return_content = dict()
 
     heroes = Hero.objects.all()
-    return_content['test_list'] = range(1, 150)
-    if not request.session.get('teach_area'):
-        request.session['teach_area'] = None
-    if not request.session.get('teach_position'):
-        request.session['teach_position'] = None
-    if not request.session.get('teach_hero'):
-        request.session['teach_hero'] = None
 
     if request.method == 'GET':
         search = request.GET.get('search')
         teach_area = request.GET.get('teach_area')
         teach_position = request.GET.get('teach_position')
         teach_hero = request.GET.get('teach_hero')
-        hero_name = request.GET.get('hero_name')
 
-        if teach_area:
-            request.session['teach_area'] = teach_area
-
-        if teach_position:
-            request.session['teach_position'] = teach_position
-            del request.session['teach_hero']
-
-        if teach_hero:
-            request.session['teach_hero'] = teach_hero
-
-        if search:
-            request.session['search'] = search
-
-        teach_area = request.session.get('teach_area')
-        teach_position = request.session.get('teach_position')
-        teach_hero = request.session.get('teach_hero')
-        if teach_hero and not teach_hero == '0':
+        if teach_hero and not teach_hero == '':
             hero_to_teach = Hero.objects.get(id=teach_hero)
         else:
             hero_to_teach = None
+            teach_hero = ''
 
         mentors = Mentor.objects.all()
         if teach_area and not teach_area == '0':
-            mentors = mentors.filter(teach_area__contains=teach_area)
+            mentors = mentors.filter(teach_area=teach_area)
+        else:
+            teach_area = '0'
 
         if teach_position and not teach_position == '0':
-            mentors = mentors.filter(good_at=teach_position)
+            mentors = mentors.filter(good_at__contains=teach_position)
             heroes = heroes.filter(hero_type__contains=teach_position)
+        else:
+            teach_position = '0'
 
         if hero_to_teach:
-            mentors = mentors.filter(Q(expert_hero1=hero_to_teach) |
-                                     Q(expert_hero2=hero_to_teach) |
-                                     Q(expert_hero3=hero_to_teach))
+            mentors = mentors.filter(hero_list__id=teach_hero)
+
+        if search and not search == '':
+            for key, value in position_dic.items():
+                if search == value:
+                    mentors = mentors.filter(good_at__contains=key)
+                    break
+
+            for key, value in area_dic.items():
+                if search == value:
+                    mentors = mentors.filter(teach_area=key)
+                    break
+
+            mentors = mentors.filter(Q(nick__contains=search) |
+                                     Q(hero_list__hero_name__contains=search))
+        else:
+            search = ''
 
         mentors.order_by('status').order_by('-priority')
         paginator = Paginator(mentors, 12)
@@ -221,6 +224,7 @@ def search_teacher(request):
         return_content['teach_area'] = teach_area
         return_content['teach_hero'] = hero_to_teach
         return_content['teach_position'] = teach_position
+        return_content['search'] = search
         return_content['heroes'] = heroes
         return render_to_response('common/search_teacher.html',
                                   return_content)

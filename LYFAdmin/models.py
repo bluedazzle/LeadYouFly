@@ -138,6 +138,8 @@ class Admin(AbstractBaseUser, BaseModel):
 class Mentor(AbstractBaseUser, BaseModel):
     account = models.CharField(max_length=11, unique=True)
     nick = models.CharField(max_length=20, null=True, blank=True, default="Mentor")
+    real_name = models.CharField(max_length=50, default='', null=True, blank=True)
+    alipay_account = models.CharField(max_length=100, default='', null=True, blank=True)
     status = models.IntegerField(default=0)
     intro = models.CharField(max_length=100, default=' ')
     good_at = models.CharField(max_length=5, default='')
@@ -148,7 +150,7 @@ class Mentor(AbstractBaseUser, BaseModel):
     phone = models.CharField(max_length=11, default=' ')
     intro_detail = models.TextField(default=' ')
     avatar = models.CharField(max_length=200, default='/img/default_mentor.jpg')
-    intro_video = models.CharField(max_length=200, default=' ')
+    intro_video = models.CharField(max_length=200, default='')
     video_poster = models.CharField(max_length=200, default='')
     expert_hero1 = models.ForeignKey(Hero, related_name='who_expert1', null=True, blank=True)
     expert_hero2 = models.ForeignKey(Hero, related_name='who_expert2', null=True, blank=True)
@@ -264,9 +266,9 @@ class Order(BaseModel):
     course_name = models.CharField(max_length=50, default='')
     course_intro = models.CharField(max_length=500, default='')
     learn_area = models.CharField(max_length=30, default='')
-    learn_type = models.IntegerField(default=1)
+    learn_type = models.CharField(max_length=10, default='')
     learn_hero = models.CharField(max_length=20, default='')
-    status = models.IntegerField(default=-1)
+    status = models.IntegerField(default=6)
     teach_video = models.CharField(max_length=200, default='')
     video_name = models.CharField(max_length=200, default='')
     video_size = models.FloatField(default=0)
@@ -274,14 +276,27 @@ class Order(BaseModel):
     video_poster = models.CharField(max_length=200, default='')
     if_upload_video = models.BooleanField(default=False)
     video_audit = models.BooleanField(default=False)
+    video_pass = models.NullBooleanField(default=None)
     teach_long = models.FloatField(default=1.5)
     teach_end_time = models.DateTimeField()
     belong = models.ForeignKey(Student, related_name='stu_orders')
     teach_by = models.ForeignKey(Mentor, related_name='men_orders')
     comment = models.ForeignKey(Comment, related_name='comment_order', null=True, blank=True)
+    if_pay = models.BooleanField(default=False)
 
     def __unicode__(self):
         return self.order_id
+
+
+class PayInfo(BaseModel):
+    order = models.OneToOneField(Order, related_name='info_order')
+    pay_id = models.CharField(max_length=64, default='')
+    buyer_email = models.CharField(max_length=100, default='')
+    status_info = models.CharField(max_length=30, default='')
+    price = models.FloatField(default=0)
+
+    def __unicode__(self):
+        return self.pay_id
 
 
 class IndexAdmin(models.Model):
@@ -306,6 +321,7 @@ class Report(BaseModel):
     qq = models.CharField(max_length=30, null=True, blank=True)
     reported = models.CharField(max_length=30)
     type = models.IntegerField(default=0)
+    finish = models.BooleanField(default=False)
     content = models.CharField(max_length=1000, default='')
     pic1 = models.CharField(max_length=200, default='')
     pic2 = models.CharField(max_length=200, default='')
@@ -329,10 +345,12 @@ class ChargeRecord(BaseModel):
 class CashRecord(BaseModel):
     record_id = models.CharField(max_length=30, unique=True)
     money = models.FloatField(default=0.0)
-    bank_id = models.CharField(max_length=50, default='')
+    alipay_account = models.CharField(max_length=50)
+    real_name = models.CharField(max_length=100)
     belong = models.ForeignKey(Mentor, related_name='men_cash_recs')
     manage = models.BooleanField(default=False)
     agree = models.NullBooleanField(default=None)
+    success = models.NullBooleanField(default=None)
 
     def __unicode__(self):
         return self.record_id

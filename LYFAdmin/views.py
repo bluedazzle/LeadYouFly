@@ -17,13 +17,14 @@ from PIL import Image
 from dss.Serializer import serializer
 
 from LYFAdmin.models import Hero, Mentor, IndexAdmin, Order, Course, Student, ChargeRecord, MoneyRecord, CashRecord, \
-    Admin, Notice, Message
+    Admin, Notice, Message, Report
+from LYFAdmin.online_pay import create_batch_trans
 
 from forms import MentorDetailContentForm, NoticeContentForm
 from decorator import login_require
 from message import REG_MES, create_new_message
 from utils import upload_picture, datetime_to_string, auth_admin, hero_convert, order_status_convert, \
-    mentor_status_convert, order_search, output_data, student_search
+    mentor_status_convert, order_search, output_data, student_search, report_convert
 from qn import upload_file_qn, list_file, QINIU_DOMAIN, VIDEO_CONVERT_PARAM, VIDEO_POSTER_PARAM, data_handle, \
     delete_data, put_block_data
 from message import push_custom_message
@@ -181,6 +182,32 @@ def admin_portal(req):
                                                         'status': 0}, context_instance=RequestContext(req))
 
 
+#投诉处理
+@login_require
+def admin_complain(req):
+    raw_report_list = Report.objects.all()
+    for report in raw_report_list:
+        report.type = report_convert(report.type)
+    report_list = serializer(raw_report_list, datetime_format='string', deep=True)
+    return render_to_response('complain_admin.html', {'report_list': report_list}, context_instance=RequestContext(req))
+
+
+#投诉图片
+@login_require
+def admin_complain_picture(req, rid):
+    report = get_object_or_404(Report, id=rid)
+    return render_to_response('complain_pic_admin.html', {'report': report})
+
+
+#投诉处理
+@login_require
+def admin_complain_finish(req, rid):
+    report = get_object_or_404(Report, id=rid)
+    report.finish = True
+    report.save()
+    return HttpResponseRedirect('/admin/complain')
+
+
 #管理员更改密码
 @login_require
 def admin_portal_change_password(req):
@@ -320,7 +347,7 @@ def admin_order_search(req):
     search_text = req.POST.get('search_text', '')
     order_status = int(req.POST.get('order_status', 0))
     raw_order_list = order_search(order_status, search_text)
-    order_list = serializer(raw_order_list, deep=True)
+    order_list = serializer(raw_order_list, datetime_format='string', deep=True)
     for itm in order_list:
         itm['status'] = order_status_convert(itm['status'])
     return render_to_response('order_admin.html', {'order_list': order_list,
@@ -344,12 +371,13 @@ def admin_order_output(req):
 def admin_mentor(req):
     raw_mentor_list = Mentor.objects.all().order_by('-create_time')
     mentor_list = serializer(raw_mentor_list, datetime_format='string')
-    priority_list = [{'index': 0}, {'index': 1}, {'index': 2}, {'index': 3}, {'index': 4}, {'index': 5}]
     for i, mentor in enumerate(raw_mentor_list):
-        mentor_list[i]['total_orders'] = mentor.men_orders.all().count()
+        mentor_list[i]['total_orders'] = mentor.men_orders.filter(Q(status=1) |
+                                           Q(status=2) |
+                                           Q(status=3) |
+                                           Q(status=4)).count()
         mentor_list[i]['status'] = mentor_status_convert(mentor.status)
-    return render_to_response('mentor_admin.html', {'mentor_list': mentor_list,
-                                                    'priority_list': priority_list}, context_instance=RequestContext(req))
+    return render_to_response('mentor_admin.html', {'mentor_list': mentor_list}, context_instance=RequestContext(req))
 
 
 #添加导师
@@ -522,7 +550,10 @@ def admin_student(req):
     for i, stu in enumerate(raw_stu_list):
         total_expense = 0.0
         last_time = ''
-        order_list = stu.stu_orders.all().order_by('-create_time')
+        order_list = stu.stu_orders.filter(Q(status=1) |
+                                           Q(status=2) |
+                                           Q(status=3) |
+                                           Q(status=4)).order_by('-create_time')
         if order_list.exists():
             last_time = datetime_to_string(order_list[0].create_time)
             for itm in order_list:
@@ -555,10 +586,32 @@ def admin_student_search(req):
 
 @login_require
 def admin_audit(req):
-    order_list = Order.objects.filter(if_upload_video=True, video_audit=False)
+    order_list = Order.objects.filter(if_upload_video=True)
     order_list = serializer(order_list, deep=True, datetime_format='string')
     return render_to_response('audit_admin.html', {'video_list': order_list}, context_instance=RequestContext(req))
 
+
+@login_require
+def admin_audit_pass(req, oid):
+    order = get_object_or_404(Order, id=oid)
+    order.video_audit = True
+    order.video_pass = True
+    order.save()
+    return HttpResponseRedirect('/admin/audit/')
+
+
+@login_require
+def admin_audit_reject(req, oid):
+    order = get_object_or_404(Order, id=oid)
+    order.video_pass = False
+    order.video_audit = True
+    order.if_upload_video = False
+    order.video_name = ''
+    order.video_size = ''
+    order.video_poster = ''
+    order.video_url = ''
+    order.save()
+    return HttpResponseRedirect('/admin/audit/')
 
 @login_require
 def admin_pay(req):
@@ -605,10 +658,17 @@ def admin_pay_mentor_rec(req):
 @login_require
 def admin_pay_agree_cash(req, cid):
     record = get_object_or_404(CashRecord, id=cid)
+    batch_list = ({'account': record.alipay_account,
+                   'name': record.real_name,
+                   'fee': record.money,
+                   'note': u'导师提款'},)
+    url = create_batch_trans(batch_list=batch_list, account_name=u'济南江山如画网络科技有限责任公司', batch_no=record.record_id)
+    print url
     record.manage = True
     record.agree = True
+    record.success = False
     record.save()
-    return HttpResponseRedirect('/admin/pay/cash/')
+    return HttpResponseRedirect(url)
 
 
 #驳回提款

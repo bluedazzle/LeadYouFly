@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 from views import *
 from LYFAdmin.qn import *
+import LYFAdmin.order_operation
 
 
 def teacher_login(request):
@@ -146,10 +147,37 @@ def teacher_indemnity(request):
         raise Http404
     if request.method == 'GET':
         mentor = return_content['mentor']
-        return_content['money_records'] = mentor.men_money_records.order_by('-create_time').all()
-    return render_to_response('teacher/indemnity.html',
-                              return_content,
-                              context_instance=RequestContext(request))
+        money_records = mentor.men_money_records.order_by('-create_time').all()
+        paginator = Paginator(money_records, 20)
+        try:
+            page_num = request.GET.get('page_num')
+            money_records = paginator.page(page_num)
+        except PageNotAnInteger:
+            money_records = paginator.page(1)
+        except EmptyPage:
+            money_records = paginator.page(paginator.num_pages)
+
+        return_content['money_records'] = money_records
+        return render_to_response('teacher/indemnity.html',
+                                  return_content,
+                                  context_instance=RequestContext(request))
+    if request.method == 'POST':
+        money = request.POST.get('money')
+        alipay_account = request.POST.get('alipay_account')
+        real_name = request.POST.get('real_name')
+        mentor = return_content['mentor']
+        if money and alipay_account and real_name:
+            iden_income = mentor.iden_income
+            if float(money) <= iden_income:
+                LYFAdmin.order_operation.create_cash_request(mentor, money, alipay_account, real_name)
+                iden_income -= float(money)
+                mentor.alipay_account = alipay_account
+                mentor.real_name = real_name
+                mentor.iden_income = iden_income
+                mentor.save()
+                return HttpResponse(json.dumps('success'))
+
+        return HttpResponse(json.dumps(u"操作失败"))
 
 
 def order_accept(request):

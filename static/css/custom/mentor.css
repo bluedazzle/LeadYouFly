@@ -187,3 +187,7 @@
 .hero-name{
     display: none;
 }
+
+.cash-form input{
+    margin-bottom: 20px;
+}

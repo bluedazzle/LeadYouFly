@@ -10,9 +10,10 @@ from django.utils.timezone import get_current_timezone
 
 def create_order_id(stu_id, men_id):
     date_str = str(datetime.date.today()).replace('-', '')
-    auto_num = Order.objects.filter(create_time__year=datetime.date.year,
-                                    create_time__month=datetime.date.month,
-                                    create_time__day=datetime.date.day).count() + 1
+    year, month, day = str(datetime.date.today()).split('-')
+    auto_num = Order.objects.filter(create_time__year=year,
+                                    create_time__month=month,
+                                    create_time__day=day).count() + 1
     new_id = '%s%06i%06i%06i' % (date_str, stu_id, men_id, auto_num)
     return new_id
 
@@ -36,11 +37,12 @@ def create_charge_record(student, money, ctype=1, order_id=None):
     return new_record
 
 
-def create_cash_request(mentor, money, bank_id):
+def create_cash_request(mentor, money, alipay_account, name):
     record_id = 'R%s%s' % (str(datetime.date.today()).replace('-', ''), str(time.time()).replace('.', ''))
     new_request = CashRecord(record_id=record_id,
                              money=money,
-                             bank_id=bank_id,
+                             alipay_account=alipay_account,
+                             real_name=name,
                              belong=mentor)
     new_request.save()
     return new_request

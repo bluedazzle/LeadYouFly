@@ -1,4 +1,7 @@
+# -*- coding: utf-8 -*-
+
 from django.conf.urls import patterns, include, url
+from LYFAdmin.notify_view import alipay_notify, alipay_batch_notify
 from views import *
 import user_view
 import teacher_view
@@ -22,7 +25,6 @@ urlpatterns = patterns('',
                        url('^logout$', logout),
                        url('^notices_list$', notices_list),
                        url('^notice_detail$', notice_detail),
-                       url('^test_pay$', test_pay),
                        url('^get_all_heroes$', utils.get_all_heroes),
 
                        # teacher
@@ -49,5 +51,11 @@ urlpatterns = patterns('',
                        url('^user/complain$', user_view.complain),
                        url('^user/upload_complain_pic$', user_view.upload_complain_pic),
                        url('^user/security_center$', user_view.security_center),
+                       url('^user/create_order/', user_view.create_order),
                        url('^test$', test),
+
+
+                       #异步通知
+                       url(r'^alipay_notify/$', alipay_notify),
+                       url(r'^batch_notify/$', alipay_batch_notify),
                        )

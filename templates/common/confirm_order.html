@@ -1,15 +1,57 @@
 {% extends 'base.html' %}
 {% block define %}
-  <div class="container">
-    <h4 class="text-center">确认订单</h4>
-    <div class="jumbotron">
-      <h5 class="text-center">{{ course.name }}</h5>
-      <p>课程介绍：{{ course.course_info }}</p>
-      <p>价格：￥{{ course.price }}</p>
-      <p>导师：{{ course.belong.nick }}</p>
-      <p class="text-right">
-        <a class="btn btn-primary btn-lg" href="/test_pay" target="_Blank">立即支付</a>
-      </p>
+    <div class="container">
+        <h4 class="text-center">确认订单</h4>
+
+        <div class="jumbotron">
+            <h5 class="text-center">{{ course.name }}</h5>
+
+            <p>课程介绍：{{ course.course_info }}</p>
+
+            <p>价格：￥{{ course.price }}</p>
+
+            <p>导师：{{ course.belong.nick }}</p>
+
+            <form action="/user/create_order/" target="_blank" method="post">
+                {% csrf_token %}
+                <div class="form-inline">
+                    <label for=""><p>学习大区：</p></label>
+                    <select name="learn_area" id="s1" class="form-control select select-primary select-block mbl">
+                        <option value="全区">全区</option>
+                        <option value="电信">电信</option>
+                        <option value="联通">联通</option>
+                    </select>
+                </div>
+                <div class="form-inline">
+                    <label for=""><p>学习位置：</p></label>
+                    <select name="learn_type" id="s2" class="form-control select select-primary select-block mbl">
+                        <option value="中单">中单</option>
+                        <option value="上单">上单</option>
+                        <option value="ADC">ADC</option>
+                        <option value="打野">打野</option>
+                        <option value="辅助">辅助</option>
+                    </select>
+                </div>
+                <div class="form-inline">
+                    <label for=""><p>学习英雄：</p></label>
+                    <select name="learn_hero" id="s3" class="form-control select select-primary select-block mbl">
+                        {% for hero in hero_list %}
+                            <option value="{{ hero.hero_name }}">{{ hero.hero_name }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <input type="hidden" name="course_id" value="{{ course.id }}"/>
+
+                <p class="text-right">
+                    <button class="btn btn-primary btn-lg" target="_Blank" type="submit">立即支付</button>
+                </p>
+            </form>
+
+        </div>
     </div>
-  </div>
+{% endblock %}
+{% block script %}
+    <script>
+        $("select").select2({dropdownCssClass: 'dropdown-inverse'});
+    </script>
 {% endblock %}

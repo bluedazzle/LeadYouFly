@@ -47,6 +47,47 @@
         {% endfor %}
       </table>
     </div>
+    {% if money_records.has_other_pages %}
+      <nav class="col-md-12 col-lg-12 text-center">
+        <ul class="pagination">
+          {% if money_records.has_previous %}
+            <li>
+              <a href="/teacher/indemnity?page_num={{ money_records.previous_page_number }}" aria-label="Previous">
+                <span aria-hidden="true" class="glyphicon glyphicon-menu-left"></span>
+              </a>
+            </li>
+          {% else %}
+            <li class="disabled">
+              <a href="#" aria-label="Previous">
+                <span aria-hidden="true" class="glyphicon glyphicon-menu-left"></span>
+              </a>
+            </li>
+          {% endif %}
+
+          {% for page in money_records.paginator.page_range %}
+            {% if page == money_records.number %}
+              <li class="active"><a href="#">{{ page }}</a></li>
+            {% else %}
+              <li><a href="/teacher/indemnity?page_num={{ page }}">{{ page }}</a></li>
+            {% endif %}
+          {% endfor %}
+
+          {% if money_records.has_next %}
+            <li>
+              <a href="/teacher/indemnity?page_num={{ money_records.next_page_number }}" aria-label="Next">
+                <span aria-hidden="true" class="glyphicon glyphicon-menu-right"></span>
+              </a>
+            </li>
+          {% else %}
+            <li class="disabled">
+              <a href="#" aria-label="Next">
+                <span aria-hidden="true" class="glyphicon glyphicon-menu-right"></span>
+              </a>
+            </li>
+          {% endif %}
+        </ul>
+      </nav>
+    {% endif %}
   </div>
 
   <!-- Modal -->
@@ -63,8 +104,8 @@
             <input type="text" class="form-control" name="alipay_account" placeholder="支付宝账号" value=""/>
             <input type="text" class="form-control" name="real_name" placeholder="真实姓名"/>
             <input type="number" class="form-control" name="money" placeholder="提取现金，需小于可用额度{{ mentor.iden_income }}元"
-                 onkeyup="this.value=this.value.replace(/\D/g,'')"
-                 onafterpaste="this.value=this.value.replace(/\D/g,'')"/>
+                   onkeyup="this.value=this.value.replace(/\D/g,'')"
+                   onafterpaste="this.value=this.value.replace(/\D/g,'')"/>
           </form>
         </div>
         <div class="modal-footer">

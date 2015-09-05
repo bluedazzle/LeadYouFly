@@ -6,12 +6,16 @@ $(document).ready(function(){
 
 function submitOutCash(money){
   var inputNumber = $('input[name=money]').val();
-  if(inputNumber && inputNumber <= money){
+  var alipayAccount = $('input[name=alipay_account]').val();
+  var realName = $('input[name=real_name]');
+  if(inputNumber && inputNumber <= money && alipayAccount && realName){
     $.ajax({
       url: "/teacher/indemnity",
       type: "post",
       data: {
         "money": inputNumber,
+        "alipay_account": alipayAccount,
+        "real_name": realName,
         "csrfmiddlewaretoken": $("input[name=csrfmiddlewaretoken]").val()
       },
       dataType: "json",

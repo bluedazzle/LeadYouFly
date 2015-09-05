@@ -39,6 +39,7 @@ def complete_mes(request):
                                   context_instance=RequestContext(request))
     if request.method == 'POST':
         form = CompleteInfoForm(request.POST)
+        avatar = request.FILES.get('')
         if form.is_valid():
             form_data = form.cleaned_data
             student_active.qq = form_data['qq']

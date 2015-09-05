@@ -138,8 +138,8 @@ class Admin(AbstractBaseUser, BaseModel):
 class Mentor(AbstractBaseUser, BaseModel):
     account = models.CharField(max_length=11, unique=True)
     nick = models.CharField(max_length=20, null=True, blank=True, default="Mentor")
-    real_name = models.CharField(max_length=50, default='')
-    alipay_account = models.CharField(max_length=100, default='')
+    real_name = models.CharField(max_length=50, default='', null=True, blank=True)
+    alipay_account = models.CharField(max_length=100, default='', null=True, blank=True)
     status = models.IntegerField(default=0)
     intro = models.CharField(max_length=100, default=' ')
     good_at = models.CharField(max_length=5, default='')

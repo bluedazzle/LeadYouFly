@@ -1,8 +1,18 @@
 {% extends 'base.html' %}
+{% block css %}
+  <link href="/css/custom/croppic.css" rel="stylesheet"/>
+  <style>
+    #stu-header{
+      width: 400px;
+      height: 400px;
+      position: relative;
+    }
+  </style>
+{% endblock %}
 {% block define %}
   <div class="col-md-12 col-lg-12 user-host-nav">
     <div class="teacher-host-head text-center">
-      <img class="teacher-head" src="{{ active_user.avatar }}"/>
+      <img class="teacher-head" src="{{ active_user.avatar }}" style="cursor: pointer" onclick="openUpdateHeader()"/>
       <p style="color: #ffffff;font-size: 16px;margin-top: 5px">{{ active_user.nick }}</p>
       <p style="color: #bdc3c7; font-size: 14px">
         <span style="color: #fff;">{{ active_user.create_time | date:"Y/m/d" }}</span>入学，已完成<span style="color: #fff;">13</span>堂课
@@ -21,7 +31,32 @@
       <a type="button" id="complete_mes_submit" class="btn btn-primary btn-large btn-block">保&nbsp;&nbsp;存</a>
     </div>
   </div>
+
+  <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <h4 class="modal-title" id="myModalLabel">
+            修改头像
+            <label class="btn btn-primary btn-upload" for="inputImage" title="Upload image file">
+              <input type="file" class="sr-only" id="inputImage" name="file" accept="image/*">
+            <span class="docs-tooltip" data-toggle="tooltip" title="" data-original-title="Import image with Blob URLs">
+              选择图片
+            </span>
+            </label>
+          </h4>
+        </div>
+        <div class="modal-body text-center">
+          <div id="stu-header">
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 {% endblock %}
 {% block script %}
+  <script src="/js/common/croppic.min.js"></script>
   <script src="/js/student/complete_mes.js"></script>
+
 {% endblock %}

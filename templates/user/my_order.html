@@ -9,6 +9,7 @@
           <th>模式</th>
           <th>价格</th>
           <th>开课时间</th>
+          <th>状态</th>
           <th>操作</th>
         </tr>
         </thead>
@@ -21,6 +22,7 @@
           <td>
             购买时间：<span class="order-buy-date">{{ order.create_time | date:"Y/m/d" }}</span>
           </td>
+          <td></td>
           <td></td>
           <td></td>
           <td></td>
@@ -40,8 +42,20 @@
           <td>
             {{ order.teach_end_time | date:"m月d号H:i开课" }}
           </td>
+          <td>
+            {% if order.status == 1 %}
+            待确认
+            {% elif order.status == 2 %}
+            已确认
+            {% elif order.status == 3 %}
+            已完成
+            {% elif order.status == 4 %}
+            已评价
+            {% elif order.stats == 5 %}
+            已经撤单
+            {% endif %}
+          </td>
           <td class="order-operation">
-            <a href="#">确认付款</a>
             {% if order.status == 3 %}
             <a href="/user/appraise_order?order_id={{ order.id }}">评价</a>
             {% endif %}

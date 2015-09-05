@@ -96,13 +96,14 @@ def appraise_order(request):
             order = Order.objects.get(id=form_data['order_id'],
                                       belong=return_content['active_user'],
                                       status=3)
+            order.status = 4
             new_comment = Comment()
             new_comment.mark = float(form_data['stars'])
             new_comment.content = form_data['content']
             new_comment.comment_mentor = order.teach_by
             new_comment.comment_by = return_content['active_user']
             new_comment.save()
-            order.status = 4
+            order.comment = new_comment
             order.save()
         except Order.DoesNotExist:
             raise Http404

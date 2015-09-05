@@ -147,9 +147,21 @@ def teacher_indemnity(request):
     if request.method == 'GET':
         mentor = return_content['mentor']
         return_content['money_records'] = mentor.men_money_records.order_by('-create_time').all()
-    return render_to_response('teacher/indemnity.html',
-                              return_content,
-                              context_instance=RequestContext(request))
+        return render_to_response('teacher/indemnity.html',
+                                  return_content,
+                                  context_instance=RequestContext(request))
+    if request.method == 'POST':
+        money = request.POST.get('money')
+        mentor = return_content['mentor']
+        if money:
+            iden_income = mentor.iden_income
+            if float(money) <= iden_income:
+                iden_income -= float(money)
+                mentor.iden_income = iden_income
+                mentor.save()
+                return HttpResponse(json.dumps('success'))
+
+        return HttpResponse(json.dumps(u"操作失败"))
 
 
 def order_accept(request):

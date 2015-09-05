@@ -12,7 +12,7 @@
       <div class="col-lg-4 col-md-4" style="border-right: 1px solid rgb(230, 230, 230);">
         <p class="text-center indemnity-title-sm">可用额度</p>
         <p class="text-center indemnity-number-lg">{{ mentor.iden_income }}</p>
-        <button class="btn btn-primary btn-cash">提现</button>
+        <button class="btn btn-primary btn-cash" data-toggle="modal" data-target="#myModal">提现</button>
       </div>
       <div class="col-lg-4 col-md-4">
         <p class="text-center indemnity-title-sm">待确认付款</p>
@@ -22,12 +22,12 @@
     <div class="col-lg-12 col-md-12" style="margin-top: 20px">
       <table class="table text-left table-indemnity text-center">
         <thead>
-          <tr style="background-color: rgb(170, 185, 202);color: #ffffff;">
-            <td>日期</td>
-            <td>行为</td>
-            <td>收入</td>
-            <td>备注</td>
-          </tr>
+        <tr style="background-color: rgb(170, 185, 202);color: #ffffff;">
+          <td>日期</td>
+          <td>行为</td>
+          <td>收入</td>
+          <td>备注</td>
+        </tr>
         </thead>
         <tbody>
         {% for recorde in money_records %}
@@ -36,16 +36,40 @@
             <td>{{ recorde.action }}</td>
             <td>
               {% if recorde.income < 0 %}
-              {{ recorde.income }}
+                {{ recorde.income }}
               {% else %}
-              +{{ recorde.income }}
+                +{{ recorde.income }}
               {% endif %}
             </td>
             <td>{{ recorde.info }}</td>
           </tr>
-        </tbody>
+          </tbody>
         {% endfor %}
       </table>
+    </div>
+  </div>
+
+  <!-- Modal -->
+  <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <h4 class="modal-title" id="myModalLabel">提现</h4>
+        </div>
+        <div class="modal-body">
+          <form action="/teacher/indemnity" method="post">
+            {% csrf_token %}
+            <input type="number" class="form-control" name="money" placeholder="需小于可用额度{{ mentor.iden_income }}元"
+                 onkeyup="this.value=this.value.replace(/\D/g,'')"
+                 onafterpaste="this.value=this.value.replace(/\D/g,'')"/>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+          <button type="button" class="btn btn-primary" onclick="submitOutCash({{ mentor.iden_income }})">确定</button>
+        </div>
+      </div>
     </div>
   </div>
 {% endblock %}

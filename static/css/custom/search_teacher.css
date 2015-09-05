@@ -223,3 +223,8 @@
     margin-top: 120px;
     display: none;
 }
+
+.hero-header-sm{
+    height: 20px;
+    width: 20px;
+}

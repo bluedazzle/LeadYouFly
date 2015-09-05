@@ -37,11 +37,12 @@ def create_charge_record(student, money, ctype=1, order_id=None):
     return new_record
 
 
-def create_cash_request(mentor, money, bank_id):
+def create_cash_request(mentor, money, alipay_account, name):
     record_id = 'R%s%s' % (str(datetime.date.today()).replace('-', ''), str(time.time()).replace('.', ''))
     new_request = CashRecord(record_id=record_id,
                              money=money,
-                             bank_id=bank_id,
+                             alipay_account=alipay_account,
+                             real_name=name,
                              belong=mentor)
     new_request.save()
     return new_request

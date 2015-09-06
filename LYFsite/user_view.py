@@ -89,7 +89,7 @@ def appraise_order(request):
             return HttpResponse(json.dumps("wrong form"))
 
         try:
-            order = Order.objects.get(id=form_data['order_id'],
+            order = Order.objects.get(order_id=form_data['order_id'],
                                       belong=return_content['active_user'],
                                       status=3)
             order.status = 4

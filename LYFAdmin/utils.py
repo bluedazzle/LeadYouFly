@@ -92,6 +92,18 @@ def hero_convert(type_str):
     return nstr
 
 
+def area_convert(type_str):
+    nstr = ''
+    for itm in type_str:
+        if itm == '0':
+            nstr += '全区'
+        elif itm == '1':
+            nstr += '电信'
+        elif itm == '2':
+            nstr += '联通'
+    return nstr
+
+
 def order_status_convert(status_type):
     n_str = ''
     if status_type == 1:

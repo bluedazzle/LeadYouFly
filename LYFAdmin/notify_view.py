@@ -2,6 +2,7 @@
 
 from django.http import HttpResponse
 from django.views.decorators.csrf import csrf_exempt
+from LYFAdmin.message import ORDER_BUY_MES, create_new_message
 
 from LYFAdmin.models import Order, PayInfo, CashRecord, MoneyRecord
 from LYFAdmin.online_pay import check_notify_id
@@ -35,6 +36,8 @@ def alipay_notify(req):
                                str(order.teach_by.phone).encode('utf-8'))
                 order.teach_by.iden_income += order.order_price
                 order.teach_by.save()
+                order_mes = ORDER_BUY_MES % order.belong.nick
+                create_new_message(order_mes, belong=order.belong)
             elif status == 'TRADE_FINISHED':
                 order.status = 3
             order.if_pay = True

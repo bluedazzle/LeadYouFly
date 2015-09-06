@@ -62,7 +62,7 @@ function submitAppraise(orderId){
         url: "/user/appraise_order",
         type: "post",
         data: {
-          "order_id": parseInt(orderId),
+          "order_id": orderId,
           "stars": parseInt(stars),
           "content": appraiseContent,
           "csrfmiddlewaretoken": $("input[name=csrfmiddlewaretoken]").val()

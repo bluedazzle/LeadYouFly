@@ -35,7 +35,7 @@ class UpdateCourseForm(forms.Form):
 
 
 class AppraiseOrder(forms.Form):
-    order_id = forms.IntegerField()
+    order_id = forms.CharField()
     stars = forms.IntegerField()
     content = forms.CharField(max_length=100)
 

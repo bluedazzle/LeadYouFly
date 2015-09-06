@@ -252,6 +252,7 @@ def teacher_detail(request):
         except Mentor.DoesNotExist:
             raise Http404
         return_content['mentor_detail'] = mentor
+        return_content['course_list'] = mentor.men_courses.all().order_by('create_time')
         return render_to_response('common/teacher_detail.html',
                                   return_content,
                                   context_instance=RequestContext(request))

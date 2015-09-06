@@ -7,7 +7,7 @@ function acceptOrder(orderId){
         url: "/teacher/order_accept",
         type: "post",
         data: {
-          "order_id": orderId,
+          "order_id": orderId.toString(),
           "operation": 'accept',
           "csrfmiddlewaretoken": $("input[name=csrfmiddlewaretoken]").val()
         },

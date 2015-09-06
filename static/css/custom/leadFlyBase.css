@@ -68,6 +68,22 @@ html,body {
     display: inline-block;
 }
 
+.navbar-nav .dropdown{
+    border-left: 1px solid #ddd;
+    border-right: 1px solid #ddd;
+}
+
+.navbar-nav .dropdown .dropdown-toggle{
+    padding-top: 13px;
+    padding-bottom: 10px;
+}
+
+.navbar-nav .dropdown .dropdown-menu{
+    box-shadow: none;
+    border-top: 0;
+    border-radius: 0;
+}
+
 .mentor-status{
     font-size: 14px;
 }
@@ -665,7 +681,7 @@ html,body {
 .user-position-list{
     padding-top: 5px;
     padding-bottom: 0;
-    width: 180px;
+    width: 164px;
 }
 
 .user-position-list a{

@@ -62,7 +62,7 @@
               {% if order.status == 3 %}
                 <a href="/user/appraise_order?order_id={{ order.id }}">评价</a>
               {% elif order.status == 6 %}
-                <a href="#" data-toggle="modal" data-target="#payModal">支付</a>
+                <a href="#" onclick="toPay()">支付</a>
                 <a href="#" onclick="cancelOrder('{{ order.id }}')">撤销</a>
               {% endif %}
             </td>
@@ -94,10 +94,9 @@
 
   <!-- Modal -->
   <div class="modal fade" id="payModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-    <div class="modal-dialog" role="document">
+    <div class="modal-dialog" role="document" aria-hidden="false">
       <div class="modal-content">
         <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
           <h4 class="modal-title" id="myModalLabel">支付操作</h4>
         </div>
         <div class="modal-body">

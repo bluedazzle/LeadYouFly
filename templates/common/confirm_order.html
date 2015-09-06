@@ -43,7 +43,7 @@
         <input type="hidden" name="course_id" value="{{ course.id }}"/>
 
         <p class="text-right">
-          <button class="btn btn-primary btn-lg" data-toggle="modal" data-target="#payModal" target="_Blank" type="submit">立即支付</button>
+          <button class="btn btn-primary btn-lg" onclick="toPay()" target="_Blank" type="submit">立即支付</button>
         </p>
       </form>
 
@@ -54,7 +54,6 @@
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
           <h4 class="modal-title" id="myModalLabel">支付操作</h4>
         </div>
         <div class="modal-body">
@@ -71,5 +70,8 @@
 {% block script %}
   <script>
     $("select").select2({dropdownCssClass: 'dropdown-inverse'});
+    function toPay(){
+      $('#payModal').modal({backdrop: 'static', keyboard: false});
+    }
   </script>
 {% endblock %}

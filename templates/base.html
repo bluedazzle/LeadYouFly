@@ -18,22 +18,22 @@
     <nav class="navbar navbar-default" style="margin-bottom: 0;border-radius: 0;padding: 0 5% 0 5%">
       <div class="container-fluid">
         <!-- Brand and toggle get grouped for better mobile display -->
-        <div class="navbar-header">
-          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
-                  data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
-            <span class="sr-only">Toggle navigation</span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </button>
+        <div class="navbar-header nav-host">
+          {#          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"#}
+          {#                  data-target="#bs-example-navbar-collapse-1" aria-expanded="false">#}
+          {#            <span class="sr-only">Toggle navigation</span>#}
+          {#            <span class="icon-bar"></span>#}
+          {#            <span class="icon-bar"></span>#}
+          {#            <span class="icon-bar"></span>#}
+          {#          </button>#}
           <a href="/">
             <img class="nav-logo" src="/img/logo.png"/>
           </a>
+          <i class="divide-line"></i>
         </div>
 
         <!-- Collect the nav links, forms, and other content for toggling -->
-        <div class="collapse navbar-collapse nav-base-host" id="bs-example-navbar-collapse-1">
-          <i class="divide-line"></i>
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
           <form class="navbar-form navbar-left search-form" action="/search_teacher" method="get" role="search">
             <button type="submit" class="btn btn-default btn-search">
               <span class="glyphicon glyphicon-search"></span>
@@ -51,26 +51,31 @@
               {% if login_type == 'student' %}
                 <li class="dropdown">
                   <a href="#" class="dropdown-toggle" id="student-route" data-toggle="dropdown"
-                     role="button" aria-haspopup="true" aria-expanded="false">
+                     role="button" aria-haspopup="true" aria-expanded="false" style="padding-top: 13px;padding-bottom: 0">
                     <img style="width: 30px;height: 30px;border-radius: 50%"
                          src="{{ active_user.avatar }}"/>
+                    <span id="user-position"></span>
                     <span class="caret"></span>
                   </a>
-                  <ul class="dropdown-menu">
-                    <li class="user-mes-title">
-                      <span>资料</span>
-                    </li>
-                    <li><a href="/user/complete_mes">我的档案</a></li>
-                    <li><a href="/user/my_orders">我的订单</a></li>
-                    <li><a href="/user/my_follow_mentors">关注导师</a></li>
-                    {#                  <li><a href="/user/comment">交流中心</a></li>#}
-                    <li><a href="/user/message">消息</a></li>
-                    <li class="user-mes-title">
-                      <span>服务</span>
-                    </li>
-                    <li><a href="/user/security_center">安全中心</a></li>
-                    <li><a href="/user/complain">投诉</a></li>
-                    <li><a href="/logout">退出</a></li>
+                  <ul class="dropdown-menu user-position-list">
+                    <h6>资料</h6>
+                    <a href="/user/complete_mes">我的档案</a>
+                    <br/>
+                    <a href="/user/my_orders">我的订单</a>
+                    <br/>
+                    <a href="/user/my_follow_mentors">关注导师</a>
+                    <br/>
+                    <a href="/user/message">消息</a>
+                    <br/>
+                    <h6>服务</h6>
+                    <a href="/user/security_center">安全中心</a>
+                    <br/>
+                    <a href="/user/complain">投诉</a>
+                    <br/>
+                    <div class="position-list-footer">
+                      飞吧，{{ active_user.nick }}
+                      <a href="/logout">退出</a>
+                    </div>
                   </ul>
                 </li>
               {% elif login_type == 'teacher' %}
@@ -141,8 +146,8 @@
       </div>
     </div>
   </div>
-{% block select_screen %}
-{% endblock %}
+  {% block select_screen %}
+  {% endblock %}
 </div>
 {% if login_type == 'teacher' %}
   <audio src="/js/567.wav" loop="loop" id="notice_music"></audio>

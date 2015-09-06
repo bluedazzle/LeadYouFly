@@ -1,4 +1,7 @@
 {% extends 'base.html' %}
+{% block css %}
+  <link href="/css/custom/base_template.css" rel="stylesheet"/>
+{% endblock %}
 {% block define %}
     <div class="col-md-12 col-lg-12 teacher-container">
     <div class="container">
@@ -24,7 +27,7 @@
           </a>
         </div>
       </div>
-      <div class="col-md-10 col-lg-10">
+      <div class="col-md-10 col-lg-10 article-content">
         {% block common_define %}
         {% endblock %}
       </div>

@@ -1,0 +1,12 @@
+.article-content{
+    box-shadow: 0 0 10px #ddd;
+    padding: 20px 10px 10px 10px;
+}
+
+.article-content p{
+    text-indent: 2em;
+}
+
+.article-content p span{
+    margin-left: 10px;
+}

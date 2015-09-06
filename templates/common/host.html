@@ -4,49 +4,37 @@
     <!-- Indicators -->
     <ol class="carousel-indicators">
       {% if index_data.index_pic1 %}
-      <li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
+        <li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
       {% endif %}
       {% if index_data.index_pic2 %}
-      <li data-target="#carousel-example-generic" data-slide-to="1"></li>
+        <li data-target="#carousel-example-generic" data-slide-to="1"></li>
       {% endif %}
       {% if index_data.index_pic3 %}
-      <li data-target="#carousel-example-generic" data-slide-to="2"></li>
+        <li data-target="#carousel-example-generic" data-slide-to="2"></li>
       {% endif %}
     </ol>
     <!-- Wrapper for slides -->
     <div class="carousel-inner" role="listbox">
       {% if index_data.index_pic1 %}
-      <div class="item active">
-        <img src="{{ index_data.index_pic1 }}" alt="...">
-        <div class="carousel-caption" style="padding-bottom: 25%">
-          <button class="btn btn-find-mentor">
-            寻找导师<br/>
-            <span style="font-size: 12px">Find a mentor</span>
-          </button>
+        <div class="item active">
+          <a href="/search_teacher">
+            <img src="{{ index_data.index_pic1 }}" alt="Picture">
+          </a>
         </div>
-      </div>
       {% endif %}
       {% if index_data.index_pic2 %}
-      <div class="item">
-        <img src="{{ index_data.index_pic2 }}" alt="...">
-        <div class="carousel-caption" style="padding-bottom: 25%">
-          <button class="btn btn-find-mentor">
-            寻找导师<br/>
-            <span style="font-size: 12px">Find a mentor</span>
-          </button>
+        <div class="item">
+          <a href="/search_teacher">
+            <img src="{{ index_data.index_pic2 }}" alt="Picture">
+          </a>
         </div>
-      </div>
       {% endif %}
       {% if index_data.index_pic3 %}
-      <div class="item">
-        <img src="{{ index_data.index_pic3 }}" alt="...">
-        <div class="carousel-caption" style="padding-bottom: 25%">
-          <button class="btn btn-find-mentor">
-            寻找导师<br/>
-            <span style="font-size: 12px">Find a mentor</span>
-          </button>
+        <div class="item">
+          <a href="/search_teacher">
+            <img src="{{ index_data.index_pic3 }}" alt="Picture">
+          </a>
         </div>
-      </div>
       {% endif %}
     </div>
   </div>
@@ -58,7 +46,7 @@
       <div>
         <video class="video-js" preload="auto" poster="{{ index_data.video_poster }}" data-setup="{}">
           <source src="{{ index_data.index_video }}" type="video/mp4">
-{#          <source src="http://iurevych.github.com/Flat-UI-videos/big_buck_bunny.webm" type="video/webm">#}
+          {#          <source src="http://iurevych.github.com/Flat-UI-videos/big_buck_bunny.webm" type="video/webm">#}
         </video>
       </div>
     </div>
@@ -89,14 +77,14 @@
     </h6>
     {% for mentor in recommend %}
       {% if mentor %}
-      <div class="col-lg-3 col-md-3">
-        <div class="host-teacher-box" onclick="recommendTeacher('{{ mentor.id }}')">
-          <div class="recommend-teacher-header" style="background: url('{{ mentor.avatar }}') center"></div>
-          <div class="recommend-teacher-base">
-            <h6>
+        <div class="col-lg-3 col-md-3">
+          <div class="host-teacher-box" onclick="recommendTeacher('{{ mentor.id }}')">
+            <div class="recommend-teacher-header" style="background: url('{{ mentor.avatar }}') center"></div>
+            <div class="recommend-teacher-base">
+              <h6>
                 {{ mentor.nick }}
-            </h6>
-            <p>擅长位置：
+              </h6>
+              <p>擅长位置：
                 {% if mentor.good_at == 1 %}
                   中单
                 {% elif mentor.good_at == 2 %}
@@ -108,12 +96,12 @@
                 {% elif mentor.good_at == 5 %}
                   辅助
                 {% endif %}
-            </p>
-            <p>交易量：{{ mentor.men_orders.count }}</p>
-            <p>用户评分：{{ mentor.mark }}</p>
+              </p>
+              <p>交易量：{{ mentor.men_orders.count }}</p>
+              <p>用户评分：{{ mentor.mark }}</p>
+            </div>
           </div>
         </div>
-      </div>
       {% endif %}
     {% endfor %}
   </div>

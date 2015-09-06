@@ -1,6 +1,9 @@
 /**
  * Created by wushengyu on 15/8/23.
  */
+$(document).ready(function(){
+  $('#user-position').text("安全中心");
+});
 function submitChangePassword(){
   var origin_password = $('#origin_password').val();
   var new_password = $('#new_password').val();

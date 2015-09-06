@@ -50,16 +50,17 @@ html,body {
     font-size: 20px;
 }
 
-.nav-base-host{
-    position: relative;
-}
-
 .divide-line{
     position: absolute;
     height: 100%;
     width: 1px;
     background-color: #1abc9c;
-    left: 90px;
+    left: 80px;
+    top: 0;
+}
+
+.nav-host{
+    position: relative;
 }
 
 .nav-logo{
@@ -659,4 +660,35 @@ html,body {
 .list-select-item>p:hover{
     background-color: #1abc9c;
     color: #FFFFFF;
+}
+
+.user-position-list{
+    padding-top: 5px;
+    padding-bottom: 0;
+    width: 180px;
+}
+
+.user-position-list a{
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+.user-position-list h6{
+    font-size: 16px;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+.position-list-footer{
+    margin-top: 10px;
+    background-color: #ecf0f1;
+    padding: 9px 5px;
+    color: #bdc3c7;
+    font-size: 13px;
+    height: 44px;
+}
+
+.position-list-footer a{
+    color: #bdc3c7;
+    float: right;
 }

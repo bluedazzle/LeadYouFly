@@ -186,6 +186,10 @@ class Mentor(AbstractBaseUser, BaseModel):
             return True
         return False
 
+    def set_password(self, password):
+        self.password = self.hashed_password(password)
+
+
 class Student(AbstractBaseUser, BaseModel):
     account = models.CharField(max_length=11, unique=True)
     nick = models.CharField(max_length=20, null=True, blank=True, default="Mentor")

@@ -49,6 +49,29 @@ def get_verify_code(request):
             return HttpResponse(json.dumps(u"错误的电话号码"))
 
 
+def get_verify_code_forget(request):
+    if request.method == 'GET':
+        phone = request.GET.get('phone')
+        if len(phone) == 11:
+            phone_has_register = Student.objects.filter(phone=phone)
+            if phone_has_register.count() == 0:
+                return HttpResponse(json.dumps(u"该用户不存在"))
+            phone_has = PhoneVerify.objects.filter(phone=phone)
+            if phone_has.count() > 0:
+                if phone_has[0].is_get_again():
+                    pass
+                else:
+                    return HttpResponse(json.dumps(u"不要短时间内多次获取验证码"))
+
+            if send_verify_code(phone):
+                return HttpResponse(json.dumps("success"))
+            else:
+                return HttpResponse(json.dumps(u"发送验证码失败"))
+
+        else:
+            return HttpResponse(json.dumps(u"错误的电话号码"))
+
+
 def is_login(request):
     content = dict()
     student_account = request.session.get('student')

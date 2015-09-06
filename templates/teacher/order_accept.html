@@ -47,9 +47,9 @@
         </div>
         <div class="col-lg-3 col-md-3 text-right" id="option{{ order.order_id }}">
           {% if order.status == 1 %}
-            <button class="btn btn-primary btn-hg" style="font-size: 18px;" onclick="acceptOrder({{ order.order_id }})">确认接单</button>
+            <button class="btn btn-primary btn-hg" style="font-size: 18px;" onclick="acceptOrder('{{ order.order_id }}')">确认接单</button>
           {% elif order.status == 2 %}
-            <button class="btn btn-success btn-hg" style="font-size: 18px;" onclick="finishOrder({{ order.order_id }})">完成订单</button>
+            <button class="btn btn-success btn-hg" style="font-size: 18px;" onclick="finishOrder('{{ order.order_id }}')">完成订单</button>
           {% elif order.status == 3 %}
             <button class="btn btn-success btn-hg disabled" style="font-size: 18px;">已完成</button>
           {% elif order.status == 4 %}

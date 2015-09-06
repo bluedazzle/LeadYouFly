@@ -72,7 +72,8 @@ function submitAppraise(orderId){
         },
         dataType: "json",
         success: function(data, status){
-          if(data === "success"){
+          console.log(data);
+          if(data == "success"){
             window.location = "/user/my_orders"
           } else{
             Notify(data);

@@ -185,6 +185,7 @@ def order_accept(request):
     if not return_content:
         return HttpResponseRedirect('/login')
     if not return_content['login_type'] == 'teacher':
+        print 'wtf'
         raise Http404
 
     if request.method == 'GET':

@@ -7,13 +7,21 @@
       height: 300px;
       position: relative;
     }
+    .rank{
+      background-color: #f1c40f;
+      padding: 5px;
+      font-size: 12px
+    }
   </style>
 {% endblock %}
 {% block define %}
   <div class="col-md-12 col-lg-12 user-host-nav">
     <div class="teacher-host-head text-center">
       <img class="teacher-head" src="{{ active_user.avatar }}" style="cursor: pointer" onclick="openUpdateHeader()"/>
-      <p style="color: #ffffff;font-size: 16px;margin-top: 5px">{{ active_user.nick }}</p>
+      <p style="color: #ffffff;font-size: 16px;margin-top: 5px">
+        {{ active_user.nick }}
+        <span class="rank">{{ active_user.rank }}级</span>
+      </p>
       <p style="color: #bdc3c7; font-size: 14px">
         <span style="color: #fff;">{{ active_user.create_time | date:"Y/m/d" }}</span>入学，已完成<span style="color: #fff;">13</span>堂课
       </p>

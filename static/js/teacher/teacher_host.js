@@ -25,10 +25,12 @@ function position_check(term_id){
     change_check('checkbox-ADC', status);
     change_check('checkbox-support', status);
     change_check('checkbox-all', status)
-  } else if(term_id === 'checkbox-area-all'){
-    change_check('checkbox-telecom', status);
-    change_check('checkbox-netcom', status);
-    change_check(term_id, status)
+  } else if(term_id === 'checkbox-area-all' || term_id === 'checkbox-telecom' ||
+      term_id === 'checkbox-netcom'){
+      change_check('checkbox-telecom', 'checked');
+      change_check('checkbox-area-all', 'checked');
+      change_check('checkbox-netcom', 'checked');
+      change_check(term_id)
   } else{
     change_check(term_id, 1)
   }

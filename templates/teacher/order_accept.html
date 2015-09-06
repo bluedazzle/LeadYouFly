@@ -2,97 +2,107 @@
 {% block teacher_define %}
   {% csrf_token %}
   {% for order in men_orders %}
-  <div class="panel-order col-lg-12 col-md-12">
-    <div class="col-lg-12 col-md-12">
-      <div class="col-lg-2 col-md-2">
-        <img src="{{ order.belong.avatar }}" style="height: 50px;width: 50px;border-radius: 30px"/>
-        <span>&nbsp;&nbsp;{{ order.belong.nick }}</span>
-      </div>
-      <div class="col-lg-4 col-md-4 panel-order-item-head">
+    <div class="panel-order col-lg-12 col-md-12">
+      <div class="col-lg-12 col-md-12">
+        <div class="col-lg-2 col-md-2">
+          <img src="{{ order.belong.avatar }}" style="height: 50px;width: 50px;border-radius: 30px"/>
+          <span>&nbsp;&nbsp;{{ order.belong.nick }}</span>
+        </div>
+        <div class="col-lg-4 col-md-4 panel-order-item-head">
         <span>订单号：
           <span style="font-size: 12px">{{ order.order_id }}</span>
         </span>
-      </div>
-      <div class="col-lg-3 col-md-3 panel-order-item-head">
-        <span>订单时间：{{ order.create_time | date:"Y-m-d" }}</span>
-      </div>
-      <div class="col-lg-3 col-md-3 panel-order-start">
+        </div>
+        <div class="col-lg-3 col-md-3 panel-order-item-head">
+          <span>订单时间：{{ order.create_time | date:"Y-m-d" }}</span>
+        </div>
+        <div class="col-lg-3 col-md-3 panel-order-start">
         <span>开课时间：
           <span style="color: #f39c12">{{ order.create_time | date:"m/d H:i" }}</span>
         </span>
+        </div>
       </div>
-    </div>
-    <div class="col-lg-12 col-md-12">
-      <div class="col-lg-3 col-md-3 panel-order-detail">
-        <p>学习区域：{{ order.learn_area }}</p>
-        <p>联系QQ：123456789</p>
-      </div>
-      <div class="col-lg-3 col-md-3 panel-order-detail">
-        <p>学习位置：{{ order.learn_type }}
-        </p>
-        <p>联系YY：123456789</p>
-      </div>
-      <div class="col-lg-3 col-md-3 panel-order-detail">
-        <p>学习英雄：{{ order.learn_hero }}</p>
-        <p>联系电话：12345678901</p>
-      </div>
-      <div class="col-lg-3 col-md-3 text-right" id="option{{ order.order_id }}">
-        {% if order.status == 1 %}
-          <button class="btn btn-primary btn-hg" style="font-size: 18px;" onclick="acceptOrder({{ order.order_id }})">确认接单</button>
-        {% elif order.status == 2 %}
-          <button class="btn btn-success btn-hg" style="font-size: 18px;" onclick="finishOrder({{ order.order_id }})">完成订单</button>
-        {% elif order.status == 3 %}
-          <button class="btn btn-success btn-hg disabled" style="font-size: 18px;">已完成</button>
-        {% elif order.status == 4 %}
-          <button class="btn btn-success btn-hg disabled" style="font-size: 18px;">已评价</button>
-        {% elif order.status == 5 %}
-          <button class="btn btn-default btn-hg disabled" style="font-size: 18px;">已关闭</button>
-        {% endif %}
-      </div>
-    </div>
-    {% if men_orders.has_other_pages %}
-      <nav class="col-md-12 col-lg-12 text-center">
-        <ul class="pagination">
-          {% if men_orders.has_previous %}
-            <li>
-              <a href="/teacher/order_accept?page_num={{ men_orders.previous_page_number }}" aria-label="Previous">
-                <span aria-hidden="true" class="glyphicon glyphicon-menu-left"></span>
-              </a>
-            </li>
-          {% else %}
-            <li class="disabled">
-              <a href="#" aria-label="Previous">
-                <span aria-hidden="true" class="glyphicon glyphicon-menu-left"></span>
-              </a>
-            </li>
-          {% endif %}
-
-          {% for page in men_orders.paginator.page_range %}
-            {% if page == men_orders.number %}
-              <li class="active"><a href="#">{{ page }}</a></li>
+      <div class="col-lg-12 col-md-12">
+        <div class="col-lg-3 col-md-3 panel-order-detail">
+          <p>学习区域：{{ order.learn_area }}</p>
+          <p>联系QQ：123456789</p>
+          <p>课程名称：{{ order.course_name }}</p>
+        </div>
+        <div class="col-lg-3 col-md-3 panel-order-detail">
+          <p>学习位置：{{ order.learn_type }}
+          </p>
+          <p>联系YY：123456789</p>
+          <p>课程价格：￥{{ order.order_price }}</p>
+        </div>
+        <div class="col-lg-3 col-md-3 panel-order-detail">
+          <p>学习英雄：{{ order.learn_hero }}</p>
+          <p>联系电话：12345678901</p>
+          <p>视频审核：
+            {% if order.video_pass == "yes" %}
+              已通过
             {% else %}
-              <li><a href="/teacher/order_accept?page_num={{ page }}">{{ page }}</a></li>
+              未通过
             {% endif %}
-          {% endfor %}
-
-          {% if men_orders.has_next %}
-            <li>
-              <a href="/teacher/order_accept?page_num={{ men_orders.next_page_number }}" aria-label="Next">
-                <span aria-hidden="true" class="glyphicon glyphicon-menu-right"></span>
-              </a>
-            </li>
-          {% else %}
-            <li class="disabled">
-              <a href="#" aria-label="Next">
-                <span aria-hidden="true" class="glyphicon glyphicon-menu-right"></span>
-              </a>
-            </li>
+          </p>
+        </div>
+        <div class="col-lg-3 col-md-3 text-right" id="option{{ order.order_id }}">
+          {% if order.status == 1 %}
+            <button class="btn btn-primary btn-hg" style="font-size: 18px;" onclick="acceptOrder({{ order.order_id }})">确认接单</button>
+          {% elif order.status == 2 %}
+            <button class="btn btn-success btn-hg" style="font-size: 18px;" onclick="finishOrder({{ order.order_id }})">完成订单</button>
+          {% elif order.status == 3 %}
+            <button class="btn btn-success btn-hg disabled" style="font-size: 18px;">已完成</button>
+          {% elif order.status == 4 %}
+            <button class="btn btn-success btn-hg disabled" style="font-size: 18px;">已评价</button>
+          {% elif order.status == 5 %}
+            <button class="btn btn-default btn-hg disabled" style="font-size: 18px;">已关闭</button>
           {% endif %}
-        </ul>
-      </nav>
-    {% endif %}
-  </div>
+        </div>
+      </div>
+    </div>
   {% endfor %}
+
+  {% if men_orders.has_other_pages %}
+    <nav class="col-md-12 col-lg-12 text-center">
+      <ul class="pagination">
+        {% if men_orders.has_previous %}
+          <li>
+            <a href="/teacher/order_accept?page_num={{ men_orders.previous_page_number }}" aria-label="Previous">
+              <span aria-hidden="true" class="glyphicon glyphicon-menu-left"></span>
+            </a>
+          </li>
+        {% else %}
+          <li class="disabled">
+            <a href="#" aria-label="Previous">
+              <span aria-hidden="true" class="glyphicon glyphicon-menu-left"></span>
+            </a>
+          </li>
+        {% endif %}
+
+        {% for page in men_orders.paginator.page_range %}
+          {% if page == men_orders.number %}
+            <li class="active"><a href="#">{{ page }}</a></li>
+          {% else %}
+            <li><a href="/teacher/order_accept?page_num={{ page }}">{{ page }}</a></li>
+          {% endif %}
+        {% endfor %}
+
+        {% if men_orders.has_next %}
+          <li>
+            <a href="/teacher/order_accept?page_num={{ men_orders.next_page_number }}" aria-label="Next">
+              <span aria-hidden="true" class="glyphicon glyphicon-menu-right"></span>
+            </a>
+          </li>
+        {% else %}
+          <li class="disabled">
+            <a href="#" aria-label="Next">
+              <span aria-hidden="true" class="glyphicon glyphicon-menu-right"></span>
+            </a>
+          </li>
+        {% endif %}
+      </ul>
+    </nav>
+  {% endif %}
 {% endblock %}
 
 {% block mentor_script %}

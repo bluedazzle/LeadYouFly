@@ -1,6 +1,9 @@
 /**
  * Created by wushengyu on 15/8/23.
  */
+$(document).ready(function(){
+  $('#user-position').text("投诉")
+});
 var number_pic = 1;
 var uploadPicObj = $('#upload_pic');
 var imageList = [];

@@ -29,7 +29,10 @@ def alipay_notify(req):
             if status == 'TRADE_SUCCESS':
                 order.status = 1
                 create_charge_record(order.belong, price, order_id=order_id)
-                send_order_msg(order.order_id, order.belong.phone, order.belong.qq, order.teach_by.phone)
+                send_order_msg(str(order.order_id).encode('utf-8'),
+                               str(order.belong.phone).encode('utf-8'),
+                               str(order.belong.qq).encode('utf-8'),
+                               str(order.teach_by.phone).encode('utf-8'))
                 order.teach_by.iden_income += order.order_price
                 order.teach_by.save()
             elif status == 'TRADE_FINISHED':

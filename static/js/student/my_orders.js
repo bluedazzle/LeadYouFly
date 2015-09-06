@@ -30,3 +30,7 @@ function cancelOrder(orderId){
     }
   })
 }
+
+function toPay(){
+  $('#payModal').modal({backdrop: 'static', keyboard: false});
+}

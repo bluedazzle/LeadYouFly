@@ -26,6 +26,7 @@ urlpatterns = patterns('',
                        url('^notices_list$', notices_list),
                        url('^notice_detail$', notice_detail),
                        url('^get_all_heroes$', utils.get_all_heroes),
+                       url('^update_header$', update_header),
 
                        # teacher
 
@@ -37,6 +38,7 @@ urlpatterns = patterns('',
                        url('^teacher/manage_courses$', teacher_view.manage_courses),
                        url('^teacher/upload_video$', teacher_view.teacher_video_upload),
                        url('^teacher/change_status$', teacher_view.change_mentor_status),
+                       url('^teacher/poll_orders$', teacher_view.poll_order),
 
                        # user
 

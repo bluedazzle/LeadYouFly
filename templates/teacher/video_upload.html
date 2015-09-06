@@ -1,7 +1,4 @@
 {% extends 'teacher/base_teacher.html' %}
-{% block css %}
-  <link href="/css/custom/mentor.css" rel="stylesheet"/>
-{% endblock %}
 {% block teacher_define %}
   <div class="col-md-12 col-lg-12 teacher-define">
     {% for order in mentor.men_orders.all %}
@@ -59,7 +56,7 @@
 
   </div>
 {% endblock %}
-{% block script %}
+{% block mentor_script %}
   <script src="//vjs.zencdn.net/4.7/video.js"></script>
   <script src="/js/teacher/video_upload.js"></script>
 {% endblock %}

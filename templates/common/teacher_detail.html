@@ -23,7 +23,7 @@
           </div>
         {% elif mentor_detail.status == 2 %}
           <div class="status-box status-warning col-lg-4 col-md-4">
-            上课中
+            上课中(预计时间)
           </div>
         {% endif %}
         {% if active_user %}
@@ -109,6 +109,15 @@
             </div>
           </div>
         {% endfor %}
+        <div class="col-lg-4 col-md-4">
+          <div class="detail-course-box view-more">
+            <div class="buy-box" onclick="viewAllCourses()">
+              <h2>
+                查看更多
+              </h2>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -139,6 +148,9 @@
           <p>{{ mentor_detail.intro_detail | safe }}</p>
         </div>
         <div role="tabpanel" class="tab-pane" id="comment">
+          {% if mentor_detail.men_comments.all.count == 0 %}
+            <h6 class="text-center">暂时没有评价</h6>
+          {% endif %}
           {% for comment in mentor_detail.men_comments.all %}
             <div class="col-lg-12 col-md-12 comment-box">
               <div class="col-lg-1 col-md-1">

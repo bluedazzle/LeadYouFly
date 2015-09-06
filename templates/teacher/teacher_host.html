@@ -1,7 +1,4 @@
 {% extends 'teacher/base_teacher.html' %}
-{% block css %}
-  <link href="/css/custom/mentor.css" rel="stylesheet">
-{% endblock %}
 {% block teacher_define %}
   <div class="teacher-define col-lg-12 col-md-12">
     <form action="#" method="post">
@@ -253,7 +250,7 @@
   </div>
 {% endblock %}
 
-{% block script %}
+{% block mentor_script %}
   <script src="/js/teacher/teacher_host.js"></script>
   <script>
     var expert_position = "{{ mentor.good_at }}";

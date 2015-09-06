@@ -17,6 +17,10 @@ from LYFAdmin.online_pay import create_alipay_order
 from models import *
 import json
 import utils
+from PIL import Image
+import os
+
+BASE = os.path.dirname(os.path.dirname(__file__))
 
 
 position_dic = {'0': u'全部位置',
@@ -317,3 +321,36 @@ def become_teacher(request):
         return render_to_response('common/become_teacher.html',
                                   return_content,
                                   context_instance=RequestContext(request))
+
+
+def update_header(request):
+    return_content = utils.is_login(request)
+    if return_content:
+        return_content['is_login'] = True
+    else:
+        raise Http404
+
+    if return_content['login_type'] == 'student':
+        user = return_content['active_user']
+    elif return_content['login_type'] == 'teacher':
+        user = return_content['mentor']
+
+    if request.method == 'POST':
+        form = UpdateHeaderForm(request.POST, request.FILES)
+        if form.is_valid():
+            form_data = form.cleaned_data
+            x1 = form_data['dataX1']
+            y1 = form_data['dataY1']
+            x2 = form_data['dataX2']
+            y2 = form_data['dataY2']
+            image = form_data['new_header']
+            header = Image.open(image)
+            region = (int(x1), int(y1), int(x2), int(y2))
+            crop_img = header.crop(region)
+            image_header = crop_img.resize((240, 240), Image.ANTIALIAS)
+            image_header.save(BASE+'/static/img/user_avatar/' + str(user.id) + image.name)
+            user.avatar = '/img/user_avatar/' + str(user.id) + image.name
+            user.save()
+            return HttpResponse(json.dumps('success'))
+        else:
+            return HttpResponse(json.dumps('wrong form'))

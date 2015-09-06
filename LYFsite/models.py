@@ -65,3 +65,11 @@ class MentorInfoForm(forms.Form):
     game_level = forms.CharField(max_length=10)
     teach_area = forms.CharField(max_length=5)
     new_video = forms.FileField(required=False)
+
+
+class UpdateHeaderForm(forms.Form):
+    dataX1 = forms.CharField(max_length=10)
+    dataY1 = forms.CharField(max_length=10)
+    dataX2 = forms.CharField(max_length=10)
+    dataY2 = forms.CharField(max_length=10)
+    new_header = forms.FileField()

@@ -1,7 +1,7 @@
 {% extends 'teacher/base_teacher.html' %}
 {% block teacher_define %}
   {% csrf_token %}
-  {% for order in mentor.men_orders.all %}
+  {% for order in men_orders %}
   <div class="panel-order col-lg-12 col-md-12">
     <div class="col-lg-12 col-md-12">
       <div class="col-lg-2 col-md-2">
@@ -40,7 +40,7 @@
         {% if order.status == 1 %}
           <button class="btn btn-primary btn-hg" style="font-size: 18px;" onclick="acceptOrder({{ order.order_id }})">确认接单</button>
         {% elif order.status == 2 %}
-          <button class="btn btn-default btn-hg disabled" style="font-size: 18px;">已接单</button>
+          <button class="btn btn-success btn-hg" style="font-size: 18px;" onclick="finishOrder({{ order.order_id }})">完成订单</button>
         {% elif order.status == 3 %}
           <button class="btn btn-success btn-hg disabled" style="font-size: 18px;">已完成</button>
         {% elif order.status == 4 %}
@@ -50,10 +50,51 @@
         {% endif %}
       </div>
     </div>
+    {% if men_orders.has_other_pages %}
+      <nav class="col-md-12 col-lg-12 text-center">
+        <ul class="pagination">
+          {% if men_orders.has_previous %}
+            <li>
+              <a href="/teacher/order_accept?page_num={{ men_orders.previous_page_number }}" aria-label="Previous">
+                <span aria-hidden="true" class="glyphicon glyphicon-menu-left"></span>
+              </a>
+            </li>
+          {% else %}
+            <li class="disabled">
+              <a href="#" aria-label="Previous">
+                <span aria-hidden="true" class="glyphicon glyphicon-menu-left"></span>
+              </a>
+            </li>
+          {% endif %}
+
+          {% for page in men_orders.paginator.page_range %}
+            {% if page == men_orders.number %}
+              <li class="active"><a href="#">{{ page }}</a></li>
+            {% else %}
+              <li><a href="/teacher/order_accept?page_num={{ page }}">{{ page }}</a></li>
+            {% endif %}
+          {% endfor %}
+
+          {% if men_orders.has_next %}
+            <li>
+              <a href="/teacher/order_accept?page_num={{ men_orders.next_page_number }}" aria-label="Next">
+                <span aria-hidden="true" class="glyphicon glyphicon-menu-right"></span>
+              </a>
+            </li>
+          {% else %}
+            <li class="disabled">
+              <a href="#" aria-label="Next">
+                <span aria-hidden="true" class="glyphicon glyphicon-menu-right"></span>
+              </a>
+            </li>
+          {% endif %}
+        </ul>
+      </nav>
+    {% endif %}
   </div>
   {% endfor %}
 {% endblock %}
 
-{% block script %}
+{% block mentor_script %}
   <script src="/js/teacher/order_accept.js"></script>
 {% endblock %}

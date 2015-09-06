@@ -1,7 +1,4 @@
 {% extends 'teacher/base_teacher.html' %}
-{% block css %}
-  <link href="/css/custom/mentor.css" rel="stylesheet"/>
-{% endblock %}
 {% block teacher_define %}
   <div class="col-md-12 col-lg-12 teacher-define">
     {% for item in mentor.men_courses.all %}

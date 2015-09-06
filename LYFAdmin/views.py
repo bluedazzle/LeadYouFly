@@ -19,6 +19,7 @@ from dss.Serializer import serializer
 from LYFAdmin.models import Hero, Mentor, IndexAdmin, Order, Course, Student, ChargeRecord, MoneyRecord, CashRecord, \
     Admin, Notice, Message, Report
 from LYFAdmin.online_pay import create_batch_trans
+from LYFAdmin.order_operation import create_money_record
 
 from forms import MentorDetailContentForm, NoticeContentForm
 from decorator import login_require
@@ -597,6 +598,11 @@ def admin_audit_pass(req, oid):
     order.video_audit = True
     order.video_pass = True
     order.save()
+    mentor = order.teach_by
+    mentor.cash_income += order.order_price
+    mentor.iden_income -= order.order_price
+    mentor.save()
+    create_money_record(mentor, '收入', order.order_price, '来自订单%s' % order.order_id)
     return HttpResponseRedirect('/admin/audit/')
 
 

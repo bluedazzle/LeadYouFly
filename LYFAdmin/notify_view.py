@@ -41,6 +41,7 @@ def alipay_notify(req):
 
 @csrf_exempt
 def alipay_batch_notify(req):
+    print req.POST
     check_id = req.POST.get('notify_id', None)
     res_code = check_notify_id(check_id)
     if res_code == 'true':

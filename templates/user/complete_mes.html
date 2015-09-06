@@ -1,10 +1,10 @@
 {% extends 'base.html' %}
 {% block css %}
-  <link href="/css/custom/croppic.css" rel="stylesheet"/>
+  <link href="/css/custom/cropper.min.css" rel="stylesheet"/>
   <style>
-    #stu-header{
-      width: 400px;
-      height: 400px;
+    #user-header{
+      width: 300px;
+      height: 300px;
       position: relative;
     }
   </style>
@@ -34,7 +34,7 @@
 
   <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
     <div class="modal-dialog" role="document">
-      <div class="modal-content">
+      <div class="modal-content col-lg-12 col-md-12">
         <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
           <h4 class="modal-title" id="myModalLabel">
@@ -48,15 +48,29 @@
           </h4>
         </div>
         <div class="modal-body text-center">
-          <div id="stu-header">
+          <div id="user-header" class="col-lg-8 col-md-8">
+            <img src="{{ active_user.avatar }}" alt="Picture"/>
           </div>
+          <div class="col-lg-4 col-md-4">
+            <p>X:<span id="dataX"></span></p>
+            <p>Y:<span id="dataY"></span></p>
+            <p>width:<span id="dataWidth"></span></p>
+            <p>height:<span id="dataHeight"></span></p>
+            <p>rotate:<span id="dataRotate"></span></p>
+            <p>scaleX:<span id="dataScaleX"></span></p>
+            <p>scaleY:<span id="dataScaleY"></span></p>
+          </div>
+        </div>
+        <div class="modal-footer col-lg-12 col-md-12">
+          <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+          <button type="button" class="btn btn-primary" onclick="submitUpdateHeader()">确定</button>
         </div>
       </div>
     </div>
   </div>
 {% endblock %}
 {% block script %}
-  <script src="/js/common/croppic.min.js"></script>
+  <script src="/js/common/cropper.js"></script>
   <script src="/js/student/complete_mes.js"></script>
-
+  <script src="/js/common/update_header.js"></script>
 {% endblock %}

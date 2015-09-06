@@ -144,8 +144,13 @@
 {% block select_screen %}
 {% endblock %}
 </div>
-
+{% if login_type == 'teacher' %}
+  <audio src="/js/567.wav" loop="loop" id="notice_music"></audio>
+{% endif %}
 <script src="/js/common/common.js"></script>
+{% if login_type == 'teacher' %}
+  <script src="/js/teacher/poll_order.js"></script>
+{% endif %}
 {% block script %}
 {% endblock %}
 </body>

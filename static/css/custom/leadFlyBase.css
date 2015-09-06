@@ -496,6 +496,7 @@ html,body {
     height: 140px;
     padding: 10px;
     background-color: rgb(242, 242, 242);
+    margin-bottom: 10px;
 }
 
 .course-title{

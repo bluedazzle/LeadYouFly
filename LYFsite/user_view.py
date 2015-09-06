@@ -2,12 +2,7 @@
 from django.shortcuts import get_object_or_404
 from LYFAdmin.order_operation import create_order_id
 from views import *
-import os
 import time
-import random
-from PIL import Image
-
-BASE = os.path.dirname(os.path.dirname(__file__))
 
 
 def user_message(request):
@@ -39,7 +34,6 @@ def complete_mes(request):
                                   context_instance=RequestContext(request))
     if request.method == 'POST':
         form = CompleteInfoForm(request.POST)
-        avatar = request.FILES.get('')
         if form.is_valid():
             form_data = form.cleaned_data
             student_active.qq = form_data['qq']
@@ -47,6 +41,7 @@ def complete_mes(request):
             student_active.phone = form_data['phone']
             student_active.save()
             return HttpResponse(json.dumps('success'))
+
         return HttpResponse(json.dumps('wrong form'))
 
 

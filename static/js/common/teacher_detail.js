@@ -1,6 +1,17 @@
 /**
  * Created by wushengyu on 15/8/18.
  */
+
+$(document).ready(function(){
+  var i = 0;
+  $('.view-more').show();
+  $('.detail-course-box').each(function(){
+    if(i < 2){
+      $(this).show();
+    }
+    i++
+  })
+});
 function toConfirmOrder(courseId){
   console.log("click");
   window.location = "/confirm_order?course_id=" + courseId;
@@ -38,4 +49,9 @@ function cancelFollow(teacherId){
         }
       }
   )
+}
+
+function viewAllCourses(){
+  $('.detail-course-box').fadeIn();
+  $('.view-more').hide();
 }

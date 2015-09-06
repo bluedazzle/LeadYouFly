@@ -43,6 +43,7 @@
     padding: 5px 20px 5px 20px;
     margin-bottom: 20px;
     position: relative;
+    display: none;
 }
 
 .detail-course-box p,
@@ -80,6 +81,10 @@
     color: #FFFFFF;
     text-align: center;
     cursor: pointer;
+}
+
+.view-more .buy-box{
+    display: block;
 }
 
 .detail-course-box:hover .buy-box{

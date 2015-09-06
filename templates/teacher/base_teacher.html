@@ -1,8 +1,19 @@
 {% extends 'base.html' %}
+{% block css %}
+  <link href="/css/custom/cropper.min.css" rel="stylesheet"/>
+  <link href="/css/custom/mentor.css" rel="stylesheet"/>
+  <style>
+    #user-header{
+      width: 300px;
+      height: 300px;
+      position: relative;
+    }
+  </style>
+{% endblock %}
 {% block define %}
   <div class="col-md-12 col-lg-12 teacher-host-nav">
     <div class="teacher-host-head text-center">
-      <img class="teacher-head" src="{{ mentor.avatar }}"/>
+      <img class="teacher-head" src="{{ mentor.avatar }}" onclick="openUpdateHeader()" style="cursor: pointer;"/>
       <p style="color: #ffffff;font-size: 18px;margin-top: 3px">{{ mentor.nick }}</p>
       <p style="color: #ffffff; font-size: 14px">
         授课<span style="color: red">{{ teach_courses }}</span>堂
@@ -41,6 +52,46 @@
       </div>
     </div>
   </div>
+  <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content col-lg-12 col-md-12">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <h4 class="modal-title" id="myModalLabel">
+            修改头像
+            <label class="btn btn-primary btn-upload" for="inputImage" title="Upload image file">
+              <input type="file" class="sr-only" id="inputImage" name="file" accept="image/*">
+            <span class="docs-tooltip" data-toggle="tooltip" title="" data-original-title="Import image with Blob URLs">
+              选择图片
+            </span>
+            </label>
+          </h4>
+        </div>
+        <div class="modal-body text-center">
+          <div id="user-header" class="col-lg-8 col-md-8">
+            <img src="{{ mentor.avatar }}" alt="Picture"/>
+          </div>
+          <div class="col-lg-4 col-md-4">
+            <p>X:<span id="dataX"></span></p>
+            <p>Y:<span id="dataY"></span></p>
+            <p>width:<span id="dataWidth"></span></p>
+            <p>height:<span id="dataHeight"></span></p>
+            <p>rotate:<span id="dataRotate"></span></p>
+            <p>scaleX:<span id="dataScaleX"></span></p>
+            <p>scaleY:<span id="dataScaleY"></span></p>
+          </div>
+        </div>
+        <div class="modal-footer col-lg-12 col-md-12">
+          <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+          <button type="button" class="btn btn-primary" onclick="submitUpdateHeader()">确定</button>
+        </div>
+      </div>
+    </div>
+  </div>
 {% endblock %}
 {% block script %}
+  <script src="/js/common/cropper.js"></script>
+  <script src="/js/common/update_header.js"></script>
+  {% block mentor_script %}
+  {% endblock %}
 {% endblock %}

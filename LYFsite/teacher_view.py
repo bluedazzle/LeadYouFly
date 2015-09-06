@@ -188,26 +188,56 @@ def order_accept(request):
         raise Http404
 
     if request.method == 'GET':
+        mentor = return_content['mentor']
+        men_orders = mentor.men_orders.exclude(status=5)
+        men_orders = men_orders.exclude(status=6)
+        men_orders = men_orders.order_by('status')
+        men_orders = men_orders.order_by('-create_time')
+        paginator = Paginator(men_orders, 8)
+        try:
+            page_num = request.GET.get('page_num')
+            men_orders = paginator.page(page_num)
+        except PageNotAnInteger:
+            men_orders = paginator.page(1)
+        except EmptyPage:
+            men_orders = paginator.page(paginator.num_pages)
+        return_content['men_orders'] = men_orders
         return render_to_response('teacher/order_accept.html',
                                   return_content,
                                   context_instance=RequestContext(request))
     if request.method == 'POST':
         order_id = request.POST.get('order_id')
+        operation = request.POST.get('operation')
         mentor = return_content['mentor']
-        if not mentor.status == 1:
-            return HttpResponse(json.dumps(u'请先更改状态为可立即授课'))
-        try:
-            order = Order.objects.get(order_id=order_id)
-            if order.status == 1:
-                order.status = 2
-                order.save()
-                return HttpResponse(json.dumps('success'))
-            else:
-                return HttpResponse(json.dumps('failed'))
-        except Order.DoesNotExist:
-            raise Http404
-        except:
-            return HttpResponse(json.dumps('wrong form'))
+        if operation == 'accept':
+            if not mentor.status == 1:
+                return HttpResponse(json.dumps(u'请先更改状态为可立即授课'))
+            try:
+                order = Order.objects.get(order_id=order_id)
+                if order.status == 1:
+                    order.status = 2
+                    order.save()
+                    return HttpResponse(json.dumps('success'))
+                else:
+                    return HttpResponse(json.dumps(u'操作失败'))
+            except Order.DoesNotExist:
+                raise Http404
+            except:
+                return HttpResponse(json.dumps('wrong form'))
+
+        if operation == 'finish':
+            try:
+                order = Order.objects.get(order_id=order_id)
+                if order.status == 2:
+                    order.status = 3
+                    order.save()
+                    return HttpResponse(json.dumps('success'))
+                else:
+                    return HttpResponse(json.dumps(u'操作失败'))
+            except Order.DoesNotExist:
+                raise Http404
+            except:
+                return HttpResponse(json.dumps('wrong form'))
 
 
 def manage_courses(request):
@@ -303,3 +333,19 @@ def utils_upload_video(video_data, video_format, order_id, support_format):
                         'sfile_name': sfile_name}
 
         return False
+
+
+def poll_order(request):
+    return_content = utils.is_login(request)
+    if not return_content:
+        return HttpResponseRedirect('/login')
+    if not return_content['login_type'] == 'teacher':
+        raise Http404
+
+    if request.method == 'GET':
+        mentor = return_content['mentor']
+        order_new = mentor.men_orders.filter(status=1)
+        if order_new.count() > 0:
+            return HttpResponse(json.dumps("success"))
+        else:
+            return HttpResponse(json.dumps("no new orders"))

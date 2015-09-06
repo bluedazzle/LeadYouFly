@@ -28,7 +28,8 @@ def alipay_notify(req):
                                    price=float(price))
             new_pay_info.save()
             if status == 'TRADE_SUCCESS':
-                order.status = 1
+                if order.status == 6:
+                    order.status = 1
                 create_charge_record(order.belong, price, order_id=order_id)
                 send_order_msg(str(order.order_id).encode('utf-8'),
                                str(order.belong.phone).encode('utf-8'),

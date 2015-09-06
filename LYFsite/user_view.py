@@ -101,11 +101,20 @@ def appraise_order(request):
             new_comment.save()
             order.comment = new_comment
             order.save()
+            mentor = order.teach_by
+            all_order_grades = 0
+            for order in mentor.men_orders.filter(status=4):
+                all_order_grades += order.comment.mark * 2
+            all_order_count = mentor.men_orders.filter(status=4).count()
+            last_grade = (all_order_grades + 90) / (all_order_count + 10)
+            mentor.mark = round(last_grade, 1)
+            print last_grade
+            mentor.save()
         except Order.DoesNotExist:
             raise Http404
         except:
             return HttpResponse(json.dumps("wrong request"))
-        return HttpResponse("success")
+        return HttpResponse(json.dumps("success"))
 
 
 def my_follow_mentors(request):
@@ -311,3 +320,21 @@ def security_center(request):
                 return HttpResponse(json.dumps('failed'))
         else:
             return HttpResponse(json.dumps('wrong form'))
+
+
+def cancel_order(request):
+    return_content = utils.is_login(request)
+    if return_content and return_content['login_type'] == 'student':
+        return_content['is_login'] = True
+    else:
+        return HttpResponseRedirect('/login')
+
+    if request.method == 'POST':
+        order_id = request.POST.get('order_id')
+        try:
+            order = Order.objects.get(id=order_id, status=6)
+            order.status = 5
+            order.save()
+            return HttpResponse(json.dumps('success'))
+        except Order.DoesNotExist:
+            return HttpResponse(json.dumps('no such order'))

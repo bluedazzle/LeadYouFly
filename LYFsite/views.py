@@ -354,3 +354,38 @@ def update_header(request):
             return HttpResponse(json.dumps('success'))
         else:
             return HttpResponse(json.dumps('wrong form'))
+
+
+def forget_password(request):
+    if request.method == 'GET':
+        return render_to_response('common/forget_password.html',
+                                  context_instance=RequestContext(request))
+    if request.method == 'POST':
+        phone = request.POST.get('phone')
+        password = request.POST.get('password')
+        verify_code = request.POST.get('verify_code')
+        if not phone or not password or not verify_code:
+            return HttpResponse(json.dumps('failed'))
+        phone_verify = PhoneVerify.objects.filter(phone=phone)
+        user_has = Student.objects.filter(account=phone)
+        mentor_has = Mentor.objects.filter(account=phone)
+        if not phone_verify.count() > 0:
+            return HttpResponse(json.dumps(u"请先获取验证码"))
+        if user_has.count() == 0 and mentor_has.count() == 0:
+            return HttpResponse(json.dumps(u"该用户不存在"))
+        if phone_verify[0].is_expire():
+            return HttpResponse(json.dumps(u"验证码已过期，请重新获取"))
+
+        if not phone_verify[0].is_current(verify_code):
+            return HttpResponse(json.dumps(u"验证码错误"))
+        if user_has.count() > 0:
+            user = Student.objects.get(account=phone)
+            user.set_password(password)
+            user.save()
+        elif mentor_has.count() > 0:
+            mentor = Mentor.objects.get(account=phone)
+            mentor.set_password(password)
+            mentor.save()
+        phone_verify[0].delete()
+
+        return HttpResponse(json.dumps("success"))

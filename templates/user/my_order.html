@@ -3,6 +3,7 @@
   <div class="col-lg-12 col-md-12 my-order-host">
     <div class="container" style="margin-top: 20px">
       <table class="table my-order-table">
+      {% csrf_token %}
         <thead>
         <tr>
           <th>导师名称</th>
@@ -15,55 +16,98 @@
         </thead>
         <tbody>
         {% for order in orders %}
-        <tr class="order-head">
-          <td>
-            订单号：{{ order.order_id }}
-          </td>
-          <td>
-            购买时间：<span class="order-buy-date">{{ order.create_time | date:"Y/m/d" }}</span>
-          </td>
-          <td></td>
-          <td></td>
-          <td></td>
-          <td></td>
-        </tr>
-        <tr>
-          <td>
-            <img src="/img/touxiang.jpg" class="order-teacher-header">
-            <span class="order-teacher-name">{{ order.teach_by.nick }}</span>
-            <span><a href="#">查看联系方式</a></span>
-          </td>
-          <td>
-            教学模式
-          </td>
-          <td>
-            ￥{{ order.order_price }}
-          </td>
-          <td>
-            {{ order.teach_end_time | date:"m月d号H:i开课" }}
-          </td>
-          <td>
-            {% if order.status == 1 %}
-            待确认
-            {% elif order.status == 2 %}
-            已确认
-            {% elif order.status == 3 %}
-            已完成
-            {% elif order.status == 4 %}
-            已评价
-            {% elif order.stats == 5 %}
-            已经撤单
-            {% endif %}
-          </td>
-          <td class="order-operation">
-            {% if order.status == 3 %}
-            <a href="/user/appraise_order?order_id={{ order.id }}">评价</a>
-            {% endif %}
-          </td>
-        </tr>
+          <tr class="order-head">
+            <td>
+              订单号：{{ order.order_id }}
+            </td>
+            <td>
+              购买时间：<span class="order-buy-date">{{ order.create_time | date:"Y/m/d" }}</span>
+            </td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>
+              <img src="/img/touxiang.jpg" class="order-teacher-header">
+              <span class="order-teacher-name">{{ order.teach_by.nick }}</span>
+              <span><a href="#" onclick="viewContact('{{ order.teach_by.phone }}', '{{ order.teach_by.yy }}', '{{ order.teach_by.qq }}')">查看联系方式</a></span>
+            </td>
+            <td>
+              教学模式
+            </td>
+            <td>
+              ￥{{ order.order_price }}
+            </td>
+            <td>
+              {{ order.teach_end_time | date:"m月d号H:i开课" }}
+            </td>
+            <td>
+              {% if order.status == 1 %}
+                待确认
+              {% elif order.status == 2 %}
+                已确认
+              {% elif order.status == 3 %}
+                已完成
+              {% elif order.status == 4 %}
+                已评价
+              {% elif order.status == 5 %}
+                已经撤单
+              {% elif order.status == 6 %}
+                待支付
+              {% endif %}
+            </td>
+            <td class="order-operation">
+              {% if order.status == 3 %}
+                <a href="/user/appraise_order?order_id={{ order.id }}">评价</a>
+              {% elif order.status == 6 %}
+                <a href="#" data-toggle="modal" data-target="#payModal">支付</a>
+                <a href="#" onclick="cancelOrder('{{ order.id }}')">撤销</a>
+              {% endif %}
+            </td>
+          </tr>
         {% endfor %}
         </tbody>
       </table>
+    </div>
+  </div>
+  <!-- Modal -->
+  <div class="modal fade" id="mentor-contact" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <h4 class="modal-title" id="myModalLabel">导师联系方式</h4>
+        </div>
+        <div class="modal-body">
+          <p>yy:<span id="yy"></span></p>
+          <p>qq:<span id="qq"></span></p>
+          <p>电话<span id="phone"></span></p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal -->
+  <div class="modal fade" id="payModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <h4 class="modal-title" id="myModalLabel">支付操作</h4>
+        </div>
+        <div class="modal-body">
+          <p>正在支付。。。</p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-primary" data-dismiss="modal">支付完成</button>
+          <a href="https://cshall.alipay.com/hall/index.htm" type="button" class="btn btn-default">支付遇到问题</a>
+        </div>
+      </div>
     </div>
   </div>
 {% endblock %}

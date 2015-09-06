@@ -13,6 +13,8 @@ urlpatterns = patterns('',
                        # common
                        url('^login$', login),
                        url('^register$', register),
+                       url('^forget_password$', forget_password),
+                       url('^get_verify_sms_forget$', utils.get_verify_code_forget),
                        url('^get_verify_sms$', utils.get_verify_code),
                        url('^search_teacher$', search_teacher),
                        url('^mentor_detail$', teacher_detail),
@@ -54,7 +56,8 @@ urlpatterns = patterns('',
                        url('^user/upload_complain_pic$', user_view.upload_complain_pic),
                        url('^user/security_center$', user_view.security_center),
                        url('^user/create_order/', user_view.create_order),
-                       url('^test$', test),
+                       # url('^test$', test),
+                       url('^user/cancel_order$', user_view.cancel_order),
 
 
                        #异步通知

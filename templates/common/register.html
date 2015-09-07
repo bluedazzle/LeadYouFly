@@ -5,7 +5,7 @@
 {% block define %}
   <div class="container">
     <div class="jumbotron input-group-box">
-      <p>登录</p>
+      <p>注册</p>
       <form id="register_form" action="/register" method="post">
         {% csrf_token %}
       <div class="form-control input-with-icon">
@@ -14,12 +14,12 @@
         <input type="text" class="login-input" id="username" name="username" placeholder="用户昵称"/>
       </div>
       <div class="form-control input-with-icon">
-        <span class="glyphicon glyphicon-user"></span>
+        <span class="glyphicon glyphicon-phone"></span>
         <i class="input-ver">&nbsp;</i>
         <input type="text" class="login-input" id="phone" name="phone" placeholder="登录手机号"/>
       </div>
       <div class="form-control input-with-icon">
-        <span class="glyphicon glyphicon-user"></span>
+        <span class="glyphicon glyphicon-lock"></span>
         <i class="input-ver">&nbsp;</i>
         <input type="password" class="login-input" id="password" name="password" placeholder="设置密码"/>
       </div>

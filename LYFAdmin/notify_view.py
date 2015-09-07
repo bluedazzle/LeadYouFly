@@ -32,6 +32,8 @@ def alipay_notify(req):
                 if order.status == 6:
                     order.status = 1
                     order.teach_start_time = check_start_time(order.teach_by)
+                    order.if_pay = True
+                    order.save()
                 create_charge_record(order.belong, price, order_id=order_id)
                 send_order_msg(str(order.order_id).encode('utf-8'),
                                str(order.belong.phone).encode('utf-8'),
@@ -43,8 +45,6 @@ def alipay_notify(req):
                 create_new_message(order_mes, belong=order.belong)
             elif status == 'TRADE_FINISHED':
                 order.status = 3
-            order.if_pay = True
-            order.save()
             return HttpResponse('success')
         else:
             return HttpResponse('no exist')

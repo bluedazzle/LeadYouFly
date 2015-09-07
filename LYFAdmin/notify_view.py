@@ -65,9 +65,9 @@ def alipay_batch_notify(req):
             cash_rec.success = True
             cash_rec.save()
             mentor = cash_rec.belong
-            create_money_record(mentor, '支出',
+            create_money_record(mentor, u'支出',
                                 cash_rec.money,
-                                '提款到支付宝%s' % cash_rec.alipay_account)
+                                '提款到支付宝%s' % str(cash_rec.alipay_account).encode('utf-8'))
         return HttpResponse('success')
     else:
         return HttpResponse('fail')

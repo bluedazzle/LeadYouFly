@@ -43,7 +43,7 @@
               ￥{{ order.order_price }}
             </td>
             <td>
-              {% if not order.status == 5 and not order.status ==6 %}
+              {% if not order.status == 5 and not order.status == 6 %}
               {{ order.teach_end_time | date:"m月d号H:i开课" }}
               {% endif %}
             </td>

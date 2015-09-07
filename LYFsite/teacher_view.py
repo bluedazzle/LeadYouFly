@@ -106,6 +106,8 @@ def change_mentor_status(request):
             else:
                 return HttpResponse(json.dumps("failed"))
         elif int(status) == 3:
+            if status == 2:
+                return HttpResponse(json.dumps('failed'))
             mentor.status = 3
             mentor.save()
             return HttpResponse(json.dumps("success"))
@@ -229,6 +231,9 @@ def order_accept(request):
                 if order.status == 2:
                     order.status = 3
                     order.save()
+                    if mentor.men_orders.filter(status=1).count() == 0:
+                        mentor.status = 1
+                        mentor.save()
                     return HttpResponse(json.dumps('success'))
                 else:
                     return HttpResponse(json.dumps(u'操作失败'))
@@ -291,9 +296,10 @@ def teacher_video_upload(request):
         order_id = request.POST.get('order_id')
         try:
             order = Order.objects.get(order_id=order_id)
-            t = order.id
+            if not order.status == 3:
+                return HttpResponse(json.dumps(u'只能上传已完成的订单'))
         except Order.DoesNotExist:
-            return HttpResponse(json.dumps('wrong order id'))
+            return HttpResponse(json.dumps(u'错误的订单号'))
 
         if video_data is not None:
             res = utils_upload_video(video_data, video_format, order_id, support_format)

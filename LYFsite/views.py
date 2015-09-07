@@ -259,6 +259,14 @@ def teacher_detail(request):
         except Mentor.DoesNotExist:
             raise Http404
         return_content['mentor_detail'] = mentor
+        if mentor.status == 2:
+            last_orders = mentor.men_orders.filter(status=2).order_by('-create_time')
+            last_time = last_orders[0].teach_end_time
+            time_now = datetime.datetime.now(tz=get_current_timezone())
+            if last_time <= time_now:
+                mentor.status = 1
+                mentor.save()
+            return_content['teach_end_time'] = last_orders[0].teach_end_time
         return render_to_response('common/teacher_detail.html',
                                   return_content,
                                   context_instance=RequestContext(request))

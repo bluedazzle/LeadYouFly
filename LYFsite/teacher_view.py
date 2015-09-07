@@ -99,19 +99,16 @@ def change_mentor_status(request):
         status = request.GET.get('status')
         mentor = return_content['mentor']
         if int(status) == 1:
-            if mentor.status == 0 or mentor.status == 1:
+            if mentor.status == 3 or mentor.status == 1:
                 mentor.status = 1
                 mentor.save()
                 return HttpResponse(json.dumps("success"))
             else:
                 return HttpResponse(json.dumps("failed"))
-        elif int(status) == 0:
-            if mentor.status == 2:
-                return HttpResponse(json.dumps('failed'))
-            else:
-                mentor.status = 0
-                mentor.save()
-                return HttpResponse(json.dumps("success"))
+        elif int(status) == 3:
+            mentor.status = 3
+            mentor.save()
+            return HttpResponse(json.dumps("success"))
 
 
 def teacher_contact(request):
@@ -174,6 +171,7 @@ def teacher_indemnity(request):
                 mentor.alipay_account = alipay_account
                 mentor.real_name = real_name
                 mentor.iden_income = iden_income
+                mentor.cash_income += float(money)
                 mentor.save()
                 return HttpResponse(json.dumps('success'))
 

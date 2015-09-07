@@ -12,8 +12,11 @@ $(document).ready(function(){
     i++
   })
 });
-function toConfirmOrder(courseId){
-  console.log("click");
+function toConfirmOrder(courseId, mentor_status){
+  if (mentor_status === 3){
+    Notify("导师休息中，无法下单");
+    return false
+  }
   window.location = "/confirm_order?course_id=" + courseId;
 }
 

@@ -73,6 +73,15 @@ def my_orders(request):
 
     if request.method == 'GET':
         orders = Order.objects.order_by('-create_time').filter(belong=return_content['active_user'])
+        orders = orders.order_by('status')
+        paginator = Paginator(orders, 10)
+        try:
+            page_num = request.GET.get('page_num')
+            orders = paginator.page(page_num)
+        except PageNotAnInteger:
+            orders = paginator.page(1)
+        except EmptyPage:
+            orders = paginator.page(paginator.num_pages)
         return_content['orders'] = orders
         return render_to_response('user/my_order.html',
                                   return_content,
@@ -106,39 +115,38 @@ def appraise_order(request):
             form_data = form.cleaned_data
         else:
             return HttpResponse(json.dumps("wrong form"))
-
-        # try:
-        order = Order.objects.get(order_id=form_data['order_id'],
-                                  belong=return_content['active_user'],
-                                  status=3)
-        order.status = 4
-        new_comment = Comment()
-        new_comment.mark = float(form_data['stars'])
-        new_comment.content = form_data['content']
-        new_comment.comment_mentor = order.teach_by
-        new_comment.comment_by = return_content['active_user']
-        new_comment.save()
-        order.comment = new_comment
-        order.save()
-        mentor = order.teach_by
-        all_order_grades = 0
-        for order in mentor.men_orders.filter(status=4):
-            all_order_grades += order.comment.mark * 2
-        all_order_count = mentor.men_orders.filter(status=4).count()
-        last_grade = (all_order_grades + 90) / (all_order_count + 10)
-        mentor.mark = round(last_grade, 1)
-        mentor.save()
-        user = return_content['active_user']
-        user.exp += int(order.order_price / 10) * 10
-        for value, key in exp_dic.items():
-            if user.exp >= value:
-                user.rank = key
-
-        user.save()
-        # except Order.DoesNotExist:
-        #     raise Http404
-        # # except:
-        #     return HttpResponse(json.dumps("wrong request"))
+        try:
+            order = Order.objects.get(id=form_data['order_id'],
+                                      belong=return_content['active_user'],
+                                      status=3)
+            order.status = 4
+            new_comment = Comment()
+            new_comment.mark = float(form_data['stars'])
+            new_comment.content = form_data['content']
+            new_comment.comment_mentor = order.teach_by
+            new_comment.comment_by = return_content['active_user']
+            new_comment.save()
+            order.comment = new_comment
+            order.save()
+            mentor = order.teach_by
+            all_order_grades = 0
+            for order in mentor.men_orders.filter(status=4):
+                if order.comment:
+                    all_order_grades += order.comment.mark * 2
+            all_order_count = mentor.men_orders.filter(status=4).count()
+            last_grade = (all_order_grades + 90) / (all_order_count + 10)
+            mentor.mark = round(last_grade, 1)
+            mentor.save()
+            user = return_content['active_user']
+            user.exp += int(order.order_price / 10) * 10
+            for key, value in exp_dic.items():
+                if user.exp >= value and user.rank < key:
+                    user.rank = key
+            user.save()
+        except Order.DoesNotExist:
+            raise Http404
+        except:
+            return HttpResponse(json.dumps("wrong request"))
         return HttpResponse(json.dumps("success"))
 
 
@@ -215,6 +223,8 @@ def confirm_order(request):
         except Course.DoesNotExist:
             raise Http404
         mentor = course.belong
+        if mentor.status == 3:
+            return HttpResponseRedirect('/mentor_detail?mentor_id=' + mentor.id)
         return_content['hero_list'] = mentor.hero_list.all()
         return_content['course'] = course
         return render_to_response('common/confirm_order.html',
@@ -231,8 +241,8 @@ def create_order(req):
     cid = req.POST.get('course_id', None)
     course = get_object_or_404(Course, id=cid)
     mentor = course.belong
-    if mentor.status ==
-    learn_area = area_convert(course.belong.teach_area)
+    if mentor.status == 3:
+        return HttpResponseRedirect('/mentor_detail?mentor_id=' + mentor.id)
     student = return_content['active_user']
     order_id = create_order_id(student.id, mentor.id)
     pay_url = create_alipay_order(order_id, course.name, course.price)

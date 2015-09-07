@@ -7,7 +7,7 @@ $(document).ready(function(){
 function submitOutCash(money){
   var inputNumber = $('input[name=money]').val();
   var alipayAccount = $('input[name=alipay_account]').val();
-  var realName = $('input[name=real_name]');
+  var realName = $('input[name=real_name]').val();
   if(inputNumber && inputNumber <= money && alipayAccount && realName){
     $.ajax({
       url: "/teacher/indemnity",

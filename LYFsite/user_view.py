@@ -107,38 +107,38 @@ def appraise_order(request):
         else:
             return HttpResponse(json.dumps("wrong form"))
 
-        try:
-            order = Order.objects.get(order_id=form_data['order_id'],
-                                      belong=return_content['active_user'],
-                                      status=3)
-            order.status = 4
-            new_comment = Comment()
-            new_comment.mark = float(form_data['stars'])
-            new_comment.content = form_data['content']
-            new_comment.comment_mentor = order.teach_by
-            new_comment.comment_by = return_content['active_user']
-            new_comment.save()
-            order.comment = new_comment
-            order.save()
-            mentor = order.teach_by
-            all_order_grades = 0
-            for order in mentor.men_orders.filter(status=4):
-                all_order_grades += order.comment.mark * 2
-            all_order_count = mentor.men_orders.filter(status=4).count()
-            last_grade = (all_order_grades + 90) / (all_order_count + 10)
-            mentor.mark = round(last_grade, 1)
-            mentor.save()
-            user = return_content['acitve_user']
-            user.exp += int(order.order_price / 10) * 10
-            for value, key in exp_dic.items():
-                if user.exp >= value:
-                    user.rank = key
+        # try:
+        order = Order.objects.get(order_id=form_data['order_id'],
+                                  belong=return_content['active_user'],
+                                  status=3)
+        order.status = 4
+        new_comment = Comment()
+        new_comment.mark = float(form_data['stars'])
+        new_comment.content = form_data['content']
+        new_comment.comment_mentor = order.teach_by
+        new_comment.comment_by = return_content['active_user']
+        new_comment.save()
+        order.comment = new_comment
+        order.save()
+        mentor = order.teach_by
+        all_order_grades = 0
+        for order in mentor.men_orders.filter(status=4):
+            all_order_grades += order.comment.mark * 2
+        all_order_count = mentor.men_orders.filter(status=4).count()
+        last_grade = (all_order_grades + 90) / (all_order_count + 10)
+        mentor.mark = round(last_grade, 1)
+        mentor.save()
+        user = return_content['acitve_user']
+        user.exp += int(order.order_price / 10) * 10
+        for value, key in exp_dic.items():
+            if user.exp >= value:
+                user.rank = key
 
-            user.save()
-        except Order.DoesNotExist:
-            raise Http404
-        except:
-            return HttpResponse(json.dumps("wrong request"))
+        user.save()
+        # except Order.DoesNotExist:
+        #     raise Http404
+        # # except:
+        #     return HttpResponse(json.dumps("wrong request"))
         return HttpResponse(json.dumps("success"))
 
 

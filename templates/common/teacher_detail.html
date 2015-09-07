@@ -193,6 +193,13 @@
   </div>
 {% endblock %}
 {% block script %}
+  {% if mentor_detail.status == 3 %}
+    <script>
+      $(document).ready(function(){
+        Notify("该导师正在休息，请查看其他导师")
+      })
+    </script>
+  {% endif %}
   <script src="/js/common/teacher_detail.js"></script>
   <script src="//vjs.zencdn.net/4.7/video.js"></script>
 {% endblock %}

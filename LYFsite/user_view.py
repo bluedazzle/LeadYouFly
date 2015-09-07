@@ -252,6 +252,7 @@ def create_order(req):
     wait_hours = order_num * 1.5
     delta_hours = datetime.timedelta(hours=wait_hours)
     wait_time = now_time + delta_hours
+    learn_area = area_convert(str(mentor.teach_area))
     new_order = Order(order_id=order_id,
                       order_price=course.price,
                       course_name=course.name,

@@ -54,7 +54,6 @@ def alipay_notify(req):
 
 @csrf_exempt
 def alipay_batch_notify(req):
-    print req.POST
     check_id = req.POST.get('notify_id', None)
     res_code = check_notify_id(check_id)
     if res_code == 'true':
@@ -65,8 +64,10 @@ def alipay_batch_notify(req):
             cash_rec.success = True
             cash_rec.save()
             mentor = cash_rec.belong
+            mentor.iden_income -= float(cash_rec.money)
+            mentor.save()
             create_money_record(mentor, u'支出',
-                                cash_rec.money,
+                                -float(cash_rec.money),
                                 '提款到支付宝%s' % str(cash_rec.alipay_account).encode('utf-8'))
         return HttpResponse('success')
     else:

@@ -124,7 +124,7 @@ def order_status_convert(status_type):
 
 def mentor_status_convert(status_type):
     n_str = ''
-    if status_type == 0:
+    if status_type == 3:
         n_str = '离线'
     elif status_type == 1:
         n_str = '接单'

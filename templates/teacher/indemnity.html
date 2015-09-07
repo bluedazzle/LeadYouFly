@@ -98,8 +98,8 @@
         <div class="modal-body cash-form">
           <form action="/teacher/indemnity" method="post">
             {% csrf_token %}
-            <input type="text" class="form-control" name="alipay_account" placeholder="支付宝账号" value=""/>
-            <input type="text" class="form-control" name="real_name" placeholder="真实姓名"/>
+            <input type="text" class="form-control" name="alipay_account" placeholder="支付宝账号" value="{{ mentor.alipay_account }}"/>
+            <input type="text" class="form-control" name="real_name" placeholder="真实姓名" value="{{ mentor.real_name }}"/>
             <input type="number" class="form-control" name="money" placeholder="提取现金，需小于可用额度{{ mentor.iden_income }}元"
                    onkeyup="this.value=this.value.replace(/\D/g,'')"
                    onafterpaste="this.value=this.value.replace(/\D/g,'')"/>

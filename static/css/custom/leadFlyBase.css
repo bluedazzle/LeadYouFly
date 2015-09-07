@@ -68,7 +68,7 @@ html,body {
     display: inline-block;
 }
 
-.navbar-nav .dropdown{
+#stu-option-list{
     border-left: 1px solid #ddd;
     border-right: 1px solid #ddd;
     min-width: 164px;

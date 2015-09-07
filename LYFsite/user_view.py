@@ -4,6 +4,24 @@ from LYFAdmin.order_operation import create_order_id
 from views import *
 import time
 
+exp_dic = {
+    1: 0,
+    2: 10,
+    3: 40,
+    4: 70,
+    5: 100,
+    6: 150,
+    7: 300,
+    8: 600,
+    9: 1000,
+    10: 1500,
+    11: 2000,
+    12: 3000,
+    13: 5000,
+    14: 8000,
+    15: 15000
+}
+
 
 def user_message(request):
     return_content = utils.is_login(request)
@@ -108,8 +126,14 @@ def appraise_order(request):
             all_order_count = mentor.men_orders.filter(status=4).count()
             last_grade = (all_order_grades + 90) / (all_order_count + 10)
             mentor.mark = round(last_grade, 1)
-            print last_grade
             mentor.save()
+            user = return_content['acitve_user']
+            user.exp += int(order.order_price / 10) * 10
+            for value, key in exp_dic.items():
+                if user.exp >= value:
+                    user.rank = key
+
+            user.save()
         except Order.DoesNotExist:
             raise Http404
         except:

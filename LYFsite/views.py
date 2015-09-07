@@ -178,7 +178,7 @@ def search_teacher(request):
         teach_position = request.GET.get('teach_position')
         teach_hero = request.GET.get('teach_hero')
 
-        if teach_hero and not teach_hero == '':
+        if teach_hero and not teach_hero == '' and not teach_hero == '0':
             hero_to_teach = Hero.objects.get(id=teach_hero)
         else:
             hero_to_teach = None
@@ -216,6 +216,7 @@ def search_teacher(request):
             search = ''
 
         mentors.order_by('status').order_by('-priority')
+        mentors = mentors.distinct()
         paginator = Paginator(mentors, 12)
         try:
             page_num = request.GET.get('page_num')

@@ -92,6 +92,6 @@ body{
     font-size: 14px;
 }
 
-.register-to-login{
-
+.input-with-icon .glyphicon{
+    color: #bdc3c7;
 }

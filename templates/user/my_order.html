@@ -3,7 +3,7 @@
   <div class="col-lg-12 col-md-12 my-order-host">
     <div class="container" style="margin-top: 20px">
       <table class="table my-order-table">
-      {% csrf_token %}
+        {% csrf_token %}
         <thead>
         <tr>
           <th>导师名称</th>
@@ -32,7 +32,9 @@
             <td>
               <img src="/img/touxiang.jpg" class="order-teacher-header">
               <span class="order-teacher-name">{{ order.teach_by.nick }}</span>
-              <span><a href="#" onclick="viewContact('{{ order.teach_by.phone }}', '{{ order.teach_by.yy }}', '{{ order.teach_by.qq }}')">查看联系方式</a></span>
+              {% if not order.status == 6 and not order.status == 5 %}
+                <span><a href="#" onclick="viewContact('{{ order.teach_by.phone }}', '{{ order.teach_by.yy }}', '{{ order.teach_by.qq }}')">查看联系方式</a></span>
+              {% endif %}
             </td>
             <td>
               教学模式
@@ -53,7 +55,7 @@
               {% elif order.status == 4 %}
                 已评价
               {% elif order.status == 5 %}
-                已经撤单
+                已撤单
               {% elif order.status == 6 %}
                 待支付
               {% endif %}
@@ -70,6 +72,47 @@
         {% endfor %}
         </tbody>
       </table>
+      {% if orders.has_other_pages %}
+        <nav class="col-md-12 col-lg-12 text-center">
+          <ul class="pagination">
+            {% if orders.has_previous %}
+              <li>
+                <a href="/user/my_orders?page_num={{ orders.previous_page_number }}" aria-label="Previous">
+                  <span aria-hidden="true" class="glyphicon glyphicon-menu-left"></span>
+                </a>
+              </li>
+            {% else %}
+              <li class="disabled">
+                <a href="#" aria-label="Previous">
+                  <span aria-hidden="true" class="glyphicon glyphicon-menu-left"></span>
+                </a>
+              </li>
+            {% endif %}
+
+            {% for page in orders.paginator.page_range %}
+              {% if page == orders.number %}
+                <li class="active"><a href="#">{{ page }}</a></li>
+              {% else %}
+                <li><a href="/user/my_orders?page_num={{ page }}">{{ page }}</a></li>
+              {% endif %}
+            {% endfor %}
+
+            {% if orders.has_next %}
+              <li>
+                <a href="/user/my_orders?page_num={{ orders.next_page_number }}" aria-label="Next">
+                  <span aria-hidden="true" class="glyphicon glyphicon-menu-right"></span>
+                </a>
+              </li>
+            {% else %}
+              <li class="disabled">
+                <a href="#" aria-label="Next">
+                  <span aria-hidden="true" class="glyphicon glyphicon-menu-right"></span>
+                </a>
+              </li>
+            {% endif %}
+          </ul>
+        </nav>
+      {% endif %}
     </div>
   </div>
   <!-- Modal -->

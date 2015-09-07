@@ -215,8 +215,8 @@ def search_teacher(request):
         else:
             search = ''
 
-        mentors.order_by('status').order_by('-priority')
         mentors = mentors.distinct()
+        mentors = mentors.order_by('-mark').order_by('-priority').order_by('status')
         paginator = Paginator(mentors, 12)
         try:
             page_num = request.GET.get('page_num')

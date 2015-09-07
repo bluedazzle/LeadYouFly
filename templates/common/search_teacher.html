@@ -4,8 +4,8 @@
 {% endblock %}
 {% block define %}
   <section class="col-lg-12 col-md-12 search-teacher-head">
-    <div class="container">
-      <div class="btn-group col-lg-12 col-md-12">
+    <div class="">
+      <div class="btn-group col-lg-11 col-md-11" style="float: right;">
         <button type="button" class="btn btn-select" onclick="openSelectScreen(1)">
           {% if not teach_area or teach_area == '0' %}
             全区
@@ -17,11 +17,11 @@
           <span class="glyphicon glyphicon-menu-down"></span>
         </button>
       </div>
-      <div class="btn-group col-lg-12 col-md-12">
-        <div class="col-lg-1 col-md-1 study-text">
+      <div class="btn-group col-lg-11 col-md-11" style="float: right">
+        <div class="col-lg-2 col-md-2 study-text">
           <p>学习</p>
         </div>
-        <div class="col-lg-11 col-md-11">
+        <div class="col-lg-10 col-md-10">
           <button type="button" class="btn btn-select" onclick="openSelectScreen(2)">
             {% if not teach_position or teach_position == '0' %}
               全部位置
@@ -42,7 +42,7 @@
         </div>
       </div>
 
-      <div class="btn-group col-lg-10 col-md-10" style="float: right;">
+      <div class="btn-group col-lg-7 col-md-7" style="float: right;">
         <button type="button" class="btn btn-select" style="margin-top: 0" onclick="openSelectScreen(3)">
           {% if teach_hero %}
             {{ teach_hero.hero_name }}
@@ -110,7 +110,7 @@
               <p class="teacher-info-attribute col-sm-12">
                 擅长英雄：
                 {% if mentor.expert_hero1 %}
-                  <img src="{{ mentor.expert_hero1.hero_picture }}" class="hero-header"/>
+                  <img src="{{ mentor.expert_hero1.hero_picture }}" data-toggle="tooltip" data-placement="top" title="{{ mentor_detail.expert_hero1.hero_name }}" class="hero-header"/>
                 {% endif %}
                 {% if mentor.expert_hero2 %}
                   <img src="{{ mentor.expert_hero2.hero_picture }}" class="hero-header"/>
@@ -175,15 +175,15 @@
 {% endblock %}
 {% block select_screen %}
   <div class="select-screen" onclick="closeSelectScreen()">
-    <div class="container">
-      <div class="col-lg-12 col-md-12 select-screen-area">
+    <div>
+      <div class="col-lg-11 col-md-11 select-screen-area" style="float: right">
         <a href="/search_teacher?teach_area=0&teach_postion={{ teach_position }}&teach_hero={{ teach_hero.id }}&search={{ search }}">全区</a>
         <br/>
         <a href="/search_teacher?teach_area=1&teach_postion={{ teach_position }}&teach_hero={{ teach_hero.id }}">电信</a>
         <br/>
         <a href="/search_teacher?teach_area=2&teach_postion={{ teach_position }}&teach_hero={{ teach_hero.id }}">网通</a>
       </div>
-      <div class="col-lg-11 col-md-11 select-screen-position">
+      <div class="col-lg-9 col-md-9 select-screen-position" style="float: right">
         <a href="/search_teacher?teach_position=0&teach_area={{ teach_area }}&teach_hero={{ teach_hero.id }}">全部位置</a>
         <br/>
         <a href="/search_teacher?teach_position=1&teach_area={{ teach_area }}&teach_hero={{ teach_hero.id }}">中单</a>
@@ -196,7 +196,7 @@
         <br/>
         <a href="/search_teacher?teach_position=5&teach_area={{ teach_area }}&teach_hero={{ teach_hero.id }}">辅助</a>
       </div>
-      <div class="col-lg-10 col-md-10 select-screen-hero">
+      <div class="col-lg-7 col-md-7 select-screen-hero">
         <a href="/search_teacher?teach_hero=0">所有英雄</a>
         <br/>
         {% for hero in heroes %}

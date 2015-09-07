@@ -222,10 +222,10 @@ def create_random_avatar():
 
 def check_start_time(mentor):
     orders = Order.objects.filter(teach_by=mentor, status=2).order_by('-teach_end_time')
+    now_time = datetime.datetime.now(tz=timezone.get_current_timezone())
     if orders.exists():
         order = orders[0]
         last_time = order.teach_end_time
-        now_time = datetime.datetime.now(tz=timezone.get_current_timezone())
         if last_time == '' or last_time is None:
             return now_time
         time_interval = last_time - now_time
@@ -234,3 +234,4 @@ def check_start_time(mentor):
             return last_time
         else:
             return now_time
+    return now_time

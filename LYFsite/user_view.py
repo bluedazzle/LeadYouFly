@@ -246,13 +246,14 @@ def create_order(req):
     student = return_content['active_user']
     order_id = create_order_id(student.id, mentor.id)
     pay_url = create_alipay_order(order_id, course.name, course.price)
-    now_time = datetime.datetime.now(tz=get_current_timezone())
-    pre_time = now_time.replace(hour=0, minute=0, second=0)
-    order_num = Order.objects.filter(create_time__range=(pre_time, now_time), status=2, teach_by=mentor).count()
-    wait_hours = order_num * 1.5
-    delta_hours = datetime.timedelta(hours=wait_hours)
-    wait_time = now_time + delta_hours
+    # now_time = datetime.datetime.now(tz=get_current_timezone())
+    # pre_time = now_time.replace(hour=0, minute=0, second=0)
+    # order_num = Order.objects.filter(create_time__range=(pre_time, now_time), status=2, teach_by=mentor).count()
+    # wait_hours = order_num * 1.5
+    # delta_hours = datetime.timedelta(hours=wait_hours)
+    # wait_time = now_time + delta_hours
     learn_area = area_convert(str(mentor.teach_area))
+    start_time = datetime.datetime(year=1970, month=1, day=1, tzinfo=get_current_timezone())
     new_order = Order(order_id=order_id,
                       order_price=course.price,
                       course_name=course.name,
@@ -261,7 +262,8 @@ def create_order(req):
                       learn_hero='',
                       learn_type='',
                       belong=student,
-                      teach_end_time=wait_time,
+                      teach_end_time=start_time,
+                      teach_start_time=start_time,
                       teach_by=mentor)
     new_order.save()
     return HttpResponseRedirect(pay_url)

@@ -195,7 +195,13 @@ def search_teacher(request):
             heroes = heroes.filter(hero_type__contains=teach_position)
         else:
             teach_position = '0'
+            request.session['teach_position'] = '0'
+        # 判断筛选位置是否改变，如果改变则重置筛选英雄
+        if not request.session.get('teach_position') or not request.session['teach_position'] == teach_position:
+            hero_to_teach = None
+            teach_hero = ''
 
+        request.session['teach_position'] = teach_position
         if hero_to_teach:
             mentors = mentors.filter(hero_list__id=teach_hero)
 

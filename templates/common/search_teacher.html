@@ -95,15 +95,17 @@
               </p>
               <p class="teacher-info-attribute col-sm-6">
                 擅长位置：
-                {% if mentor.good_at == 1 %}
+                {% if mentor.good_at == '12345' %}
+                  全部
+                {% elif '1' in mentor.good_at or '1' == mentor.good_at %}
                   中单
-                {% elif mentor.good_at == 2 %}
+                {% elif '2' in mentor.good_at or '2' == mentor.good_at %}
                   上单
-                {% elif mentor.good_at == 3 %}
+                {% elif '3' in mentor.good_at or '3' == mentor.good_at %}
                   ADC
-                {% elif mentor.good_at == 4 %}
+                {% elif '4' in mentor.good_at or '4' == mentor.good_at %}
                   打野
-                {% elif mentor.good_at == 5 %}
+                {% elif '5' in mentor.good_at or '5' == mentor.good_at %}
                   辅助
                 {% endif %}
               </p>
@@ -197,7 +199,7 @@
         <a href="/search_teacher?teach_position=5&teach_area={{ teach_area }}&teach_hero={{ teach_hero.id }}">辅助</a>
       </div>
       <div class="col-lg-7 col-md-7 select-screen-hero">
-        <a href="/search_teacher?teach_hero=0">所有英雄</a>
+        <a href="/search_teacher?teach_hero=0&teach_area={{ teach_area }}&teach_position={{ teach_position }}">所有英雄</a>
         <br/>
         {% for hero in heroes %}
           {#          {% if teach_position and teach_position != '0' and hero.hero_type == teach_position %}#}

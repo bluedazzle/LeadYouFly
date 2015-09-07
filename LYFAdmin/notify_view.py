@@ -61,7 +61,7 @@ def alipay_batch_notify(req):
         c_id = req.POST.get('batch_no', None)
         s_detail = req.POST.get('success_details', None)
         if s_detail and s_detail != '':
-            cash_rec = CashRecord.objects.get(id=c_id)
+            cash_rec = CashRecord.objects.get(record_id=c_id)
             cash_rec.success = True
             cash_rec.save()
             mentor = cash_rec.belong

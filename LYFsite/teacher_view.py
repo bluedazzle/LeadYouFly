@@ -216,6 +216,7 @@ def order_accept(request):
                 order = Order.objects.get(order_id=order_id)
                 if order.status == 1:
                     order.status = 2
+                    order.teach_end_time = order.teach_start_time + datetime.timedelta(hours=1.5)
                     order.save()
                     return HttpResponse(json.dumps('success'))
                 else:

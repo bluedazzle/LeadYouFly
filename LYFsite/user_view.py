@@ -128,7 +128,7 @@ def appraise_order(request):
         last_grade = (all_order_grades + 90) / (all_order_count + 10)
         mentor.mark = round(last_grade, 1)
         mentor.save()
-        user = return_content['acitve_user']
+        user = return_content['active_user']
         user.exp += int(order.order_price / 10) * 10
         for value, key in exp_dic.items():
             if user.exp >= value:
@@ -231,6 +231,7 @@ def create_order(req):
     cid = req.POST.get('course_id', None)
     course = get_object_or_404(Course, id=cid)
     mentor = course.belong
+    if mentor.status ==
     learn_area = area_convert(course.belong.teach_area)
     student = return_content['active_user']
     order_id = create_order_id(student.id, mentor.id)

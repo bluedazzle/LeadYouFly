@@ -746,7 +746,8 @@ def admin_student_info(req, sid):
     order_list = student.stu_orders.all()
     total_expense = 0.0
     for itm in order_list:
-        total_expense += float(itm.order_price)
+        if itm.status != 5 and itm.status != 6:
+            total_expense += float(itm.order_price)
     student = serializer(student)
     student['total_expense'] = total_expense
     return render_to_response('student_info_admin.html', {'student': student}, context_instance=RequestContext(req))

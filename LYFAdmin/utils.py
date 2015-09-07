@@ -6,6 +6,7 @@ import random
 import string
 import hashlib
 import ujson
+import datetime
 import xlwt
 
 
@@ -217,3 +218,19 @@ def create_random_avatar():
     r_num = random.randint(1, 73)
     file_name = '/img/avatar/%i.png' % r_num
     return file_name
+
+
+def check_start_time(mentor):
+    orders = Order.objects.filter(teach_by=mentor, status=2).order_by('-teach_end_time')
+    if orders.exists():
+        order = orders[0]
+        last_time = order.teach_end_time
+        now_time = datetime.datetime.now(tz=timezone.get_current_timezone())
+        if last_time == '' or last_time is None:
+            return now_time
+        time_interval = last_time - now_time
+        time_zero = datetime.timedelta(minutes=0, seconds=0)
+        if time_interval > time_zero:
+            return last_time
+        else:
+            return now_time

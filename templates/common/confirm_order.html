@@ -11,6 +11,8 @@
             <p>价格：￥{{ course.price }}</p>
 
             <p>导师：{{ course.belong.nick }}</p>
+            <p>你的电话：{{ active_user.phone }}</p>
+            <p>你的QQ：{{ active_user.qq }}</p>
 
             <form action="/user/create_order/" target="_blank" method="post">
                 {% csrf_token %}

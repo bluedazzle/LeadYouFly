@@ -140,7 +140,7 @@ def appraise_order(request):
             mentor.mark = round(last_grade, 1)
             mentor.save()
             user = return_content['active_user']
-            user.exp += int(order.order_price / 10) * 10
+            user.exp += int(order.order_price)
             for key, value in exp_dic.items():
                 if user.exp >= value and user.rank < key:
                     user.rank = key
@@ -232,6 +232,20 @@ def confirm_order(request):
         return render_to_response('common/confirm_order.html',
                                   return_content,
                                   context_instance=RequestContext(request))
+
+
+def repay_order(req):
+    return_content = utils.is_login(req)
+    if not return_content:
+        return HttpResponseRedirect('/login')
+    if not return_content['login_type'] == 'student':
+        raise Http404
+    order_id =req.POST.get('order_id', None)
+    if order_id:
+        order = get_object_or_404(Order, order_id=order_id)
+        pay_url = create_alipay_order(order_id, order.course_name, order.order_price)
+        return HttpResponse(json.dumps(pay_url))
+
 
 
 def create_order(req):

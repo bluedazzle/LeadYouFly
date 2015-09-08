@@ -69,7 +69,7 @@
     border-bottom: 1px solid #FFFFFF;
     padding-bottom: 0;
     text-align: center;
-    font-size: 48px;
+    font-size: 40px;
 }
 
 .btn-select:hover{
@@ -89,7 +89,7 @@
 .study-text p{
     margin-top: 23px;
     float: right;
-    font-size: 48px;
+    font-size: 40px;
     color: #ffffff;
 }
 

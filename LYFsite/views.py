@@ -104,20 +104,28 @@ def notice_detail(request):
 
 
 def login(request):
+    body = {}
     if request.method == 'GET':
+        refer_url = request.META['HTTP_REFERER']
+        if 'mentor_detail?mentor_id' in refer_url:
+            return render_to_response('common/login.html', {'refer': refer_url},
+                                      context_instance=RequestContext(request))
         return render_to_response('common/login.html', context_instance=RequestContext(request))
     if request.method == 'POST':
         form = LoginForm(request.POST)
         if not form.is_valid():
-            return HttpResponse(json.dumps("wrong forms"))
+            body['status'] = "wrong forms"
+            return HttpResponse(json.dumps(body))
         student_has = Student.objects.filter(account=request.POST.get('username'))
         if student_has.count() == 0:
-            return HttpResponse(json.dumps("用户名或者密码错误"))
+            body['status'] = "用户名或者密码错误"
+            return HttpResponse(json.dumps(body))
         if not student_has[0].check_password(request.POST.get('password')):
-            return HttpResponse(json.dumps("用户名或者密码错误"))
+            body['status'] = "用户名或者密码错误"
+            return HttpResponse(json.dumps(body))
         request.session['student'] = student_has[0].account
-
-        return HttpResponse(json.dumps("success"))
+        body['status'] = 'success'
+        return HttpResponse(json.dumps(body))
 
 
 def logout(request):

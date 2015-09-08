@@ -66,7 +66,7 @@
               {% if order.status == 3 %}
                 <a href="/user/appraise_order?order_id={{ order.id }}">评价</a>
               {% elif order.status == 6 %}
-                <a href="#" onclick="toPay()">支付</a>
+                <a href="#" onclick="toPay('{{ order.order_id }}')">支付</a>
                 <a href="#" onclick="cancelOrder('{{ order.id }}')">撤销</a>
               {% endif %}
             </td>

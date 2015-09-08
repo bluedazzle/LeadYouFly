@@ -31,6 +31,18 @@ function cancelOrder(orderId){
   })
 }
 
-function toPay(){
+function toPay(orderId){
   $('#payModal').modal({backdrop: 'static', keyboard: false});
+  $.ajax({
+    url: '/user/repay_order/',
+    type: 'post',
+    data: {
+      'order_id': orderId,
+      'csrfmiddlewaretoken': $("input[name=csrfmiddlewaretoken]").val()
+    },
+    dataType: 'json',
+    success: function(data){
+      window.open(data);
+    }
+  })
 }

@@ -73,7 +73,10 @@ def my_orders(request):
 
     if request.method == 'GET':
         orders = Order.objects.order_by('-create_time').filter(belong=return_content['active_user'])
-        orders = orders.order_by('status')
+        orders_first = list(orders.filter(status=6))
+        orders_last = list(orders.exclude(status=6).order_by('status'))
+
+        orders = orders_first + orders_last
         paginator = Paginator(orders, 10)
         try:
             page_num = request.GET.get('page_num')

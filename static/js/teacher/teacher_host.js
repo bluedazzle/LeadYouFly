@@ -349,7 +349,7 @@ function uploadComplete(evt) {
   var res = JSON.parse(xhr.responseText);
   if(res === 'success'){
     document.getElementById('fileStatus').innerHTML = '上传成功！';
-    //location.reload();
+    location.reload();
   } else{
     document.getElementById('fileStatus').innerHTML = res;
 

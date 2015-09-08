@@ -73,8 +73,10 @@ def my_orders(request):
         raise Http404
 
     if request.method == 'GET':
-        orders = Order.objects.filter(belong=return_content['active_user']).order_by('status').order_by('-create_time')
-        orders = orders.order_by('status')
+        orders = Order.objects.order_by('-create_time').filter(belong=return_content['active_user'])
+        orders_first = list(orders.filter(status=6))
+        orders_last = list(orders.exclude(status=6).order_by('status'))
+        orders = orders_first + orders_last
         paginator = Paginator(orders, 10)
         try:
             page_num = request.GET.get('page_num')

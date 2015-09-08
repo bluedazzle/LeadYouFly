@@ -191,8 +191,8 @@ def teacher_indemnity(request):
                 iden_income -= float(money)
                 mentor.alipay_account = alipay_account
                 mentor.real_name = real_name
-                mentor.iden_income = iden_income
-                mentor.cash_income += float(money)
+                mentor.cash_income -= iden_income
+                mentor.iden_income += float(money)
                 mentor.save()
                 return HttpResponse(json.dumps('success'))
 

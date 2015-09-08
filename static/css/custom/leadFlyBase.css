@@ -9,8 +9,10 @@ html,body {
     padding:0;
     height: 100%;
 }
+
 #container {
     min-height:100%;
+    min-width: 1024px;
     height: auto !important;
     position: relative;
 }
@@ -164,10 +166,18 @@ html,body {
 .footer-two{
     height: 40px;
     padding-top: 5px;
-    padding-left: 15%;
-    padding-right: 15%;
+    /*padding-left: 15%;*/
+    /*padding-right: 15%;*/
     margin-bottom: 10px;
 }
+
+@media (min-width: 1024px) {
+    .footer-two{
+        padding-left: 15%;
+        padding-right: 15%;
+    }
+}
+
 .footer-two>div>a{
     font-size: 14px;
     color: #ffffff;

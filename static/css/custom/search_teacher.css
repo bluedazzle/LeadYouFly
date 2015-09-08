@@ -1,6 +1,5 @@
 .search-teacher-head{
     height: 350px;
-    /*background: url('/img/2.jpg');*/
 }
 
 .search-teacher-body{
@@ -13,10 +12,11 @@
     height: 390px;
     border: 1px #DDDDDD solid;
     margin-bottom: 20px;
-    width: 240px;
     border-radius: 6px;
     cursor: pointer;
+    width: 240px;
 }
+
 
 .teacher-info-panel-head{
     height: 180px;

@@ -284,7 +284,7 @@ class Order(BaseModel):
     video_audit = models.BooleanField(default=False)
     video_pass = models.NullBooleanField(default=None)
     teach_long = models.FloatField(default=1.5)
-    teach_start_time = models.DateTimeField()
+    teach_start_time = models.DateTimeField(null=True, blank=True)
     teach_end_time = models.DateTimeField()
     belong = models.ForeignKey(Student, related_name='stu_orders')
     teach_by = models.ForeignKey(Mentor, related_name='men_orders')

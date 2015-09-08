@@ -36,6 +36,7 @@ def teacher_host(request):
     if request.method == 'POST':
         video_format = ['mp4', 'flv', 'avi', 'rmvb', 'webm', 'ogg']
         support_format = ['mp4', 'webm', 'ogg']
+        picture_format = ['jpg', 'jpeg', 'png']
         form = MentorInfoForm(request.POST, request.FILES)
         if form.is_valid():
             form_data = form.cleaned_data
@@ -44,6 +45,17 @@ def teacher_host(request):
 
         mentor = return_content['mentor']
         video_data = form_data['new_video']
+        picture_data = form_data['new_picture']
+        pic_name = None
+        if picture_data is not None:
+            file_name, ext_name = picture_data.name.encode('utf-8').split('.')
+            if ext_name not in picture_format:
+                return HttpResponse(json.dumps(u"请上传jpg/jpeg/png格式的图片"))
+            image_data = Image.open(picture_data)
+            pic_name = str(int(time.time())) + picture_data.name
+            pic_full_path = BASE + '/static/img/mentor_intro/' + pic_name
+            image_data.save(pic_full_path)
+
         if video_data is not None:
             res = utils_upload_video(video_data, video_format, mentor.id, support_format)
             if not res:
@@ -60,6 +72,12 @@ def teacher_host(request):
         if res:
             mentor.intro_video = QINIU_DOMAIN + res['sfile_name']
             mentor.video_poster = QINIU_DOMAIN + res['poster_name']
+        if pic_name:
+            mentor.intro_picture = "/img/mentor_intro/" + pic_name
+        if form_data['view_type'] == '0':
+            mentor.have_intro_video = False
+        elif form_data['view_type'] == '1':
+            mentor.have_intro_video = True
         expert_heroes = json.loads(form_data['expert_heroes'])
         expert_length = len(expert_heroes)
         mentor.expert_hero1 = None

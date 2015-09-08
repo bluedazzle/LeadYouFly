@@ -27,10 +27,14 @@ function position_check(term_id){
     change_check('checkbox-all', status)
   } else if(term_id === 'checkbox-area-all' || term_id === 'checkbox-telecom' ||
       term_id === 'checkbox-netcom'){
-      change_check('checkbox-telecom', 'checked');
-      change_check('checkbox-area-all', 'checked');
-      change_check('checkbox-netcom', 'checked');
-      change_check(term_id)
+    change_check('checkbox-telecom', 'checked');
+    change_check('checkbox-area-all', 'checked');
+    change_check('checkbox-netcom', 'checked');
+    change_check(term_id)
+  } else if(term_id === 'checkbox-video' || term_id === 'checkbox-picture'){
+    change_check('checkbox-video', 'checked');
+    change_check('checkbox-picture', 'checked');
+    change_check(term_id)
   } else{
     change_check(term_id, 1)
   }
@@ -206,16 +210,16 @@ function changeHeroesList(option){
 // 表单提交
 
 var xhr;
-function fileSelected() {
-  var file = document.getElementById('new_video').files[0];
+function fileSelected(fileId, nameId, sizeId) {
+  var file = document.getElementById(fileId).files[0];
   if (file) {
     var fileSize = 0;
     if (file.size > 1024 * 1024)
       fileSize = (Math.round(file.size * 100 / (1024 * 1024)) / 100).toString() + 'MB';
     else
       fileSize = (Math.round(file.size * 100 / 1024) / 100).toString() + 'KB';
-    document.getElementById('fileName').innerHTML = file.name;
-    document.getElementById('fileSize').innerHTML = fileSize;
+    document.getElementById(nameId).innerHTML = file.name;
+    document.getElementById(sizeId).innerHTML = fileSize;
   }
 }
 
@@ -224,11 +228,11 @@ function checkForm(){
   var intro = $("input[name='intro']").val();
 
   var goodAt = "";
-  var positionMid = $("input[name='position_mid']").val();
-  var positionTop = $("input[name='position_top']").val();
-  var positionADC = $("input[name='position_ADC']").val();
-  var positionJungle = $("input[name='position_jungle']").val();
-  var positionSupport = $("input[name='position_support']").val();
+  var positionMid = $("input[name='position_mid']").attr('checked');
+  var positionTop = $("input[name='position_top']").attr('checked');
+  var positionADC = $("input[name='position_ADC']").attr('checked');
+  var positionJungle = $("input[name='position_jungle']").attr('checked');
+  var positionSupport = $("input[name='position_support']").attr('checked');
   if(positionMid) goodAt += '1';
   if(positionTop) goodAt += '2';
   if(positionADC) goodAt += '3';
@@ -247,12 +251,14 @@ function checkForm(){
 
   var gameLevel = $("input[name='level']").val();
 
-  var areaTelecom = $("input[name='area_telecom']").val();
-  var areaNetcom = $("input[name='area_netcom']").val();
+  var areaTelecom = $("input[name='area_telecom']").attr('checked');
+  var areaNetcom = $("input[name='area_netcom']").attr('checked');
   var teachArea;
   if(areaTelecom) teachArea = '1';
   if(areaNetcom) teachArea = '2';
   if(areaTelecom && areaNetcom) teachArea = '0';
+
+  var viewVideo = $("input[name='view_video']").attr('checked');
 
   if(!name) return false;
   if(!intro) return false;
@@ -261,6 +267,12 @@ function checkForm(){
   if(teachHeroes.length === 0)  return false;
   if(!gameLevel) return false;
   if(!teachArea) return false;
+  var viewType;
+  if(!viewVideo){
+    viewType = '0'
+  } else{
+    viewType = '1'
+  }
 
 
   var formData = {};
@@ -271,6 +283,7 @@ function checkForm(){
   formData.teachHeroes = JSON.stringify(teachHeroes);
   formData.gameLevel = gameLevel;
   formData.teachArea = teachArea;
+  formData.viewType = viewType;
 
   return formData
 }
@@ -285,6 +298,20 @@ function submitUpdateForm(){
   if(document.getElementById('new_video').files.length > 0){
     fd.append("new_video", document.getElementById('new_video').files[0]);
   }
+  if(document.getElementById('new_pic').files.length > 0){
+    //var img = new Image();
+    var img = $('#view_new_pic');
+    var file = document.getElementById('new_pic').files[0];
+    img.attr('src', window.URL.createObjectURL(file));
+
+    img.load(function(){
+      if(parseFloat(img.height()) / parseFloat(img.width()) > 1.0){
+        Notify("请上传高比宽小于1的图片");
+        return false;
+      }
+    });
+    fd.append("new_picture", document.getElementById('new_pic').files[0]);
+  }
   fd.append("name", formData.name);
   fd.append("intro", formData.intro);
   fd.append("good_at", formData.goodAt);
@@ -292,6 +319,7 @@ function submitUpdateForm(){
   fd.append("teach_heroes", formData.teachHeroes);
   fd.append("game_level", formData.gameLevel);
   fd.append("teach_area", formData.teachArea);
+  fd.append("view_type", formData.viewType);
   fd.append("csrfmiddlewaretoken", $("input[name='csrfmiddlewaretoken']").val());
   xhr = new XMLHttpRequest();
   xhr.upload.addEventListener("progress", uploadProgress, false);

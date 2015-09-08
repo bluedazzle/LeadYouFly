@@ -12,7 +12,6 @@
         <label class="col-md-2 col-lg-2 teacher-host-label">简介：</label>
         <input class="col-md-10 col-lg-10 teacher-host-input" name="intro" value="{{ mentor.intro }}"/>
       </div>
-
       <div class="col-lg-12 col-md-12">
         <label class="col-md-2 col-lg-2 teacher-host-label">擅长位置：</label>
         <div class="checkbox-group col-lg-10 col-md-10">
@@ -188,12 +187,48 @@
         <div class="col-lg-10 col-md-10" style="margin-left: -9%">
           <a type="button" class="btn btn-upload" style="position: relative">
             选择视频
-            <input type="file" id="new_video" name="upload_video" onchange="fileSelected()"/>
+            <input type="file" id="new_video" name="upload_video" onchange="fileSelected('new_video', 'fileName', 'fileSize')"/>
           </a>
           <span id="fileName"></span>
           <span id="fileSize"></span>
         </div>
       </div>
+
+      <div class="col-lg-12 col-md-12">
+        <div class="col-lg-2 col-md-2 teacher-host-label">图片上传：</div>
+        <div class="col-lg-10 col-md-10" style="margin-left: -9%">
+          <a type="button" class="btn btn-upload" style="position: relative">
+            选择图片
+            <input type="file" id="new_pic" name="upload_pic" onchange="fileSelected('new_pic', 'picName', 'picSize')"/>
+          </a>
+          <span id="picName"></span>
+          <span id="picSize"></span>
+        </div>
+      </div>
+      <div class="col-lg-12 col-md-12">
+        <div class="col-lg-2 col-md-2 teacher-host-label">显示：</div>
+        <div class="col-lg-10 col-md-10" style="margin-left: -9%;margin-top: 2px">
+          <div class="col-lg-2 col-md-2">
+            <input type="checkbox" name="view_video" id="checkbox-video" class="checkbox"/>
+            <div class="checkbox-wrapper" onclick="position_check('checkbox-video')">
+              <label class="checkbox-label" id="checkbox-video-label">
+                <div class="checkbox-div" id="checkbox-video-div"></div>
+              </label>
+            </div>
+            <div class="position-text">视频</div>
+          </div>
+          <div class="col-lg-2 col-md-2">
+            <input type="checkbox" name="view_picture" id="checkbox-picture" class="checkbox"/>
+            <div class="checkbox-wrapper" onclick="position_check('checkbox-picture')">
+              <label class="checkbox-label" id="checkbox-picture-label">
+                <div class="checkbox-div" id="checkbox-picture-div"></div>
+              </label>
+            </div>
+            <div class="position-text">图片</div>
+          </div>
+        </div>
+      </div>
+      <img src="" style="display: none" id="view_new_pic">
 
       <div class="col-lg-11 col-md-11" style="float: right;margin-left: 2.5%">
         <a type="button" class="btn btn-primary btn-lg" onclick="submitUpdateForm()">
@@ -269,5 +304,10 @@
     } else if(teach_area === "0"){
       change_check('checkbox-area-all')
     }
+    {% if mentor.have_intro_video %}
+      change_check('checkbox-video');
+    {% else %}
+      change_check('checkbox-picture');
+    {% endif %}
   </script>
 {% endblock %}

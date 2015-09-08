@@ -44,7 +44,6 @@ def teacher_host(request):
 
         mentor = return_content['mentor']
         video_data = form_data['new_video']
-        print "test"
         if video_data is not None:
             res = utils_upload_video(video_data, video_format, mentor.id, support_format)
             if not res:
@@ -56,6 +55,8 @@ def teacher_host(request):
         mentor.intro = form_data['intro']
         mentor.good_at = form_data['good_at']
         mentor.teach_area = str(form_data['teach_area'])
+        mentor.game_level = str(form_data['game_level'])
+        print form_data
         if res:
             mentor.intro_video = QINIU_DOMAIN + res['sfile_name']
             mentor.video_poster = QINIU_DOMAIN + res['poster_name']

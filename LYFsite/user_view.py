@@ -31,9 +31,10 @@ def user_message(request):
     if not return_content['login_type'] == 'student':
         raise Http404
     return_content['is_login'] = True
-
-    test_list = range(0, 6)
-    return_content['test_list'] = test_list
+    message_list = Message.objects.filter(belong=return_content['active_user']) | Message.objects.filter(send_all=True)
+    # test_list = range(0, 6)
+    # return_content['test_list'] = test_list
+    return_content['message_list'] = message_list
     return render_to_response('user/message.html',
                               return_content,
                               context_instance=RequestContext(request))

@@ -250,6 +250,9 @@ def order_accept(request):
                 if order.status == 2:
                     order.status = 3
                     order.save()
+                    mentor.iden_income -= order.order_price
+                    mentor.cash_income += order.order_price
+                    mentor.save()
                     if mentor.men_orders.filter(status=1).count() == 0:
                         mentor.status = 1
                         mentor.save()

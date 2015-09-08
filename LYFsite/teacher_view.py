@@ -67,7 +67,7 @@ def teacher_host(request):
         mentor.intro = form_data['intro']
         mentor.good_at = form_data['good_at']
         mentor.teach_area = str(form_data['teach_area'])
-        mentor.game_level = str(form_data['game_level'])
+        mentor.game_level = form_data['game_level']
         print form_data
         if res:
             mentor.intro_video = QINIU_DOMAIN + res['sfile_name']

@@ -22,12 +22,12 @@
             可立即授课
           </div>
         {% elif mentor_detail.status == 2 %}
-          <div class="status-box status-warning col-lg-4 col-md-4">
-            上课中(预计时间)
+          <div class="status-box status-warning col-lg-8 col-md-8">
+            上课中(预计时间{{ teach_end_time | date:"m/d H:i:s" }})
           </div>
         {% endif %}
         {% if active_user %}
-          <div class="col-lg-8 col-md-8" id="followMentor">
+          <div class="col-lg-4 col-md-4" id="followMentor">
             {% if mentor_detail in active_user.follow.all %}
               <button class="btn btn-warning" onclick="cancelFollow('{{ mentor_detail.id }}')">取消关注</button>
             {% else %}
@@ -45,15 +45,19 @@
           <br/>
           <p>
             擅长位置：
-            {% if mentor_detail.good_at == 1 %}
+            {% if '1' in mentor_detail.good_at %}
               中单
-            {% elif mentor_detail.good_at == 2 %}
+            {% endif %}
+            {% if '2' in mentor_detail.good_at %}
               上单
-            {% elif mentor_detail.good_at == 3 %}
+            {% endif %}
+            {% if '3' in mentor_detail.good_at %}
               ADC
-            {% elif mentor_detail.good_at == 4 %}
+            {% endif %}
+            {% if '4' in mentor_detail.good_at %}
               打野
-            {% elif mentor_detail.good_at == 5 %}
+            {% endif %}
+            {% if '5' in mentor_detail.good_at %}
               辅助
             {% endif %}
           </p>
@@ -61,13 +65,13 @@
           <p>
             擅长英雄：
             {% if mentor_detail.expert_hero1 %}
-              <img src="{{ mentor_detail.expert_hero1.hero_picture }}" class="hero-header"/>
+              <img src="{{ mentor_detail.expert_hero1.hero_picture }}" data-toggle="tooltip" data-placement="top" title="{{ mentor_detail.expert_hero1.hero_name }}" class="hero-header"/>
             {% endif %}
             {% if mentor_detail.expert_hero2 %}
-              <img src="{{ mentor_detail.expert_hero2.hero_picture }}" class="hero-header"/>
+              <img src="{{ mentor_detail.expert_hero2.hero_picture }}" data-toggle="tooltip" data-placement="top" title="{{ mentor_detail.expert_hero2.hero_name }}" class="hero-header"/>
             {% endif %}
             {% if mentor_detail.expert_hero3 %}
-              <img src="{{ mentor_detail.expert_hero3.hero_picture }}" class="hero-header"/>
+              <img src="{{ mentor_detail.expert_hero3.hero_picture }}" data-toggle="tooltip" data-placement="top" title="{{ mentor_detail.expert_hero3.hero_name }}" class="hero-header"/>
             {% endif %}
           </p>
 
@@ -101,7 +105,7 @@
                 {{ course.course_info }}
               </p>
 
-              <div class="buy-box" onclick="toConfirmOrder({{ course.id }})">
+              <div class="buy-box" onclick="toConfirmOrder({{ course.id }}, {{ mentor_detail.status }})">
                 <h2>
                   立即购买
                 </h2>
@@ -109,6 +113,7 @@
             </div>
           </div>
         {% endfor %}
+        {% if mentor_detail.men_courses.all.count > 2 %}
         <div class="col-lg-4 col-md-4">
           <div class="detail-course-box view-more">
             <div class="buy-box" onclick="viewAllCourses()">
@@ -118,6 +123,7 @@
             </div>
           </div>
         </div>
+        {% endif %}
       </div>
     </div>
   </div>
@@ -187,6 +193,13 @@
   </div>
 {% endblock %}
 {% block script %}
+  {% if mentor_detail.status == 3 %}
+    <script>
+      $(document).ready(function(){
+        Notify("该导师正在休息，请查看其他导师")
+      })
+    </script>
+  {% endif %}
   <script src="/js/common/teacher_detail.js"></script>
   <script src="//vjs.zencdn.net/4.7/video.js"></script>
 {% endblock %}

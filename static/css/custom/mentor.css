@@ -44,7 +44,7 @@
     background-color: #DDDDDD;
 }
 
-.video-box .cross-horizontal{
+.video-add .cross-horizontal{
     position: absolute;
     top: 87px;
     left: 85px;
@@ -69,6 +69,7 @@
     right: 0;
     height: 100%;
     cursor: pointer;
+    width: 100%;
 }
 
 .btn-cash{

@@ -99,19 +99,18 @@ def change_mentor_status(request):
         status = request.GET.get('status')
         mentor = return_content['mentor']
         if int(status) == 1:
-            if mentor.status == 0 or mentor.status == 1:
+            if mentor.status == 3 or mentor.status == 1:
                 mentor.status = 1
                 mentor.save()
                 return HttpResponse(json.dumps("success"))
             else:
                 return HttpResponse(json.dumps("failed"))
-        elif int(status) == 0:
-            if mentor.status == 2:
+        elif int(status) == 3:
+            if status == 2:
                 return HttpResponse(json.dumps('failed'))
-            else:
-                mentor.status = 0
-                mentor.save()
-                return HttpResponse(json.dumps("success"))
+            mentor.status = 3
+            mentor.save()
+            return HttpResponse(json.dumps("success"))
 
 
 def teacher_contact(request):
@@ -174,6 +173,7 @@ def teacher_indemnity(request):
                 mentor.alipay_account = alipay_account
                 mentor.real_name = real_name
                 mentor.iden_income = iden_income
+                mentor.cash_income += float(money)
                 mentor.save()
                 return HttpResponse(json.dumps('success'))
 
@@ -231,6 +231,9 @@ def order_accept(request):
                 if order.status == 2:
                     order.status = 3
                     order.save()
+                    if mentor.men_orders.filter(status=1).count() == 0:
+                        mentor.status = 1
+                        mentor.save()
                     return HttpResponse(json.dumps('success'))
                 else:
                     return HttpResponse(json.dumps(u'操作失败'))
@@ -293,9 +296,10 @@ def teacher_video_upload(request):
         order_id = request.POST.get('order_id')
         try:
             order = Order.objects.get(order_id=order_id)
-            t = order.id
+            if not order.status == 3:
+                return HttpResponse(json.dumps(u'只能上传已完成的订单'))
         except Order.DoesNotExist:
-            return HttpResponse(json.dumps('wrong order id'))
+            return HttpResponse(json.dumps(u'错误的订单号'))
 
         if video_data is not None:
             res = utils_upload_video(video_data, video_format, order_id, support_format)

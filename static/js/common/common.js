@@ -1,5 +1,11 @@
 function Notify(msg){
-  alert(msg)
+  $('#noticeModal').modal('show');
+  $('#notice-message').text(msg);
+  setTimeout(closeNoticeModal, 1500);
+}
+
+function closeNoticeModal(){
+  $('#noticeModal').modal('hide')
 }
 
 function changeMentorStatus(status){

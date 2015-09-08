@@ -49,7 +49,7 @@
               <li><a href="/register" class="sm-title">注册</a></li>
             {% else %}
               {% if login_type == 'student' %}
-                <li class="dropdown">
+                <li class="dropdown" id="stu-option-list">
                   <a href="#" class="dropdown-toggle" id="student-route" data-toggle="dropdown"
                      role="button" aria-haspopup="true" aria-expanded="false">
                     <img style="width: 30px;height: 30px;border-radius: 50%"
@@ -95,7 +95,7 @@
                   </a>
                   <ul class="dropdown-menu">
                     <li><a href="#" onclick="changeMentorStatus(1)">立即授课</a></li>
-                    <li><a href="#" onclick="changeMentorStatus(0)">休息中</a></li>
+                    <li><a href="#" onclick="changeMentorStatus(3)">休息中</a></li>
                     <li><a href="/teacher/host">个人中心</a></li>
                     <li><a href="/logout">退出</a></li>
                   </ul>
@@ -148,6 +148,16 @@
   </div>
   {% block select_screen %}
   {% endblock %}
+</div>
+<!-- Modal -->
+<div class="modal fade" id="noticeModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-body">
+        <p class="text-center" id="notice-message"></p>
+      </div>
+    </div>
+  </div>
 </div>
 {% if login_type == 'teacher' %}
   <audio src="/js/567.wav" loop="loop" id="notice_music"></audio>

@@ -1,5 +1,5 @@
 .search-teacher-head{
-    height: 250px;
+    height: 350px;
     /*background: url('/img/2.jpg');*/
 }
 
@@ -69,6 +69,7 @@
     border-bottom: 1px solid #FFFFFF;
     padding-bottom: 0;
     text-align: center;
+    font-size: 48px;
 }
 
 .btn-select:hover{
@@ -86,9 +87,9 @@
 }
 
 .study-text p{
-    margin-top: 27px;
+    margin-top: 23px;
     float: right;
-    font-size: 16px;
+    font-size: 48px;
     color: #ffffff;
 }
 
@@ -196,6 +197,7 @@
     color: #FFFFFF;
     margin-top: 10px;
     margin-bottom: 10px;
+    font-size: 36px;
 }
 
 .select-screen a:hover,
@@ -204,27 +206,27 @@
 }
 
 .select-screen-area{
-    margin-left: 20px;
+    margin-top: 42px;
+    padding-left: 57px;
     display: none;
 }
 
 .select-screen-position{
     float: right;
-    margin-left: 20px;
     padding-left: 40px;
     display: none;
-    margin-top: 60px;
+    margin-top: 140px;
 }
 
 .select-screen-hero{
     float: right;
-    margin-left: 20px;
     padding-left: 40px;
-    margin-top: 120px;
+    margin-top: 240px;
     display: none;
 }
 
 .hero-header-sm{
-    height: 20px;
-    width: 20px;
+    height: 40px;
+    width: 40px;
+    margin-top: -10px;
 }

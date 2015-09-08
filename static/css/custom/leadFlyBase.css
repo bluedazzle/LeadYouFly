@@ -68,9 +68,11 @@ html,body {
     display: inline-block;
 }
 
-.navbar-nav .dropdown{
+#stu-option-list{
     border-left: 1px solid #ddd;
     border-right: 1px solid #ddd;
+    min-width: 164px;
+    text-align: center;
 }
 
 .navbar-nav .dropdown .dropdown-toggle{
@@ -108,29 +110,29 @@ html,body {
 }
 
 .carousel-indicators li {
-  display: inline-block;
-  width: 14px;
-  height: 14px;
-  margin: 1px 1px 1px 10px;
-  text-indent: -999px;
-  cursor: pointer;
-  background-color: #000\9;
-  background-color: rgba(0,0,0,0);
-  border: 1px solid #fff;
-  border-radius: 50%;
+    display: inline-block;
+    width: 14px;
+    height: 14px;
+    margin: 1px 1px 1px 10px;
+    text-indent: -999px;
+    cursor: pointer;
+    background-color: #000\9;
+    background-color: rgba(0,0,0,0);
+    border: 1px solid #fff;
+    border-radius: 50%;
 }
 
 .carousel-indicators .active {
-  display: inline-block;
-  width: 14px;
-  height: 14px;
-  margin: 1px 1px 1px 10px;
-  text-indent: -999px;
-  cursor: pointer;
-  background-color: #000\9;
-  background-color: #bdc3c7;
-  border: 1px solid #fff;
-  border-radius: 50%;
+    display: inline-block;
+    width: 14px;
+    height: 14px;
+    margin: 1px 1px 1px 10px;
+    text-indent: -999px;
+    cursor: pointer;
+    background-color: #000\9;
+    background-color: #bdc3c7;
+    border: 1px solid #fff;
+    border-radius: 50%;
 }
 
 .nav .lg-title,

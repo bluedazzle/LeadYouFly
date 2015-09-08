@@ -178,7 +178,7 @@ def search_teacher(request):
         teach_position = request.GET.get('teach_position')
         teach_hero = request.GET.get('teach_hero')
 
-        if teach_hero and not teach_hero == '':
+        if teach_hero and not teach_hero == '' and not teach_hero == '0':
             hero_to_teach = Hero.objects.get(id=teach_hero)
         else:
             hero_to_teach = None
@@ -195,7 +195,13 @@ def search_teacher(request):
             heroes = heroes.filter(hero_type__contains=teach_position)
         else:
             teach_position = '0'
+            request.session['teach_position'] = '0'
+        # 判断筛选位置是否改变，如果改变则重置筛选英雄
+        if not request.session.get('teach_position') or not request.session['teach_position'] == teach_position:
+            hero_to_teach = None
+            teach_hero = ''
 
+        request.session['teach_position'] = teach_position
         if hero_to_teach:
             mentors = mentors.filter(hero_list__id=teach_hero)
 
@@ -215,7 +221,8 @@ def search_teacher(request):
         else:
             search = ''
 
-        mentors.order_by('status').order_by('-priority')
+        mentors = mentors.distinct()
+        mentors = mentors.order_by('-mark').order_by('-priority').order_by('status')
         paginator = Paginator(mentors, 12)
         try:
             page_num = request.GET.get('page_num')
@@ -252,6 +259,14 @@ def teacher_detail(request):
         except Mentor.DoesNotExist:
             raise Http404
         return_content['mentor_detail'] = mentor
+        if mentor.status == 2:
+            last_orders = mentor.men_orders.filter(status=2).order_by('-create_time')
+            last_time = last_orders[0].teach_end_time
+            time_now = datetime.datetime.now(tz=get_current_timezone())
+            if last_time <= time_now:
+                mentor.status = 1
+                mentor.save()
+            return_content['teach_end_time'] = last_orders[0].teach_end_time
         return render_to_response('common/teacher_detail.html',
                                   return_content,
                                   context_instance=RequestContext(request))

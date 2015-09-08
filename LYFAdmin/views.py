@@ -441,6 +441,7 @@ def admin_mentor_change_video(req, mid):
                     mentor.video_poster = QINIU_DOMAIN + itm['key']
                 else:
                     mentor.intro_video = QINIU_DOMAIN + itm['key']
+            mentor.have_intro_video = True
             mentor.save()
     new_url = '/admin/mentor/detail/' + str(mid) + '/'
     return HttpResponseRedirect(new_url)
@@ -498,6 +499,7 @@ def admin_mentor_new_video(req, mid):
                     sfile_name = new_name
                 mentor.intro_video = QINIU_DOMAIN + sfile_name
                 mentor.video_poster = QINIU_DOMAIN + poster_name
+                mentor.have_intro_video = True
                 mentor.save()
     new_url = '/admin/mentor/detail/' + str(mid) + '/'
     return HttpResponseRedirect(new_url)

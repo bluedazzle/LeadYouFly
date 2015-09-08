@@ -236,6 +236,8 @@ def order_accept(request):
                 if order.status == 1:
                     order.status = 2
                     order.save()
+                    mentor.status = 2
+                    mentor.save()
                     return HttpResponse(json.dumps('success'))
                 else:
                     return HttpResponse(json.dumps(u'操作失败'))
@@ -250,9 +252,6 @@ def order_accept(request):
                 if order.status == 2:
                     order.status = 3
                     order.save()
-                    mentor.iden_income -= order.order_price
-                    mentor.cash_income += order.order_price
-                    mentor.save()
                     if mentor.men_orders.filter(status=1).count() == 0:
                         mentor.status = 1
                         mentor.save()

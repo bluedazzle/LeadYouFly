@@ -72,7 +72,7 @@ def my_orders(request):
         raise Http404
 
     if request.method == 'GET':
-        orders = Order.objects.order_by('-create_time').filter(belong=return_content['active_user'])
+        orders = Order.objects.filter(belong=return_content['active_user']).order_by('status').order_by('-create_time')
         orders = orders.order_by('status')
         paginator = Paginator(orders, 10)
         try:

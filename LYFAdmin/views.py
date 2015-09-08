@@ -82,6 +82,31 @@ def admin_index(req):
                                                    'video_list': index_video_list}, context_instance=RequestContext(req))
 
 
+#标示获取
+@login_require
+def admin_get_status(req):
+    body = {}
+    order_num = Order.objects.filter(status=1).count()
+    if order_num > 0:
+        body['order_status'] = True
+        body['order_counts'] = order_num
+    else:
+        body['order_status'] = False
+    report_num = Report.objects.filter(finish=False).count()
+    cash_num = CashRecord.objects.filter(manage=False).count()
+    if report_num > 0:
+        body['report_status'] = True
+        body['report_counts'] = report_num
+    else:
+        body['report_status'] = False
+    if cash_num > 0:
+        body['cash_status'] = True
+        body['cash_counts'] = cash_num
+    else:
+        body['cash_status'] = False
+    return HttpResponse(ujson.dumps(body), content_type="application/json")
+
+
 # 首页视频更改
 @login_require
 def admin_index_change_video(req):
@@ -478,6 +503,24 @@ def admin_mentor_new_video(req, mid):
     return HttpResponseRedirect(new_url)
 
 
+#导师添加新图片
+@login_require
+def admin_mentor_new_picture(req, mid):
+    pic_format = ['png', 'jpg', 'bmp', 'gif', 'jpeg']
+    new_picture = req.FILES.get('new_picture', None)
+    mentor = get_object_or_404(Mentor, id=mid)
+    if new_picture:
+        file_name, ext_name = new_picture.name.encode('utf-8').split('.')
+        if ext_name in pic_format:
+            pic_path, save_path = upload_picture(new_picture, 'img/')
+            mentor.intro_picture = pic_path
+            mentor.have_intro_video = False
+            mentor.save()
+    new_url = '/admin/mentor/detail/' + str(mid) + '/'
+    return HttpResponseRedirect(new_url)
+
+
+
 #导师课程价格变更
 @login_require
 def admin_mentor_change_price(req, mid, cid):
@@ -684,6 +727,9 @@ def admin_pay_rejected_cash(req, cid):
     record.manage = True
     record.agree = False
     record.save()
+    record.belong.iden_income -= record.money
+    record.belong.cash_income += record.money
+    record.belong.save()
     return HttpResponseRedirect('/admin/pay/cash/')
 
 

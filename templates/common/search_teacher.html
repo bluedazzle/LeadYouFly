@@ -58,7 +58,7 @@
   <section class="col-lg-12 col-md-12 search-teacher-body">
     <div class="container">
       {% for mentor in mentors %}
-        <div class="col-lg-3 col-md-4">
+        <div class="col-lg-3 col-md-4 col-sm-12 col-xs-12">
           <div class="teacher-info-panel" onclick="toMentorDetail('{{ mentor.id }}')">
             <div class="teacher-info-panel-head" style="background: url('{{ mentor.avatar }}') center no-repeat;">
               {% if mentor.status == 1 %}
@@ -81,7 +81,7 @@
                 </div>
               {% endif %}
             </div>
-            <div class="teacher-info-panel-body">
+            <div class="teacher-info-panel-body" style="width: 100%;">
               <p class="teacher-info-introduce">
                 {{ mentor.intro }}
               </p>

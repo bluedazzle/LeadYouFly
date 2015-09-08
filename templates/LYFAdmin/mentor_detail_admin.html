@@ -28,7 +28,8 @@
                             <div>更改视频：</div>
                             <div class="panel panel-default">
                                 <div class="panel-body">
-                                    <form action="/admin/mentor/detail/{{ mentor.id }}/new_video" method="post" enctype="multipart/form-data">
+                                    <form action="/admin/mentor/detail/{{ mentor.id }}/new_video" method="post"
+                                          enctype="multipart/form-data">
                                         {% csrf_token %}
                                         <div class="form-group">
                                             <label for="">上传新视频：</label>
@@ -49,7 +50,7 @@
                                     <label for="">选择现有视频：</label>
 
                                     <form action="/admin/mentor/detail/{{ mentor.id }}/change_video" method="post">
-                                    {% csrf_token %}
+                                        {% csrf_token %}
                                         {% for video in video_list %}
                                             <label class="radio-inline">
                                                 <input type="radio" name="video_radio" value="{{ video.name }}">
@@ -65,6 +66,45 @@
                                 </div>
                             </div>
 
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <h3 class="panel-title">介绍图片编辑</h3>
+            </div>
+            <div class="panel-body">
+                <div>
+                    <h5>导师图片编辑：</h5>
+
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div>当前图片：</div>
+                            <img src="{{ mentor.intro_picture }}" width="750px" height="450px" alt=""/>
+                        </div>
+                        <div class="col-md-6">
+                            <div>更改图片：</div>
+                            <div class="panel panel-default">
+                                <div class="panel-body">
+                                    <form action="/admin/mentor/detail/{{ mentor.id }}/new_picture" method="post"
+                                          enctype="multipart/form-data">
+                                        {% csrf_token %}
+                                        <div class="form-group">
+                                            <label for="">上传新图片：</label>
+
+                                            <div class="input-group">
+                                                <input type="file" name="new_picture" class="form-control btn btn-primary"
+                                                       placeholder="："/>
+                                    <span class="input-group-btn"><button class="btn btn-primary" type="submit">保存
+                                    </button></span>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -113,7 +153,7 @@
                                 </div>
                                 <div class="modal-body">
                                     <form action="/admin/mentor/detail/{{ mentor.id }}/add_hero/" method="post">
-                                    {% csrf_token %}
+                                        {% csrf_token %}
                                         <div class="form-group">
                                             <label for="price">选择英雄</label>
                                             <select id="rec_mentor_1" name="new_hero_select"
@@ -162,7 +202,9 @@
                                 <button type="button" class="btn btn-primary" data-toggle="modal"
                                         data-target="#cPriceModel{{ course.id }}">修改价格
                                 </button>
-                                <a href="/admin/mentor/detail/{{ mentor.id }}/del_course/{{ course.id }}/" class="btn btn-warning">删除</a>
+                                <a href="/admin/mentor/detail/{{ mentor.id }}/del_course/{{ course.id }}/"
+                                   class="btn btn-warning">删除</a>
+
                                 <div class="modal fade" id="cPriceModel{{ course.id }}" tabindex="-1" role="dialog"
                                      aria-labelledby="myModalLabel">
                                     <div class="modal-dialog" role="document">
@@ -174,8 +216,9 @@
                                                 <h4 class="modal-title" id="myModalLabel">修改价格</h4>
                                             </div>
                                             <div class="modal-body">
-                                                <form action="/admin/mentor/detail/{{ mentor.id }}/change_price/{{ course.id }}/" method="get">
-                                                      {% csrf_token %}
+                                                <form action="/admin/mentor/detail/{{ mentor.id }}/change_price/{{ course.id }}/"
+                                                      method="get">
+                                                    {% csrf_token %}
                                                     <div class="form-group">
                                                         <label for="price">新价格</label>
                                                         <input type="number" class="form-control" name="new_price"
@@ -220,48 +263,51 @@
                     </tbody>
                 </table>
                 <br/>
-            <div>
-                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#newCourseModal" >添加</button>
-                <div class="modal fade" id="newCourseModal" tabindex="-1" role="dialog"
-                                     aria-labelledby="myModalLabel">
-                                    <div class="modal-dialog" role="document">
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                <button type="button" class="close" data-dismiss="modal"
-                                                        aria-label="Close"><span
-                                                        aria-hidden="true">&times;</span></button>
-                                                <h4 class="modal-title" id="myModalLabel">新课程</h4>
-                                            </div>
-                                            <div class="modal-body">
-                                                <form action="/admin/mentor/detail/{{ mentor.id }}/new_course/" method="post">
-                                                      {% csrf_token %}
-                                                    <div class="form-group">
-                                                        <label for="price">价格</label>
-                                                        <input type="text" class="form-control" name="new_price"
-                                                               placeholder="价格">
-                                                    </div>
-                                                    <div class="form-group">
-                                                        <label for="price">课程名称</label>
-                                                        <input type="text" class="form-control" name="new_name"
-                                                               placeholder="课程名称">
-                                                    </div>
-                                                    <div class="form-group">
-                                                        <label for="price">课程介绍</label>
-                                                        <textarea name="new_intro" id="" cols="52" rows="5" placeholder="课程介绍"></textarea>
-                                                    </div>
-                                                    <div class="modal-xfooter">
-                                                        <button type="button" class="btn btn-default"
-                                                                data-dismiss="modal">关闭
-                                                        </button>
-                                                        <button type="submit" class="btn btn-primary">确定</button>
-                                                    </div>
-                                                </form>
-                                            </div>
 
-                                        </div>
-                                    </div>
+                <div>
+                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#newCourseModal">添加
+                    </button>
+                    <div class="modal fade" id="newCourseModal" tabindex="-1" role="dialog"
+                         aria-labelledby="myModalLabel">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal"
+                                            aria-label="Close"><span
+                                            aria-hidden="true">&times;</span></button>
+                                    <h4 class="modal-title" id="myModalLabel">新课程</h4>
                                 </div>
-            </div>
+                                <div class="modal-body">
+                                    <form action="/admin/mentor/detail/{{ mentor.id }}/new_course/" method="post">
+                                        {% csrf_token %}
+                                        <div class="form-group">
+                                            <label for="price">价格</label>
+                                            <input type="text" class="form-control" name="new_price"
+                                                   placeholder="价格">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="price">课程名称</label>
+                                            <input type="text" class="form-control" name="new_name"
+                                                   placeholder="课程名称">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="price">课程介绍</label>
+                                            <textarea name="new_intro" id="" cols="52" rows="5"
+                                                      placeholder="课程介绍"></textarea>
+                                        </div>
+                                        <div class="modal-xfooter">
+                                            <button type="button" class="btn btn-default"
+                                                    data-dismiss="modal">关闭
+                                            </button>
+                                            <button type="submit" class="btn btn-primary">确定</button>
+                                        </div>
+                                    </form>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
         <div class="panel panel-primary">

@@ -152,7 +152,7 @@ class Mentor(AbstractBaseUser, BaseModel):
     avatar = models.CharField(max_length=200, default='/img/default_mentor.jpg')
     intro_video = models.CharField(max_length=200, default='')
     have_intro_video = models.BooleanField(default=False)
-    intro_picture = models.CharField(max_length=200, default='')
+    intro_picture = models.CharField(max_length=200, default='/img/default_mentor.jpg')
     video_poster = models.CharField(max_length=200, default='')
     expert_hero1 = models.ForeignKey(Hero, related_name='who_expert1', null=True, blank=True)
     expert_hero2 = models.ForeignKey(Hero, related_name='who_expert2', null=True, blank=True)

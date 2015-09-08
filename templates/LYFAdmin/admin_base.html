@@ -32,7 +32,7 @@
     <li>
         <a href="/admin/order">
             <span class="glyphicon glyphicon-edit" style="margin-right: 3%"></span>
-            订单管理<span class="badge" id="appoint_new_count" style="margin-left: 2px;"></span>
+            订单管理<span class="badge" id="order_num"></span><span class="badge" id="appoint_new_count" style="margin-left: 2px;"></span>
         </a>
     </li>
     <li>
@@ -56,7 +56,7 @@
     <li>
         <a href="/admin/pay">
             <span class="glyphicon glyphicon-usd" style="margin-right: 3%"></span>
-            支付管理
+            支付管理<span class="badge" id="cash_num"></span>
         </a>
     </li>
     <li>
@@ -74,7 +74,7 @@
     <li>
         <a href="/admin/complain">
             <span class="glyphicon glyphicon-warning-sign" style="margin-right: 3%"></span>
-            投诉处理
+            投诉处理<span class="badge" id="report_num"></span>
         </a>
     </li>
     <li>
@@ -84,4 +84,7 @@
         </a>
     </li>
 {% endblock %}
-
+{% block script %}
+{{ block.super }}
+<script src="/js/admin/get_order.js"></script>
+{% endblock %}

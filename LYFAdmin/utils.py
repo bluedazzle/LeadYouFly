@@ -78,18 +78,18 @@ def report_convert(status_type):
 
 
 def hero_convert(type_str):
-    nstr = ''
+    nstr = u''
     for itm in type_str:
         if itm == '1':
-            nstr += '上单 '
+            nstr += u'上单 '
         elif itm == '2':
-            nstr += '中单 '
+            nstr += u'中单 '
         elif itm == '3':
-            nstr += 'ADC'
+            nstr += u'ADC '
         elif itm == '4':
-            nstr += '打野 '
+            nstr += u'打野 '
         elif itm == '5':
-            nstr += '辅助 '
+            nstr += u'辅助 '
     return nstr
 
 
@@ -106,19 +106,19 @@ def area_convert(type_str):
 
 
 def order_status_convert(status_type):
-    n_str = ''
+    n_str = u''
     if status_type == 1:
-        n_str = '待确认'
+        n_str = u'待确认'
     elif status_type == 2:
-        n_str = '已确认'
+        n_str = u'已确认'
     elif status_type == 3:
-        n_str = '已完成'
+        n_str = u'已完成'
     elif status_type == 4:
-        n_str = '已评价'
+        n_str = u'已评价'
     elif status_type == 5:
-        n_str = '已撤单'
+        n_str = u'已撤单'
     elif status_type == 6:
-        n_str = '待支付'
+        n_str = u'待支付'
     return n_str
 
 
@@ -194,17 +194,30 @@ def output_data(file_name, order_list):
     ws.write(0, 13, "教学导师")
     i = 1
     for item in order_list:
+        print item.learn_type
+        print type(item.learn_type)
+        nstr = u''
+        if item.learn_type == '1':
+            nstr = u'上单 '
+        elif item.learn_type == '2':
+            nstr = u'中单 '
+        elif item.learn_type == '3':
+            nstr = u'ADC '
+        elif item.learn_type == '4':
+            nstr = u'打野 '
+        elif item.learn_type == '5':
+            nstr = u'辅助 '
         ws.write(i, 0, item.order_id, style0)
         ws.write(i, 1, item.order_price, style0)
-        ws.write(i, 2, pay_type_convert(item.pay_type), style0)
+        ws.write(i, 2, u"在线支付", style0)
         ws.write(i, 3, item.course_name)
         ws.write(i, 4, item.course_intro)
         ws.write(i, 5, item.learn_area)
-        ws.write(i, 6, hero_convert(str(item.learn_type)))
+        ws.write(i, 6, nstr)
         ws.write(i, 7, item.learn_hero)
         ws.write(i, 8, order_status_convert(item.status))
         ws.write(i, 9, item.teach_video)
-        ws.write(i, 10, datetime_to_string(item.teach_time))
+        ws.write(i, 10, datetime_to_string(item.teach_start_time))
         ws.write(i, 11, datetime_to_string(item.create_time))
         ws.write(i, 12, item.belong.account)
         ws.write(i, 13, item.teach_by.account)

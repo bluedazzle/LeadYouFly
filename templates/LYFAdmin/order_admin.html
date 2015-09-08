@@ -25,6 +25,7 @@
                 <button class="btn-primary btn" type="submit">查询</button>
             </div>
             <div class="col-md-1 text-right">
+                <input type="hidden" name="csrfmiddlewaretoken" id="csrfmiddlewaretoken" value="{{ csrf_token }}"/>
                 <button class="btn btn-primary" id="out_data" type="button">导出</button>
             </div>
         </div>
@@ -70,8 +71,10 @@
           $('#out_data').click(function(){
               var order_status = $("#order_status").val();
               var search_text = $("#search_text").val();
+              var csrf_token = $("#csrfmiddlewaretoken").val();
               var message = {'order_status': order_status,
-                             'search_text': search_text};
+                             'search_text': search_text,
+                             'csrfmiddlewaretoken': csrf_token};
               $.ajax({
                   type: 'POST',
                   url: '/admin/order/output',

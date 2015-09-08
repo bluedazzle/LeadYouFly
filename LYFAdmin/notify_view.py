@@ -10,6 +10,7 @@ from LYFAdmin.order_operation import create_charge_record, create_money_record
 from LYFAdmin.sms import send_order_msg
 from LYFAdmin.utils import check_start_time
 
+import datetime
 
 @csrf_exempt
 def alipay_notify(req):
@@ -31,7 +32,9 @@ def alipay_notify(req):
             if status == 'TRADE_SUCCESS':
                 if order.status == 6:
                     order.status = 1
-                    order.teach_start_time = check_start_time(order.teach_by)
+                    start_time = check_start_time(order.teach_by)
+                    order.teach_start_time = start_time
+                    order.teach_end_time = start_time + datetime.timedelta(hours=1.5)
                     order.if_pay = True
                     order.save()
                 create_charge_record(order.belong, price, order_id=order_id)
@@ -40,6 +43,7 @@ def alipay_notify(req):
                                str(order.belong.qq).encode('utf-8'),
                                str(order.teach_by.phone).encode('utf-8'))
                 order.teach_by.iden_income += order.order_price
+                order.teach_by.total_income += order.order_price
                 order.teach_by.save()
                 order_mes = ORDER_BUY_MES % str(order.belong.nick).encode('utf-8')
                 create_new_message(order_mes, belong=order.belong)

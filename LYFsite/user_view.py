@@ -57,7 +57,6 @@ def complete_mes(request):
         if form.is_valid():
             form_data = form.cleaned_data
             student_active.qq = form_data['qq']
-            student_active.yy = form_data['yy']
             student_active.phone = form_data['phone']
             student_active.save()
             return HttpResponse(json.dumps('success'))

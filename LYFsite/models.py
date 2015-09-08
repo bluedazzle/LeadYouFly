@@ -17,7 +17,6 @@ class LoginForm(forms.Form):
 
 class CompleteInfoForm(forms.Form):
     qq = forms.CharField(max_length=20)
-    yy = forms.CharField(max_length=50)
     phone = forms.CharField(max_length=11)
 
 

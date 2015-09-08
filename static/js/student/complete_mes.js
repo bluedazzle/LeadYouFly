@@ -5,9 +5,9 @@ $(document).ready(function(){
   $('#user-position').text("我的档案");
   $('#complete_mes_submit').click(function(){
     var qq = $('#qq').val();
-    var yy = $('#yy').val();
+    var yy = '';
     var phone = $('#phone').val();
-    if (qq && yy && phone && phone.length == 11){
+    if (qq && phone && phone.length == 11){
       $.ajax({
             url: "/user/complete_mes",
             type: "post",

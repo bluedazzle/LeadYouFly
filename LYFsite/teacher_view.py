@@ -229,7 +229,7 @@ def order_accept(request):
         operation = request.POST.get('operation')
         mentor = return_content['mentor']
         if operation == 'accept':
-            if not mentor.status == 1:
+            if mentor.status == 3:
                 return HttpResponse(json.dumps(u'请先更改状态为可立即授课'))
             try:
                 order = Order.objects.get(order_id=order_id)

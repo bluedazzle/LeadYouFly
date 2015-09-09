@@ -118,7 +118,7 @@ def get_all_heroes(request):
 
 
 def check_status(mentor):
-    order_list = mentor.men_orders.all().filter(status=2)
+    order_list = mentor.men_orders.filter(status=2).order_by('-teach_end_time')
     if order_list.count() > 0:
         order = order_list[0]
         end_time = order.teach_end_time

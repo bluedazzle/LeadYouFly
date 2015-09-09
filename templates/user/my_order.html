@@ -5,7 +5,7 @@
       <table class="table my-order-table">
         {% csrf_token %}
         <thead>
-        <tr>
+        <tr style="border-right: solid 1px #000000;">
           <th>导师名称</th>
           <th>模式</th>
           <th>价格</th>
@@ -16,11 +16,11 @@
         </thead>
         <tbody>
         {% for order in orders %}
-          <tr class="order-head">
-            <td>
+          <tr class="order-head" style="border-right: solid 1px rgb(237,237,237);">
+            <td style="color: #000000;">
               订单号：{{ order.order_id }}
             </td>
-            <td>
+            <td style="color: #000000;">
               购买时间：<span class="order-buy-date">{{ order.create_time | date:"Y/m/d" }}</span>
             </td>
             <td></td>
@@ -28,7 +28,7 @@
             <td></td>
             <td></td>
           </tr>
-          <tr>
+          <tr style="border-left: solid 1px rgb(237,237,237);border-right: solid 1px rgb(237,237,237);height: 120px;">
             <td>
               <img src="/img/touxiang.jpg" class="order-teacher-header">
               <span class="order-teacher-name">{{ order.teach_by.nick }}</span>
@@ -71,6 +71,14 @@
               {% endif %}
             </td>
           </tr>
+            <tr style="height: 80px;">
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            </tr>
         {% endfor %}
         </tbody>
       </table>

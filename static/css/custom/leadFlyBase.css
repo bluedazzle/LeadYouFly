@@ -600,8 +600,8 @@ html,body {
 }
 
 .my-order-table tbody tr td{
-    height: 60px;
-    padding-top: 20px;
+    /*height: 60px;*/
+    /*padding-top: 20px;*/
     vertical-align: middle;
 }
 

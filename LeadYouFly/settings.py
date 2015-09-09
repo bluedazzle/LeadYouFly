@@ -29,6 +29,8 @@ TEMPLATE_DEBUG = True
 
 ALLOWED_HOSTS = []
 
+WEBSITE_SIGN = 'D'
+
 
 # Application definition
 
@@ -61,6 +63,7 @@ PASSWORD_HASHERS = {
 ROOT_URLCONF = 'LeadYouFly.urls'
 
 WSGI_APPLICATION = 'LeadYouFly.wsgi.application'
+
 
 
 # Database

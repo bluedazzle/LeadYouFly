@@ -55,7 +55,7 @@ html,body {
     position: absolute;
     height: 100%;
     width: 1px;
-    background-color: #1abc9c;
+    background-color: rgb(210,210,210);
     left: 80px;
     top: 0;
 }

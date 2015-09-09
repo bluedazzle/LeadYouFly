@@ -82,7 +82,7 @@
               {% endif %}
             </div>
             <div class="teacher-info-panel-body" style="width: 100%;">
-              <p class="teacher-info-introduce">
+              <p class="teacher-info-introduce" style="color: darkslategray;">
                 {{ mentor.intro }}
               </p>
               <p class="teacher-info-name">
@@ -90,10 +90,10 @@
                 <span class="teacher-info-value">￥{{ mentor.men_courses.first.price }}</span>
               </p>
               <div class="teacher-info-ver col-sm-12"></div>
-              <p class="teacher-info-attribute col-sm-6">
+              <p class="teacher-info-attribute col-sm-6" style="color:#000000;">
                 段位：{{ mentor.game_level }}
               </p>
-              <p class="teacher-info-attribute col-sm-6">
+              <p class="teacher-info-attribute col-sm-6" style="color:#000000;">
                 擅长位置：
                 {% if mentor.good_at == '12345' %}
                   全部
@@ -109,7 +109,7 @@
                   辅助
                 {% endif %}
               </p>
-              <p class="teacher-info-attribute col-sm-12">
+              <p class="teacher-info-attribute col-sm-12" style="color:#000000;">
                 擅长英雄：
                 {% if mentor.expert_hero1 %}
                   <img src="{{ mentor.expert_hero1.hero_picture }}" data-toggle="tooltip" data-placement="top" title="{{ mentor_detail.expert_hero1.hero_name }}" class="hero-header"/>
@@ -121,10 +121,10 @@
                   <img src="{{ mentor.expert_hero3.hero_picture }}" class="hero-header"/>
                 {% endif %}
               </p>
-              <p class="teacher-info-attribute col-sm-8">
+              <p class="teacher-info-attribute col-sm-8" style="color:#000000;">
                 交易量：{{ mentor.men_orders.count }}
               </p>
-              <p class="teacher-info-attribute col-sm-4">
+              <p class="teacher-info-attribute col-sm-4" style="color:#000000;">
                 评分：{{ mentor.mark }}
               </p>
             </div>

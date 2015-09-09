@@ -20,7 +20,7 @@ from LYFAdmin.order_operation import create_money_record
 from forms import MentorDetailContentForm, NoticeContentForm
 from decorator import login_require
 from utils import upload_picture, datetime_to_string, auth_admin, hero_convert, order_status_convert, \
-    mentor_status_convert, order_search, output_data, student_search, report_convert
+    mentor_status_convert, order_search, output_data, student_search, report_convert, get_day_info
 from qn import upload_file_qn, list_file, QINIU_DOMAIN, VIDEO_CONVERT_PARAM, VIDEO_POSTER_PARAM, data_handle, \
     delete_data, put_block_data
 from message import push_custom_message
@@ -352,28 +352,38 @@ def admin_website_new_hero(req):
 #订单管理
 @login_require
 def admin_order(req):
+    day = {}
     raw_order_list = Order.objects.all().order_by('-create_time')
     order_list = serializer(raw_order_list, deep=True, datetime_format='string')
     for itm in order_list:
         itm['status'] = order_status_convert(itm['status'])
+    day_num, day_income = get_day_info()
+    day['count'] = day_num
+    day['income'] = day_income
     return render_to_response('order_admin.html', {'order_list': order_list,
-                                                   'select_code': 0}, context_instance=RequestContext(req))
+                                                   'select_code': 0,
+                                                   'day': day}, context_instance=RequestContext(req))
 
 
 #订单查询
 @login_require
 def admin_order_search(req):
+    day =  {}
     if req.method != 'POST':
         return Http404
     search_text = req.POST.get('search_text', '')
     order_status = int(req.POST.get('order_status', 0))
     raw_order_list = order_search(order_status, search_text)
     order_list = serializer(raw_order_list, datetime_format='string', deep=True)
+    day_num, day_income = get_day_info()
+    day['count'] = day_num
+    day['income'] = day_income
     for itm in order_list:
         itm['status'] = order_status_convert(itm['status'])
     return render_to_response('order_admin.html', {'order_list': order_list,
                                                    'select_code': order_status,
-                                                   'search_text': search_text}, context_instance=RequestContext(req))
+                                                   'search_text': search_text,
+                                                   'day': day}, context_instance=RequestContext(req))
 
 
 #订单导出

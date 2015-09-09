@@ -5,17 +5,23 @@ from LYFAdmin.models import Order, Student, Mentor, MoneyRecord, CashRecord, Cha
 import time
 import datetime
 from django.utils.timezone import get_current_timezone
+from LeadYouFly.settings import WEBSITE_SIGN
 
 
 
-def create_order_id(stu_id, men_id):
-    date_str = str(datetime.date.today()).replace('-', '')
-    year, month, day = str(datetime.date.today()).split('-')
-    auto_num = Order.objects.filter(create_time__year=year,
-                                    create_time__month=month,
-                                    create_time__day=day).count() + 1
-    new_id = '%s%06i%06i%06i' % (date_str, stu_id, men_id, auto_num)
-    return new_id
+# def create_order_id(stu_id, men_id):
+#     date_str = str(datetime.date.today()).replace('-', '')
+#     year, month, day = str(datetime.date.today()).split('-')
+#     auto_num = Order.objects.filter(create_time__year=year,
+#                                     create_time__month=month,
+#                                     create_time__day=day).count() + 1
+#     new_id = '%s%06i%06i%06i' % (date_str, stu_id, men_id, auto_num)
+#     return new_id
+
+
+def create_order_id(stu_id=None, men_id=None):
+    order_id = '%s%s%s' % (WEBSITE_SIGN, str(datetime.date.today()).replace('-', '')[2:], str(time.time()).replace('.', ''))
+    return order_id
 
 
 def create_charge_record(student, money, ctype=1, order_id=None):
@@ -38,7 +44,7 @@ def create_charge_record(student, money, ctype=1, order_id=None):
 
 
 def create_cash_request(mentor, money, alipay_account, name):
-    record_id = 'R%s%s' % (str(datetime.date.today()).replace('-', ''), str(time.time()).replace('.', ''))
+    record_id = '%sR%s%s' % (WEBSITE_SIGN, str(datetime.date.today()).replace('-', ''), str(time.time()).replace('.', ''))
     new_request = CashRecord(record_id=record_id,
                              money=money,
                              alipay_account=alipay_account,

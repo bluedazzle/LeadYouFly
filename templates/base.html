@@ -9,7 +9,8 @@
   <link href="/css/custom/leadFlyBase.css" rel="stylesheet"/>
   {% block css %}
   {% endblock %}
-  <script src="http://cdn.bootcss.com/jquery/1.11.2/jquery.min.js"></script>
+{#  <script src="http://cdn.bootcss.com/jquery/1.11.2/jquery.min.js"></script>#}
+  <script src="/js/jquery.min.js"></script>
   <script src="/js/flat-ui.min.js"></script>
 </head>
 <body>
@@ -43,7 +44,7 @@
             </div>
           </form>
           <ul class="nav navbar-nav navbar-right">
-            <li><a href="/search_teacher" class="lg-title">寻找导师</a></li>
+            <li><a href="/search_teacher" class="lg-title" style="font-size: 16px;font-weight: 700;">寻找导师</a></li>
             {% if not is_login %}
               <li><a href="/login" class="sm-title">登录</a></li>
               <li><a href="/register" class="sm-title">注册</a></li>

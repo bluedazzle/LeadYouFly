@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+import re
 
 import time
 import os
@@ -147,21 +148,50 @@ def order_search(order_status, search_text):
         else:
             raw_order_list = Order.objects.filter(status=order_status)
     else:
-        if order_status == 0:
-            raw_order_list = Order.objects.filter(Q(order_price__icontains=search_text) |
-                                                  Q(course_name__icontains=search_text) |
-                                                  Q(belong__account__icontains=search_text) |
-                                                  Q(belong__nick__icontains=search_text) |
-                                                  Q(teach_by__account__icontains=search_text) |
-                                                  Q(teach_by__nick__icontains=search_text))
+        date_str = re.findall(r'(\d{4}-\d{1,2}-\d{1,2})', search_text)
+        if len(date_str) > 0:
+            date_str = date_str[0]
+            date_array = date_str.split('-')
+            if order_status == 0:
+                raw_order_list = Order.objects.filter(create_time__year=int(date_array[0]),
+                                                      create_time__month=int(date_array[1]),
+                                                      create_time__day=int(date_array[2]))
+            else:
+                raw_order_list = Order.objects.filter(status=order_status).filter(create_time__year=int(date_array[0]),
+                                                                                  create_time__month=int(date_array[1]),
+                                                                                  create_time__day=int(date_array[2]))
         else:
-            raw_order_list = Order.objects.filter(status=order_status).filter(Q(order_price__icontains=search_text) |
-                                                                              Q(course_name__icontains=search_text) |
-                                                                              Q(belong__account__icontains=search_text) |
-                                                                              Q(belong__nick__icontains=search_text) |
-                                                                              Q(teach_by__account__icontains=search_text) |
-                                                                              Q(teach_by__nick__icontains=search_text))
+            if order_status == 0:
+                raw_order_list = Order.objects.filter(Q(order_price__icontains=search_text) |
+                                                      Q(course_name__icontains=search_text) |
+                                                      Q(belong__account__icontains=search_text) |
+                                                      Q(belong__nick__icontains=search_text) |
+                                                      Q(teach_by__account__icontains=search_text) |
+                                                      Q(teach_by__nick__icontains=search_text))
+            else:
+                raw_order_list = Order.objects.filter(status=order_status).filter(Q(order_price__icontains=search_text) |
+                                                                                  Q(course_name__icontains=search_text) |
+                                                                                  Q(belong__account__icontains=search_text) |
+                                                                                  Q(belong__nick__icontains=search_text) |
+                                                                                  Q(teach_by__account__icontains=search_text) |
+                                                                                  Q(teach_by__nick__icontains=search_text))
     return raw_order_list
+
+
+def get_day_info():
+    today_array = str(datetime.date.today()).split('-')
+    day_income = 0.0
+    order_list = Order.objects.filter(Q(status=1) |
+                                      Q(status=2) |
+                                      Q(status=3) |
+                                      Q(status=4)).filter(create_time__year=int(today_array[0]),
+                                                          create_time__month=int(today_array[1]),
+                                                          create_time__day=int(today_array[2]))
+    day_num = order_list.count()
+    for order in order_list:
+        day_income += order.order_price
+    return day_num, day_income
+
 
 
 def student_search(search_text):

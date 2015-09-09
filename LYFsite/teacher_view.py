@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+from LYFAdmin.utils import check_start_time
 from views import *
 from LYFAdmin.qn import *
 import LYFAdmin.order_operation
@@ -235,6 +236,9 @@ def order_accept(request):
                 order = Order.objects.get(order_id=order_id)
                 if order.status == 1:
                     order.status = 2
+                    start_time = check_start_time(order.teach_by)
+                    order.teach_start_time = start_time
+                    order.teach_end_time = start_time + datetime.timedelta(hours=1.5)
                     order.save()
                     mentor.status = 2
                     mentor.save()

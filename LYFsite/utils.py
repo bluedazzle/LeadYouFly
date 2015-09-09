@@ -115,3 +115,16 @@ def get_all_heroes(request):
             })
 
         return HttpResponse(json.dumps(hero_list))
+
+
+def check_status(mentor):
+    order_list = mentor.men_orders.all().filter(status=2)
+    if order_list.count() > 0:
+        order = order_list[0]
+        end_time = order.teach_end_time
+        now_time = datetime.datetime.now(tz=get_current_timezone())
+        if now_time > end_time:
+            return True
+        else:
+            return False
+    return True

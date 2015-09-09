@@ -11,6 +11,7 @@ from django.core.paginator import EmptyPage
 from django.contrib.auth.decorators import login_required
 import datetime
 from django.db.models import Q
+from LYFSite.utils import check_status
 from LYFAdmin.utils import create_random_avatar
 from LYFAdmin.message import REG_MES, create_new_message
 from LYFAdmin.online_pay import create_alipay_order
@@ -231,6 +232,11 @@ def search_teacher(request):
 
         mentors = mentors.distinct()
         mentors = mentors.order_by('-mark').order_by('-priority').order_by('status')
+        for mentor in mentors:
+            res = check_status(mentor)
+            if not res:
+                mentor.status = 2
+                mentor.save()
         paginator = Paginator(mentors, 12)
         try:
             page_num = request.GET.get('page_num')

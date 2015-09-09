@@ -27,7 +27,7 @@ $(document).ready(function () {
                             if (refer != '') {
                                 window.location = refer;
                             } else {
-                                window.location = "/user/complete_mes";
+                                window.location = "/";
 
                             }
                         } else {

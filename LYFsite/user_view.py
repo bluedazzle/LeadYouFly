@@ -32,6 +32,7 @@ def user_message(request):
         raise Http404
     return_content['is_login'] = True
     message_list = Message.objects.filter(belong=return_content['active_user']) | Message.objects.filter(send_all=True)
+    message_list = message_list.order_by('-create_time')
     # test_list = range(0, 6)
     # return_content['test_list'] = test_list
     return_content['message_list'] = message_list

@@ -49,7 +49,7 @@
             </td>
             <td>
               {% if order.status == 1 %}
-                待确认
+                待教练确认
               {% elif order.status == 2 %}
                 已确认
               {% elif order.status == 3 %}
@@ -126,7 +126,7 @@
           <h4 class="modal-title" id="myModalLabel">导师联系方式</h4>
         </div>
         <div class="modal-body">
-          <p>yy:<span id="yy"></span></p>
+{#          <p>yy:<span id="yy"></span></p>#}
           <p>qq:<span id="qq"></span></p>
           <p>电话<span id="phone"></span></p>
         </div>
@@ -145,10 +145,10 @@
           <h4 class="modal-title" id="myModalLabel">支付操作</h4>
         </div>
         <div class="modal-body">
-          <p>正在支付。。。</p>
+          <p>正在支付...</p>
         </div>
         <div class="modal-footer">
-          <a href="/user/my_orders" type="button" class="btn btn-primary" data-dismiss="modal">支付完成</a>
+          <a href="/user/my_orders" type="button" class="btn btn-primary">支付完成</a>
           <a href="https://cshall.alipay.com/hall/index.htm" type="button" class="btn btn-default">支付遇到问题</a>
         </div>
       </div>

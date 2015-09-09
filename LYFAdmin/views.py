@@ -1,29 +1,24 @@
 # -*- coding: utf-8 -*-
-import os
 import time
-import random
 import hashlib
 import ujson
 import copy
 
-from django.shortcuts import render
-from django.shortcuts import render_to_response, HttpResponseRedirect, Http404
+
+from django.shortcuts import render_to_response, HttpResponseRedirect
 from django.shortcuts import get_object_or_404
 from django.http import HttpResponse, Http404
 from django.template import RequestContext
-from django.views.decorators.csrf import csrf_exempt
 from django.db.models import Q
-from PIL import Image
 from dss.Serializer import serializer
+
 
 from LYFAdmin.models import Hero, Mentor, IndexAdmin, Order, Course, Student, ChargeRecord, MoneyRecord, CashRecord, \
     Admin, Notice, Message, Report
 from LYFAdmin.online_pay import create_batch_trans
 from LYFAdmin.order_operation import create_money_record
-
 from forms import MentorDetailContentForm, NoticeContentForm
 from decorator import login_require
-from message import REG_MES, create_new_message
 from utils import upload_picture, datetime_to_string, auth_admin, hero_convert, order_status_convert, \
     mentor_status_convert, order_search, output_data, student_search, report_convert
 from qn import upload_file_qn, list_file, QINIU_DOMAIN, VIDEO_CONVERT_PARAM, VIDEO_POSTER_PARAM, data_handle, \
@@ -629,7 +624,6 @@ def admin_student_search(req):
     return render_to_response('student_admin.html', {'stu_list': stu_list}, context_instance=RequestContext(req))
 
 
-
 @login_require
 def admin_audit(req):
     order_list = Order.objects.filter(if_upload_video=True)
@@ -663,6 +657,7 @@ def admin_audit_reject(req, oid):
     order.video_url = ''
     order.save()
     return HttpResponseRedirect('/admin/audit/')
+
 
 @login_require
 def admin_pay(req):

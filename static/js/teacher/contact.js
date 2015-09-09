@@ -2,9 +2,9 @@ $(document).ready(function(){
   $('#teacher_contact').addClass('list-group-item-active');
   $('#submit_contact').click(function(){
     var qq = $('#qq').val();
-    var yy = $('#yy').val();
+    var yy = '';
     var phone = $('#phone').val();
-    if (qq && yy && phone && phone.length == 11){
+    if (qq && phone && phone.length == 11){
       $.ajax({
             url: "/teacher/contact",
             type: "post",

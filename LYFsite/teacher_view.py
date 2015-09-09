@@ -150,7 +150,7 @@ def teacher_contact(request):
         if form.is_valid():
             form_data = form.cleaned_data
             mentor_active.qq = form_data['qq']
-            mentor_active.yy = form_data['yy']
+            # mentor_active.yy = form_data['yy']
             mentor_active.phone = form_data['phone']
             mentor_active.save()
             return HttpResponse(json.dumps('success'))

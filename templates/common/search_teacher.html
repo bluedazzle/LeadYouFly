@@ -19,7 +19,6 @@
       </div>
       <div class="btn-group col-lg-11 col-md-11 col-sm-11" style="float: right">
         <div class="col-lg-2 col-md-2 col-sm-2 study-text">
-          <p>学习</p>
         </div>
         <div class="col-lg-10 col-md-10 col-sm-10">
           <button type="button" class="btn btn-select" onclick="openSelectScreen(2)">
@@ -91,10 +90,10 @@
               </p>
               <div class="teacher-info-ver col-sm-12"></div>
               <p class="teacher-info-attribute col-sm-6" style="color:#000000;">
-                段位：{{ mentor.game_level }}
+                段位:{{ mentor.game_level }}
               </p>
               <p class="teacher-info-attribute col-sm-6" style="color:#000000;">
-                擅长位置：
+                擅长位置:
                 {% if mentor.good_at == '12345' %}
                   全部
                 {% elif '1' in mentor.good_at or '1' == mentor.good_at %}
@@ -110,7 +109,7 @@
                 {% endif %}
               </p>
               <p class="teacher-info-attribute col-sm-12" style="color:#000000;">
-                擅长英雄：
+                擅长英雄:
                 {% if mentor.expert_hero1 %}
                   <img src="{{ mentor.expert_hero1.hero_picture }}" data-toggle="tooltip" data-placement="top" title="{{ mentor_detail.expert_hero1.hero_name }}" class="hero-header"/>
                 {% endif %}
@@ -122,10 +121,10 @@
                 {% endif %}
               </p>
               <p class="teacher-info-attribute col-sm-8" style="color:#000000;">
-                交易量：{{ mentor.men_orders.count }}
+                交易量:{{ mentor.men_orders.count }}
               </p>
               <p class="teacher-info-attribute col-sm-4" style="color:#000000;">
-                评分：{{ mentor.mark }}
+                评分:{{ mentor.mark }}
               </p>
             </div>
           </div>

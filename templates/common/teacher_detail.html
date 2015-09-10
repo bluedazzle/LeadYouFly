@@ -48,6 +48,19 @@
           <p>评分：{{ mentor_detail.mark }}</p>
           <br/>
           <p>
+            游戏段位：{{ mentor_detail.game_level }}
+          </p>
+        <p>
+            教学大区：
+            {% if '1' == mentor_detail.teach_area %}
+              电信
+            {% elif '2' == mentor_detail.teach_area %}
+              网通
+            {% elif '0' == mentor_detail.teach_area %}
+              全区
+            {% endif %}
+          </p>
+          <p>
             擅长位置：
             {% if '1' in mentor_detail.good_at %}
               中单
@@ -79,20 +92,9 @@
             {% endif %}
           </p>
 
-          <p>
-            游戏段位：{{ mentor_detail.game_level }}
-          </p>
 
-          <p>
-            可教学大区：
-            {% if '1' == mentor_detail.teach_area %}
-              电信
-            {% elif '2' == mentor_detail.teach_area %}
-              网通
-            {% elif '0' == mentor_detail.teach_area %}
-              全区
-            {% endif %}
-          </p>
+
+
         </div>
 
       </div>

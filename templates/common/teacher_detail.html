@@ -164,13 +164,13 @@
             <h6 class="text-center">暂时没有评价</h6>
           {% endif %}
           {% for comment in mentor_detail.men_comments.all %}
-            <div class="col-lg-12 col-md-12 comment-box" style="padding-left: 0;">
-              <div class="col-lg-1 col-md-1">
+            <div class="col-lg-12 col-md-12 comment-box" style="padding-left: 0; padding-right: 0px;">
+              <div class="col-lg-1 col-md-1" style="padding-left: 0px;">
                 <img src="{{ comment.comment_by.avatar }}" class="student-header"/>
               </div>
-              <div class="col-lg-11 col-md-11">
+              <div class="col-lg-11 col-md-11" style="padding-right: 0px;">
                 <div class="col-lg-5 col-md-5">
-                  <h5 class="comment-by-name" style="color:#000000; font-weight: 200;">
+                  <h5 class="comment-by-name" style="color:#000000; font-weight: 200;font-size: 24px;">
                     {{ comment.comment_by.nick }}
                     <span style="color:dimgray;">{{ comment.comment_by.rank }}级学员</span>
                   </h5>

@@ -30,7 +30,7 @@
           </tr>
           <tr style="border-left: solid 1px rgb(237,237,237);border-right: solid 1px rgb(237,237,237);height: 120px;">
             <td>
-              <img src="/img/touxiang.jpg" class="order-teacher-header">
+              <img src="{{ order.teach_by.avatar }}" class="order-teacher-header">
               <span class="order-teacher-name">{{ order.teach_by.nick }}</span>
               {% if not order.status == 6 and not order.status == 5 %}
                 <span><a href="#" onclick="viewContact('{{ order.teach_by.phone }}', '{{ order.teach_by.yy }}', '{{ order.teach_by.qq }}')">查看联系方式</a></span>

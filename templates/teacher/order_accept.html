@@ -46,7 +46,7 @@
                     <p>视频审核：
                         {% if order.video_pass == None %}
                             未上传
-                        {% elif order.video_pass == yes %}
+                        {% elif order.video_pass == True %}
                             已通过
                         {% else %}
                             未通过

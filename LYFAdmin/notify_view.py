@@ -65,14 +65,15 @@ def alipay_batch_notify(req):
         s_detail = req.POST.get('success_details', None)
         if s_detail and s_detail != '':
             cash_rec = CashRecord.objects.get(record_id=c_id)
-            cash_rec.success = True
-            cash_rec.save()
-            mentor = cash_rec.belong
-            mentor.iden_income -= float(cash_rec.money)
-            mentor.save()
-            create_money_record(mentor, u'支出',
-                                -float(cash_rec.money),
-                                '提款到支付宝%s' % str(cash_rec.alipay_account).encode('utf-8'))
+            if cash_rec.success is not True:
+                cash_rec.success = True
+                cash_rec.save()
+                mentor = cash_rec.belong
+                mentor.iden_income -= float(cash_rec.money)
+                mentor.save()
+                create_money_record(mentor, u'支出',
+                                    -float(cash_rec.money),
+                                    '提款到支付宝%s' % str(cash_rec.alipay_account).encode('utf-8'))
         return HttpResponse('success')
     else:
         return HttpResponse('fail')

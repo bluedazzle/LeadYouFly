@@ -37,16 +37,16 @@ def alipay_notify(req):
                     order.teach_end_time = start_time + datetime.timedelta(hours=1.5)
                     order.if_pay = True
                     order.save()
-                create_charge_record(order.belong, price, order_id=order_id)
-                send_order_msg(str(order.order_id).encode('utf-8'),
-                               str(order.belong.phone).encode('utf-8'),
-                               str(order.belong.qq).encode('utf-8'),
-                               str(order.teach_by.phone).encode('utf-8'))
-                order.teach_by.iden_income += order.order_price
-                order.teach_by.total_income += order.order_price
-                order.teach_by.save()
-                order_mes = ORDER_BUY_MES % str(order.belong.nick).encode('utf-8')
-                create_new_message(order_mes, belong=order.belong)
+                    create_charge_record(order.belong, price, order_id=order_id)
+                    send_order_msg(str(order.order_id).encode('utf-8'),
+                                   str(order.belong.phone).encode('utf-8'),
+                                   str(order.belong.qq).encode('utf-8'),
+                                   str(order.teach_by.phone).encode('utf-8'))
+                    order.teach_by.iden_income += order.order_price
+                    order.teach_by.total_income += order.order_price
+                    order.teach_by.save()
+                    order_mes = ORDER_BUY_MES % str(order.belong.nick).encode('utf-8')
+                    create_new_message(order_mes, belong=order.belong)
             elif status == 'TRADE_FINISHED':
                 order.status = 3
             return HttpResponse('success')

@@ -636,7 +636,7 @@ def admin_student_search(req):
 
 @login_require
 def admin_audit(req):
-    order_list = Order.objects.filter(if_upload_video=True)
+    order_list = Order.objects.filter(if_upload_video=True, video_audit=False)
     order_list = serializer(order_list, deep=True, datetime_format='string')
     return render_to_response('audit_admin.html', {'video_list': order_list}, context_instance=RequestContext(req))
 
@@ -644,6 +644,8 @@ def admin_audit(req):
 @login_require
 def admin_audit_pass(req, oid):
     order = get_object_or_404(Order, id=oid)
+    if order.video_audit is True:
+        return HttpResponseRedirect('/admin/audit/')
     order.video_audit = True
     order.video_pass = True
     order.save()
@@ -651,7 +653,8 @@ def admin_audit_pass(req, oid):
     mentor.cash_income += order.order_price
     mentor.iden_income -= order.order_price
     mentor.save()
-    create_money_record(mentor, '收入', order.order_price, '来自订单%s' % order.order_id)
+    info = '来自订单%s' % str(order.order_id)
+    create_money_record(mentor, '收入', order.order_price, info)
     return HttpResponseRedirect('/admin/audit/')
 
 
@@ -662,7 +665,7 @@ def admin_audit_reject(req, oid):
     order.video_audit = True
     order.if_upload_video = False
     order.video_name = ''
-    order.video_size = ''
+    order.video_size = 0
     order.video_poster = ''
     order.video_url = ''
     order.save()

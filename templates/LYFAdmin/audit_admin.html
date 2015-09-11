@@ -13,9 +13,7 @@
                 <th>课程名称</th>
                 <th>课程金额</th>
                 <th>下单时间</th>
-                <th>订单状态</th>
                 <th>视频名称</th>
-                <th>视频大小</th>
                 <th>操作</th>
             </tr>
             </thead>
@@ -28,9 +26,7 @@
                     <td>{{ video.course_name }}</td>
                     <td>{{ video.order_price }}</td>
                     <td>{{ video.create_time }}</td>
-                    <td>{{ video.status }}</td>
                     <td>{{ video.video_name }}</td>
-                    <td>{{ video.video_size }}</td>
                     <td><a class="btn btn-primary" data-toggle="modal" data-target="#auditModal{{ video.id }}" style="margin-right: 5px;">审核</a><a
                             href="/admin/audit/pass/{{ video.id }}/"
                             class="btn btn-success">通过</a>
@@ -49,9 +45,9 @@
                                 <div class="modal-body">
                                     <div></div>
                                     <div>
-                                        <video class="video-js" width="400px" height="300px;" preload="auto" poster=""
+                                        <video class="video-js" width="400px" height="300px;" preload="auto" poster="{{ video.video_poster }}"
                                            data-setup="{}">
-                                        <source src="{{ video.teach_video }}" type="video/mp4">
+                                        <source src="{{ video.video_url }}" type="video/mp4">
                                     </video>
                                     </div>
                                 </div>

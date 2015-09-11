@@ -318,10 +318,12 @@ def teacher_video_upload(request):
         video_format = ['mp4', 'flv', 'avi', 'rmvb', 'webm', 'ogg']
         support_format = ['mp4', 'webm', 'ogg']
         video_data = request.FILES.get('new_video', None)
-        order_id = request.POST.get('order_id')
+        order_id = str(request.POST.get('order_id')).strip()
         try:
             order = Order.objects.get(order_id=order_id)
-            if not order.status == 3:
+            if order.video_audit and order.video_pass:
+                return HttpResponse(json.dumps(u'该单已上传过视频'))
+            if not (order.status == 3 or order.status == 4):
                 return HttpResponse(json.dumps(u'只能上传已完成的订单'))
         except Order.DoesNotExist:
             return HttpResponse(json.dumps(u'错误的订单号'))
@@ -334,6 +336,8 @@ def teacher_video_upload(request):
                 order.video_poster = QINIU_DOMAIN + res['poster_name']
                 order.video_name = res['sfile_name']
                 order.video_size = video_data.size
+                order.video_audit = False
+                order.video_pass = None
                 order.save()
                 return HttpResponse(json.dumps('success'))
             else:
@@ -347,7 +351,7 @@ def utils_upload_video(video_data, video_format, order_id, support_format):
     if ext_name in video_format:
         upload_name = file_name + '_' + str(order_id) + '.' + ext_name
         progress_handler = lambda progress, total: progress
-        sign = 'video_order' + str(order_id)
+        sign = 'video_order'
         res, sfile_name = put_block_data(upload_name, video_data, progress_handler=progress_handler,
                                          sign=sign)
         if res:

@@ -186,13 +186,12 @@ def teacher_indemnity(request):
         real_name = request.POST.get('real_name')
         mentor = return_content['mentor']
         if money and alipay_account and real_name:
-            iden_income = mentor.iden_income
-            if float(money) <= iden_income:
+            cash_income = mentor.cash_income
+            if float(money) <= cash_income:
                 LYFAdmin.order_operation.create_cash_request(mentor, money, alipay_account, real_name)
-                iden_income -= float(money)
                 mentor.alipay_account = alipay_account
                 mentor.real_name = real_name
-                mentor.cash_income -= iden_income
+                mentor.cash_income -= float(money)
                 mentor.iden_income += float(money)
                 mentor.save()
                 return HttpResponse(json.dumps('success'))

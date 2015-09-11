@@ -31,6 +31,8 @@ ALLOWED_HOSTS = []
 
 WEBSITE_SIGN = 'D'
 
+HOST = 'http://www.fibar.cn/'
+
 
 # Application definition
 

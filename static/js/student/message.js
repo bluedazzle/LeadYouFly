@@ -3,7 +3,7 @@
  */
 $(document).ready(function(){
   $('#user-position').text("消息中心");
-  $('body').css('background', 'url(/img/2.jpg)');
+  $('body').css('background', 'url(/img/mback.jpg)');
   $('.time-line ul li:odd').addClass('a');
   $('.time-line ul li:even').addClass('b');
   $('.in').each(function(){

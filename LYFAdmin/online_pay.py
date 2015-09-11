@@ -2,13 +2,13 @@
 from alipay import Alipay
 import requests
 from urllib import urlencode
+from LeadYouFly.settings import HOST
 
 
 ALIPAY_PID = '2088021077647325'
 ALIPAY_KEY = 'f6nhdtxet02q0swn216rtoq0m9m9xnie'
 ALIPAY_EML = '765566978@qq.com'
 
-HOST = 'http://www.fibar.cn/'
 
 RETURN_URL = '%suser/my_orders' % HOST
 

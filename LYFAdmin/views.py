@@ -652,6 +652,8 @@ def admin_audit_pass(req, oid):
     mentor = order.teach_by
     mentor.cash_income += order.order_price
     mentor.iden_income -= order.order_price
+    if mentor.iden_income < 0:
+        mentor.iden_income = 0.0
     mentor.save()
     info = '来自订单%s' % str(order.order_id)
     create_money_record(mentor, '收入', order.order_price, info)

@@ -23,15 +23,15 @@ BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 SECRET_KEY = '-lxgg3^qp92z*2mr33&w)5_st6m-p5qxi=qi4_j6vkte=2u$rg'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-TEMPLATE_DEBUG = True
+TEMPLATE_DEBUG = F1
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['dota2.fibar.cn']
 
 WEBSITE_SIGN = 'D'
 
-HOST = 'http://www.fibar.cn/'
+HOST = 'http://dota2.fibar.cn/'
 
 
 # Application definition
@@ -74,9 +74,9 @@ WSGI_APPLICATION = 'LeadYouFly.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'lyf',
+        'NAME': 'fibar_dota2',
         'USER': 'postgres',  # Not used with sqlite3.
-        'PASSWORD': '123456',  # Not used with sqlite3.
+        'PASSWORD': 'Aiwe2015',  # Not used with sqlite3.
         'HOST': 'localhost',  # Set to empty string for localhost. Not used with sqlite3.
         'PORT': '5432',
     }

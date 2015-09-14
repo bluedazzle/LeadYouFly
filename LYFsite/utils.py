@@ -30,7 +30,7 @@ def get_verify_code(request):
     if request.method == 'GET':
         phone = request.GET.get('phone')
         if len(phone) == 11:
-            phone_has_register = Student.objects.filter(phone=phone)
+            phone_has_register = Student.objects.filter(acount=phone)
             if phone_has_register.count() > 0:
                 return HttpResponse(json.dumps(u"该手机号已注册"))
             phone_has = PhoneVerify.objects.filter(phone=phone)

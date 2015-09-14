@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 from django.shortcuts import get_object_or_404
+from LYFAdmin.message import EXP_MES, LVLUP_MES
 from LYFAdmin.order_operation import create_order_id
 from LYFAdmin.utils import area_convert
 from views import *
@@ -20,7 +21,8 @@ exp_dic = {
     12: 3000,
     13: 5000,
     14: 8000,
-    15: 15000
+    15: 15000,
+    16: 100000000
 }
 
 
@@ -147,11 +149,16 @@ def appraise_order(request):
             for key, value in exp_dic.items():
                 if user.exp >= value and user.rank < key:
                     user.rank = key
+                    lvl_mes = LVLUP_MES % key
+                    create_new_message(lvl_mes, user)
             user.save()
         except Order.DoesNotExist:
             raise Http404
         except:
             return HttpResponse(json.dumps("wrong request"))
+        coment_mes = EXP_MES % (str(int(order.order_price)), str(user.rank),
+                                str(exp_dic[int(user.rank) + 1] - int(user.exp)))
+        create_new_message(coment_mes, user)
         return HttpResponse(json.dumps("success"))
 
 

@@ -37,8 +37,16 @@ area_dic = {'0': u'全区',
 
 
 def test(request):
-    test_list = range(0, 5)
-    return render_to_response('test.html', {'test_list': test_list})
+    test_list = range(0, 11)
+    paginator = Paginator(test_list, 1)
+    try:
+        page_num = request.GET.get('page_num')
+        test_list = paginator.page(page_num)
+    except PageNotAnInteger:
+        test_list = paginator.page(1)
+    except EmptyPage:
+        test_list = paginator.page(paginator.num_pages)
+    return render_to_response('test.html', {'mentors': test_list})
 
 
 def host(request):
@@ -276,12 +284,13 @@ def teacher_detail(request):
         return_content['course_list'] = mentor.men_courses.all().order_by('create_time')
         if mentor.status == 2:
             last_orders = mentor.men_orders.filter(status=2).order_by('-create_time')
-            last_time = last_orders[0].teach_end_time
-            time_now = datetime.datetime.now(tz=get_current_timezone())
-            if last_time <= time_now:
-                mentor.status = 1
-                mentor.save()
-            return_content['teach_end_time'] = last_orders[0].teach_end_time
+            if last_orders.count() > 0:
+                last_time = last_orders[0].teach_end_time
+                time_now = datetime.datetime.now(tz=get_current_timezone())
+                if last_time <= time_now:
+                    mentor.status = 1
+                    mentor.save()
+                return_content['teach_end_time'] = last_orders[0].teach_end_time
         return render_to_response('common/teacher_detail.html',
                                   return_content,
                                   context_instance=RequestContext(request))

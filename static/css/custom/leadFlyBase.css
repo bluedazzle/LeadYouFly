@@ -264,7 +264,7 @@ html,body {
 
 .table-host>tbody>tr>td>a{
     text-decoration:none;
-    color: #16a085;
+    color: #000000;
     font-size: 16px;
     display: inline-block;
     margin-left: 35px;
@@ -276,7 +276,7 @@ html,body {
 }
 
 .table-host-ver{
-    background: #16a085;
+    background: #000000;
     width: 1px;
     height: 52px;
     display: inline-block;
@@ -285,6 +285,7 @@ html,body {
 }
 
 .table-host>tbody>tr>td:hover .table-host-ver{
+    background: #16a085;
     width: 6px;
 }
 

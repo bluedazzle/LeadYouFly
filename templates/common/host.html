@@ -41,7 +41,7 @@
   <div class="container">
     <div class="col-lg-6 col-md-6">
       <h6 class="host-title">
-        平台介绍
+        关于飞吧
       </h6>
       <div>
         <video class="video-js" preload="auto" poster="{{ index_data.video_poster }}" data-setup="{}">
@@ -73,7 +73,7 @@
   </div>
   <div class="container recommend-teacher-container">
     <h6 class="host-title col-lg-12 col-md-12">
-      推荐导师
+      推荐教练
     </h6>
     {% for mentor in recommend %}
       {% if mentor %}
@@ -105,6 +105,7 @@
       {% endif %}
     {% endfor %}
   </div>
+    <br/>
 {% endblock %}
 {% block script %}
   <script src="/js/common/host.js"></script>

@@ -55,14 +55,16 @@ def complete_mes(request):
                                   context_instance=RequestContext(request))
     if request.method == 'POST':
         form = CompleteInfoForm(request.POST)
+        next_page = request.GET.get('next_page', None)
         if form.is_valid():
             form_data = form.cleaned_data
             student_active.qq = form_data['qq']
             student_active.phone = form_data['phone']
             student_active.save()
-            return HttpResponse(json.dumps('success'))
+            return HttpResponse(json.dumps({'status': 'success',
+                                            'next_page': next_page}))
 
-        return HttpResponse(json.dumps('wrong form'))
+        return HttpResponse(json.dumps({'status': 'wrong form'}))
 
 
 def my_orders(request):
@@ -216,7 +218,10 @@ def confirm_order(request):
         return_content['is_login'] = True
     else:
         return HttpResponseRedirect('/login')
-
+    student = return_content['active_user']
+    if student.phone == '' or student.qq == '':
+        next_page = request.get_full_path()
+        return HttpResponseRedirect('/user/complete_mes?next_page=%s' % next_page)
     if request.method == 'GET':
         course_id = request.GET.get('course_id')
         if not course_id:

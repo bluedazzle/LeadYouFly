@@ -26,7 +26,7 @@
                 <div class="col-lg-3 col-md-3 panel-order-detail">
                     <p>学习区域：{{ order.learn_area }}</p>
 
-                    <p>联系QQ：123456789</p>
+                    <p>联系QQ：{{ order.belong.qq }}</p>
 
                     <p>课程名称：{{ order.course_name }}</p>
                 </div>
@@ -34,14 +34,14 @@
                     <p>学习位置：{{ order.learn_type }}
                     </p>
 
-                    <p>联系YY：123456789</p>
+{#                    <p>联系YY：123456789</p>#}
 
                     <p>课程价格：￥{{ order.order_price }}</p>
                 </div>
                 <div class="col-lg-3 col-md-3 panel-order-detail">
                     <p>学习英雄：{{ order.learn_hero }}</p>
 
-                    <p>联系电话：12345678901</p>
+                    <p>联系电话：{{ order.belong.phone }}</p>
 
                     <p>视频审核：
                         {% if order.video_pass == None %}

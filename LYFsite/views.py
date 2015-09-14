@@ -37,8 +37,16 @@ area_dic = {'0': u'全区',
 
 
 def test(request):
-    test_list = range(0, 5)
-    return render_to_response('test.html', {'test_list': test_list})
+    test_list = range(0, 11)
+    paginator = Paginator(test_list, 1)
+    try:
+        page_num = request.GET.get('page_num')
+        test_list = paginator.page(page_num)
+    except PageNotAnInteger:
+        test_list = paginator.page(1)
+    except EmptyPage:
+        test_list = paginator.page(paginator.num_pages)
+    return render_to_response('test.html', {'mentors': test_list})
 
 
 def host(request):

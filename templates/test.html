@@ -5,13 +5,55 @@
   <title></title>
   <link href="/css/bootstrap.min.css" rel="stylesheet"/>
   <link href="/css/flat-ui.min.css" rel="stylesheet">
+  <link href="/css/custom/leadFlyBase.css" rel="stylesheet"/>
   <link href="/css/custom/search_teacher.css" rel="stylesheet"/>
   <script src="http://cdn.bootcss.com/jquery/1.11.2/jquery.min.js"></script>
   <script src="/js/bootstrap.min.js"></script>
 </head>
 <body>
-<div class="select-screen">
+<div class="">
+  {% if mentors.has_other_pages %}
+    <nav class="col-md-12 col-lg-12 text-center">
+      <ul class="pagination">
+        {% if mentors.has_previous %}
+          <li>
+            <a href="/test?page_num={{ mentors.previous_page_number }}&teach_area={{ teach_area }}&teach_postion={{ teach_position }}&teach_hero={{ teach_hero.id }}&search={{ search }}" aria-label="Previous">
+              <span aria-hidden="true" class="glyphicon glyphicon-menu-left"></span>
+            </a>
+          </li>
+        {% else %}
+          <li class="disabled">
+            <a href="#" aria-label="Previous">
+              <span aria-hidden="true" class="glyphicon glyphicon-menu-left"></span>
+            </a>
+          </li>
+        {% endif %}
 
+        {% for page in mentors.paginator.page_range %}
+          {% if page == mentors.number %}
+            <li class="active pagination-page"><a href="#">{{ page }}</a></li>
+          {% else %}
+            <li class="pagination-page"><a href="/test?page_num={{ page }}&teach_area={{ teach_area }}&teach_postion={{ teach_position }}&teach_hero={{ teach_hero.id }}&search={{ search }}">{{ page }}</a></li>
+          {% endif %}
+        {% endfor %}
+
+        {% if mentors.has_next %}
+          <li>
+            <a href="/test?page_num={{ mentors.next_page_number }}&teach_area={{ teach_area }}&teach_postion={{ teach_position }}&teach_hero={{ teach_hero.id }}&search={{ search }}" aria-label="Next">
+              <span aria-hidden="true" class="glyphicon glyphicon-menu-right"></span>
+            </a>
+          </li>
+        {% else %}
+          <li class="disabled">
+            <a href="#" aria-label="Next">
+              <span aria-hidden="true" class="glyphicon glyphicon-menu-right"></span>
+            </a>
+          </li>
+        {% endif %}
+      </ul>
+    </nav>
+  {% endif %}
 </div>
+<script src="/js/common/common.js"></script>
 </body>
 </html>

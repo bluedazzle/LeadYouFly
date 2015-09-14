@@ -17,11 +17,8 @@
           <span class="glyphicon glyphicon-menu-down"></span>
         </button>
       </div>
-      <div class="btn-group col-lg-11 col-md-11 col-sm-11" style="float: right">
-        <div class="col-lg-2 col-md-2 col-sm-2 study-text">
-            <p>学习</p>
-        </div>
-        <div class="col-lg-10 col-md-10 col-sm-10">
+      <div class="btn-group col-lg-11 col-md-11 col-sm-11" style="float: right;">
+        <div class="col-lg-10 col-md-10 col-sm-10" style="float:right;padding-left: 0">
           <button type="button" class="btn btn-select" onclick="openSelectScreen(2)">
             {% if not teach_position or teach_position == '0' %}
               全部位置
@@ -42,7 +39,7 @@
         </div>
       </div>
 
-      <div class="btn-group col-lg-7 col-md-7 col-sm-7" style="float: right;">
+      <div class="btn-group col-lg-7 col-md-7 col-sm-7" style="float: right;padding-left: 35px">
         <button type="button" class="btn btn-select" style="margin-top: 0" onclick="openSelectScreen(3)">
           {% if teach_hero %}
             {{ teach_hero.hero_name }}
@@ -150,9 +147,9 @@
 
             {% for page in mentors.paginator.page_range %}
               {% if page == mentors.number %}
-                <li class="active"><a href="#">{{ page }}</a></li>
+                <li class="active pagination-page"><a href="#">{{ page }}</a></li>
               {% else %}
-                <li><a href="/search_teacher?page_num={{ page }}&teach_area={{ teach_area }}&teach_postion={{ teach_position }}&teach_hero={{ teach_hero.id }}&search={{ search }}">{{ page }}</a></li>
+                <li class="pagination-page"><a href="/search_teacher?page_num={{ page }}&teach_area={{ teach_area }}&teach_postion={{ teach_position }}&teach_hero={{ teach_hero.id }}&search={{ search }}">{{ page }}</a></li>
               {% endif %}
             {% endfor %}
 

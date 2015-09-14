@@ -23,3 +23,35 @@ function changeMentorStatus(status){
     }
   })
 }
+
+
+$(function(){
+  var paginationList = $('.pagination .pagination-page');
+  var n = paginationList.length;
+  var c = paginationList.index($('.pagination .active'));
+  var i, y;
+  var setp1=c;
+  var setp2=n-c; //后余
+  if(n>11){
+    if(c>5&&c<n-6){
+      for (i=3;i<c-3;i++){
+        paginationList.eq(i).hide();
+      }
+      paginationList.eq(2).text('...');
+      for (i=c+5; i<n-2; i++){
+        paginationList.eq(i).hide();
+      }
+      paginationList.eq(c+4).text('...')
+    } else if(c<=5){
+      for (i=9; i<n-3; i++){
+        paginationList.eq(i).hide();
+      }
+      paginationList.eq(i).text('...');
+    } else {
+      for (i=3; i<n-9; i++){
+        paginationList.eq(i).hide();
+      }
+      paginationList.eq(2).text('...');
+    }
+  }
+});

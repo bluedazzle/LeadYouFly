@@ -101,9 +101,9 @@
 
             {% for page in orders.paginator.page_range %}
               {% if page == orders.number %}
-                <li class="active"><a href="#">{{ page }}</a></li>
+                <li class="active pagination-page"><a href="#">{{ page }}</a></li>
               {% else %}
-                <li><a href="/user/my_orders?page_num={{ page }}">{{ page }}</a></li>
+                <li class="pagination-page"><a href="/user/my_orders?page_num={{ page }}">{{ page }}</a></li>
               {% endif %}
             {% endfor %}
 

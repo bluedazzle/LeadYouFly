@@ -7,7 +7,7 @@ from LYFAdmin.message import ORDER_BUY_MES, create_new_message
 from LYFAdmin.models import Order, PayInfo, CashRecord, MoneyRecord
 from LYFAdmin.online_pay import check_notify_id
 from LYFAdmin.order_operation import create_charge_record, create_money_record
-from LYFAdmin.sms import send_order_msg
+from LYFAdmin.sms import send_order_msg, send_confirm_msg
 from LYFAdmin.utils import check_start_time
 
 import datetime
@@ -45,6 +45,7 @@ def alipay_notify(req):
                     order.teach_by.iden_income += order.order_price
                     order.teach_by.total_income += order.order_price
                     order.teach_by.save()
+                    send_confirm_msg(str(order.belong.phone))
                     order_mes = ORDER_BUY_MES % str(order.belong.nick).encode('utf-8')
                     create_new_message(order_mes, belong=order.belong)
             elif status == 'TRADE_FINISHED':

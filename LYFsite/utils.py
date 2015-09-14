@@ -53,8 +53,9 @@ def get_verify_code_forget(request):
     if request.method == 'GET':
         phone = request.GET.get('phone')
         if len(phone) == 11:
-            phone_has_register = Student.objects.filter(phone=phone)
-            if phone_has_register.count() == 0:
+            stu_has_register = Student.objects.filter(account=phone)
+            mentor_has_register = Mentor.objects.filter(account=phone)
+            if stu_has_register.count() == 0 and mentor_has_register.count() == 0:
                 return HttpResponse(json.dumps(u"该用户不存在"))
             phone_has = PhoneVerify.objects.filter(phone=phone)
             if phone_has.count() > 0:

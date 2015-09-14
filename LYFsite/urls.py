@@ -57,7 +57,7 @@ urlpatterns = patterns('',
                        url('^user/security_center$', user_view.security_center),
                        url('^user/create_order/', user_view.create_order),
                        url('^user/repay_order/', user_view.repay_order),
-                       # url('^test$', test),
+                       url('^test$', test),
                        url('^user/cancel_order$', user_view.cancel_order),
 
 

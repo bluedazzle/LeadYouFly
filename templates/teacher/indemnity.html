@@ -63,9 +63,9 @@
 
           {% for page in money_records.paginator.page_range %}
             {% if page == money_records.number %}
-              <li class="active"><a href="#">{{ page }}</a></li>
+              <li class="active pagination-page"><a href="#">{{ page }}</a></li>
             {% else %}
-              <li><a href="/teacher/indemnity?page_num={{ page }}">{{ page }}</a></li>
+              <li class="pagination-page"><a href="/teacher/indemnity?page_num={{ page }}">{{ page }}</a></li>
             {% endif %}
           {% endfor %}
 

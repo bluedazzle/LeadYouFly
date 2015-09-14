@@ -103,7 +103,7 @@ def appraise_order(request):
     if request.method == 'GET':
         order_id = request.GET.get('order_id')
         try:
-            order = Order.objects.get(id=order_id,
+            order = Order.objects.get(order_id=order_id,
                                       status=3)
             return_content['order'] = order
             return render_to_response('user/appraise.html',

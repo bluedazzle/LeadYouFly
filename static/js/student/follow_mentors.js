@@ -2,7 +2,7 @@
  * Created by wushengyu on 15/8/20.
  */
 $(document).ready(function(){
-  $('#user-position').text("关注导师");
+  $('#user-position').text("关注教练");
 });
 function cancelFollow(teacherId){
   $.ajax({

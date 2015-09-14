@@ -149,7 +149,7 @@ def admin_index_new_video(req):
 
 
 
-#更改推荐导师
+#更改推荐教练
 @login_require
 def admin_index_change_recommend(req):
     if req.method != 'POST':
@@ -397,7 +397,7 @@ def admin_order_output(req):
     return HttpResponse(ujson.dumps(output_path))
 
 
-#导师管理
+#教练管理
 @login_require
 def admin_mentor(req):
     raw_mentor_list = Mentor.objects.all().order_by('-create_time')
@@ -411,7 +411,7 @@ def admin_mentor(req):
     return render_to_response('mentor_admin.html', {'mentor_list': mentor_list}, context_instance=RequestContext(req))
 
 
-#添加导师
+#添加教练
 @login_require
 def admin_mentor_new_mentor(req):
     if req.method != 'POST':
@@ -433,7 +433,7 @@ def admin_mentor_new_mentor(req):
     return HttpResponseRedirect('/admin/mentor')
 
 
-#导师改变介绍视频
+#教练改变介绍视频
 @login_require
 def admin_mentor_change_video(req, mid):
     video_name = req.POST.get('video_radio', '')
@@ -452,7 +452,7 @@ def admin_mentor_change_video(req, mid):
     return HttpResponseRedirect(new_url)
 
 
-#新增导师课程
+#新增教练课程
 @login_require
 def admin_mentor_new_course(req, mid):
     new_name = req.POST.get('new_name', None)
@@ -469,7 +469,7 @@ def admin_mentor_new_course(req, mid):
     return HttpResponseRedirect(new_url)
 
 
-#删除导师课程
+#删除教练课程
 @login_require
 def admin_mentor_del_course(req, mid, cid):
     mentor = get_object_or_404(Mentor, id=mid)
@@ -481,7 +481,7 @@ def admin_mentor_del_course(req, mid, cid):
 
 
 
-#导师添加新视频
+#教练添加新视频
 @login_require
 def admin_mentor_new_video(req, mid):
     video_format = ['mp4', 'flv', 'avi', 'rmvb', 'webm', 'ogg']
@@ -510,7 +510,7 @@ def admin_mentor_new_video(req, mid):
     return HttpResponseRedirect(new_url)
 
 
-#导师添加新图片
+#教练添加新图片
 @login_require
 def admin_mentor_new_picture(req, mid):
     pic_format = ['png', 'jpg', 'bmp', 'gif', 'jpeg']
@@ -528,7 +528,7 @@ def admin_mentor_new_picture(req, mid):
 
 
 
-#导师课程价格变更
+#教练课程价格变更
 @login_require
 def admin_mentor_change_price(req, mid, cid):
     mentor = get_object_or_404(Mentor, id=mid)
@@ -543,7 +543,7 @@ def admin_mentor_change_price(req, mid, cid):
     return HttpResponseRedirect(re_url)
 
 
-#更改导师优先级
+#更改教练优先级
 @login_require
 def admin_mentor_change_priority(req, mid):
     mentor = get_object_or_404(Mentor, id=mid)
@@ -555,7 +555,7 @@ def admin_mentor_change_priority(req, mid):
 
 
 
-#导师英雄池删除英雄
+#教练英雄池删除英雄
 @login_require
 def admin_mentor_del_hero(req, mid, hid):
     mentor = get_object_or_404(Mentor, id=mid)
@@ -567,7 +567,7 @@ def admin_mentor_del_hero(req, mid, hid):
     return HttpResponseRedirect(re_url)
 
 
-#导师英雄池添加英雄
+#教练英雄池添加英雄
 @login_require
 def admin_mentor_add_hero(req, mid):
     new_hero_id = req.POST.get('new_hero_select', '')
@@ -581,7 +581,7 @@ def admin_mentor_add_hero(req, mid):
     return HttpResponseRedirect(re_url)
 
 
-#导师详情更新
+#教练详情更新
 @login_require
 def admin_mentor_update_detail(req, mid):
     form = MentorDetailContentForm(req.POST)
@@ -681,7 +681,7 @@ def admin_pay(req):
     return render_to_response('pay_mentor_admin.html', {'mentor_list': mentor_list}, context_instance=RequestContext(req))
 
 
-#解冻导师
+#解冻教练
 @login_require
 def admin_pay_thaw(req, mid):
     mentor = get_object_or_404(Mentor, id=mid)
@@ -690,7 +690,7 @@ def admin_pay_thaw(req, mid):
     return HttpResponseRedirect('/admin/pay/')
 
 
-#冻结导师
+#冻结教练
 @login_require
 def admin_pay_freeze(req, mid):
     mentor = get_object_or_404(Mentor, id=mid)
@@ -707,7 +707,7 @@ def admin_pay_stu_rec(req):
     return render_to_response('pay_stu_rec.html', {'charge_list': charge_list}, context_instance=RequestContext(req))
 
 
-#导师收支纪录
+#教练收支纪录
 @login_require
 def admin_pay_mentor_rec(req):
     money_rec_list = MoneyRecord.objects.all().order_by('-create_time')
@@ -722,7 +722,7 @@ def admin_pay_agree_cash(req, cid):
     batch_list = ({'account': record.alipay_account,
                    'name': record.real_name,
                    'fee': record.money,
-                   'note': u'导师提款'},)
+                   'note': u'教练提款'},)
     url = create_batch_trans(batch_list=batch_list, account_name=u'济南江山如画网络科技有限责任公司', batch_no=record.record_id)
     print url
     record.manage = True
@@ -745,7 +745,7 @@ def admin_pay_rejected_cash(req, cid):
     return HttpResponseRedirect('/admin/pay/cash/')
 
 
-#导师提现请求
+#教练提现请求
 @login_require
 def admin_pay_cash(req):
     cash_list = CashRecord.objects.all().order_by('-create_time').order_by('manage')
@@ -753,7 +753,7 @@ def admin_pay_cash(req):
     return render_to_response('pay_cash.html', {'cash_record': cash_list}, context_instance=RequestContext(req))
 
 
-#导师详情
+#教练详情
 @login_require
 def admin_mentor_detail(req, mid):
     mentor = get_object_or_404(Mentor, id=mid)
@@ -777,7 +777,7 @@ def admin_mentor_detail(req, mid):
                                                            'hero_pool': hero_pool}, context_instance=RequestContext(req))
 
 
-#导师信息
+#教练信息
 @login_require
 def admin_mentor_info(req, mid):
     mentor = get_object_or_404(Mentor, id=mid)
@@ -785,7 +785,7 @@ def admin_mentor_info(req, mid):
     return render_to_response('mentor_info_admin.html', {'mentor': mentor}, context_instance=RequestContext(req))
 
 
-#导师订单
+#教练订单
 @login_require
 def admin_mentor_order(req, mid):
     mentor = get_object_or_404(Mentor, id=mid)

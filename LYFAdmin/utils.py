@@ -221,7 +221,7 @@ def output_data(file_name, order_list):
     ws.write(0, 10, "教学时间")
     ws.write(0, 11, "下单时间")
     ws.write(0, 12, "下单人")
-    ws.write(0, 13, "教学导师")
+    ws.write(0, 13, "教学教练")
     i = 1
     for item in order_list:
         print item.learn_type

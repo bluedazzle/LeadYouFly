@@ -6,12 +6,12 @@
         <div>
             <form action="/admin/index/change_recommend" method="post">
             {% csrf_token %}
-                <h5>推荐导师编辑：</h5>
+                <h5>推荐教练编辑：</h5>
 
                 <div class="row">
 
                     <div class="col-md-3 text-center">
-                        <div><span>推荐导师1:</span></div>
+                        <div><span>推荐教练1:</span></div>
                         <img src="{{ index_admin.rec_mentor1.avatar }}" width="100px" height="100px" alt=""/>
                         <h5>{{ index_admin.rec_mentor1.nick }}</h5>
 
@@ -29,7 +29,7 @@
                         </div>
                     </div>
                     <div class="col-md-3 text-center">
-                        <div><span>推荐导师2:</span></div>
+                        <div><span>推荐教练2:</span></div>
 
                         <img src="{{ index_admin.rec_mentor2.avatar }}" width="100px" height="100px" alt=""/>
                         <h5>{{ index_admin.rec_mentor2.nick }}</h5>
@@ -48,7 +48,7 @@
                         </div>
                     </div>
                     <div class="col-md-3 text-center">
-                        <div><span>推荐导师3:</span></div>
+                        <div><span>推荐教练3:</span></div>
 
                         <img src="{{ index_admin.rec_mentor3.avatar }}" width="100px" height="100px" alt=""/>
                         <h5>{{ index_admin.rec_mentor3.nick }}</h5>
@@ -67,7 +67,7 @@
                         </div>
                     </div>
                     <div class="col-md-3 text-center">
-                        <div><span>推荐导师4:</span></div>
+                        <div><span>推荐教练4:</span></div>
 
                         <img src="{{ index_admin.rec_mentor4.avatar }}" width="100px" height="100px" alt=""/>
                         <h5>{{ index_admin.rec_mentor4.nick }}</h5>

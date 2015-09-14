@@ -82,15 +82,15 @@ def hero_convert(type_str):
     nstr = u''
     for itm in type_str:
         if itm == '1':
-            nstr += u'上单 '
+            nstr += u'1号位 '
         elif itm == '2':
-            nstr += u'中单 '
+            nstr += u'2号位 '
         elif itm == '3':
-            nstr += u'ADC '
+            nstr += u'3号位 '
         elif itm == '4':
-            nstr += u'打野 '
+            nstr += u'4号位 '
         elif itm == '5':
-            nstr += u'辅助 '
+            nstr += u'5号位 '
     return nstr
 
 
@@ -221,22 +221,22 @@ def output_data(file_name, order_list):
     ws.write(0, 10, "教学时间")
     ws.write(0, 11, "下单时间")
     ws.write(0, 12, "下单人")
-    ws.write(0, 13, "教学导师")
+    ws.write(0, 13, "教学教练")
     i = 1
     for item in order_list:
         print item.learn_type
         print type(item.learn_type)
         nstr = u''
         if item.learn_type == '1':
-            nstr = u'上单 '
+            nstr = u'1号位 '
         elif item.learn_type == '2':
-            nstr = u'中单 '
+            nstr = u'2号位 '
         elif item.learn_type == '3':
-            nstr = u'ADC '
+            nstr = u'3号位 '
         elif item.learn_type == '4':
-            nstr = u'打野 '
+            nstr = u'4号位 '
         elif item.learn_type == '5':
-            nstr = u'辅助 '
+            nstr = u'5号位 '
         ws.write(i, 0, item.order_id, style0)
         ws.write(i, 1, item.order_price, style0)
         ws.write(i, 2, u"在线支付", style0)

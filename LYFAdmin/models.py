@@ -242,7 +242,7 @@ class Course(BaseModel):
         return self.name
 
 
-#导师账款纪录
+#教练账款纪录
 class MoneyRecord(BaseModel):
     record_id = models.CharField(max_length=30, unique=True)
     action = models.CharField(max_length=8, default='')
@@ -348,7 +348,7 @@ class ChargeRecord(BaseModel):
     def __unicode__(self):
         return self.record_id
 
-#导师提现请求纪录
+#教练提现请求纪录
 class CashRecord(BaseModel):
     record_id = models.CharField(max_length=30, unique=True)
     money = models.FloatField(default=0.0)

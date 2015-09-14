@@ -41,7 +41,7 @@
   <div class="container">
     <div class="col-lg-6 col-md-6">
       <h6 class="host-title">
-        平台介绍
+        关于飞吧
       </h6>
       <div>
         <video class="video-js" preload="auto" poster="{{ index_data.video_poster }}" data-setup="{}">
@@ -73,7 +73,7 @@
   </div>
   <div class="container recommend-teacher-container">
     <h6 class="host-title col-lg-12 col-md-12">
-      推荐导师
+      推荐教练
     </h6>
     {% for mentor in recommend %}
       {% if mentor %}
@@ -84,18 +84,7 @@
               <h6>
                 {{ mentor.nick }}
               </h6>
-              <p>擅长位置：
-                {% if mentor.good_at == 1 %}
-                  中单
-                {% elif mentor.good_at == 2 %}
-                  上单
-                {% elif mentor.good_at == 3 %}
-                  ADC
-                {% elif mentor.good_at == 4 %}
-                  打野
-                {% elif mentor.good_at == 5 %}
-                  辅助
-                {% endif %}
+              <p>擅长位置：{{ mentor.good_at }}号位
               </p>
               <p>交易量：{{ mentor.men_orders.count }}</p>
               <p>用户评分：{{ mentor.mark }}</p>
@@ -105,6 +94,7 @@
       {% endif %}
     {% endfor %}
   </div>
+    <br/>
 {% endblock %}
 {% block script %}
   <script src="/js/common/host.js"></script>

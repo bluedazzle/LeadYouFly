@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+from LYFAdmin.message import ORDER_CMMNT_MES
 from LYFAdmin.utils import check_start_time
 from views import *
 from LYFAdmin.qn import *
@@ -258,6 +259,7 @@ def order_accept(request):
                     if mentor.men_orders.filter(status=1).count() == 0:
                         mentor.status = 1
                         mentor.save()
+                    create_new_message(ORDER_CMMNT_MES, order.belong)
                     return HttpResponse(json.dumps('success'))
                 else:
                     return HttpResponse(json.dumps(u'操作失败'))

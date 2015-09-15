@@ -13,7 +13,7 @@ def teacher_login(request):
     if request.method == 'POST':
         form = LoginForm(request.POST)
         if not form.is_valid():
-            return HttpResponse(json.dumps("wrong forms"))
+            return HttpResponse(json.dumps("信息有误"))
         teacher_has = Mentor.objects.filter(account=request.POST.get('username'))
         if teacher_has.count() == 0:
             return HttpResponse(json.dumps(u"用户名或者密码错误"))
@@ -43,7 +43,7 @@ def teacher_host(request):
         if form.is_valid():
             form_data = form.cleaned_data
         else:
-            return HttpResponse(json.dumps("wrong forms"))
+            return HttpResponse(json.dumps("信息有误"))
 
         mentor = return_content['mentor']
         video_data = form_data['new_video']

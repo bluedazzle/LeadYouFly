@@ -46,7 +46,11 @@ def send_confirm_msg(phone):
                                                'content': o_str}
     result = requests.get(req_url)
     rescode = str(result.content)[0:16].split(',')[1]
+    print result.content
     if str(rescode) == '0':
         return True
     else:
         return False
+
+
+# send_confirm_msg('15608059720')

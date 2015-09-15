@@ -153,7 +153,7 @@ def admin_index_new_video(req):
 @login_require
 def admin_index_change_recommend(req):
     if req.method != 'POST':
-        return Http404
+        raise Http404
     rec_id_1 = req.POST.get('rec_mentor_1')
     rec_id_2 = req.POST.get('rec_mentor_2')
     rec_id_3 = req.POST.get('rec_mentor_3')
@@ -175,7 +175,7 @@ def admin_index_change_recommend(req):
 @login_require
 def admin_index_change_picture(req):
     if req.method != 'POST':
-        return Http404
+        raise Http404
     index_pic_1 = req.FILES.get('pic_choice_1', None)
     index_pic_2 = req.FILES.get('pic_choice_2', None)
     index_pic_3 = req.FILES.get('pic_choice_3', None)
@@ -329,7 +329,7 @@ def admin_website_del_hero(req):
 @login_require
 def admin_website_new_hero(req):
     if req.method != 'POST':
-        return Http404
+        raise Http404
     hero_pic = req.FILES.get('picture')
     hero_name = req.POST.get('hero_name')
     hero_type = req.POST.getlist('hero_type')
@@ -370,7 +370,7 @@ def admin_order(req):
 def admin_order_search(req):
     day =  {}
     if req.method != 'POST':
-        return Http404
+        raise Http404
     search_text = req.POST.get('search_text', '')
     order_status = int(req.POST.get('order_status', 0))
     raw_order_list = order_search(order_status, search_text)
@@ -415,16 +415,16 @@ def admin_mentor(req):
 @login_require
 def admin_mentor_new_mentor(req):
     if req.method != 'POST':
-        return Http404
+        raise Http404
     account = req.POST.get('mentor_account', '')
     passwd = req.POST.get('mentor_passwd', '')
     nick = req.POST.get('mentor_nick', '')
     if account == '' or passwd == '':
-        return Http404
+        raise Http404
     mentor = Mentor.objects.filter(account=account)
     print mentor.count()
     if mentor.exists():
-        return Http404
+        raise Http404
     hash_pass = hashlib.md5(passwd).hexdigest()
     new_mentor = Mentor(account=account,
                         password=hash_pass,
@@ -534,7 +534,7 @@ def admin_mentor_change_price(req, mid, cid):
     mentor = get_object_or_404(Mentor, id=mid)
     course = get_object_or_404(Course, id=cid)
     if course.belong != mentor:
-        return Http404
+        raise Http404
     new_price = float(req.GET.get('new_price'))
     course.price = new_price
     print new_price

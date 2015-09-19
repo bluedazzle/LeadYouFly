@@ -59,7 +59,7 @@ class MentorInfoForm(forms.Form):
     intro = forms.CharField(max_length=50)
     good_at = forms.CharField(max_length=5)
     expert_heroes = forms.CharField(max_length=100)
-    teach_heroes = forms.CharField(max_length=100)
+    teach_heroes = forms.CharField(max_length=1000000)
     game_level = forms.CharField(max_length=10)
     teach_area = forms.CharField(max_length=5)
     new_video = forms.FileField(required=False)

@@ -258,7 +258,7 @@ def output_data(file_name, order_list):
 
 
 def create_random_avatar():
-    r_num = random.randint(1, 73)
+    r_num = random.randint(1, 72)
     file_name = '/img/avatar/%i.png' % r_num
     return file_name
 

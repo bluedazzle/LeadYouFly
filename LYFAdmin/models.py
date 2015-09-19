@@ -157,7 +157,7 @@ class Mentor(AbstractBaseUser, BaseModel):
     expert_hero1 = models.ForeignKey(Hero, related_name='who_expert1', null=True, blank=True, on_delete=models.SET_NULL)
     expert_hero2 = models.ForeignKey(Hero, related_name='who_expert2', null=True, blank=True, on_delete=models.SET_NULL)
     expert_hero3 = models.ForeignKey(Hero, related_name='who_expert3', null=True, blank=True, on_delete=models.SET_NULL)
-    hero_list = models.ManyToManyField(Hero, related_name='who_uses', null=True, blank=True, on_delete=models.SET_NULL)
+    hero_list = models.ManyToManyField(Hero, related_name='who_uses', null=True, blank=True)
     id_picture = models.CharField(max_length=100, default='')
     total_income = models.FloatField(default=0.0)
     iden_income = models.FloatField(default=0.0)

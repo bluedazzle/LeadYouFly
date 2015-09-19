@@ -23,15 +23,15 @@
             {% if not teach_position or teach_position == '0' %}
               全部位置
             {% elif teach_position == '1' %}
-              中单
+              1号位
             {% elif teach_position == '2' %}
-              上单
+              2号位
             {% elif teach_position == '3' %}
-              ADC
+              3号位
             {% elif teach_position == '4' %}
-              打野
+              4号位
             {% elif teach_position == '5' %}
-              辅助
+              5号位
             {% endif %}
             <span class="glyphicon glyphicon-menu-down"></span>
           </button>
@@ -88,22 +88,22 @@
               </p>
               <div class="teacher-info-ver col-sm-12"></div>
               <p class="teacher-info-attribute col-sm-6" style="color:#000000;">
-                段位:{{ mentor.game_level }}
+                天梯:{{ mentor.game_level }}
               </p>
               <p class="teacher-info-attribute col-sm-6" style="color:#000000;">
                 擅长位置:
                 {% if mentor.good_at == '12345' %}
                   全部
                 {% elif '1' in mentor.good_at or '1' == mentor.good_at %}
-                  中单
+                  1号位
                 {% elif '2' in mentor.good_at or '2' == mentor.good_at %}
-                  上单
+                  2号位
                 {% elif '3' in mentor.good_at or '3' == mentor.good_at %}
-                  ADC
+                  3号位
                 {% elif '4' in mentor.good_at or '4' == mentor.good_at %}
-                  打野
+                  4号位
                 {% elif '5' in mentor.good_at or '5' == mentor.good_at %}
-                  辅助
+                  5号位
                 {% endif %}
               </p>
               <p class="teacher-info-attribute col-sm-12" style="color:#000000;">
@@ -185,15 +185,15 @@
       <div class="col-lg-9 col-md-9 col-sm-9 select-screen-position" style="float: right">
         <a href="/search_teacher?teach_position=0&teach_area={{ teach_area }}&teach_hero={{ teach_hero.id }}">全部位置</a>
         <br/>
-        <a href="/search_teacher?teach_position=1&teach_area={{ teach_area }}&teach_hero={{ teach_hero.id }}">中单</a>
+        <a href="/search_teacher?teach_position=1&teach_area={{ teach_area }}&teach_hero={{ teach_hero.id }}">1号位</a>
         <br/>
-        <a href="/search_teacher?teach_position=2&teach_area={{ teach_area }}&teach_hero={{ teach_hero.id }}">上单</a>
+        <a href="/search_teacher?teach_position=2&teach_area={{ teach_area }}&teach_hero={{ teach_hero.id }}">2号位</a>
         <br/>
-        <a href="/search_teacher?teach_position=3&teach_area={{ teach_area }}&teach_hero={{ teach_hero.id }}">ADC</a>
+        <a href="/search_teacher?teach_position=3&teach_area={{ teach_area }}&teach_hero={{ teach_hero.id }}">3号位</a>
         <br/>
-        <a href="/search_teacher?teach_position=4&teach_area={{ teach_area }}&teach_hero={{ teach_hero.id }}">打野</a>
+        <a href="/search_teacher?teach_position=4&teach_area={{ teach_area }}&teach_hero={{ teach_hero.id }}">4号位</a>
         <br/>
-        <a href="/search_teacher?teach_position=5&teach_area={{ teach_area }}&teach_hero={{ teach_hero.id }}">辅助</a>
+        <a href="/search_teacher?teach_position=5&teach_area={{ teach_area }}&teach_hero={{ teach_hero.id }}">5号位</a>
       </div>
       <div class="col-lg-7 col-md-7 col-sm-7 select-screen-hero">
         <a href="/search_teacher?teach_hero=0&teach_area={{ teach_area }}&teach_position={{ teach_position }}">所有英雄</a>

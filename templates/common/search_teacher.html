@@ -129,7 +129,7 @@
         </div>
       {% endfor %}
       {% if mentors.has_other_pages %}
-        <nav class="col-md-12 col-lg-12 text-center">
+        <nav class="col-md-12 col-lg-12 col-sm-12 text-center">
           <ul class="pagination">
             {% if mentors.has_previous %}
               <li>
@@ -161,7 +161,7 @@
               </li>
             {% else %}
               <li class="disabled">
-                <a href="#" aria-label="Next">
+                <a aria-label="Next">
                   <span aria-hidden="true" class="glyphicon glyphicon-menu-right"></span>
                 </a>
               </li>

@@ -17,21 +17,24 @@
           <span class="glyphicon glyphicon-menu-down"></span>
         </button>
       </div>
-      <div class="btn-group col-lg-11 col-md-11 col-sm-11" style="float: right;">
-        <div class="col-lg-10 col-md-10 col-sm-10" style="float:right;padding-left: 0">
+      <div class="btn-group col-lg-11 col-md-11 col-sm-11" style="float: right">
+        <div class="col-lg-2 col-md-2 col-sm-2 study-text">
+            <p>学习</p>
+        </div>
+        <div class="col-lg-10 col-md-10 col-sm-10">
           <button type="button" class="btn btn-select" onclick="openSelectScreen(2)">
             {% if not teach_position or teach_position == '0' %}
               全部位置
             {% elif teach_position == '1' %}
-              1号位
+              中单
             {% elif teach_position == '2' %}
-              2号位
+              上单
             {% elif teach_position == '3' %}
-              3号位
+              ADC
             {% elif teach_position == '4' %}
-              4号位
+              打野
             {% elif teach_position == '5' %}
-              5号位
+              辅助
             {% endif %}
             <span class="glyphicon glyphicon-menu-down"></span>
           </button>
@@ -39,7 +42,7 @@
         </div>
       </div>
 
-      <div class="btn-group col-lg-7 col-md-7 col-sm-7" style="float: right;padding-left: 35px">
+      <div class="btn-group col-lg-7 col-md-7 col-sm-7" style="float: right;">
         <button type="button" class="btn btn-select" style="margin-top: 0" onclick="openSelectScreen(3)">
           {% if teach_hero %}
             {{ teach_hero.hero_name }}
@@ -79,7 +82,7 @@
               {% endif %}
             </div>
             <div class="teacher-info-panel-body" style="width: 100%;">
-              <p class="teacher-info-introduce" style="color: gray;">
+              <p class="teacher-info-introduce" style="color: darkslategray;">
                 {{ mentor.intro }}
               </p>
               <p class="teacher-info-name">
@@ -88,22 +91,22 @@
               </p>
               <div class="teacher-info-ver col-sm-12"></div>
               <p class="teacher-info-attribute col-sm-6" style="color:#000000;">
-                天梯:{{ mentor.game_level }}
+                段位:{{ mentor.game_level }}
               </p>
               <p class="teacher-info-attribute col-sm-6" style="color:#000000;">
                 擅长位置:
                 {% if mentor.good_at == '12345' %}
                   全部
                 {% elif '1' in mentor.good_at or '1' == mentor.good_at %}
-                  1号位
+                  中单
                 {% elif '2' in mentor.good_at or '2' == mentor.good_at %}
-                  2号位
+                  上单
                 {% elif '3' in mentor.good_at or '3' == mentor.good_at %}
-                  3号位
+                  ADC
                 {% elif '4' in mentor.good_at or '4' == mentor.good_at %}
-                  4号位
+                  打野
                 {% elif '5' in mentor.good_at or '5' == mentor.good_at %}
-                  5号位
+                  辅助
                 {% endif %}
               </p>
               <p class="teacher-info-attribute col-sm-12" style="color:#000000;">
@@ -129,7 +132,7 @@
         </div>
       {% endfor %}
       {% if mentors.has_other_pages %}
-        <nav class="col-md-12 col-lg-12 col-sm-12 text-center">
+        <nav class="col-md-12 col-lg-12 text-center">
           <ul class="pagination">
             {% if mentors.has_previous %}
               <li>
@@ -147,9 +150,9 @@
 
             {% for page in mentors.paginator.page_range %}
               {% if page == mentors.number %}
-                <li class="active pagination-page"><a href="#">{{ page }}</a></li>
+                <li class="active"><a href="#">{{ page }}</a></li>
               {% else %}
-                <li class="pagination-page"><a href="/search_teacher?page_num={{ page }}&teach_area={{ teach_area }}&teach_postion={{ teach_position }}&teach_hero={{ teach_hero.id }}&search={{ search }}">{{ page }}</a></li>
+                <li><a href="/search_teacher?page_num={{ page }}&teach_area={{ teach_area }}&teach_postion={{ teach_position }}&teach_hero={{ teach_hero.id }}&search={{ search }}">{{ page }}</a></li>
               {% endif %}
             {% endfor %}
 
@@ -185,15 +188,15 @@
       <div class="col-lg-9 col-md-9 col-sm-9 select-screen-position" style="float: right">
         <a href="/search_teacher?teach_position=0&teach_area={{ teach_area }}&teach_hero={{ teach_hero.id }}">全部位置</a>
         <br/>
-        <a href="/search_teacher?teach_position=1&teach_area={{ teach_area }}&teach_hero={{ teach_hero.id }}">1号位</a>
+        <a href="/search_teacher?teach_position=1&teach_area={{ teach_area }}&teach_hero={{ teach_hero.id }}">中单</a>
         <br/>
-        <a href="/search_teacher?teach_position=2&teach_area={{ teach_area }}&teach_hero={{ teach_hero.id }}">2号位</a>
+        <a href="/search_teacher?teach_position=2&teach_area={{ teach_area }}&teach_hero={{ teach_hero.id }}">上单</a>
         <br/>
-        <a href="/search_teacher?teach_position=3&teach_area={{ teach_area }}&teach_hero={{ teach_hero.id }}">3号位</a>
+        <a href="/search_teacher?teach_position=3&teach_area={{ teach_area }}&teach_hero={{ teach_hero.id }}">ADC</a>
         <br/>
-        <a href="/search_teacher?teach_position=4&teach_area={{ teach_area }}&teach_hero={{ teach_hero.id }}">4号位</a>
+        <a href="/search_teacher?teach_position=4&teach_area={{ teach_area }}&teach_hero={{ teach_hero.id }}">打野</a>
         <br/>
-        <a href="/search_teacher?teach_position=5&teach_area={{ teach_area }}&teach_hero={{ teach_hero.id }}">5号位</a>
+        <a href="/search_teacher?teach_position=5&teach_area={{ teach_area }}&teach_hero={{ teach_hero.id }}">辅助</a>
       </div>
       <div class="col-lg-7 col-md-7 col-sm-7 select-screen-hero">
         <a href="/search_teacher?teach_hero=0&teach_area={{ teach_area }}&teach_position={{ teach_position }}">所有英雄</a>

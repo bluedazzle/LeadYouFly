@@ -257,7 +257,7 @@ class MoneyRecord(BaseModel):
 
 class Comment(BaseModel):
     mark = models.FloatField(default=0.0)
-    content = models.CharField(max_length=500, default='')
+    content = models.CharField(max_length=50000, default='')
     comment_by = models.ForeignKey(Student, related_name='stu_comments', null=True, blank=True, on_delete=models.SET_NULL)
     comment_mentor = models.ForeignKey(Mentor, related_name='men_comments', null=True, blank=True, on_delete=models.SET_NULL)
 

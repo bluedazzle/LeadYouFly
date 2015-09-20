@@ -43,7 +43,7 @@
 
           <p class="intro-msg">{{ mentor_detail.intro }}</p>
 
-          <p>交易量：{{ mentor_detail.men_orders.count }}</p>
+          <p>交易量：{{ mentor_detail.get_orders_count }}</p>
 
           <p>评分：{{ mentor_detail.mark }}</p>
           <br/>

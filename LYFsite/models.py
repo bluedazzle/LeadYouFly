@@ -35,7 +35,7 @@ class UpdateCourseForm(forms.Form):
 class AppraiseOrder(forms.Form):
     order_id = forms.CharField()
     stars = forms.IntegerField()
-    content = forms.CharField(max_length=100)
+    content = forms.CharField(max_length=50000)
 
 
 class ComplainForm(forms.Form):
@@ -43,7 +43,7 @@ class ComplainForm(forms.Form):
     qq = forms.CharField(max_length=20)
     phone = forms.CharField(max_length=11)
     mentor_name = forms.CharField(max_length=50)
-    complain_content = forms.CharField(max_length=100, required=False)
+    complain_content = forms.CharField(max_length=1000, required=False)
     check_id = forms.CharField(max_length=10)
     image_list = forms.CharField(max_length=100)
 
@@ -59,7 +59,7 @@ class MentorInfoForm(forms.Form):
     intro = forms.CharField(max_length=50)
     good_at = forms.CharField(max_length=5)
     expert_heroes = forms.CharField(max_length=100)
-    teach_heroes = forms.CharField(max_length=1000000)
+    teach_heroes = forms.CharField(max_length=100000)
     game_level = forms.CharField(max_length=10)
     teach_area = forms.CharField(max_length=5)
     new_video = forms.FileField(required=False)

@@ -21,7 +21,7 @@ $(document).ready(function () {
                     dataType: "json",
                     success: function (data, status) {
                         if (data.status === "success") {
-                            Notify("修改稿成！");
+                            Notify("修改成功！");
                             if (data.next_page) {
                                 window.location = data.next_page;
                             } else {

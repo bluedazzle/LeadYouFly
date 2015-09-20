@@ -144,7 +144,7 @@ class Mentor(AbstractBaseUser, BaseModel):
     intro = models.CharField(max_length=100, default='')
     good_at = models.CharField(max_length=5, default='')
     game_level = models.CharField(max_length=8, default='')
-    teach_area = models.CharField(max_length=20, default='')
+    teach_area = models.CharField(max_length=20, default='0')
     qq = models.CharField(max_length=20, default='')
     yy = models.CharField(max_length=50, default='')
     phone = models.CharField(max_length=11, default='')
@@ -190,6 +190,11 @@ class Mentor(AbstractBaseUser, BaseModel):
 
     def set_password(self, password):
         self.password = self.hashed_password(password)
+
+    def get_orders_count(self):
+        orders = self.men_orders.exclude(status=5).exclude(status=6)
+        orders_count = orders.count()
+        return orders_count
 
 
 class Student(AbstractBaseUser, BaseModel):

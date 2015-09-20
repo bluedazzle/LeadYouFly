@@ -206,7 +206,8 @@ def search_teacher(request):
 
         mentors = Mentor.objects.all()
         if teach_area and not teach_area == '0':
-            mentors = mentors.filter(teach_area=teach_area)
+            mentors = mentors.filter(Q(teach_area=teach_area) |
+                                     Q(teach_area='0'))
         else:
             teach_area = '0'
 
@@ -242,7 +243,7 @@ def search_teacher(request):
             search = ''
 
         mentors = mentors.distinct()
-        mentors = mentors.order_by('-mark').order_by('-priority').order_by('status')
+        mentors = mentors.order_by('status', '-priority', '-mark')
         for mentor in mentors:
             res = check_status(mentor)
             if not res:

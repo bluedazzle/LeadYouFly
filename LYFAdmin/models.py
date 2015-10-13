@@ -196,6 +196,9 @@ class Mentor(AbstractBaseUser, BaseModel):
         orders_count = orders.count()
         return orders_count
 
+    def get_comment_list(self):
+        return self.men_comments.all().order_by('-create_time')
+
 
 class Student(AbstractBaseUser, BaseModel):
     account = models.CharField(max_length=11, unique=True)

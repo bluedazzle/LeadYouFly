@@ -1,173 +1,193 @@
 <!DOCTYPE html>
 <html>
 <head lang="en">
-  <meta charset="UTF-8">
-  <link href="/img/shortcut.png" rel="shortcut icon"/>
-  <title>LOL游戏教练-飞吧游戏教练</title>
-  <link href="/css/bootstrap.min.css" rel="stylesheet"/>
-  <link href="/css/flat-ui.min.css" rel="stylesheet">
-  <link href="/css/custom/leadFlyBase.css" rel="stylesheet"/>
-  {% block css %}
-  {% endblock %}
-{#  <script src="http://cdn.bootcss.com/jquery/1.11.2/jquery.min.js"></script>#}
-  <script src="/js/jquery.min.js"></script>
-  <script src="/js/flat-ui.min.js"></script>
+    <meta charset="UTF-8">
+    <link href="/img/shortcut.png" rel="shortcut icon"/>
+    <title>LOL游戏教练-飞吧游戏教练</title>
+    <link href="/css/bootstrap.min.css" rel="stylesheet"/>
+    <link href="/css/flat-ui.min.css" rel="stylesheet">
+    <link href="/css/custom/leadFlyBase.css" rel="stylesheet"/>
+    <link rel="stylesheet" type="text/css" href="/css/qq.css"/>
+    {% block css %}
+    {% endblock %}
+    {#  <script src="http://cdn.bootcss.com/jquery/1.11.2/jquery.min.js"></script>#}
+    <script src="/js/jquery.min.js"></script>
+    <script src="/js/flat-ui.min.js"></script>
+    <script type="text/javascript" src="/js/base.js"></script>
+    <script type="text/javascript" src="/js/common.js"></script>
 </head>
 <body>
+<div class="suspend">
+    <dl>
+        <dt class="IE6PNG"></dt>
+        <dd class="suspendQQ"><a href="http://wpa.qq.com/msgrd?v=3&uin=765566978&site=qq&menu=yes" target="_blank"></a>
+        </dd>
+        <dd class="suspendTel"><a href="javascript:alert('12345');"></a></dd>
+    </dl>
+</div>
 <div id="container">
-  <div id="header">
-    <nav class="navbar navbar-default" style="margin-bottom: 0;border-radius: 0;padding: 0 5% 0 5%">
-      <div class="container-fluid">
-        <!-- Brand and toggle get grouped for better mobile display -->
-        <div class="navbar-header nav-host">
-          {#          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"#}
-          {#                  data-target="#bs-example-navbar-collapse-1" aria-expanded="false">#}
-          {#            <span class="sr-only">Toggle navigation</span>#}
-          {#            <span class="icon-bar"></span>#}
-          {#            <span class="icon-bar"></span>#}
-          {#            <span class="icon-bar"></span>#}
-          {#          </button>#}
-          <a href="http://www.fibar.cn">
-            <img class="nav-logo" src="/img/logo.png"/>
-          </a>
-          <i class="divide-line"></i>
-        </div>
+    <div id="header">
+        <nav class="navbar navbar-default" style="margin-bottom: 0;border-radius: 0;padding: 0 5% 0 5%">
+            <div class="container-fluid">
+                <!-- Brand and toggle get grouped for better mobile display -->
+                <div class="navbar-header nav-host">
+                    {#          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"#}
+                    {#                  data-target="#bs-example-navbar-collapse-1" aria-expanded="false">#}
+                    {#            <span class="sr-only">Toggle navigation</span>#}
+                    {#            <span class="icon-bar"></span>#}
+                    {#            <span class="icon-bar"></span>#}
+                    {#            <span class="icon-bar"></span>#}
+                    {#          </button>#}
+                    <a href="http://www.fibar.cn">
+                        <img class="nav-logo" src="/img/logo.png"/>
+                    </a>
+                    <i class="divide-line"></i>
+                </div>
 
-        <!-- Collect the nav links, forms, and other content for toggling -->
-        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-          <form class="navbar-form navbar-left search-form" action="/search_teacher" method="get" role="search">
-            <button type="submit" class="btn btn-default btn-search">
-              <span class="glyphicon glyphicon-search"></span>
-            </button>
-            <div class="form-group">
-              <input type="text" class="form-control" name="search" placeholder="搜索..." value="{{ search }}">
-            </div>
-          </form>
-          <ul class="nav navbar-nav navbar-right">
-            <li><a href="/search_teacher" class="lg-title" style="font-size: 16px;font-weight: 700;">寻找教练</a></li>
-            {% if not is_login %}
-              <li><a href="/login" class="sm-title">登录</a></li>
-              <li><a href="/register" class="sm-title">注册</a></li>
-            {% else %}
-              {% if login_type == 'student' %}
-                <li class="dropdown" id="stu-option-list">
-                  <a href="#" class="dropdown-toggle" id="student-route" data-toggle="dropdown"
-                     role="button" aria-haspopup="true" aria-expanded="false">
-                    <img style="width: 30px;height: 30px;border-radius: 50%"
-                         src="{{ active_user.avatar }}"/>
-                    <span id="user-position">个人中心</span>
-                    <span class="caret"></span>
-                  </a>
-                  <ul class="dropdown-menu user-position-list" style="margin-top: 0;right: -1px;">
-                    <h6>资料</h6>
-                    <a href="/user/complete_mes">我的档案</a>
-                    <br/>
-                    <a href="/user/my_orders">我的订单</a>
-                    <br/>
-                    <a href="/user/my_follow_mentors">关注教练</a>
-                    <br/>
-                    <a href="/user/message">消息</a>
-                    <br/>
-                    <h6>服务</h6>
-                    <a href="/user/security_center">安全中心</a>
-                    <br/>
-                    <a href="/user/complain">投诉</a>
-                    <br/>
-                    <div class="position-list-footer">
-                      飞吧，{{ active_user.nick }}
-                      <a href="/logout">退出</a>
-                    </div>
-                  </ul>
-                </li>
-              {% elif login_type == 'teacher' %}
-                <li class="dropdown">
-                  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
-                     aria-haspopup="true" aria-expanded="false">
+                <!-- Collect the nav links, forms, and other content for toggling -->
+                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                    <form class="navbar-form navbar-left search-form" action="/search_teacher" method="get"
+                          role="search">
+                        <button type="submit" class="btn btn-default btn-search">
+                            <span class="glyphicon glyphicon-search"></span>
+                        </button>
+                        <div class="form-group">
+                            <input type="text" class="form-control" name="search" placeholder="搜索..."
+                                   value="{{ search }}">
+                        </div>
+                    </form>
+                    <ul class="nav navbar-nav navbar-right">
+                        <li><a href="/search_teacher" class="lg-title"
+                               style="font-size: 16px;font-weight: 700;">寻找教练</a></li>
+                        {% if not is_login %}
+                            <li><a href="/login" class="sm-title">登录</a></li>
+                            <li><a href="/register" class="sm-title">注册</a></li>
+                        {% else %}
+                            {% if login_type == 'student' %}
+                                <li class="dropdown" id="stu-option-list">
+                                    <a href="#" class="dropdown-toggle" id="student-route" data-toggle="dropdown"
+                                       role="button" aria-haspopup="true" aria-expanded="false">
+                                        <img style="width: 30px;height: 30px;border-radius: 50%"
+                                             src="{{ active_user.avatar }}"/>
+                                        <span id="user-position">个人中心</span>
+                                        <span class="caret"></span>
+                                    </a>
+                                    <ul class="dropdown-menu user-position-list" style="margin-top: 0;right: -1px;">
+                                        <h6>资料</h6>
+                                        <a href="/user/complete_mes">我的档案</a>
+                                        <br/>
+                                        <a href="/user/my_orders">我的订单</a>
+                                        <br/>
+                                        <a href="/user/my_follow_mentors">关注教练</a>
+                                        <br/>
+                                        <a href="/user/message">消息</a>
+                                        <br/>
+                                        <h6>服务</h6>
+                                        <a href="/user/security_center">安全中心</a>
+                                        <br/>
+                                        <a href="/user/complain">投诉</a>
+                                        <br/>
+
+                                        <div class="position-list-footer">
+                                            飞吧，{{ active_user.nick }}
+                                            <a href="/logout">退出</a>
+                                        </div>
+                                    </ul>
+                                </li>
+                            {% elif login_type == 'teacher' %}
+                                <li class="dropdown">
+                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
+                                       aria-haspopup="true" aria-expanded="false">
                     <span id="mentor-status" class="mentor-status">
                       {% if mentor.status == 1 %}
-                        立即授课
+                          立即授课
                       {% elif mentor.status == 3 %}
-                        休息中
+                          休息中
                       {% elif mentor.status == 2 %}
-                        上课中
+                          上课中
                       {% endif %}
                     </span>
-                    <span class="caret"></span>
-                  </a>
-                  <ul class="dropdown-menu">
-                    <li><a href="#" onclick="changeMentorStatus(1)">立即授课</a></li>
-                    <li><a href="#" onclick="changeMentorStatus(3)">休息中</a></li>
-                    <li><a href="/teacher/host">个人中心</a></li>
-                    <li><a href="/logout">退出</a></li>
-                  </ul>
-                </li>
-              {% endif %}
-            {% endif %}
-          </ul>
-        </div>
-        <!-- /.navbar-collapse -->
-      </div>
-      <!-- /.container-fluid -->
-    </nav>
-  </div>
-  <div id="page" class="clearfix">
-    {% block define %}
-    {% endblock %}
-  </div>
-  <div id="footer">
-    <div class="col-md-12 col-lg-12 col-sm-12 footer">
-      <div class="container">
-        <p class="footer-line">&nbsp;</p>
-      </div>
-      <div class="container">
-        <div class="footer-two">
-          <div class="col-lg-2 col-md-2 col-sm-2">
-            <a href="/about_us">关于我们</a>
-          </div>
-          <div class="col-lg-2 col-md-2 col-sm-2">
-            <a href="/contact_us">联系我们</a>
-          </div>
-          <div class="col-lg-2 col-md-2 col-sm-2">
-            <a href="/become_mentor">成为教练</a>
-          </div>
-          <div class="col-lg-2 col-md-2 col-sm-2">
-            <a href="/laws">法律声明</a>
-          </div>
-          <div class="col-lg-2 col-md-2 col-sm-2">
-            <a href="/problems">常见问题</a>
-          </div>
-          <div class="col-lg-2 col-md-2 col-sm-2">
-            <a href="/service">服务指南</a>
-          </div>
-        </div>
-        <div class="text-center col-sm-12">
-          <p style="color: #95a5a6;font-size: 14px">Copyright© fibar.com 版权所有&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;鲁ICP备15029913号<script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1256331579'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s11.cnzz.com/z_stat.php%3Fid%3D1256331579%26show%3Dpic1' type='text/javascript'%3E%3C/script%3E"));</script>
-          </p>
-        </div>
-      </div>
+                                        <span class="caret"></span>
+                                    </a>
+                                    <ul class="dropdown-menu">
+                                        <li><a href="#" onclick="changeMentorStatus(1)">立即授课</a></li>
+                                        <li><a href="#" onclick="changeMentorStatus(3)">休息中</a></li>
+                                        <li><a href="/teacher/host">个人中心</a></li>
+                                        <li><a href="/logout">退出</a></li>
+                                    </ul>
+                                </li>
+                            {% endif %}
+                        {% endif %}
+                    </ul>
+                </div>
+                <!-- /.navbar-collapse -->
+            </div>
+            <!-- /.container-fluid -->
+        </nav>
     </div>
-  </div>
-  {% block select_screen %}
-  {% endblock %}
+    <div id="page" class="clearfix">
+        {% block define %}
+        {% endblock %}
+    </div>
+    <div id="footer">
+        <div class="col-md-12 col-lg-12 col-sm-12 footer">
+            <div class="container">
+                <p class="footer-line">&nbsp;</p>
+            </div>
+            <div class="container">
+                <div class="footer-two">
+                    <div class="col-lg-2 col-md-2 col-sm-2">
+                        <a href="/about_us">关于我们</a>
+                    </div>
+                    <div class="col-lg-2 col-md-2 col-sm-2">
+                        <a href="/contact_us">联系我们</a>
+                    </div>
+                    <div class="col-lg-2 col-md-2 col-sm-2">
+                        <a href="/become_mentor">成为教练</a>
+                    </div>
+                    <div class="col-lg-2 col-md-2 col-sm-2">
+                        <a href="/laws">法律声明</a>
+                    </div>
+                    <div class="col-lg-2 col-md-2 col-sm-2">
+                        <a href="/problems">常见问题</a>
+                    </div>
+                    <div class="col-lg-2 col-md-2 col-sm-2">
+                        <a href="/service">服务指南</a>
+                    </div>
+                </div>
+                <div class="text-center col-sm-12">
+                    <p style="color: #95a5a6;font-size: 14px">Copyright© fibar.com 版权所有&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;鲁ICP备15029913号
+                        <script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+                        document.write(unescape("%3Cspan id='cnzz_stat_icon_1256331579'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s11.cnzz.com/z_stat.php%3Fid%3D1256331579%26show%3Dpic1' type='text/javascript'%3E%3C/script%3E"));</script>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% block select_screen %}
+    {% endblock %}
 </div>
 <!-- Modal -->
 <div class="modal fade" id="noticeModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-body">
-        <p class="text-center" id="notice-message"></p>
-      </div>
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-body">
+                <p class="text-center" id="notice-message"></p>
+            </div>
+        </div>
     </div>
-  </div>
 </div>
 {% if login_type == 'teacher' %}
-  <audio src="/js/567.wav" loop="loop" id="notice_music"></audio>
+    <audio src="/js/567.wav" loop="loop" id="notice_music"></audio>
 {% endif %}
 <script src="/js/common/common.js"></script>
 {% if login_type == 'teacher' %}
-  <script src="/js/teacher/poll_order.js"></script>
+    <script src="/js/teacher/poll_order.js"></script>
 {% endif %}
 {% block script %}
 {% endblock %}
+<script type="text/javascript">
+        Common.init();
+    </script>
 </body>
 </html>

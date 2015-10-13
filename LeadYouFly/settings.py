@@ -74,9 +74,9 @@ WSGI_APPLICATION = 'LeadYouFly.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'fibar_dota2',
+        'NAME': 'lyf',
         'USER': 'postgres',  # Not used with sqlite3.
-        'PASSWORD': 'Aiwe2015',  # Not used with sqlite3.
+        'PASSWORD': '123456',  # Not used with sqlite3.
         'HOST': 'localhost',  # Set to empty string for localhost. Not used with sqlite3.
         'PORT': '5432',
     }

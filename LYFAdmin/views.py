@@ -357,8 +357,8 @@ def admin_order(req):
     day = {}
     raw_order_list = Order.objects.all().order_by('-create_time')
     total = raw_order_list.count()
-    total_page = math.ceil(float(total) / 5.0)
-    paginator = Paginator(raw_order_list, 5)
+    total_page = math.ceil(float(total) / 50.0)
+    paginator = Paginator(raw_order_list, 50)
     page_num = 1
     try:
         page_num = int(req.GET.get('page'))

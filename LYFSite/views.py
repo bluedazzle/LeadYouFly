@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 from django.shortcuts import render_to_response
 from django.views.decorators.csrf import csrf_exempt
+import math
 from LYFAdmin.models import *
 from django.http import HttpResponseRedirect, HttpResponse, Http404
 from django.views.decorators.gzip import gzip_page
@@ -292,6 +293,32 @@ def teacher_detail(request):
                     mentor.status = 1
                     mentor.save()
                 return_content['teach_end_time'] = last_orders[0].teach_end_time
+        comment_list = mentor.get_comment_list()
+        total = comment_list.count()
+        total_page = math.ceil(float(total) / 50.0)
+        paginator = Paginator(comment_list, 50)
+        page_num = 1
+        comment = False
+        try:
+            page_num = int(request.GET.get('page'))
+            comment_list = paginator.page(page_num)
+            comment = True
+        except PageNotAnInteger:
+            comment_list = paginator.page(1)
+        except EmptyPage:
+            comment_list = []
+        except:
+            comment_list = paginator.page(page_num)
+        first_page = 1
+        last_page = int(total_page)
+        page_list = [{'page': i} for i in range(1, int(total_page) + 1)]
+        paginator_dict = {'first': first_page,
+                          'last': last_page,
+                          'current': page_num,
+                          'page_list': page_list}
+        return_content['paginator'] = paginator_dict
+        return_content['comment_list'] = comment_list
+        return_content['comment'] = comment
         return render_to_response('common/teacher_detail.html',
                                   return_content,
                                   context_instance=RequestContext(request))

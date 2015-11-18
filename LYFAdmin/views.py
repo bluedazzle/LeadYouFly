@@ -3,7 +3,9 @@ import time
 import hashlib
 import ujson
 import copy
-
+from django.core.paginator import Paginator
+from django.core.paginator import PageNotAnInteger
+from django.core.paginator import EmptyPage
 
 from django.shortcuts import render_to_response, HttpResponseRedirect
 from django.shortcuts import get_object_or_404
@@ -11,7 +13,7 @@ from django.http import HttpResponse, Http404
 from django.template import RequestContext
 from django.db.models import Q
 from dss.Serializer import serializer
-
+import math
 
 from LYFAdmin.models import Hero, Mentor, IndexAdmin, Order, Course, Student, ChargeRecord, MoneyRecord, CashRecord, \
     Admin, Notice, Message, Report
@@ -354,32 +356,71 @@ def admin_website_new_hero(req):
 def admin_order(req):
     day = {}
     raw_order_list = Order.objects.all().order_by('-create_time')
-    order_list = serializer(raw_order_list, deep=True, datetime_format='string')
+    total = raw_order_list.count()
+    total_page = math.ceil(float(total) / 5.0)
+    paginator = Paginator(raw_order_list, 5)
+    page_num = 1
+    try:
+        page_num = int(req.GET.get('page'))
+        order_list = paginator.page(page_num)
+    except PageNotAnInteger:
+        order_list = paginator.page(1)
+    except EmptyPage:
+        order_list = []
+    except:
+        order_list = paginator.page(page_num)
+    order_list = serializer(order_list, deep=True, datetime_format='string')
     for itm in order_list:
         itm['status'] = order_status_convert(itm['status'])
     day_num, day_income = get_day_info()
     day['count'] = day_num
     day['income'] = day_income
+    first_page = 1
+    last_page = int(total_page)
+    page_list = [{'page': i} for i in range(1, int(total_page) + 1)]
+    paginator_dict = {'first': first_page,
+                      'last': last_page,
+                      'current': page_num,
+                      'page_list': page_list}
     return render_to_response('order_admin.html', {'order_list': order_list,
                                                    'select_code': 0,
+                                                   'paginator': paginator_dict,
                                                    'day': day}, context_instance=RequestContext(req))
 
 
 #订单查询
 @login_require
 def admin_order_search(req):
-    day =  {}
-    if req.method != 'POST':
-        raise Http404
+    day = {}
     search_text = req.POST.get('search_text', '')
     order_status = int(req.POST.get('order_status', 0))
     raw_order_list = order_search(order_status, search_text)
-    order_list = serializer(raw_order_list, datetime_format='string', deep=True)
+    # total = raw_order_list.count()
+    # total_page = math.ceil(float(total) / 5.0)
+    # paginator = Paginator(raw_order_list, 5)
+    # page_num = 1
+    # try:
+    #     page_num = int(req.GET.get('page'))
+    #     order_list = paginator.page(page_num)
+    # except PageNotAnInteger:
+    #     order_list = paginator.page(1)
+    # except EmptyPage:
+    #     order_list = []
+    # except:
+    #     order_list = paginator.page(page_num)
+    order_list = serializer(raw_order_list, deep=True, datetime_format='string')
     day_num, day_income = get_day_info()
     day['count'] = day_num
     day['income'] = day_income
     for itm in order_list:
         itm['status'] = order_status_convert(itm['status'])
+    # first_page = 1
+    # last_page = int(total_page)
+    # page_list = [{'page': i} for i in range(1, int(total_page) + 1)]
+    # paginator_dict = {'first': first_page,
+    #                   'last': last_page,
+    #                   'current': page_num,
+    #                   'page_list': page_list}
     return render_to_response('order_admin.html', {'order_list': order_list,
                                                    'select_code': order_status,
                                                    'search_text': search_text,

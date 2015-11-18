@@ -65,16 +65,16 @@
         </div>
         <div class="pagination">
             <ul>
-                <li class="previous"><a href="http://localhost:8000/admin/order?page={{ paginator.first }}">&laquo;</a></li>
+                <li class="previous"><a href="/admin/order?page={{ paginator.first }}">&laquo;</a></li>
                 {% for page in paginator.page_list %}
                     {% if page.page == paginator.current %}
-                        <li class="active"><a href="http://localhost:8000/admin/order?page={{ page.page }}">{{ page.page }}</a></li>
+                        <li class="active"><a href="/admin/order?page={{ page.page }}">{{ page.page }}</a></li>
                     {% else %}
-                        <li class=""><a href="http://localhost:8000/admin/order?page={{ page.page }}">{{ page.page }}</a></li>
+                        <li class=""><a href="/admin/order?page={{ page.page }}">{{ page.page }}</a></li>
 
                     {% endif %}
                 {% endfor %}
-                <li class="next"><a href="http://localhost:8000/admin/order?page={{ paginator.last }}">&raquo;</a></li>
+                <li class="next"><a href="/admin/order?page={{ paginator.last }}">&raquo;</a></li>
             </ul>
         </div>
     </div>

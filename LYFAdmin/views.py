@@ -874,8 +874,29 @@ def admin_student_order(req, sid):
 @login_require
 def admin_message(req):
     message_list = Message.objects.all()
-    message_list = serializer(message_list, datetime_format='string', deep=True)
-    return render_to_response('message_admin.html', {'message_list': message_list}, context_instance=RequestContext(req))
+    total = message_list.count()
+    total_page = math.ceil(float(total) / 50.0)
+    paginator = Paginator(message_list, 50)
+    page_num = 1
+    try:
+        page_num = int(req.GET.get('page'))
+        message_list = paginator.page(page_num)
+    except PageNotAnInteger:
+        message_list = paginator.page(1)
+    except EmptyPage:
+        message_list = []
+    except:
+        message_list = paginator.page(page_num)
+    message_list = serializer(message_list, deep=True, datetime_format='string')
+    first_page = 1
+    last_page = int(total_page)
+    page_list = [{'page': i} for i in range(1, int(total_page) + 1)]
+    paginator_dict = {'first': first_page,
+                      'last': last_page,
+                      'current': page_num,
+                      'page_list': page_list}
+    return render_to_response('message_admin.html', {'message_list': message_list,
+                                                     'paginator': paginator_dict}, context_instance=RequestContext(req))
 
 
 #新消息

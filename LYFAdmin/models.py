@@ -166,6 +166,8 @@ class Mentor(AbstractBaseUser, BaseModel):
     freeze = models.BooleanField(default=False)
     priority = models.IntegerField(default=0)
 
+    disabled = models.BooleanField(default=False)
+
 
     USERNAME_FIELD = 'account'
     REQUIRED_FIELDS = ['account']

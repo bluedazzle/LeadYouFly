@@ -367,9 +367,10 @@ class CashRecord(BaseModel):
     manage = models.BooleanField(default=False)
     agree = models.NullBooleanField(default=None)
     success = models.NullBooleanField(default=None)
+    info = models.CharField(max_length=500, default='')
 
     def __unicode__(self):
-        return self.record_id
+        return self.record_id + '|' + self.alipay_account
 
 
 class PhoneVerify(BaseModel):

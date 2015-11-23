@@ -64,8 +64,9 @@ def alipay_batch_notify(req):
     if res_code == 'true':
         c_id = req.POST.get('batch_no', None)
         s_detail = req.POST.get('success_details', None)
+        f_detail = req.POST.get('fail_details', '')
+        cash_rec = CashRecord.objects.get(record_id=c_id)
         if s_detail and s_detail != '':
-            cash_rec = CashRecord.objects.get(record_id=c_id)
             if cash_rec.success is not True:
                 cash_rec.success = True
                 cash_rec.save()
@@ -75,6 +76,14 @@ def alipay_batch_notify(req):
                 create_money_record(mentor, u'支出',
                                     -float(cash_rec.money),
                                     '提款到支付宝%s' % str(cash_rec.alipay_account).encode('utf-8'))
+        elif f_detail != '':
+            if cash_rec.success is not True:
+                cash_rec.success = False
+                cash_rec.save()
+                mentor = cash_rec.belong
+                mentor.iden_income -= float(cash_rec.money)
+                mentor.cash_income += float(cash_rec.money)
+                mentor.save()
         return HttpResponse('success')
     else:
         return HttpResponse('fail')

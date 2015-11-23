@@ -16,6 +16,7 @@
                 <th data-sortable="true">是否处理</th>
                 <th data-sortable="true">处理结果</th>
                 <th data-sortable="true">转账状态</th>
+                <th data-sortable="true">信息</th>
                 <th>操作</th>
             </tr>
             </thead>
@@ -32,6 +33,7 @@
                     <td>{{ record.manage }}</td>
                     <td>{{ record.agree }}</td>
                     <td>{{ record.success }}</td>
+                    <td>{{ record.info }}</td>
                     <td>{% if record.manage == False and record.belong.freeze == False %}
                         <a href="/admin/pay/cash/confirm/{{ record.id }}/" target="_blank" class="btn btn-primary">同意</a>
                         <a href="/admin/pay/cash/rejected/{{ record.id }}/" class="btn-warning btn">驳回</a>

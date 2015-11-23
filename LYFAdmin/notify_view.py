@@ -69,6 +69,7 @@ def alipay_batch_notify(req):
         if s_detail and s_detail != '':
             if cash_rec.success is not True:
                 cash_rec.success = True
+                cash_rec.info = s_detail
                 cash_rec.save()
                 mentor = cash_rec.belong
                 mentor.iden_income -= float(cash_rec.money)
@@ -79,6 +80,7 @@ def alipay_batch_notify(req):
         elif f_detail != '':
             if cash_rec.success is not True:
                 cash_rec.success = False
+                cash_rec.info = f_detail
                 cash_rec.save()
                 mentor = cash_rec.belong
                 mentor.iden_income -= float(cash_rec.money)

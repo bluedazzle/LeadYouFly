@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+from __future__ import unicode_literals
 from django.core.management.base import BaseCommand
 from LYFAdmin.models import Student
 import datetime
@@ -34,37 +35,24 @@ class Command(BaseCommand):
         total_p = user_list.count()
         for itm in s_user_list:
             total_money += itm['total']
-            if itm['total'] >= 50:
+            if 50 <= itm['total'] < 100:
                 p_50 += 1
+            elif 100 <= itm['total'] < 400:
                 p_100 += 1
+            elif 400 <= itm['total'] < 800:
                 p_400 += 1
+            elif 800 <= itm['total'] < 2000:
                 p_800 += 1
-                p_2000 += 1
-                continue
-            elif itm['total'] >= 100:
-                p_100 += 1
-                p_400 += 1
-                p_800 += 1
-                p_2000 += 1
-                continue
-            elif itm['total'] >= 400:
-                p_400 += 1
-                p_800 += 1
-                p_2000 += 1
-            elif itm['total'] >= 800:
-                p_800 += 1
-                p_2000 += 1
-                continue
             elif itm['total'] >= 2000:
                 p_2000 += 1
-                continue
-
-        percent_100 = (p_100 + p_400 + p_800 + p_2000) / total_p
+        per_100 = (p_100 + p_400 + p_800 + p_2000)
+        percent_100 = float(per_100) / total_p
         result = u'''消费金额：{0}
 2000以上人数：{1}
 800以上人数：{2}
 400以上人数：{3}
 100以上人数：{4}
 50以上人数：{5}
-过百元用户占比：{6}'''.format(total_money, p_2000, p_800, p_400, p_100, p_50, percent_100)
-        print result
+过百元用户：{6}
+过百元用户占比：{7}'''.format(total_money, p_2000, p_800, p_400, p_100, p_50, per_100, percent_100)
+        print result.encode('utf-8')

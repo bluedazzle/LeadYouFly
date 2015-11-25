@@ -45,7 +45,7 @@ def alipay_notify(req):
                     order.teach_by.iden_income += order.order_price
                     order.teach_by.total_income += order.order_price
                     order.teach_by.save()
-                    send_confirm_msg(str(order.belong.phone))
+                    send_confirm_msg(str(order.belong.phone), str(order.teach_by.phone))
                     order_mes = ORDER_BUY_MES % order.belong.nick
                     create_new_message(order_mes, belong=order.belong)
             elif status == 'TRADE_FINISHED':

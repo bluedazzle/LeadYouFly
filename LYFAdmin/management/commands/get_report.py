@@ -23,14 +23,14 @@ class Command(BaseCommand):
         for i, user in enumerate(user_list):
             # user_order = user.stu_orders.filter(Q(status=1) | Q(status=2) | Q(status=3) | Q(status=4))
             user_order = user.stu_orders.all()
-        total_money = 0.0
-        fu = False
-        if user_order.count() >= 2:
-            fu = True
-        for order in user_order:
-            total_money += float(order.order_price)
-        s_user_list[i]['total'] = total_money
-        s_user_list[i]['fu'] = fu
+            total_money = 0.0
+            fu = False
+            if user_order.count() >= 2:
+                fu = True
+            for order in user_order:
+                total_money += float(order.order_price)
+            s_user_list[i]['total'] = total_money
+            s_user_list[i]['fu'] = fu
 
         p_50 = 0
         p_100 = 0
@@ -69,5 +69,5 @@ class Command(BaseCommand):
     过百元用户：{6}
     xiaofei:{7}
     fu:{8}
-    过百元用户占比：{9}'''.format(total_money, p_2000, p_800, p_400, p_100, p_50, zhi_x, fu_percent, percent_100)
+    过百元用户占比：{9}'''.format(total_money, p_2000, p_800, p_400, p_100, p_50, per_100, zhi_x, fu_percent, percent_100)
         print result.encode('utf-8')

@@ -409,3 +409,18 @@ class Notice(BaseModel):
 
     def __unicode__(self):
         return self.title
+
+
+class Coupon(BaseModel):
+    type_dict = {(1, u'注册赠送'),
+                 (2, u'邀请注册赠送'),
+                 (3, u'系统赠送')}
+    money = models.FloatField(default=0.0)
+    type = models.IntegerField(max_length=1, default=1, choices=type_dict)
+    info = models.CharField(max_length=500, default='')
+    use = models.BooleanField(default=False)
+    expire = models.DateField()
+    belong = models.ForeignKey(Student, related_name='stu_coupons')
+
+    def __unicode__(self):
+        return u'{0}:{1}元'.format(self.belong.account, self.money)

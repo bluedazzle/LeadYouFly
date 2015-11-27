@@ -1,0 +1,41 @@
+# coding: utf-8
+from __future__ import unicode_literals
+import requests
+import hashlib
+import json
+import sys
+reload(sys)
+sys.setdefaultencoding('utf8')
+
+api_host = 'http://ask.1006.tv'
+app_name = 'loldata'
+key = 'kbpRXtPWoDuM2'
+channel = '9'
+
+
+def get_xcode(*args):
+    md5 = hashlib.md5()
+    params = ''
+    for arg in args:
+        params += arg
+    params = params.encode('utf-8')
+    md5.update(params)
+    return md5.hexdigest()
+
+
+def get_answer(question=''):
+    xcode = get_xcode(app_name, channel, key)
+    urls = '{0}/foundNewUser/{1}/?channel={2}&xcode={3}'.format(api_host, app_name, channel, xcode)
+    r1 = requests.get(urls)
+    user_id = json.loads(r1.content)['result']
+    xcode = get_xcode(user_id, question, key)
+    req_data = {'user': user_id,
+                'question': question,
+                'channel': channel,
+                'xcode': xcode,
+                'mid': 0,
+                'chat_type': 0}
+    r2 = requests.post('http://ask.1006.tv/question/loldata', data=req_data)
+    answer = json.loads(r2.content)['result']['answer']
+    answer = unicode(answer).replace('小问', '小飞')
+    return '{0}\n来飞吧游戏教练，让教练一对一教你{1}'.format(answer, question)

@@ -4,6 +4,7 @@ from django.http import HttpResponse
 from django.shortcuts import render
 from django.views.decorators.csrf import csrf_exempt
 from wechat_sdk import WechatBasic
+from kw import get_answer
 
 # Create your views here.
 
@@ -30,7 +31,8 @@ def wechat_service(req):
         wechat.parse_data(body_text)
         message = wechat.get_message()
         if message.type == 'text':
-            response = wechat.response_text(u'success')
+            answer = get_answer(message.content)
+            response = wechat.response_text(answer)
         else:
             response = wechat.response_text(u'^_^')
         return HttpResponse(response)

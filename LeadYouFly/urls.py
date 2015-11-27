@@ -3,6 +3,7 @@ from django.contrib import admin
 import settings
 import LYFSite.urls
 import LYFAdmin.urls
+import weichat.urls
 
 urlpatterns = patterns('',
                        # Examples:
@@ -10,6 +11,7 @@ urlpatterns = patterns('',
                        # url(r'^blog/', include('blog.urls')),
 
                        url(r'^site_admin/', include(admin.site.urls)),
+                       url(r'^service/v1/', include(weichat.urls)),
                        url(r'^css/(?P<path>.*)$', 'django.views.static.serve', {'document_root': settings.CSS_DIR}),
                        url(r'^img/(?P<path>.*)$', 'django.views.static.serve', {'document_root': settings.IMG_DIR}),
                        url(r'^js/(?P<path>.*)$', 'django.views.static.serve', {'document_root': settings.JS_DIR}),

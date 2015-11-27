@@ -46,6 +46,7 @@ INSTALLED_APPS = (
     'LYFAdmin',
     'LYFSite',
     'DjangoUeditor',
+    'weichat',
 )
 
 MIDDLEWARE_CLASSES = (

@@ -8,7 +8,7 @@ from kw import get_answer
 
 # Create your views here.
 
-ACCESS_TOKEN = 'test'
+ACCESS_TOKEN = '2RGp6ozXkHZg17x8d3pSxd9qtOTWECGdvAzPg77jiUBQH5ij87-TeNPQKPQrH_lN78zk8eDvQS3cuM8ZceUguNpJGFjZgjLBjIvkVTckbsgZNYhAJAGUF'
 
 @csrf_exempt
 def wechat_service(req):
@@ -34,5 +34,5 @@ def wechat_service(req):
             answer = get_answer(message.content)
             response = wechat.response_text(answer)
         else:
-            response = wechat.response_text(u'^_^')
+            response = wechat.response_text(u'小飞现在还不能理解其他类型的消息呢～请输入文字')
         return HttpResponse(response)

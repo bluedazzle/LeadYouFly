@@ -38,4 +38,4 @@ def get_answer(question=''):
     r2 = requests.post('http://ask.1006.tv/question/loldata', data=req_data)
     answer = json.loads(r2.content)['result']['answer']
     answer = unicode(answer).replace('小问', '小飞')
-    return '{0}\n来飞吧游戏教练，让教练一对一教你{1}'.format(answer, question)
+    return '{0}\n <a href="http://www.fibar.cn"> 来飞吧游戏教练，让教练一对一教你{1}</a>'.format(answer, question)

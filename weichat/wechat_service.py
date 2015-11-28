@@ -39,7 +39,7 @@ class WechatService(object):
         return new_channel
 
 
-    def get_promotion_info(self, openID, channel):
+    def get_promotion_info(self, openID, channel=None):
         result = Promotion.objects.filter(open_id=openID)
         if result.exists():
             return result[0]
@@ -76,13 +76,15 @@ class WechatService(object):
     def event_manage(self, message):
         open_id = message.source
         if message.type == 'subscribe':
-            channel = Channel.objects.get(ticket=message.ticket)
-            promotion = self.get_promotion_info(open_id, channel)
-            return promotion.channel.welcome_text
+            channel_list = Channel.objects.filter(ticket=message.ticket)
+            if channel_list.exists():
+                channel = channel_list[0]
+                promotion = self.get_promotion_info(open_id, channel)
+                return promotion.channel.welcome_text
+            else:
+                return '欢迎关注飞吧游戏教练，我是小飞，可以帮助您解决LOL的任何问题哦'
         elif message.type == 'unsubscribe':
-            print 'tt'
             promotion = self.get_promotion_info(open_id)
-            print 'pt '
             promotion.cancel = True
             promotion.save()
             return ''

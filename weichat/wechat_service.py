@@ -64,7 +64,6 @@ class WechatService(object):
                        'unsubscribe': self.event_manage,
                        'scan': self.event_manage
                        }
-        print message.type
         result = manage_dict[message.type](message)
         response_text = self.wechat.response_text(result)
         return response_text
@@ -81,7 +80,9 @@ class WechatService(object):
             promotion = self.get_promotion_info(open_id, channel)
             return promotion.channel.welcome_text
         elif message.type == 'unsubscribe':
+            print 'tt'
             promotion = self.get_promotion_info(open_id)
+            print 'pt '
             promotion.cancel = True
             promotion.save()
             return ''

@@ -28,6 +28,8 @@ from qn import upload_file_qn, list_file, QINIU_DOMAIN, VIDEO_CONVERT_PARAM, VID
 from message import push_custom_message
 
 # Create your views here.
+from weichat.models import Channel, WeChatAdmin, Promotion
+from weichat.wechat_service import WechatService
 
 
 def test(req):
@@ -918,6 +920,53 @@ def admin_message_new(req):
             push_custom_message(content, send_all=True)
     return HttpResponseRedirect('/admin/message')
 
+
+@login_require
+def admin_wechat(req):
+    channel_list = Channel.objects.all()
+    we_admin = WeChatAdmin.objects.all()[0]
+    return render_to_response('wechat_admin.html', {'channel_list': channel_list,
+                                                    'wechat_admin': we_admin}, context_instance=RequestContext(req))
+
+
+@login_require
+def admin_wechat_new_channel(req):
+    area = req.POST.get('area', None)
+    scene = req.POST.get('scene', None)
+    welcome = req.POST.get('welcome', None)
+
+    if (area and scene and welcome) is not None:
+        WS = WechatService()
+        channel = WS.create_promotion_qrcode(name=area, scene=scene)
+        channel.welcome_text = welcome
+        channel.save()
+    return HttpResponseRedirect('/admin/wechat/')
+
+
+@login_require
+def admin_wechat_setting(req):
+    app_id = req.POST.get('app_id', None)
+    app_secret = req.POST.get('app_secret', None)
+    if (app_id and app_secret) is not None:
+        w_admin = WeChatAdmin.objects.all()[0]
+        w_admin.app_id = app_id
+        w_admin.app_secret = app_secret
+        w_admin.save()
+    return HttpResponseRedirect('/admin/wechat/')
+
+
+@login_require
+def admin_wechat_refresh(req):
+    WS = WechatService()
+    WS.refresh_token()
+    return HttpResponseRedirect('/admin/wechat/')
+
+
+@login_require
+def admin_wechat_detail(req, pid):
+    channel = get_object_or_404(Channel, id=pid)
+    promotion_list = Promotion.objects.filter(channel=channel)
+    return render_to_response('wechat_detail_admin.html', {'promotion_list': promotion_list})
 
 
 

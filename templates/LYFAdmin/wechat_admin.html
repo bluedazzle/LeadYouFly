@@ -1,0 +1,112 @@
+{% extends "admin_base.html" %}
+{% block title %}微信管理{% endblock %}
+{% block page %}微信管理{% endblock %}
+{% block content %}
+    <div class="my_contianer">
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <h3 class="panel-title">主配置设置（请勿轻易更改）</h3>
+            </div>
+            <div class="panel-body">
+                <div>
+                    <form action="/admin/wechat/setting" method="post">
+                        {% csrf_token %}
+                        <div class="form-group">
+                            <label for="">AppID：</label>
+                            <input type="text" class="form-control" name="app_id" id="app_id" value="{{ wechat_admin.app_id }}"
+                                   placeholder="AppID" >
+                        </div>
+                        <div class="form-group">
+                            <label for="">AppSecret：</label>
+                            <input type="text" class="form-control" name="app_secret" id="app_secret" value="{{ wechat_admin.app_secret }}"
+                                   placeholder="AppSecret">
+                        </div>
+                        <button type="submit" class="btn btn-primary">提交</button>
+                    </form>
+                </div>
+                <br/>
+
+                <div>
+                    <div class="form-inline">
+                        <label for="">access_token：</label>
+                        <span>{{ wechat_admin.access_token }}</span>
+                        <a href="/admin/wechat/refresh" class="btn btn-primary">刷新</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <h3 class="panel-title">二维码推广管理</h3>
+            </div>
+            <div class="panel-body">
+                <button class="btn btn-primary" data-toggle="modal" data-target="#myModal">增加推广渠道</button>
+                <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                                        aria-hidden="true">&times;</span></button>
+                                <h4 class="modal-title" id="myModalLabel">新渠道</h4>
+                            </div>
+                            <div class="modal-body">
+                                <form action="/admin/wechat/new_channel" method="post">
+                                    {% csrf_token %}
+                                    <div class="form-group">
+                                        <label for="">区域：</label>
+                                        <input type="text" class="form-control" name="area" id="area"
+                                               placeholder="城市\区域\学校\推广人">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="">scene：</label>
+                                        <input type="text" class="form-control" name="scene" id="scene"
+                                               placeholder="scene">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="">欢迎文字：</label>
+                                        <textarea name="welcome" id="welcome" class="form-control" cols="30" rows="10"></textarea>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-default" data-dismiss="modal">关闭
+                                        </button>
+                                        <button type="submit" class="btn btn-primary">确定</button>
+                                    </div>
+                                </form>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                <br/>
+                <table class="table table-hover" data-toggle="table">
+                    <thead>
+                    <tr>
+                        <th data-sortable="true">推广渠道</th>
+                        <th data-sortable="true">生成时间</th>
+                        <th data-sortable="true">ticket</th>
+                        <th data-sortable="true">二维码</th>
+                        <th data-sortable="true">欢迎文字</th>
+                        <th data-sortable="true">推广数</th>
+                        <th data-sortable="true">推广详情</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for channel in channel_list %}
+                        <tr>
+                            <td>{{ channel.name }}</td>
+                            <td>{{ channel.create_time | date:"F j, Y" }}</td>
+                            <td>{{ channel.ticket |slice:"10" }}...</td>
+                            <td><a class="btn btn-primary" href="https://mp.weixin.qq.com/cgi-bin/showqrcode?ticket={{ channel.ticket }}">查看</a></td>
+                            <td>{{ channel.welcome|slice:"10" }}...</td>
+                            <td>{{ channel.get_channel_promotion }}</td>
+                            <td><a class="btn btn-primary" href="/admin/wechat/channel/detail/{{ channel.id }}/">查看</a></td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+
+    </div>
+{% endblock %}

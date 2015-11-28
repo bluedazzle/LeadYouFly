@@ -937,9 +937,7 @@ def admin_wechat_new_channel(req):
 
     if (area and scene and welcome) is not None:
         WS = WechatService()
-        channel = WS.create_promotion_qrcode(name=area, scene=scene)
-        channel.welcome_text = welcome
-        channel.save()
+        channel = WS.create_promotion_qrcode(name=area, scene=scene, welcome=welcome)
     return HttpResponseRedirect('/admin/wechat/')
 
 

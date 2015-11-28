@@ -97,7 +97,7 @@
                             <td>{{ channel.create_time | date:"F j, Y" }}</td>
                             <td>{{ channel.ticket |slice:"10" }}...</td>
                             <td><a class="btn btn-primary" href="https://mp.weixin.qq.com/cgi-bin/showqrcode?ticket={{ channel.ticket }}">查看</a></td>
-                            <td>{{ channel.welcome|slice:"10" }}...</td>
+                            <td>{{ channel.welcome_text|slice:"10" }}...</td>
                             <td>{{ channel.get_channel_promotion }}</td>
                             <td><a class="btn btn-primary" href="/admin/wechat/channel/detail/{{ channel.id }}/">查看</a></td>
                         </tr>

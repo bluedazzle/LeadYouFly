@@ -82,7 +82,7 @@ class WechatService(object):
                 promotion = self.get_promotion_info(open_id, channel)
                 return promotion.channel.welcome_text
             else:
-                return '欢迎关注飞吧游戏教练，我是小飞，可以帮助您解决LOL的任何问题哦'
+                return '嘿！欢迎关注飞吧游戏教练，直接输入文字提出LOL中遇到的任何问题，都可以第一时间得到解答，更有大神教练提供一对一游戏教学服务，讲道理的话，这里是教你快速上分的不二之选。'
         elif message.type == 'unsubscribe':
             promotion = self.get_promotion_info(open_id)
             promotion.cancel = True

@@ -88,7 +88,8 @@
                     <tr>
                         <th data-sortable="true">推广渠道</th>
                         <th data-sortable="true">生成时间</th>
-                        <th data-sortable="true">ticket</th>
+                        <th data-sortable="true">联系人</th>
+                        <th data-sortable="true">scene</th>
                         <th data-sortable="true">二维码</th>
                         <th data-sortable="true">欢迎文字</th>
                         <th data-sortable="true">推广数</th>
@@ -100,7 +101,8 @@
                         <tr>
                             <td>{{ channel.name }}</td>
                             <td>{{ channel.create_time | date:"F j, Y" }}</td>
-                            <td>{{ channel.ticket |slice:"10" }}...</td>
+                            <td>{{ channel.phone }}</td>
+                            <td>{{ channel.scene }}</td>
                             <td><a class="btn btn-primary" href="https://mp.weixin.qq.com/cgi-bin/showqrcode?ticket={{ channel.ticket }}">查看</a></td>
                             <td>{{ channel.welcome_text|slice:"10" }}...</td>
                             <td>{{ channel.get_channel_promotion }}</td>

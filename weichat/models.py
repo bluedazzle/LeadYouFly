@@ -14,7 +14,7 @@ class Channel(BaseModel):
     name = models.CharField(max_length=256, default='')
     scene = models.CharField(max_length=60, unique=True)
     ticket = models.CharField(max_length=512, default='')
-    welcome_text = models.CharField(max_length=2000, default='')
+    welcome_text = models.TextField(default='')
 
     def get_channel_promotion(self):
         return self.cnl_pros.all().count()

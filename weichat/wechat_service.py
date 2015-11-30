@@ -84,8 +84,7 @@ class WechatService(object):
             else:
                 return '''嘿！欢迎关注飞吧游戏教练。
 
-直接发送文字消息，提出关于LOL的任何问题，小飞都会第一时间给你答复。
-（Try it~[坏笑]）
+直接发送文字消息，提出关于LOL的任何问题，小飞都会第一时间给你答复。Try it~[坏笑]
 
 更有大神教练提供一对一游戏教学服务，讲道理的话，这里是教你快速上分的不二之选。'''
         elif message.type == 'unsubscribe':

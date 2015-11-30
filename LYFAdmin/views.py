@@ -983,6 +983,8 @@ def promotion_login(req):
             channel = channel_list[0]
             re_url = '/admin/wechat/channel/detail/{0}/'.format(channel.id)
             return HttpResponseRedirect(re_url)
+    else:
+        return render_to_response('promotion_login.html')
 
 
 

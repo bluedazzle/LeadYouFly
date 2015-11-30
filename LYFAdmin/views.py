@@ -968,7 +968,8 @@ def admin_wechat_detail(req, pid):
     valid_promotions = promotion_list.filter(cancel=False).count()
     return render_to_response('wechat_detail_admin.html', {'promotion_list': promotion_list,
                                                            'valid_count': valid_promotions,
-                                                           'total_count': total_promotions})
+                                                           'total_count': total_promotions,
+                                                           'channel': channel})
 
 
 def promotion(req):

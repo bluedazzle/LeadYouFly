@@ -80,6 +80,8 @@ class WechatService(object):
             if channel_list.exists():
                 channel = channel_list[0]
                 promotion = self.get_promotion_info(open_id, channel)
+                promotion.cancel = False
+                promotion.save()
                 return promotion.channel.welcome_text
             else:
                 return '''嘿！欢迎关注飞吧游戏教练。

@@ -6,3 +6,4 @@
 .DS_Store
 LYFAdmin/migrations/
 *.xls
+weichat/migrations/

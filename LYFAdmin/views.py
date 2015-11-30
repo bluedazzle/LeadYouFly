@@ -960,11 +960,28 @@ def admin_wechat_refresh(req):
     return HttpResponseRedirect('/admin/wechat/')
 
 
-@login_require
 def admin_wechat_detail(req, pid):
     channel = get_object_or_404(Channel, id=pid)
     promotion_list = Promotion.objects.filter(channel=channel)
-    return render_to_response('wechat_detail_admin.html', {'promotion_list': promotion_list})
+    total_promotions = promotion_list.count()
+    valid_promotions = promotion_list.filter(cancel=False).count()
+    return render_to_response('wechat_detail_admin.html', {'promotion_list': promotion_list,
+                                                           'valid_count': valid_promotions,
+                                                           'total_count': total_promotions})
+
+
+def promotion(req):
+    return render_to_response('promotion_login.html')
+
+
+def promotion_login(req):
+    phone = req.GET.get('username', '')
+    if phone != '':
+        channel_list = Channel.objects.filter(phone=phone)
+        if channel_list.exists():
+            channel = channel_list[0]
+            re_url = '/admin/wechat/channel/detail/{0}/'.format(channel.id)
+            return HttpResponseRedirect(re_url)
 
 
 

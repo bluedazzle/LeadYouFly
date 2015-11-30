@@ -69,5 +69,7 @@ urlpatterns = patterns('',
                        url(r'^wechat/refresh$', views.admin_wechat_refresh),
                        url(r'^wechat/new_channel', views.admin_wechat_new_channel),
                        url(r'^wechat/channel/detail/(?P<pid>(\d)+)/$', views.admin_wechat_detail),
+                       url(r'^promotion$', views.promotion),
+                       url(r'^promotion/login$', views.promotion_login),
 
 )

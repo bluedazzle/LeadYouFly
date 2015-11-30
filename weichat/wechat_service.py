@@ -28,13 +28,14 @@ class WechatService(object):
         return token
 
 
-    def create_promotion_qrcode(self, name, scene, welcome):
+    def create_promotion_qrcode(self, name, scene, welcome, phone):
         data = {"action_name": "QR_LIMIT_STR_SCENE", "action_info": {"scene": {"scene_str": scene}}}
         ticket = self.wechat.create_qrcode(data)['ticket']
         new_channel = Channel(name=name,
                               scene=scene,
                               ticket=ticket,
-                              welcome_text=welcome)
+                              welcome_text=welcome,
+                              phone=phone)
         new_channel.save()
         return new_channel
 

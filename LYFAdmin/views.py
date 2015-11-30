@@ -934,10 +934,11 @@ def admin_wechat_new_channel(req):
     area = req.POST.get('area', None)
     scene = req.POST.get('scene', None)
     welcome = req.POST.get('welcome', None)
+    phone = req.POST.get('phone', None)
 
-    if (area and scene and welcome) is not None:
+    if (area and scene and welcome and phone) is not None:
         WS = WechatService()
-        channel = WS.create_promotion_qrcode(name=area, scene=scene, welcome=welcome)
+        channel = WS.create_promotion_qrcode(name=area, scene=scene, welcome=welcome, phone=phone)
     return HttpResponseRedirect('/admin/wechat/')
 
 

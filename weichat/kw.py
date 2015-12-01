@@ -39,6 +39,7 @@ def get_answer(question=''):
     r2 = requests.post('http://ask.1006.tv/question/loldata', data=req_data)
     answer = json.loads(r2.content)['result']['answer']
     answer = unicode(answer).replace('小问', '小飞')
+    answer = answer.replace('快问', '小飞')
     if u'张建奇' in question:
         answer = u'叫你爸爸做什么？'
     if u'这里是游戏问答平台，你能换个游戏问题么？' in answer:

@@ -84,8 +84,8 @@ class WechatService(object):
     def text_manage(self, message):
         question = message.content
         result = Question.objects.filter(question=question)
-        if not result.exists():
-            result = Question.objects.filter(question__icontains=question)
+        # if not result.exists():
+        #     result = Question.objects.filter(question__icontains=question)
         if result.exists():
             return result[0].answer
         return get_answer(message.content)

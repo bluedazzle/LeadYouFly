@@ -35,3 +35,11 @@ class Promotion(BaseModel):
 
     def __unicode__(self):
         return self.nick
+
+
+class Question(BaseModel):
+    question = models.CharField(max_length=200, default='')
+    answer = models.TextField(default='')
+
+    def __unicode__(self):
+        return self.question

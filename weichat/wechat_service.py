@@ -1,7 +1,7 @@
 # coding: utf-8
 from __future__ import unicode_literals
 import json
-from weichat.models import WeChatAdmin, Channel, Promotion
+from weichat.models import WeChatAdmin, Channel, Promotion, Question
 from wechat_sdk import WechatBasic
 from kw import get_answer
 
@@ -82,6 +82,12 @@ class WechatService(object):
 
 
     def text_manage(self, message):
+        question = message.content
+        result = Question.objects.filter(question=question)
+        if not result.exists():
+            result = Question.objects.filter(question__icontains=question)
+        if result.exists():
+            return result[0].answer
         return get_answer(message.content)
 
 

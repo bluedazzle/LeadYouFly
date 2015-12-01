@@ -29,6 +29,9 @@ class Promotion(BaseModel):
     nick = models.CharField(max_length=512, default='')
     channel = models.ForeignKey(Channel, related_name='cnl_pros', null=True, blank=True)
     cancel = models.BooleanField(default=False)
+    province = models.CharField(max_length=10, default='')
+    city = models.CharField(max_length=20, default='')
+    sex = models.CharField(max_length=10, default='')
 
     def __unicode__(self):
         return self.nick

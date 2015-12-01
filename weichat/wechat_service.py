@@ -44,9 +44,20 @@ class WechatService(object):
         result = Promotion.objects.filter(open_id=openID)
         if result.exists():
             return result[0]
-        nick = self.wechat.get_user_info(openID)['nickname']
+        user_info = self.wechat.get_user_info(openID)
+        nick = user_info['nickname']
+        city = user_info['city']
+        province = user_info['province']
+        sex = '男'
+        if user_info['sex'] == '2':
+            sex = '女'
+        elif user_info['sex'] == '0':
+            sex = '未知'
         new_promotion = Promotion(open_id=openID,
                                   nick=nick,
+                                  sex=sex,
+                                  city=city,
+                                  province=province,
                                   channel=channel)
         new_promotion.save()
         return new_promotion

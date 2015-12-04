@@ -32,6 +32,7 @@ class Promotion(BaseModel):
     province = models.CharField(max_length=10, default='')
     city = models.CharField(max_length=20, default='')
     sex = models.CharField(max_length=10, default='')
+    reply = models.TextField(default='')
 
     def __unicode__(self):
         return self.nick

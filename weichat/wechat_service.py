@@ -74,7 +74,8 @@ class WechatService(object):
                        'location': self.other_manage,
                        'subscribe': self.event_manage,
                        'unsubscribe': self.event_manage,
-                       'scan': self.event_manage
+                       'scan': self.event_manage,
+                       'view': self.event_manage,
                        }
         result = manage_dict[message.type](message)
         response_text = self.wechat.response_text(result)
@@ -83,6 +84,12 @@ class WechatService(object):
 
     def text_manage(self, message):
         question = message.content
+        open_id = message.source
+        user_list = Promotion.objects.filter(open_id=open_id)
+        if user_list.exists():
+            user = user_list[0]
+            user.reply += '{0}; '.format(question)
+            user.save()
         result = Question.objects.filter(question=question)
         # if not result.exists():
         #     result = Question.objects.filter(question__icontains=question)
@@ -111,6 +118,16 @@ class WechatService(object):
             promotion = self.get_promotion_info(open_id)
             promotion.cancel = True
             promotion.save()
+            return ''
+        elif message.type == 'view':
+            user_list = Promotion.objects.filter(open_id=open_id)
+            if user_list.exists():
+                menu_dict = {'http://www.fibar.cn': '寻找教练',
+                             'http://mp.weixin.qq.com/mp/getmasssendmsg?__biz=MzI4ODAzNzI5OA==#wechat_webview_type=1&wechat_redirect': '发现好玩',
+                             'http://forum.fibar.cn': '飞吧社区'}
+                user = user_list[0]
+                user.reply += '点击菜单：{0}; '.format(menu_dict.get(message.key, '菜单'))
+                user.save()
             return ''
         else:
             promotion = self.get_promotion_info(open_id)

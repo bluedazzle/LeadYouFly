@@ -2,32 +2,26 @@
 <html>
 <head lang="en">
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
     <link href="/img/shortcut.png" rel="shortcut icon"/>
     <title>LOL游戏教练-飞吧游戏教练</title>
     <link href="/css/bootstrap.min.css" rel="stylesheet"/>
     <link href="/css/flat-ui.min.css" rel="stylesheet">
     <link href="/css/custom/leadFlyBase.css" rel="stylesheet"/>
-    <link rel="stylesheet" type="text/css" href="/css/qq.css"/>
     {% block css %}
     {% endblock %}
     {#  <script src="http://cdn.bootcss.com/jquery/1.11.2/jquery.min.js"></script>#}
     <script src="/js/jquery.min.js"></script>
     <script src="/js/flat-ui.min.js"></script>
-{#    <script type="text/javascript" src="/js/base.js"></script>#}
-    <script type="text/javascript" src="/js/qcommon.js"></script>
+    {#  <script src="/js/bootstrap.min.js"></script>#}
 </head>
 <body>
-<div class="suspend">
-    <dl>
-        <dt class="IE6PNG"></dt>
-        <dd class="suspendQQ"><a href="http://wpa.qq.com/msgrd?v=3&uin=765566978&site=qq&menu=yes" target="_blank"></a>
-        </dd>
-        <dd class="suspendTel"><a href="javascript:alert('客服电话：186-7882-2051');"></a></dd>
-    </dl>
-</div>
+
+<div id="mask" onclick="mobileHide()"></div>
+
 <div id="container">
     <div id="header">
-        <nav class="navbar navbar-default" style="margin-bottom: 0;border-radius: 0;padding: 0 5% 0 5%">
+        <nav class="navbar navbar-default" style="margin-bottom: 0;border-radius: 0;padding: 0">
             <div class="container-fluid">
                 <!-- Brand and toggle get grouped for better mobile display -->
                 <div class="navbar-header nav-host">
@@ -38,7 +32,7 @@
                     {#            <span class="icon-bar"></span>#}
                     {#            <span class="icon-bar"></span>#}
                     {#          </button>#}
-                    <a href="http://www.fibar.cn">
+                    <a href="/">
                         <img class="nav-logo" src="/img/logo.png"/>
                     </a>
                     <i class="divide-line"></i>
@@ -59,8 +53,8 @@
                     <ul class="nav navbar-nav navbar-right">
                         <li><a href="/search_teacher" class="lg-title"
                                style="font-size: 16px;font-weight: 700;">寻找教练</a></li>
-                        <li><a href="http://forum.fibar.cn/" class="lg-title"
-                               style="font-size: 16px;font-weight: 700;">社区</a></li>
+                        <li><a href="http://forum.fibar.cn/" class="lg-title" style="font-size: 16px;font-weight: 700;">社区</a>
+                        </li>
                         {% if not is_login %}
                             <li><a href="/login" class="sm-title">登录</a></li>
                             <li><a href="/register" class="sm-title">注册</a></li>
@@ -80,7 +74,7 @@
                                         <br/>
                                         <a href="/user/my_orders">我的订单</a>
                                         <br/>
-                                        <a href="/user/my_follow_mentors">关注教练</a>
+                                        <a href="/user/my_follow_mentors">关注导师</a>
                                         <br/>
                                         <a href="/user/message">消息</a>
                                         <br/>
@@ -127,6 +121,52 @@
             <!-- /.container-fluid -->
         </nav>
     </div>
+
+
+    <div id="mobileHeader">
+        <img src="/img/logo.png">
+        <div class="dropdown">
+            <button class="btn btn-default dropdown-toggle menuBar" type="button" id="dropdownMenu1"
+                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <i class="glyphicon glyphicon-menu-hamburger"></i>
+            </button>
+            <ul class="dropdown-menu dropOption" aria-labelledby="dropdownMenu1">
+                {% if not is_login %}
+                    <li><a href="/login" class="sm-title">登录</a></li>
+                    <li role="separator" class="divider"></li>
+                    <li><a href="/register" class="sm-title">注册</a></li>
+                {% else %}
+                {% endif %}
+
+                {% if login_type == 'student' %}
+                    <li><a><img style="width: 30px;height: 30px;border-radius: 50%"
+                                src="{{ active_user.avatar }}"/><span>{{ active_user.nick }}</span></a></li>
+                    <li role="separator" class="divider"></li>
+                    <li><a href="/user/complete_mes">我的档案</a></li>
+                    <li role="separator" class="divider"></li>
+                    <li><a href="/user/my_orders">我的订单</a></li>
+                    <li role="separator" class="divider"></li>
+                    <li><a href="/user/my_follow_mentors">关注教练</a></li>
+                    <li role="separator" class="divider"></li>
+                    <li><a href="/user/message">消息</a></li>
+                    <li role="separator" class="divider"></li>
+                    <li><a href="/user/security_center">安全中心</a></li>
+                    <li role="separator" class="divider"></li>
+                    <li><a href="/user/complain">投诉</a></li>
+                    <li role="separator" class="divider"></li>
+                    <li><a href="/logout">退出</a></li>
+
+                {% elif login_type == 'teacher' %}
+                {% endif %}
+
+
+            </ul>
+        </div>
+    </div>
+
+    <div class="title-divider"></div>
+
+
     <div id="page" class="clearfix">
         {% block define %}
         {% endblock %}
@@ -160,7 +200,7 @@
                 <div class="text-center col-sm-12">
                     <p style="color: #95a5a6;font-size: 14px">Copyright© fibar.com 版权所有&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;鲁ICP备15029913号
                         <script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");
-                        document.write(unescape("%3Cspan id='cnzz_stat_icon_1256331579'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s11.cnzz.com/z_stat.php%3Fid%3D1256331579%26show%3Dpic1' type='text/javascript'%3E%3C/script%3E"));</script>
+                        document.write(unescape("%3Cspan id='cnzz_stat_icon_1256220804'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s11.cnzz.com/z_stat.php%3Fid%3D1256220804%26show%3Dpic1' type='text/javascript'%3E%3C/script%3E"));</script>
                     </p>
                 </div>
             </div>
@@ -169,6 +209,8 @@
     {% block select_screen %}
     {% endblock %}
 </div>
+
+
 <!-- Modal -->
 <div class="modal fade" id="noticeModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
     <div class="modal-dialog" role="document">
@@ -188,8 +230,5 @@
 {% endif %}
 {% block script %}
 {% endblock %}
-<script type="text/javascript">
-        Common.init();
-    </script>
 </body>
 </html>

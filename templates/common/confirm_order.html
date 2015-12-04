@@ -1,4 +1,7 @@
 {% extends 'base.html' %}
+{% block css %}
+<link href="/css/custom/confirm_order.css" rel="stylesheet"/>
+{% endblock %}
 {% block define %}
     <div class="container">
         <h4 class="text-center">确认订单</h4>
@@ -6,15 +9,15 @@
         <div class="jumbotron">
             <h5 class="text-center">{{ course.name }}</h5>
 
-            <p>课程名称：{{ course.course_info }}</p>
+            <p class="cName">课程名称：{{ course.course_info }}</p>
 
-            <p>价格：￥{{ course.price }}</p>
+            <p class="cOther">价格：￥{{ course.price }}</p>
 
-            <p>教练：{{ course.belong.nick }}</p>
-            <p>你的电话：{{ active_user.phone }}</p>
-            <p>你的QQ：{{ active_user.qq }}</p>
+            <p class="cOther">导师：{{ course.belong.nick }}</p>
+            <p class="cOther">你的电话：{{ active_user.phone }}</p>
+            <p class="cOther">你的QQ：{{ active_user.qq }}</p>
 
-            <form action="/user/create_order/" target="_blank" method="post">
+            <form class="cOther" action="/user/create_order/" target="_blank" method="post">
                 {% csrf_token %}
                 <div class="form-inline">
                     <label for=""><p>学习大区：{% if course.belong.teach_area == '0' %}
@@ -33,6 +36,43 @@
             </form>
 
         </div>
+
+
+        <!--mobile-->
+
+
+        <div>
+            <p class="cMobile">导师：{{ course.belong.nick }}</p>
+            <p class="cMobile">你的电话：<input placeholder="请输入联系方式" value="{{ active_user.phone }}"></p>
+            <p class="cMobile">你的&nbsp&nbspQQ：<input placeholder="请输入QQ号码" value="{{ active_user.qq }}"></p>
+            <form class="" action="/user/create_order/" target="_blank" method="post">
+                {% csrf_token %}
+                <div class="form-inline cMobile">
+                    <label for="">
+                        <p class="">学习大区：{% if course.belong.teach_area == '0' %}
+                            全区
+                            {% elif course.belong.teach_area == '1' %}
+                            电信
+                            {% else %}
+                            联通
+                            {% endif %}
+                        </p>
+                    </label>
+                </div>
+                <p class="cMobile">需要支付：<span class="cPrice">￥{{ course.price }}</span></p>
+
+                <input type="hidden" name="course_id" value="{{ course.id }}">
+
+                <p class="text-right cMobile cInput">
+                    <button class="btn btn-primary btn-lg" onclick="toPay()" target="_Blank" type="submit">立即支付</button>
+                </p>
+            </form>
+        </div>
+
+
+        <!--end mobile-->
+
+
     </div>
     <!-- Modal -->
     <div class="modal fade" id="payModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">

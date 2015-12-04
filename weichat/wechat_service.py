@@ -88,7 +88,7 @@ class WechatService(object):
         user_list = Promotion.objects.filter(open_id=open_id)
         if user_list.exists():
             user = user_list[0]
-            user.reply += '{0}; '.format(question)
+            user.reply = '{0}; 回复内容：{1}'.format(user.reply, question)
             user.save()
         result = Question.objects.filter(question=question)
         # if not result.exists():
@@ -126,7 +126,7 @@ class WechatService(object):
                              'http://mp.weixin.qq.com/mp/getmasssendmsg?__biz=MzI4ODAzNzI5OA==#wechat_webview_type=1&wechat_redirect': '发现好玩',
                              'http://forum.fibar.cn': '飞吧社区'}
                 user = user_list[0]
-                user.reply += '点击菜单：{0}; '.format(menu_dict.get(message.key, '菜单'))
+                user.reply += '{0}; 点击菜单：{0}'.format(user.reply, menu_dict.get(message.key, '菜单'))
                 user.save()
             return ''
         else:

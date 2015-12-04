@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <link href="/img/shortcut.png" rel="shortcut icon"/>
+    <link href="/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/css/flat-ui.min.css" rel="stylesheet">
+    <link href="/css/LFYAdmin/main.css" rel="stylesheet">
+    <title></title>
+</head>
+<body style="background-color: #eee; font-family:microsoft YaHei;">
+<div class="container">
+    <div class="login">
+
+        <div class="login-screen"
+             style="background-color: #1abc9c; border-radius: 10px; box-shadow: inset -2px -2px 0 rgba(0, 0, 0, 0.15);">
+
+            <div class="">
+                <div class="login-icon">
+                    <img src="/img/book.png" alt="Welcome to Mail App">
+                    <h4>Welcome to
+                        <small>Fibar</small>
+                    </h4>
+                </div>
+
+                <div class="login-form">
+                    <form action="/admin/promotion/login" method="get" id="login_form">
+                        {% csrf_token %}
+                        <div class="input-group">
+                            <span class="input-group-addon" style="min-width: 80px">渠道负责人手机号</span>
+                            <input type="text" class="form-control" id="username" name="username" placeholder="账号"
+                                   onkeyup="this.value=this.value.replace(/\D/g,'')">
+                        </div>
+                        <br/>
+                        <button class="btn btn-primary btn-large btn-block" type="submit" id="login_button">登录</button>
+                    </form>
+                    <a class="login-link" href="#"></a>
+                </div>
+            </div>
+            <br/>
+            <br/>
+
+            <h1 class="text-center " style="color:#f5f5f5;font-size: 40px;">飞吧游戏教练渠道管理</h1>
+        </div>
+
+    </div>
+</div>
+<script src="/js/jquery.min.js"></script>
+<script src="/js/flat-ui.min.js"></script>
+</body>
+</html>

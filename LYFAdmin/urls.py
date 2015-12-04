@@ -64,5 +64,12 @@ urlpatterns = patterns('',
                        url(r'^student/info/(?P<sid>(\d)+)/$', views.admin_student_info),
                        url(r'^student/info/(?P<sid>(\d)+)/modify_exp/$', views.admin_student_modify_exp),
                        url(r'^student/order/(?P<sid>(\d)+)/$', views.admin_student_order),
+                       url(r'^wechat/$', views.admin_wechat),
+                       url(r'^wechat/setting$', views.admin_wechat_setting),
+                       url(r'^wechat/refresh$', views.admin_wechat_refresh),
+                       url(r'^wechat/new_channel', views.admin_wechat_new_channel),
+                       url(r'^wechat/channel/detail/(?P<pid>(\d)+)/$', views.admin_wechat_detail),
+                       url(r'^promotion$', views.promotion),
+                       url(r'^promotion/login$', views.promotion_login),
 
 )

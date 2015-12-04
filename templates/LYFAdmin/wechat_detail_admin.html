@@ -1,0 +1,36 @@
+{% extends "admin_base.html" %}
+{% block title %}微信管理{% endblock %}
+{% block page %}微信管理{% endblock %}
+{% block content %}
+    <div class="my_contianer">
+        <span>渠道：{{ channel.name }}   总推广人数：{{ total_count }}人， 有效推广人数：{{ valid_count }}人</span>
+        <table class="table table-hover" data-toggle="table">
+            <thead>
+            <tr>
+                <th data-sortable="true">用户名</th>
+                <th data-sortable="true">性别</th>
+                <th data-sortable="true">省份</th>
+                <th data-sortable="true">城市</th>
+                <th data-sortable="true">关注时间</th>
+                <th data-sortable="true">open_id</th>
+                <th data-sortable="true">所属渠道</th>
+                <th data-sortable="true">是否取关</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for promotion in promotion_list %}
+                <tr>
+                    <td>{{ promotion.nick }}</td>
+                    <td>{{ promotion.sex }}</td>
+                    <td>{{ promotion.province }}</td>
+                    <td>{{ promotion.city }}</td>
+                    <td>{{ promotion.create_time | date:"Y-m-d H:i:s" }}</td>
+                    <td>{{ promotion.open_id }}</td>
+                    <td>{{ promotion.channel.name }}</td>
+                    <td>{{ promotion.cancel }}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}

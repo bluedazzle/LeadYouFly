@@ -25,13 +25,13 @@ SECRET_KEY = '-lxgg3^qp92z*2mr33&w)5_st6m-p5qxi=qi4_j6vkte=2u$rg'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-TEMPLATE_DEBUG = True
+TEMPLATE_DEBUG = False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['lol.fibar.cn']
 
-WEBSITE_SIGN = 'D'
+WEBSITE_SIGN = 'L'
 
-HOST = 'http://www.fibar.cn/'
+HOST = 'http://lol.fibar.cn/'
 
 
 # Application definition
@@ -46,6 +46,7 @@ INSTALLED_APPS = (
     'LYFAdmin',
     'LYFSite',
     'DjangoUeditor',
+    'weichat',
 )
 
 MIDDLEWARE_CLASSES = (

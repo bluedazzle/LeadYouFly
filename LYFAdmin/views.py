@@ -3,7 +3,9 @@ import time
 import hashlib
 import ujson
 import copy
-
+from django.core.paginator import Paginator
+from django.core.paginator import PageNotAnInteger
+from django.core.paginator import EmptyPage
 
 from django.shortcuts import render_to_response, HttpResponseRedirect
 from django.shortcuts import get_object_or_404
@@ -11,7 +13,7 @@ from django.http import HttpResponse, Http404
 from django.template import RequestContext
 from django.db.models import Q
 from dss.Serializer import serializer
-
+import math
 
 from LYFAdmin.models import Hero, Mentor, IndexAdmin, Order, Course, Student, ChargeRecord, MoneyRecord, CashRecord, \
     Admin, Notice, Message, Report
@@ -26,6 +28,8 @@ from qn import upload_file_qn, list_file, QINIU_DOMAIN, VIDEO_CONVERT_PARAM, VID
 from message import push_custom_message
 
 # Create your views here.
+from weichat.models import Channel, WeChatAdmin, Promotion
+from weichat.wechat_service import WechatService
 
 
 def test(req):
@@ -153,7 +157,7 @@ def admin_index_new_video(req):
 @login_require
 def admin_index_change_recommend(req):
     if req.method != 'POST':
-        return Http404
+        raise Http404
     rec_id_1 = req.POST.get('rec_mentor_1')
     rec_id_2 = req.POST.get('rec_mentor_2')
     rec_id_3 = req.POST.get('rec_mentor_3')
@@ -175,7 +179,7 @@ def admin_index_change_recommend(req):
 @login_require
 def admin_index_change_picture(req):
     if req.method != 'POST':
-        return Http404
+        raise Http404
     index_pic_1 = req.FILES.get('pic_choice_1', None)
     index_pic_2 = req.FILES.get('pic_choice_2', None)
     index_pic_3 = req.FILES.get('pic_choice_3', None)
@@ -329,7 +333,7 @@ def admin_website_del_hero(req):
 @login_require
 def admin_website_new_hero(req):
     if req.method != 'POST':
-        return Http404
+        raise Http404
     hero_pic = req.FILES.get('picture')
     hero_name = req.POST.get('hero_name')
     hero_type = req.POST.getlist('hero_type')
@@ -354,32 +358,71 @@ def admin_website_new_hero(req):
 def admin_order(req):
     day = {}
     raw_order_list = Order.objects.all().order_by('-create_time')
-    order_list = serializer(raw_order_list, deep=True, datetime_format='string')
+    total = raw_order_list.count()
+    total_page = math.ceil(float(total) / 50.0)
+    paginator = Paginator(raw_order_list, 50)
+    page_num = 1
+    try:
+        page_num = int(req.GET.get('page'))
+        order_list = paginator.page(page_num)
+    except PageNotAnInteger:
+        order_list = paginator.page(1)
+    except EmptyPage:
+        order_list = []
+    except:
+        order_list = paginator.page(page_num)
+    order_list = serializer(order_list, deep=True, datetime_format='string')
     for itm in order_list:
         itm['status'] = order_status_convert(itm['status'])
     day_num, day_income = get_day_info()
     day['count'] = day_num
     day['income'] = day_income
+    first_page = 1
+    last_page = int(total_page)
+    page_list = [{'page': i} for i in range(1, int(total_page) + 1)]
+    paginator_dict = {'first': first_page,
+                      'last': last_page,
+                      'current': page_num,
+                      'page_list': page_list}
     return render_to_response('order_admin.html', {'order_list': order_list,
                                                    'select_code': 0,
+                                                   'paginator': paginator_dict,
                                                    'day': day}, context_instance=RequestContext(req))
 
 
 #订单查询
 @login_require
 def admin_order_search(req):
-    day =  {}
-    if req.method != 'POST':
-        return Http404
+    day = {}
     search_text = req.POST.get('search_text', '')
     order_status = int(req.POST.get('order_status', 0))
     raw_order_list = order_search(order_status, search_text)
-    order_list = serializer(raw_order_list, datetime_format='string', deep=True)
+    # total = raw_order_list.count()
+    # total_page = math.ceil(float(total) / 5.0)
+    # paginator = Paginator(raw_order_list, 5)
+    # page_num = 1
+    # try:
+    #     page_num = int(req.GET.get('page'))
+    #     order_list = paginator.page(page_num)
+    # except PageNotAnInteger:
+    #     order_list = paginator.page(1)
+    # except EmptyPage:
+    #     order_list = []
+    # except:
+    #     order_list = paginator.page(page_num)
+    order_list = serializer(raw_order_list, deep=True, datetime_format='string')
     day_num, day_income = get_day_info()
     day['count'] = day_num
     day['income'] = day_income
     for itm in order_list:
         itm['status'] = order_status_convert(itm['status'])
+    # first_page = 1
+    # last_page = int(total_page)
+    # page_list = [{'page': i} for i in range(1, int(total_page) + 1)]
+    # paginator_dict = {'first': first_page,
+    #                   'last': last_page,
+    #                   'current': page_num,
+    #                   'page_list': page_list}
     return render_to_response('order_admin.html', {'order_list': order_list,
                                                    'select_code': order_status,
                                                    'search_text': search_text,
@@ -415,16 +458,16 @@ def admin_mentor(req):
 @login_require
 def admin_mentor_new_mentor(req):
     if req.method != 'POST':
-        return Http404
+        raise Http404
     account = req.POST.get('mentor_account', '')
     passwd = req.POST.get('mentor_passwd', '')
     nick = req.POST.get('mentor_nick', '')
     if account == '' or passwd == '':
-        return Http404
+        raise Http404
     mentor = Mentor.objects.filter(account=account)
     print mentor.count()
     if mentor.exists():
-        return Http404
+        raise Http404
     hash_pass = hashlib.md5(passwd).hexdigest()
     new_mentor = Mentor(account=account,
                         password=hash_pass,
@@ -534,7 +577,7 @@ def admin_mentor_change_price(req, mid, cid):
     mentor = get_object_or_404(Mentor, id=mid)
     course = get_object_or_404(Course, id=cid)
     if course.belong != mentor:
-        return Http404
+        raise Http404
     new_price = float(req.GET.get('new_price'))
     course.price = new_price
     print new_price
@@ -650,11 +693,6 @@ def admin_audit_pass(req, oid):
     order.video_pass = True
     order.save()
     mentor = order.teach_by
-    mentor.cash_income += order.order_price
-    mentor.iden_income -= order.order_price
-    if mentor.iden_income < 0:
-        mentor.iden_income = 0.0
-    mentor.save()
     info = '来自订单%s' % str(order.order_id)
     create_money_record(mentor, '收入', order.order_price, info)
     return HttpResponseRedirect('/admin/audit/')
@@ -838,8 +876,29 @@ def admin_student_order(req, sid):
 @login_require
 def admin_message(req):
     message_list = Message.objects.all()
-    message_list = serializer(message_list, datetime_format='string', deep=True)
-    return render_to_response('message_admin.html', {'message_list': message_list}, context_instance=RequestContext(req))
+    total = message_list.count()
+    total_page = math.ceil(float(total) / 50.0)
+    paginator = Paginator(message_list, 50)
+    page_num = 1
+    try:
+        page_num = int(req.GET.get('page'))
+        message_list = paginator.page(page_num)
+    except PageNotAnInteger:
+        message_list = paginator.page(1)
+    except EmptyPage:
+        message_list = []
+    except:
+        message_list = paginator.page(page_num)
+    message_list = serializer(message_list, deep=True, datetime_format='string')
+    first_page = 1
+    last_page = int(total_page)
+    page_list = [{'page': i} for i in range(1, int(total_page) + 1)]
+    paginator_dict = {'first': first_page,
+                      'last': last_page,
+                      'current': page_num,
+                      'page_list': page_list}
+    return render_to_response('message_admin.html', {'message_list': message_list,
+                                                     'paginator': paginator_dict}, context_instance=RequestContext(req))
 
 
 #新消息
@@ -861,6 +920,72 @@ def admin_message_new(req):
             push_custom_message(content, send_all=True)
     return HttpResponseRedirect('/admin/message')
 
+
+@login_require
+def admin_wechat(req):
+    channel_list = Channel.objects.all()
+    we_admin = WeChatAdmin.objects.all()[0]
+    return render_to_response('wechat_admin.html', {'channel_list': channel_list,
+                                                    'wechat_admin': we_admin}, context_instance=RequestContext(req))
+
+
+@login_require
+def admin_wechat_new_channel(req):
+    area = req.POST.get('area', None)
+    scene = req.POST.get('scene', None)
+    welcome = req.POST.get('welcome', None)
+    phone = req.POST.get('phone', None)
+
+    if (area and scene and welcome and phone) is not None:
+        WS = WechatService()
+        channel = WS.create_promotion_qrcode(name=area, scene=scene, welcome=welcome, phone=phone)
+    return HttpResponseRedirect('/admin/wechat/')
+
+
+@login_require
+def admin_wechat_setting(req):
+    app_id = req.POST.get('app_id', None)
+    app_secret = req.POST.get('app_secret', None)
+    if (app_id and app_secret) is not None:
+        w_admin = WeChatAdmin.objects.all()[0]
+        w_admin.app_id = app_id
+        w_admin.app_secret = app_secret
+        w_admin.save()
+    return HttpResponseRedirect('/admin/wechat/')
+
+
+@login_require
+def admin_wechat_refresh(req):
+    WS = WechatService()
+    WS.refresh_token()
+    return HttpResponseRedirect('/admin/wechat/')
+
+
+def admin_wechat_detail(req, pid):
+    channel = get_object_or_404(Channel, id=pid)
+    promotion_list = Promotion.objects.filter(channel=channel).order_by('-create_time')
+    total_promotions = promotion_list.count()
+    valid_promotions = promotion_list.filter(cancel=False).count()
+    return render_to_response('wechat_detail_admin.html', {'promotion_list': promotion_list,
+                                                           'valid_count': valid_promotions,
+                                                           'total_count': total_promotions,
+                                                           'channel': channel})
+
+
+def promotion(req):
+    return render_to_response('promotion_login.html')
+
+
+def promotion_login(req):
+    phone = req.GET.get('username', '')
+    if phone != '':
+        channel_list = Channel.objects.filter(phone=phone)
+        if channel_list.exists():
+            channel = channel_list[0]
+            re_url = '/admin/wechat/channel/detail/{0}/'.format(channel.id)
+            return HttpResponseRedirect(re_url)
+    else:
+        return render_to_response('promotion_login.html')
 
 
 

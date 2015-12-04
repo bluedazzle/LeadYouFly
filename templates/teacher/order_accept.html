@@ -14,7 +14,7 @@
         </span>
                 </div>
                 <div class="col-lg-3 col-md-3 panel-order-item-head">
-                    <span>订单时间：{{ order.create_time | date:"Y-m-d" }}</span>
+                    <span>订单时间：{{ order.create_time | date:"Y-m-d H:i:s" }}</span>
                 </div>
                 <div class="col-lg-3 col-md-3 panel-order-start">
         <span>开课时间：
@@ -69,6 +69,7 @@
                     {% elif order.status == 5 %}
                         <button class="btn btn-default btn-hg disabled" style="font-size: 18px;">已关闭</button>
                     {% endif %}
+                    <div><a href="http://forum.fibar.cn/" target="_blank">去社区讨论</a></div>
                 </div>
             </div>
         </div>
@@ -94,9 +95,9 @@
 
                 {% for page in men_orders.paginator.page_range %}
                     {% if page == men_orders.number %}
-                        <li class="active"><a href="#">{{ page }}</a></li>
+                        <li class="active pagination-page"><a href="#">{{ page }}</a></li>
                     {% else %}
-                        <li><a href="/teacher/order_accept?page_num={{ page }}">{{ page }}</a></li>
+                        <li class="pagination-page"><a href="/teacher/order_accept?page_num={{ page }}">{{ page }}</a></li>
                     {% endif %}
                 {% endfor %}
 

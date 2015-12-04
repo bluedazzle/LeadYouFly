@@ -253,10 +253,11 @@ function checkForm(){
 
   var areaTelecom = $("input[name='area_telecom']").attr('checked');
   var areaNetcom = $("input[name='area_netcom']").attr('checked');
+  var areaAll = $("input[name='area_all']").attr('checked');
   var teachArea;
   if(areaTelecom) teachArea = '1';
   if(areaNetcom) teachArea = '2';
-  if(areaTelecom && areaNetcom) teachArea = '0';
+  if(areaAll) teachArea = '0';
 
   var viewVideo = $("input[name='view_video']").attr('checked');
 

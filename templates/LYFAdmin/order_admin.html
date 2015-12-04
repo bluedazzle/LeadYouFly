@@ -5,30 +5,32 @@
     <div class="my_contianer">
         <form action="/admin/order/search" method="post">
             {% csrf_token %}
-        <div class="row">
-            <div class="col-md-4">
-                <span>订单状态：</span>
-                <select id="order_status" name="order_status" class="form-control select select-primary select-block mbl">
-                    <option value="0" selected>所有订单</option>
-                    <option value="1">待确认</option>
-                    <option value="2">已确认</option>
-                    <option value="3">已完成</option>
-                    <option value="4">已评价</option>
-                    <option value="5">已撤销</option>
-                    <option value="6">待付款</option>
-                </select>
+            <div class="row">
+                <div class="col-md-4">
+                    <span>订单状态：</span>
+                    <select id="order_status" name="order_status"
+                            class="form-control select select-primary select-block mbl">
+                        <option value="0" selected>所有订单</option>
+                        <option value="1">待确认</option>
+                        <option value="2">已确认</option>
+                        <option value="3">已完成</option>
+                        <option value="4">已评价</option>
+                        <option value="5">已撤销</option>
+                        <option value="6">待付款</option>
+                    </select>
+                </div>
+                <div class="col-md-6">
+                    <input type="text" id="search_text" name="search_text" class="form-control" placeholder="搜索"
+                           value="{{ search_text }}"/>
+                </div>
+                <div class="col-md-1 text-right">
+                    <button class="btn-primary btn" type="submit">查询</button>
+                </div>
+                <div class="col-md-1 text-right">
+                    <input type="hidden" name="csrfmiddlewaretoken" id="csrfmiddlewaretoken" value="{{ csrf_token }}"/>
+                    <button class="btn btn-primary" id="out_data" type="button">导出</button>
+                </div>
             </div>
-            <div class="col-md-6">
-                <input type="text" id="search_text" name="search_text" class="form-control" placeholder="搜索" value="{{ search_text }}"/>
-            </div>
-            <div class="col-md-1 text-right">
-                <button class="btn-primary btn" type="submit">查询</button>
-            </div>
-            <div class="col-md-1 text-right">
-                <input type="hidden" name="csrfmiddlewaretoken" id="csrfmiddlewaretoken" value="{{ csrf_token }}"/>
-                <button class="btn btn-primary" id="out_data" type="button">导出</button>
-            </div>
-        </div>
         </form>
         <div>今日成交单量：{{ day.count }} 今日成交额：{{ day.income }}元</div>
         <div>
@@ -47,19 +49,33 @@
                 </thead>
                 <tbody>
                 {% for order in order_list %}
-                <tr>
-                    <td>{{ order.order_id }}</td>
-                    <td>{{ order.belong.nick }}({{ order.belong.account }})</td>
-                    <td>{{ order.teach_by.nick }}({{ order.teach_by.account }})</td>
-                    <td>{{ order.course_name }}</td>
-                    <td>{{ order.order_price }}</td>
-                    <td>{{ order.create_time }}</td>
-                    <td>{{ order.status }}</td>
-                    <td>在线支付</td>
-                </tr>
+                    <tr>
+                        <td>{{ order.order_id }}</td>
+                        <td>{{ order.belong.nick }}({{ order.belong.account }})</td>
+                        <td>{{ order.teach_by.nick }}({{ order.teach_by.account }})</td>
+                        <td>{{ order.course_name }}</td>
+                        <td>{{ order.order_price }}</td>
+                        <td>{{ order.create_time }}</td>
+                        <td>{{ order.status }}</td>
+                        <td>在线支付</td>
+                    </tr>
                 {% endfor %}
                 </tbody>
             </table>
+        </div>
+        <div class="pagination">
+            <ul>
+                <li class="previous"><a href="/admin/order?page={{ paginator.first }}">&laquo;</a></li>
+                {% for page in paginator.page_list %}
+                    {% if page.page == paginator.current %}
+                        <li class="active"><a href="/admin/order?page={{ page.page }}">{{ page.page }}</a></li>
+                    {% else %}
+                        <li class=""><a href="/admin/order?page={{ page.page }}">{{ page.page }}</a></li>
+
+                    {% endif %}
+                {% endfor %}
+                <li class="next"><a href="/admin/order?page={{ paginator.last }}">&raquo;</a></li>
+            </ul>
         </div>
     </div>
 {% endblock %}
@@ -69,28 +85,30 @@
         $("select").select2({dropdownCssClass: 'dropdown-inverse'});
     </script>
     <script>
-          $('#out_data').click(function(){
-              var order_status = $("#order_status").val();
-              var search_text = $("#search_text").val();
-              var csrf_token = $("#csrfmiddlewaretoken").val();
-              var message = {'order_status': order_status,
-                             'search_text': search_text,
-                             'csrfmiddlewaretoken': csrf_token};
-              $.ajax({
-                  type: 'POST',
-                  url: '/admin/order/output',
-                  data: message,
-                  success: function (data) {
-                      if (data) {
-                          window.location.href = data
-                      }
-                      else {
-                          alert("导出失败！")
-                      }
-                  },
-                  dataType: 'json'
-              });
-          })
-      </script>
+        $('#out_data').click(function () {
+            var order_status = $("#order_status").val();
+            var search_text = $("#search_text").val();
+            var csrf_token = $("#csrfmiddlewaretoken").val();
+            var message = {
+                'order_status': order_status,
+                'search_text': search_text,
+                'csrfmiddlewaretoken': csrf_token
+            };
+            $.ajax({
+                type: 'POST',
+                url: '/admin/order/output',
+                data: message,
+                success: function (data) {
+                    if (data) {
+                        window.location.href = data
+                    }
+                    else {
+                        alert("导出失败！")
+                    }
+                },
+                dataType: 'json'
+            });
+        })
+    </script>
     <script src="//vjs.zencdn.net/4.7/video.js"></script>
 {% endblock %}

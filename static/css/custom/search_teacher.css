@@ -1,4 +1,5 @@
 .search-teacher-head{
+    padding-top: 45px;
     height: 350px;
 }
 
@@ -63,7 +64,6 @@
 }
 
 .btn-select{
-    margin-top: 35px;
     background-color: rgba(0, 0, 0, 0);
     color: #FFFFFF;
     border-bottom: 1px solid #FFFFFF;
@@ -206,22 +206,22 @@
 }
 
 .select-screen-area{
-    margin-top: 42px;
-    padding-left: 57px;
+    margin-top: 52px;
+    padding-left: 46px;
     display: none;
 }
 
 .select-screen-position{
     float: right;
-    padding-left: 40px;
+    padding-left: 23px;
     display: none;
     margin-top: 140px;
 }
 
 .select-screen-hero{
     float: right;
-    padding-left: 40px;
-    margin-top: 240px;
+    padding-left: 55px;
+    margin-top: 200px;
     display: none;
 }
 
@@ -229,4 +229,177 @@
     height: 40px;
     width: 40px;
     margin-top: -10px;
+}
+
+
+
+
+/*adapt for mobiles*/
+
+@media (min-width: 768px) {
+    .search-teacher-head-mobile {
+        display: none;
+    }
+}
+
+
+
+@media (max-width: 768px) {
+
+    /*/!*make page nav invisible*!/*/
+
+    /*.search-teacher-body nav {*/
+        /*display: none;*/
+    /*}*/
+
+
+    .search-teacher-head,
+    .suspend {
+        display: none;
+    }
+
+    .search-teacher-head-mobile {
+        margin: 0 0 20px 0;
+        text-align: center;
+    }
+
+    .search-teacher-head-mobile>div {
+        display: inline-block;
+    }
+
+    .otherSelector {
+        width: 100px;
+        min-width: 100px;
+    }
+
+    .search-teacher-head-mobile>div>ul {
+        padding: 6px 0;
+        background-color: white;
+        border-radius: 6px;
+        z-index: 11;
+    }
+
+    .search-teacher-body {
+        background-color: rgb(239, 243, 246);
+    }
+
+    .search-teacher-body>div>div {
+        padding: 0;
+    }
+
+    .teacher-info-panel {
+        width: 100%;
+        max-width: 350px;
+        height: 415px;
+        margin: 10px auto;
+        background-color: white;
+    }
+
+    .teacher-info-attribute {
+        padding: 0;
+        margin: 5px 0 0 0;
+    }
+
+    .triangle-top-right-success,
+    .triangle-bottom-left-success {
+        display: none;
+    }
+
+    .tag-status-success {
+        background-color: rgba(0, 114, 181, 0.7);
+    }
+
+    .tag-status {
+        padding: 5px;
+        width: 96px;
+        height: 27px;
+    }
+
+    .teacher-info-value {
+        color: #0072b5;
+    }
+
+    .teacher-info-name {
+        font-weight: bold;
+    }
+
+    /*.teacher-info-attribute {*/
+        /*text-align: center;*/
+    /*}*/
+    .dropdown-menu>li>a,
+    .dropdown-menu>li>span>a {
+        color: #080808;
+        background-color: white;
+        padding: 5px;
+        font-size: 12px;
+    }
+
+    .dropOption>li>a {
+        background-color: #0072b5;
+        color: white;
+    }
+
+    .dropdown-menu {
+        margin-top: 0;
+    }
+
+    .selectMenu {
+        width: 100px;
+        padding: 5px;
+        text-align: center;
+        font-size: 12px;
+    }
+
+    .open>.dropdown-toggle.btn-default:hover,
+    .open>.dropdown-toggle.btn-default,
+    .btn-default {
+        color: #080808;
+        background-color: white;
+    }
+
+
+    .btn-default:active:hover,
+    .btn-default:hover {
+        color: #080808;
+    }
+
+
+    .heroSelector {
+        width: 240px;
+        min-width: 240px;
+    }
+
+    .heroSelector>li {
+        text-align: left;
+        padding: 0 20px;
+    }
+
+    .heroPic>img {
+        height: 20px;
+        width: 20px;
+        vertical-align: bottom;
+    }
+
+    #mask {
+        left: 0;
+        top: 0;
+        position: absolute;
+        height: 100%;
+        width: 100%;
+        background-color: rgba(0, 0, 0, 0.5);
+        z-index: 10;
+        display: none;
+    }
+
+    #page {
+        padding: 0;
+    }
+
+
+    .title-divider {
+        background-color: #cccccc;
+        height: 1px;
+        margin-bottom: 10px;
+    }
+
 }

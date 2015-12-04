@@ -18,8 +18,8 @@ $(document).ready(function(){
   if(localStorage['verify_time']){
     var last_time = parseInt(localStorage['verify_time']);
     var now_time = parseInt(new Date().getTime());
-    if(now_time-last_time < 30000){
-      count = parseInt(30-(now_time - last_time)/1000);
+    if(now_time-last_time < 60000){
+      count = parseInt(60-(now_time - last_time)/1000);
       verifyButton.text("请等待"+count+"秒");
       verifyButton.attr('disabled', true);
       countdown = setInterval(Count, 1000);
@@ -38,7 +38,7 @@ $(document).ready(function(){
         dataType: "json",
         success: function(data, status){
           if(data == "success"){
-            count = 30;
+            count = 60;
             verifyButton.text("请等待"+count+"秒");
             verifyButton.attr('disabled', true);
             localStorage['verify_time'] = new Date().getTime();

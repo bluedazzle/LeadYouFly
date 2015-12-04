@@ -70,6 +70,20 @@
             {% endfor %}
             </tbody>
         </table>
+        <div class="pagination">
+            <ul>
+                <li class="previous"><a href="/admin/message/?page={{ paginator.first }}">&laquo;</a></li>
+                {% for page in paginator.page_list %}
+                    {% if page.page == paginator.current %}
+                        <li class="active"><a href="/admin/message/?page={{ page.page }}">{{ page.page }}</a></li>
+                    {% else %}
+                        <li class=""><a href="/admin/message/?page={{ page.page }}">{{ page.page }}</a></li>
+
+                    {% endif %}
+                {% endfor %}
+                <li class="next"><a href="/admin/message/?page={{ paginator.last }}">&raquo;</a></li>
+            </ul>
+        </div>
     </div>
 {% endblock %}
 {% block script %}

@@ -144,7 +144,7 @@ class Mentor(AbstractBaseUser, BaseModel):
     intro = models.CharField(max_length=100, default='')
     good_at = models.CharField(max_length=5, default='')
     game_level = models.CharField(max_length=8, default='')
-    teach_area = models.CharField(max_length=20, default='')
+    teach_area = models.CharField(max_length=20, default='0')
     qq = models.CharField(max_length=20, default='')
     yy = models.CharField(max_length=50, default='')
     phone = models.CharField(max_length=11, default='')
@@ -154,9 +154,9 @@ class Mentor(AbstractBaseUser, BaseModel):
     have_intro_video = models.BooleanField(default=False)
     intro_picture = models.CharField(max_length=200, default='/img/default_mentor.jpg')
     video_poster = models.CharField(max_length=200, default='')
-    expert_hero1 = models.ForeignKey(Hero, related_name='who_expert1', null=True, blank=True)
-    expert_hero2 = models.ForeignKey(Hero, related_name='who_expert2', null=True, blank=True)
-    expert_hero3 = models.ForeignKey(Hero, related_name='who_expert3', null=True, blank=True)
+    expert_hero1 = models.ForeignKey(Hero, related_name='who_expert1', null=True, blank=True, on_delete=models.SET_NULL)
+    expert_hero2 = models.ForeignKey(Hero, related_name='who_expert2', null=True, blank=True, on_delete=models.SET_NULL)
+    expert_hero3 = models.ForeignKey(Hero, related_name='who_expert3', null=True, blank=True, on_delete=models.SET_NULL)
     hero_list = models.ManyToManyField(Hero, related_name='who_uses', null=True, blank=True)
     id_picture = models.CharField(max_length=100, default='')
     total_income = models.FloatField(default=0.0)
@@ -165,6 +165,8 @@ class Mentor(AbstractBaseUser, BaseModel):
     mark = models.FloatField(default=0.0)
     freeze = models.BooleanField(default=False)
     priority = models.IntegerField(default=0)
+
+    disabled = models.BooleanField(default=False)
 
 
     USERNAME_FIELD = 'account'
@@ -191,6 +193,13 @@ class Mentor(AbstractBaseUser, BaseModel):
     def set_password(self, password):
         self.password = self.hashed_password(password)
 
+    def get_orders_count(self):
+        orders = self.men_orders.exclude(status=5).exclude(status=6)
+        orders_count = orders.count()
+        return orders_count
+
+    def get_comment_list(self):
+        return self.men_comments.all().order_by('-create_time')
 
 class Student(AbstractBaseUser, BaseModel):
     account = models.CharField(max_length=11, unique=True)
@@ -224,7 +233,7 @@ class Student(AbstractBaseUser, BaseModel):
 
 class Message(BaseModel):
     content = models.CharField(max_length=500)
-    belong = models.ForeignKey(Student, related_name='stu_messages', null=True, blank=True)
+    belong = models.ForeignKey(Student, related_name='stu_messages', null=True, blank=True, on_delete=models.SET_NULL)
     read = models.BooleanField(default=False)
     send_all = models.BooleanField(default=False)
 
@@ -249,7 +258,7 @@ class MoneyRecord(BaseModel):
     income = models.FloatField(default=0.0)
     type = models.BooleanField(default=True)
     info = models.CharField(max_length=200, default='')
-    belong = models.ForeignKey(Mentor, related_name='men_money_records')
+    belong = models.ForeignKey(Mentor, related_name='men_money_records', null=True, blank=True, on_delete=models.SET_NULL)
 
     def __unicode__(self):
         return self.action
@@ -257,9 +266,9 @@ class MoneyRecord(BaseModel):
 
 class Comment(BaseModel):
     mark = models.FloatField(default=0.0)
-    content = models.CharField(max_length=500, default='')
-    comment_by = models.ForeignKey(Student, related_name='stu_comments')
-    comment_mentor = models.ForeignKey(Mentor, related_name='men_comments')
+    content = models.CharField(max_length=50000, default='')
+    comment_by = models.ForeignKey(Student, related_name='stu_comments', null=True, blank=True, on_delete=models.SET_NULL)
+    comment_mentor = models.ForeignKey(Mentor, related_name='men_comments', null=True, blank=True, on_delete=models.SET_NULL)
 
     def __unicode__(self):
         return self.content
@@ -288,7 +297,7 @@ class Order(BaseModel):
     teach_end_time = models.DateTimeField()
     belong = models.ForeignKey(Student, related_name='stu_orders')
     teach_by = models.ForeignKey(Mentor, related_name='men_orders')
-    comment = models.ForeignKey(Comment, related_name='comment_order', null=True, blank=True)
+    comment = models.ForeignKey(Comment, related_name='comment_order', null=True, blank=True, on_delete=models.SET_NULL)
     if_pay = models.BooleanField(default=False)
 
     def __unicode__(self):
@@ -307,10 +316,10 @@ class PayInfo(BaseModel):
 
 
 class IndexAdmin(models.Model):
-    rec_mentor1 = models.ForeignKey(Mentor, blank=True, null=True, related_name='ind_rec_1')
-    rec_mentor2 = models.ForeignKey(Mentor, blank=True, null=True, related_name='ind_rec_2')
-    rec_mentor3 = models.ForeignKey(Mentor, blank=True, null=True, related_name='ind_rec_3')
-    rec_mentor4 = models.ForeignKey(Mentor, blank=True, null=True, related_name='ind_rec_4')
+    rec_mentor1 = models.ForeignKey(Mentor, blank=True, null=True, related_name='ind_rec_1', on_delete=models.SET_NULL)
+    rec_mentor2 = models.ForeignKey(Mentor, blank=True, null=True, related_name='ind_rec_2', on_delete=models.SET_NULL)
+    rec_mentor3 = models.ForeignKey(Mentor, blank=True, null=True, related_name='ind_rec_3', on_delete=models.SET_NULL)
+    rec_mentor4 = models.ForeignKey(Mentor, blank=True, null=True, related_name='ind_rec_4', on_delete=models.SET_NULL)
     index_pic1 = models.CharField(max_length=500, default=' ')
     index_pic2 = models.CharField(max_length=500, default=' ')
     index_pic3 = models.CharField(max_length=500, default=' ')
@@ -358,9 +367,10 @@ class CashRecord(BaseModel):
     manage = models.BooleanField(default=False)
     agree = models.NullBooleanField(default=None)
     success = models.NullBooleanField(default=None)
+    info = models.CharField(max_length=500, default='')
 
     def __unicode__(self):
-        return self.record_id
+        return self.record_id + '|' + self.alipay_account
 
 
 class PhoneVerify(BaseModel):
@@ -399,3 +409,18 @@ class Notice(BaseModel):
 
     def __unicode__(self):
         return self.title
+
+
+class Coupon(BaseModel):
+    type_dict = {(1, u'注册赠送'),
+                 (2, u'邀请注册赠送'),
+                 (3, u'系统赠送')}
+    money = models.FloatField(default=0.0)
+    type = models.IntegerField(max_length=1, default=1, choices=type_dict)
+    info = models.CharField(max_length=500, default='')
+    use = models.BooleanField(default=False)
+    expire = models.DateField()
+    belong = models.ForeignKey(Student, related_name='stu_coupons')
+
+    def __unicode__(self):
+        return u'{0}:{1}元'.format(self.belong.account, self.money)

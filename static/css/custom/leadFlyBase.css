@@ -8,11 +8,16 @@ html,body {
     margin: 0;
     padding:0;
     height: 100%;
+    font-family: "Microsoft Yahei", "Lato", Helvetica, Arial, sans-serif;
+}
+
+body {
+    min-width: 320px;
+    overflow-x: hidden;
 }
 
 #container {
     min-height:100%;
-    min-width: 1024px;
     height: auto !important;
     position: relative;
 }
@@ -227,7 +232,6 @@ html,body {
     z-index: -1;
 }
 
-/*教练页面*/
 .hero-header{
     height: 25px;
     width: 25px;
@@ -264,7 +268,7 @@ html,body {
 
 .table-host>tbody>tr>td>a{
     text-decoration:none;
-    color: #16a085;
+    color: #000000;
     font-size: 16px;
     display: inline-block;
     margin-left: 35px;
@@ -276,7 +280,7 @@ html,body {
 }
 
 .table-host-ver{
-    background: #16a085;
+    background: #000000;
     width: 1px;
     height: 52px;
     display: inline-block;
@@ -285,6 +289,7 @@ html,body {
 }
 
 .table-host>tbody>tr>td:hover .table-host-ver{
+    background: #16a085;
     width: 6px;
 }
 
@@ -718,4 +723,75 @@ html,body {
 .position-list-footer a{
     color: #bdc3c7;
     float: right;
+}
+
+
+/*adapt for mobiles*/
+
+
+@media (min-width: 768px) {
+    #mobileHeader {
+        display: none;
+    }
+}
+
+@media (max-width: 768px) {
+    #header {
+        display: none;
+    }
+    #footer {
+        display: none;
+    }
+}
+
+#mobileHeader {
+    text-align: center;
+}
+
+#mobileHeader>img {
+    height: 60px;
+    width: 70px;
+    margin-left: 51px;
+}
+
+#mobileHeader>.dropdown {
+    display: inline-block;
+    float: right;
+    vertical-align: middle;
+}
+
+#mobileHeader .menuBar {
+    background-color: white;
+    color: #0072b5;
+    margin: 12px 0;
+}
+
+#mobileHeader .btn-default:hover,
+#mobileHeader .btn-default:active:focus,
+#mobileHeader .btn-default:active:hover,
+#mobileHeader .open>.dropdown-toggle.btn-default:focus,
+#mobileHeader .open>.dropdown-toggle.btn-default:hover {
+    background-color: white;
+    color: #0072b5;
+}
+
+.btn-default :hover:focus :active {
+    background-color: white;
+    color: #0072b5;
+}
+
+
+.dropOption {
+    background-color: #0072b5;
+    width: 8em;
+    min-width: 8em;
+    text-align: center;
+    margin-top: 0;
+    right: 10px;
+    left: auto;
+    top: 45px;
+}
+
+.dropOption>li>a {
+    color: white;
 }

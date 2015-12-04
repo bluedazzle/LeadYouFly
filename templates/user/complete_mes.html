@@ -1,84 +1,103 @@
 {% extends 'base.html' %}
 {% block css %}
-  <link href="/css/custom/cropper.min.css" rel="stylesheet"/>
-  <style>
-    #user-header{
-      width: 300px;
-      height: 300px;
-      position: relative;
-    }
-    .rank{
-      background-color: #f1c40f;
-      padding: 5px;
-      font-size: 12px
-    }
-  </style>
+    <link href="/css/custom/cropper.min.css" rel="stylesheet"/>
+    <style>
+        #user-header {
+            width: 300px;
+            height: 300px;
+            position: relative;
+        }
+
+        .rank {
+            background-color: #f1c40f;
+            padding: 5px;
+            font-size: 12px
+        }
+    </style>
 {% endblock %}
 {% block define %}
-  <div class="col-md-12 col-lg-12 user-host-nav">
-    <div class="teacher-host-head text-center">
-      <img class="teacher-head" src="{{ active_user.avatar }}" style="cursor: pointer" onclick="openUpdateHeader()"/>
-      <p style="color: #ffffff;font-size: 16px;margin-top: 5px">
-        {{ active_user.nick }}
-        <span class="rank">{{ active_user.rank }}级</span>
-      </p>
-      <p style="color: #bdc3c7; font-size: 14px">
-        <span style="color: #fff;">{{ active_user.create_time | date:"Y/m/d" }}</span>入学，已完成<span style="color: #fff;">{{ active_user.stu_orders.all.count }}</span>堂课
-      </p>
-    </div>
-  </div>
-  <div class="col-md-12 col-lg-12 user-mes">
-    <div class="container complete-mes">
-      <p>请认真填写以下资料，方便教练联系你</p>
-      <form>
-        {% csrf_token %}
-        <input class="form-control" id="qq" name="qq" value="{{ active_user.qq }}" placeholder="请填写联系qq..."/>
-        <input class="form-control" id="yy" name="yy" type="hidden" value="" placeholder="请填写联系YY..."/>
-        <input class="form-control" id="phone" name="phone" value="{{ active_user.phone }}" placeholder="请填写手机号..."/>
-      </form>
-      <a type="button" id="complete_mes_submit" class="btn btn-primary btn-large btn-block">保&nbsp;&nbsp;存</a>
-    </div>
-  </div>
+    <div class="col-md-12 col-lg-12 user-host-nav">
+        <div class="teacher-host-head text-center">
+            <img class="teacher-head" src="{{ active_user.avatar }}" style="cursor: pointer"
+                 onclick="openUpdateHeader()"/>
 
-  <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-    <div class="modal-dialog" role="document">
-      <div class="modal-content col-lg-12 col-md-12">
-        <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-          <h4 class="modal-title" id="myModalLabel">
-            修改头像
-            <label class="btn btn-primary btn-upload" for="inputImage" title="Upload image file">
-              <input type="file" class="sr-only" id="inputImage" name="file" accept="image/*">
+            <p style="color: #ffffff;font-size: 16px;margin-top: 5px">
+                {{ active_user.nick }}
+                <span class="rank">{{ active_user.rank }}级</span>
+            </p>
+
+            <p style="color: #bdc3c7; font-size: 14px">
+                <span style="color: #fff;">{{ active_user.create_time | date:"Y/m/d" }}</span>入学，已完成<span
+                    style="color: #fff;">{{ active_user.stu_orders.all.count }}</span>堂课
+            </p>
+        </div>
+    </div>
+    <div class="col-md-12 col-lg-12 user-mes">
+        <div class="container complete-mes">
+            <p>请认真填写以下资料，方便教练联系你</p>
+
+            <form>
+                {% csrf_token %}
+                <div class="form-group">
+                    <label for="" class="col-md-2">QQ：</label>
+                    <input class="form-control col-md-10" id="qq" name="qq" value="{{ active_user.qq }}"
+                           placeholder="请填写联系qq..."/>
+                    <label for="" class="col-md-4">手机：</label>
+                    <input class="form-control" id="phone" name="phone" value="{{ active_user.phone }}"
+                           placeholder="请填写手机号..."/>
+                </div>
+                <input class="form-control" id="yy" name="yy" type="hidden" value="" placeholder="请填写联系YY..."/>
+            </form>
+            <a type="button" id="complete_mes_submit" class="btn btn-primary btn-large btn-block">保&nbsp;&nbsp;存</a>
+        </div>
+    </div>
+
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content col-lg-12 col-md-12">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                            aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel">
+                        修改头像
+                        <label class="btn btn-primary btn-upload" for="inputImage" title="Upload image file">
+                            <input type="file" class="sr-only" id="inputImage" name="file" accept="image/*">
             <span class="docs-tooltip" data-toggle="tooltip" title="" data-original-title="Import image with Blob URLs">
               选择图片
             </span>
-            </label>
-          </h4>
+                        </label>
+                    </h4>
+                </div>
+                <div class="modal-body text-center">
+                    <div id="user-header" class="col-lg-8 col-md-8">
+                        <img src="{{ active_user.avatar }}" alt="Picture"/>
+                    </div>
+                    <div class="col-lg-4 col-md-4">
+                        <p>X:<span id="dataX"></span></p>
+
+                        <p>Y:<span id="dataY"></span></p>
+
+                        <p>width:<span id="dataWidth"></span></p>
+
+                        <p>height:<span id="dataHeight"></span></p>
+
+                        <p>rotate:<span id="dataRotate"></span></p>
+
+                        <p>scaleX:<span id="dataScaleX"></span></p>
+
+                        <p>scaleY:<span id="dataScaleY"></span></p>
+                    </div>
+                </div>
+                <div class="modal-footer col-lg-12 col-md-12">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                    <button type="button" class="btn btn-primary" onclick="submitUpdateHeader()">确定</button>
+                </div>
+            </div>
         </div>
-        <div class="modal-body text-center">
-          <div id="user-header" class="col-lg-8 col-md-8">
-            <img src="{{ active_user.avatar }}" alt="Picture"/>
-          </div>
-          <div class="col-lg-4 col-md-4">
-            <p>X:<span id="dataX"></span></p>
-            <p>Y:<span id="dataY"></span></p>
-            <p>width:<span id="dataWidth"></span></p>
-            <p>height:<span id="dataHeight"></span></p>
-            <p>rotate:<span id="dataRotate"></span></p>
-            <p>scaleX:<span id="dataScaleX"></span></p>
-            <p>scaleY:<span id="dataScaleY"></span></p>
-          </div>
-        </div>
-        <div class="modal-footer col-lg-12 col-md-12">
-          <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
-          <button type="button" class="btn btn-primary" onclick="submitUpdateHeader()">确定</button>
-        </div>
-      </div>
     </div>
-  </div>
 {% endblock %}
 {% block script %}
-  <script src="/js/common/cropper.js"></script>
-  <script src="/js/student/complete_mes.js"></script>
-  <script src="/js/common/update_header.js"></script>
+    <script src="/js/common/cropper.js"></script>
+    <script src="/js/student/complete_mes.js"></script>
+    <script src="/js/common/update_header.js"></script>
 {% endblock %}

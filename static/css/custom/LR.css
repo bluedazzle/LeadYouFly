@@ -95,3 +95,94 @@ body{
 .input-with-icon .glyphicon{
     color: #bdc3c7;
 }
+
+
+/*adapt for mobiles*/
+
+
+@media (min-width: 1024px) {
+    .input-group-box>img {
+        display: none;
+    }
+}
+
+
+
+@media (max-width: 1024px) {
+    body {
+        background: none;
+    }
+
+    .suspend {
+        display: none;
+    }
+
+    .container {
+        padding: 0;
+    }
+
+    .container .input-group-box {
+        float: none;
+        width: 340px;
+        padding: 0 40px;
+        text-align: center;
+    }
+
+    .input-group-box>img {
+        height: 150px;
+        margin: 20px 0;
+    }
+
+    #header {
+        display: none;
+    }
+
+    #footer {
+        display: none;
+    }
+
+    #mobileHeader {
+        display: none;
+    }
+
+    #page {
+        width: 100%;
+        display: block;
+    }
+
+    #page>.container {
+        width: 340px;
+        max-width: 340px;
+        overflow-x: hidden;
+        margin: 0 auto;
+    }
+
+    .teacherLogin {
+        display: none;
+    }
+
+    .loginTitle {
+        display: none;
+    }
+
+    .btn-warning,
+    .btn-primary {
+        background-color: #0072b5;
+    }
+
+    .register-login,
+    .input-herf {
+        color: #0072b5;
+    }
+
+
+    .input-verify {
+        margin-right: 10px;
+        width: 110px;
+    }
+
+    .btn-verify {
+        float: right;
+        margin: 0;
+    }
+}

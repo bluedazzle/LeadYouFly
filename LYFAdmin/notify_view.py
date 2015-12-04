@@ -7,7 +7,7 @@ from LYFAdmin.message import ORDER_BUY_MES, create_new_message
 from LYFAdmin.models import Order, PayInfo, CashRecord, MoneyRecord
 from LYFAdmin.online_pay import check_notify_id
 from LYFAdmin.order_operation import create_charge_record, create_money_record
-from LYFAdmin.sms import send_order_msg
+from LYFAdmin.sms import send_order_msg, send_confirm_msg
 from LYFAdmin.utils import check_start_time
 
 import datetime
@@ -45,7 +45,8 @@ def alipay_notify(req):
                     order.teach_by.iden_income += order.order_price
                     order.teach_by.total_income += order.order_price
                     order.teach_by.save()
-                    order_mes = ORDER_BUY_MES % str(order.belong.nick).encode('utf-8')
+                    send_confirm_msg(str(order.belong.phone), str(order.teach_by.phone))
+                    order_mes = ORDER_BUY_MES % order.belong.nick
                     create_new_message(order_mes, belong=order.belong)
             elif status == 'TRADE_FINISHED':
                 order.status = 3
@@ -63,10 +64,12 @@ def alipay_batch_notify(req):
     if res_code == 'true':
         c_id = req.POST.get('batch_no', None)
         s_detail = req.POST.get('success_details', None)
+        f_detail = req.POST.get('fail_details', '')
+        cash_rec = CashRecord.objects.get(record_id=c_id)
         if s_detail and s_detail != '':
-            cash_rec = CashRecord.objects.get(record_id=c_id)
             if cash_rec.success is not True:
                 cash_rec.success = True
+                cash_rec.info = s_detail
                 cash_rec.save()
                 mentor = cash_rec.belong
                 mentor.iden_income -= float(cash_rec.money)
@@ -74,6 +77,15 @@ def alipay_batch_notify(req):
                 create_money_record(mentor, u'支出',
                                     -float(cash_rec.money),
                                     '提款到支付宝%s' % str(cash_rec.alipay_account).encode('utf-8'))
+        elif f_detail != '':
+            if cash_rec.success is not True:
+                cash_rec.success = False
+                cash_rec.info = f_detail
+                cash_rec.save()
+                mentor = cash_rec.belong
+                mentor.iden_income -= float(cash_rec.money)
+                mentor.cash_income += float(cash_rec.money)
+                mentor.save()
         return HttpResponse('success')
     else:
         return HttpResponse('fail')

@@ -1,0 +1,92 @@
+@media (min-width: 768px) {
+    .cMobile {
+        display: none;
+    }
+}
+
+@media (max-height: 500px) {
+    body {
+        height: auto;
+    }
+}
+
+
+@media (max-width: 768px) {
+
+    .container {
+        padding: 0;
+    }
+
+    body {
+        background-color: rgb(239, 243, 246);
+    }
+
+    #page {
+        padding-bottom: 40px;
+    }
+
+    #mobileHeader {
+        background-color: white;
+    }
+
+    h4 {
+        color: #0072b5;
+        font-size: 22px;
+        margin: 40px 0;
+        font-weight: normal;
+    }
+    .container .jumbotron {
+        background-color: white;
+        padding: 0;
+        margin: 0;
+        border-radius: 0;
+    }
+
+    h5 {
+        color: rgb(164, 164, 164);
+        font-size: 20px;
+        padding: 20px 0;
+        margin: 0;
+        font-weight: normal;
+    }
+
+    .container .cName {
+        padding: 0 40px 30px 40px;
+        overflow-x: auto;
+        font-size: 14px;
+        line-height: 16px;
+    }
+
+    .cOther {
+        display: none;
+    }
+
+    .cMobile {
+        margin: 5px 40px;
+    }
+
+    .cMobile>input {
+        width: 60%;
+    }
+
+    .cInput>button {
+        background-color: #0072b5;
+        width: 100%;
+        border-radius: 0;
+        bottom: 0;
+        margin: 0;
+    }
+
+    .cInput {
+        margin: 0;
+        position: fixed;
+        width: 100%;
+        bottom: 0;
+    }
+
+    .cPrice {
+        font-size: 22px;
+        font-weight: bold;
+        color: #0072b5;
+    }
+}

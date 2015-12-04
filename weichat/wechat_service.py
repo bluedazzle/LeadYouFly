@@ -126,7 +126,7 @@ class WechatService(object):
                              'http://mp.weixin.qq.com/mp/getmasssendmsg?__biz=MzI4ODAzNzI5OA==#wechat_webview_type=1&wechat_redirect': '发现好玩',
                              'http://forum.fibar.cn': '飞吧社区'}
                 user = user_list[0]
-                user.reply += '{0}; 点击菜单：{0}'.format(user.reply, menu_dict.get(message.key, '菜单'))
+                user.reply = '{0}; 点击菜单：{1}'.format(user.reply, menu_dict.get(message.key, '菜单'))
                 user.save()
             return ''
         else:

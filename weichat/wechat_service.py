@@ -151,6 +151,7 @@ class WechatService(object):
     def upload_picture(self, url):
         ext = str(url).split('.')[-1]
         img_req = requests.get(url)
+        print url
         res = self.wechat.upload_media('image', img_req.content)
         print res
         return res.get('media_id', '')

@@ -232,11 +232,11 @@ def cancel_follow(request):
 def confirm_order(request):
     refer_url = request.META.get('HTTP_REFERER', '')
     return_content = utils.is_login(request)
-    return_content['referer'] = refer_url
     if return_content and return_content['login_type'] == 'student':
         return_content['is_login'] = True
     else:
         return HttpResponseRedirect('/login')
+    return_content['referer'] = refer_url
     student = return_content['active_user']
     if student.phone == '' or student.qq == '':
         next_page = request.get_full_path()

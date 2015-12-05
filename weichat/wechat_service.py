@@ -153,7 +153,9 @@ class WechatService(object):
         img_req = requests.get(url)
         print url
         try:
-            res = self.wechat.upload_media('image', img_req.content)
+            with open('tmppic.{0}'.format(ext), 'wb') as f1:
+                f1.write(img_req.content)
+                res = self.wechat.upload_media('image', f1)
             print res
             return res.get('media_id', '')
         except Exception, e:

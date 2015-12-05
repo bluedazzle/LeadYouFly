@@ -32,6 +32,7 @@ class Promotion(BaseModel):
     province = models.CharField(max_length=10, default='')
     city = models.CharField(max_length=20, default='')
     sex = models.CharField(max_length=10, default='')
+    reply = models.TextField(default='')
 
     def __unicode__(self):
         return self.nick
@@ -40,6 +41,8 @@ class Promotion(BaseModel):
 class Question(BaseModel):
     question = models.CharField(max_length=200, default='')
     answer = models.TextField(default='')
+    image = models.CharField(max_length=512, default='')
+    have_image = models.BooleanField(default=False)
 
     def __unicode__(self):
         return self.question

@@ -104,7 +104,7 @@ class WechatService(object):
             return False, result[0].answer
         answer = get_answer(question)
         if answer.have_image:
-            return True, answer.image
+            return True, self.upload_picture(answer.image)
         else:
             return False, answer.answer
 

@@ -22,7 +22,6 @@ body{
 
 .input-group-box p{
     font-size: 18px;
-    text-align: center;
 }
 
 .input-with-icon{
@@ -51,7 +50,7 @@ body{
     border: none;
     box-shadow: none;
     outline: none;
-    margin-left: 20px;
+    margin-left: 2px;
 }
 
 .btn-login{
@@ -101,7 +100,7 @@ body{
 
 
 @media (min-width: 1024px) {
-    .input-group-box>img {
+    .input-group-box>div>img {
         display: none;
     }
 }
@@ -125,10 +124,13 @@ body{
         float: none;
         width: 340px;
         padding: 0 40px;
+    }
+
+    .input-group-box>div {
         text-align: center;
     }
 
-    .input-group-box>img {
+    .input-group-box>div>img {
         height: 150px;
         margin: 20px 0;
     }
@@ -185,4 +187,5 @@ body{
         float: right;
         margin: 0;
     }
+
 }

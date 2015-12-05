@@ -5,6 +5,9 @@
 {% block define %}
   <div class="container">
     <div class="jumbotron input-group-box">
+      <div>
+        <img src="/img/logo.png">
+      </div>
       <p class="loginTitle">注册</p>
       <form id="register_form" action="/register" method="post">
         {% csrf_token %}
@@ -32,7 +35,7 @@
       </form>
       <a type="button" class="btn btn-warning btn-lg btn-block btn-login" id="submit_register">注&nbsp;&nbsp;册</a>
       <span class="register-footer">
-        已有账号？<a class="register-login" href="/login">登录</a>
+        已有账号？<a class="register-login" href="/login">登录</a>或者<a class="register-login" href="/search_teacher">再看看</a>
       </span>
     </div>
   </div>

@@ -232,6 +232,8 @@ body {
     z-index: -1;
 }
 
+/*教练页面*/
+
 .hero-header{
     height: 25px;
     width: 25px;
@@ -751,7 +753,6 @@ body {
 #mobileHeader>img {
     height: 60px;
     width: 70px;
-    margin-left: 51px;
 }
 
 #mobileHeader>.dropdown {

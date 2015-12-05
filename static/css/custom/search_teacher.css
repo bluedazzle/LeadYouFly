@@ -21,11 +21,11 @@
 
 .teacher-info-panel-head{
     height: 180px;
-    background-size: cover;
     border-top-right-radius: 6px;
     border-top-left-radius: 6px;
     position: relative;
 }
+
 
 .teacher-info-panel-body{
     padding-left: 15px;

@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 {% block css %}
-<link href="/css/custom/confirm_order.css" rel="stylesheet"/>
+    <link href="/css/custom/confirm_order.css" rel="stylesheet"/>
 {% endblock %}
 {% block define %}
     <div class="container">
@@ -12,8 +12,11 @@
             <p class="cName">课程名称：{{ course.course_info }}</p>
 
             <p class="cOther">价格：￥{{ course.price }}</p>
+
             <p class="cOther">导师：{{ course.belong.nick }}</p>
+
             <p class="cOther">你的电话：{{ active_user.phone }}</p>
+
             <p class="cOther">你的QQ：{{ active_user.qq }}</p>
 
             <form class="cOther" action="/user/create_order/" target="_blank" method="post">
@@ -42,19 +45,22 @@
 
         <div>
             <p class="cMobile">导师：{{ course.belong.nick }}</p>
-            <p class="cMobile">你的电话：<input placeholder="请输入联系方式" value="{{ active_user.phone }}"></p>
-            <p class="cMobile">你的&nbsp&nbspQQ：<input placeholder="请输入QQ号码" value="{{ active_user.qq }}"></p>
+
             <form class="" action="/user/create_order/" target="_blank" method="post">
+                <p class="cMobile">你的电话：<input placeholder="请输入联系方式" id="phone" name="phone" value="{{ active_user.phone }}"></p>
+
+                <p class="cMobile">你的&nbsp&nbspQQ：<input placeholder="请输入QQ号码" id="qq" name="qq" value="{{ active_user.qq }}"></p>
+
                 {% csrf_token %}
                 <div class="form-inline cMobile">
                     <label for="">
                         <p class="">学习大区：{% if course.belong.teach_area == '0' %}
                             全区
-                            {% elif course.belong.teach_area == '1' %}
+                        {% elif course.belong.teach_area == '1' %}
                             电信
-                            {% else %}
+                        {% else %}
                             联通
-                            {% endif %}
+                        {% endif %}
                         </p>
                     </label>
                 </div>
@@ -84,8 +90,8 @@
             <p>正在支付...</p>
         </div>
         <div class="modal-footer">
-          <a href="/user/my_orders" type="button" class="btn btn-primary">支付完成</a>
-          <a href="https://cshall.alipay.com/hall/index.htm" type="button" class="btn btn-default">支付遇到问题</a>
+            <a href="/user/my_orders" type="button" class="btn btn-primary">支付完成</a>
+            <a href="https://cshall.alipay.com/hall/index.htm" type="button" class="btn btn-default">支付遇到问题</a>
         </div>
     </div>
 {% endblock %}

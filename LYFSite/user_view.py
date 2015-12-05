@@ -44,7 +44,9 @@ def user_message(request):
 
 
 def complete_mes(request):
+    refer_url = request.META.get('HTTP_REFERER', '')
     return_content = utils.is_login(request)
+    return_content['referer'] = refer_url
     if not return_content:
         return HttpResponseRedirect('/login')
     if not return_content['login_type'] == 'student':
@@ -70,7 +72,9 @@ def complete_mes(request):
 
 
 def my_orders(request):
+    refer_url = request.META.get('HTTP_REFERER', '')
     return_content = utils.is_login(request)
+    return_content['referer'] = refer_url
     if not return_content:
         return HttpResponseRedirect('/login')
     if not return_content['login_type'] == 'student':
@@ -96,7 +100,9 @@ def my_orders(request):
 
 
 def appraise_order(request):
+    refer_url = request.META.get('HTTP_REFERER', '')
     return_content = utils.is_login(request)
+    return_content['referer'] = refer_url
     if not return_content:
         return HttpResponseRedirect('/login')
     if not return_content['login_type'] == 'student':
@@ -163,7 +169,9 @@ def appraise_order(request):
 
 
 def my_follow_mentors(request):
+    refer_url = request.META.get('HTTP_REFERER', '')
     return_content = utils.is_login(request)
+    return_content['referer'] = refer_url
     if not return_content:
         return HttpResponseRedirect('/login')
     if not return_content['login_type'] == 'student':
@@ -176,7 +184,9 @@ def my_follow_mentors(request):
 
 
 def follow_mentor(request):
+    refer_url = request.META.get('HTTP_REFERER', '')
     return_content = utils.is_login(request)
+    return_content['referer'] = refer_url
     if not return_content:
         return HttpResponseRedirect('/login')
     if not return_content['login_type'] == 'student':
@@ -220,7 +230,9 @@ def cancel_follow(request):
 
 
 def confirm_order(request):
+    refer_url = request.META.get('HTTP_REFERER', '')
     return_content = utils.is_login(request)
+    return_content['referer'] = refer_url
     if return_content and return_content['login_type'] == 'student':
         return_content['is_login'] = True
     else:
@@ -299,7 +311,9 @@ def create_order(req):
 
 
 def complain(request):
+    refer_url = request.META.get('HTTP_REFERER', '')
     return_content = utils.is_login(request)
+    return_content['referer'] = refer_url
     if return_content and return_content['login_type'] == 'student':
         return_content['is_login'] = True
     else:
@@ -360,7 +374,9 @@ def upload_complain_pic(request):
 
 
 def security_center(request):
+    refer_url = request.META.get('HTTP_REFERER', '')
     return_content = utils.is_login(request)
+    return_content['referer'] = refer_url
     if return_content and return_content['login_type'] == 'student':
         return_content['is_login'] = True
     else:

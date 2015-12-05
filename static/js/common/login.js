@@ -27,7 +27,7 @@ $(document).ready(function () {
                             if (refer != '') {
                                 window.location = refer;
                             } else {
-                                window.location = "/";
+                                window.location = "/search_teacher";
 
                             }
                         } else {

@@ -180,6 +180,7 @@ def register(request):
 
 
 def search_teacher(request):
+    refer_url = request.META.get('HTTP_REFERER', '')
     return_content = utils.is_login(request)
     if return_content:
         # if return_content['login_type'] == 'teacher':
@@ -262,11 +263,13 @@ def search_teacher(request):
         return_content['teach_position'] = teach_position
         return_content['search'] = search
         return_content['heroes'] = heroes
+        return_content['referer'] = refer_url
         return render_to_response('common/search_teacher.html',
                                   return_content)
 
 
 def teacher_detail(request):
+    refer_url = request.META.get('HTTP_REFERER', '')
     return_content = utils.is_login(request)
     if return_content:
         # if return_content['login_type'] == 'teacher':
@@ -320,6 +323,7 @@ def teacher_detail(request):
         return_content['paginator'] = paginator_dict
         return_content['comment_list'] = comment_list
         return_content['comment'] = comment
+        return_content['referer'] = refer_url
         return render_to_response('common/teacher_detail.html',
                                   return_content,
                                   context_instance=RequestContext(request))

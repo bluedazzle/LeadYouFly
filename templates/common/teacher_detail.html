@@ -16,20 +16,47 @@
                 {% endif %}
             </div>
             <div class="col-md-5 col-lg-5 intro-content text-left" style="margin-top: -18px;">
+
+                <p class="intro-msg forMobile">{{ mentor_detail.intro }}</p>
+
                 <h4>{{ mentor_detail.nick }}</h4>
+
+                <p class="forMobile count col-sm-6 col-xs-6">交易量：{{ mentor_detail.get_orders_count }}</p>
+
+                <p class="forMobile count col-sm-6 col-xs-6">评分：{{ mentor_detail.mark }}</p>
+
                 {% if mentor_detail.status == 3 %}
-                    <div class="status-box status-danger col-lg-4 col-md-4">
+                    <div class="status-box status-danger col-lg-4 col-md-4 clearMobile">
                         不接单
                     </div>
                 {% elif mentor_detail.status == 1 %}
-                    <div class="status-box status-success col-lg-4 col-md-4">
+                    <div class="status-box status-success col-lg-4 col-md-4 clearMobile">
                         可立即授课
                     </div>
                 {% elif mentor_detail.status == 2 %}
-                    <div class="status-box status-warning col-lg-8 col-md-8">
+                    <div class="status-box status-warning col-lg-8 col-md-8 clearMobile">
                         上课中(预计时间{{ teach_end_time | date:"m/d H:i:s" }})
                     </div>
                 {% endif %}
+
+                {% if mentor_detail.status == 3 %}
+                <div class="status-box status-danger col-lg-4 col-md-4 forMobile leftMobile">
+                    <div></div>
+                    不接单
+                </div>
+                {% elif mentor_detail.status == 1 %}
+                <div class="status-box status-success col-lg-4 col-md-4 forMobile leftMobile">
+                    <div></div>
+                    可立即授课
+                </div>
+                {% elif mentor_detail.status == 2 %}
+                <div class="status-box status-warning col-lg-8 col-md-8 forMobile leftMobile">
+                    <div"></div>
+                    上课中(预计时间{{ teach_end_time | date:"m/d H:i:s" }})
+                </div>
+                {% endif %}
+
+
                 {% if active_user %}
                     <div class="col-lg-4 col-md-4" id="followMentor">
                         {% if mentor_detail in active_user.follow.all %}
@@ -42,18 +69,18 @@
                 {% endif %}
                 <div class="col-lg-12 col-md-12">
 
-                    <p class="intro-msg">{{ mentor_detail.intro }}</p>
+                    <p class="intro-msg clearMobile">{{ mentor_detail.intro }}</p>
 
-                    <p>交易量：{{ mentor_detail.get_orders_count }}</p>
+                    <p class="clearMobile">交易量：{{ mentor_detail.get_orders_count }}</p>
 
-                    <p>评分：{{ mentor_detail.mark }}</p>
+                    <p class="clearMobile">评分：{{ mentor_detail.mark }}</p>
                     <br/>
 
-                    <p>
+                    <p class="clearMobile">
                         游戏段位：{{ mentor_detail.game_level }}
                     </p>
 
-                    <p>
+                    <p class="clearMobile">
                         教学大区：
                         {% if '1' == mentor_detail.teach_area %}
                             电信
@@ -64,7 +91,7 @@
                         {% endif %}
                     </p>
 
-                    <p>
+                    <p class="clearMobile">
                         擅长位置：
                         {% if '1' in mentor_detail.good_at %}
                             中单
@@ -83,7 +110,50 @@
                         {% endif %}
                     </p>
 
-                    <p>
+                    <div class="talentBox">
+
+                    <div>
+
+                    <p class="forMobile talent talentLeft">
+                        {{ mentor_detail.game_level }}段位
+                    </p>
+
+
+                    <p class="forMobile talent talentMid">
+                        {% if '1' == mentor_detail.teach_area %}
+                        可教电信
+                        {% elif '2' == mentor_detail.teach_area %}
+                        可教网通
+                        {% elif '0' == mentor_detail.teach_area %}
+                        可教全区
+                        {% endif %}
+                    </p>
+
+                    <p class="forMobile talent talentRight">
+                        {% if '1' in mentor_detail.good_at %}
+                        擅长中单
+                        {% endif %}
+                        {% if '2' in mentor_detail.good_at %}
+                        擅长上单
+                        {% endif %}
+                        {% if '3' in mentor_detail.good_at %}
+                        擅长ADC
+                        {% endif %}
+                        {% if '4' in mentor_detail.good_at %}
+                        擅长打野
+                        {% endif %}
+                        {% if '5' in mentor_detail.good_at %}
+                        擅长辅助
+                        {% endif %}
+                    </p>
+                    </div>
+
+                    </div>
+
+
+
+
+                    <p class="text-center">
                         擅长英雄：
                         {% if mentor_detail.expert_hero1 %}
                             <img src="{{ mentor_detail.expert_hero1.hero_picture }}" data-toggle="tooltip"
@@ -107,6 +177,7 @@
 
             </div>
             <div class="col-lg-12 col-md-12">
+                <p>选择课程</p>
                 {% for course in course_list %}
                     <div class="col-lg-4 col-md-4"
                          onclick="toConfirmOrder({{ course.id }}, {{ mentor_detail.status }})">
@@ -132,8 +203,11 @@
                     <div class="col-lg-4 col-md-4">
                         <div class="detail-course-box view-more">
                             <div class="buy-box" onclick="viewAllCourses()">
-                                <h2>
+                                <h2 class="clearMobile">
                                     查看更多
+                                </h2>
+                                <h2 class="forMobile">
+                                    查看更多课程&nbsp<i class="glyphicon glyphicon-chevron-down"></i>
                                 </h2>
                             </div>
                         </div>
@@ -225,7 +299,7 @@
                 <div role="tabpanel" class="tab-pane" id="heroes-list">
                     <div class="heroes-list">
                         {% for hero in mentor_detail.hero_list.all %}
-                            <div class="col-lg-1 col-md-1">
+                            <div class="col-lg-1 col-md-1 col-xs-3 col-sm-3">
                                 <img src="{{ hero.hero_picture }}"/>
                             </div>
                         {% endfor %}
@@ -236,17 +310,6 @@
     </div>
 {% endblock %}
 {% block script %}
-<<<<<<< HEAD
-  {% if mentor_detail.status == 3 %}
-    <script>
-      $(document).ready(function(){
-        Notify("该教练正在休息，请查看其他教练")
-      })
-    </script>
-  {% endif %}
-  <script src="/js/common/teacher_detail.js"></script>
-  <script src="//vjs.zencdn.net/4.7/video.js"></script>
-=======
     {% if mentor_detail.status == 3 %}
         <script>
             $(document).ready(function () {
@@ -256,5 +319,4 @@
     {% endif %}
     <script src="/js/common/teacher_detail.js"></script>
     <script src="//vjs.zencdn.net/4.7/video.js"></script>
->>>>>>> lol
 {% endblock %}

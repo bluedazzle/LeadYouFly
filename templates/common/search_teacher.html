@@ -3,7 +3,7 @@
     <link href="/css/custom/search_teacher.css" rel="stylesheet"/>
 {% endblock %}
 {% block define %}
-    <section class="col-lg-12 col-md-12 col-sm-12 search-teacher-head" style="background-size: auto 100%;">
+    <section class="col-lg-12 col-md-12 col-sm-12 search-teacher-head" style="background-size: auto 120%;">
         <div class="">
             <div class="btn-group col-lg-11 col-md-11 col-sm-11" style="float: right;">
                 <button type="button" class="btn btn-select" onclick="openSelectScreen(1)">
@@ -141,9 +141,10 @@
                 <span class="caret"></span>
             </button>
             <ul class="heroSelector dropdown-menu pull-right">
-            <li><span><a href="/search_teacher?teach_hero=0&teach_area={{ teach_area }}&teach_position={{ teach_position }}">所有英雄</a></span></li>
+                <li><span><a
+                        href="/search_teacher?teach_hero=0&teach_area={{ teach_area }}&teach_position={{ teach_position }}">所有英雄</a></span>
+                </li>
                 {% for hero in heroes %}
-
                     {#          {% if teach_position and teach_position != '0' and hero.hero_type == teach_position %}#}
 
                     {#            <a href="/search_teacher?teach_hero={{ hero.id }}">{{ hero.hero_name }}</a>#}
@@ -161,7 +162,6 @@
           <a href="/search_teacher?teach_hero={{ hero.id }}&teach_area={{ teach_area }}&teach_position={{ teach_position }}">{{ hero.hero_name }}</a>
         </span>
                     </li>
-
                 {% endfor %}
             </ul>
 
@@ -182,7 +182,7 @@
                 <div class="col-lg-3 col-md-4 col-sm-6">
                     <div class="teacher-info-panel" onclick="toMentorDetail('{{ mentor.id }}')">
                         <div class="teacher-info-panel-head"
-                             style="background: url('{{ mentor.avatar }}') center no-repeat;">
+                             style="background: url('{{ mentor.avatar }}') center no-repeat; background-size:348px 348px;">
                             {% if mentor.status == 1 %}
                                 <div class="tag-status tag-status-success">
                                     <i class="triangle-top-right-success"></i>

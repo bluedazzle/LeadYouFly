@@ -13,7 +13,7 @@
     {#  <script src="http://cdn.bootcss.com/jquery/1.11.2/jquery.min.js"></script>#}
     <script src="/js/jquery.min.js"></script>
     <script src="/js/flat-ui.min.js"></script>
-    {#  <script src="/js/bootstrap.min.js"></script>#}
+{#      <script src="/js/bootstrap.min.js"></script>#}
 </head>
 <body>
 
@@ -37,6 +37,7 @@
                     </a>
                     <i class="divide-line"></i>
                 </div>
+
                 <!-- Collect the nav links, forms, and other content for toggling -->
                 <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                     <form class="navbar-form navbar-left search-form" action="/search_teacher" method="get"
@@ -51,9 +52,7 @@
                     </form>
                     <ul class="nav navbar-nav navbar-right">
                         <li><a href="/search_teacher" class="lg-title"
-                               style="font-size: 16px;font-weight: 700;">寻找教练</a></li>
-                        <li><a href="http://forum.fibar.cn/" class="lg-title" style="font-size: 16px;font-weight: 700;">社区</a>
-                        </li>
+                               style="font-size: 16px;font-weight: 700;">寻找导师</a></li>
                         {% if not is_login %}
                             <li><a href="/login" class="sm-title">登录</a></li>
                             <li><a href="/register" class="sm-title">注册</a></li>
@@ -123,7 +122,11 @@
 
 
     <div id="mobileHeader">
+        <a href="{{ referer }}" class="btn menuBar pull-left back">
+            <i class="glyphicon glyphicon-chevron-left"></i>
+        </a>
         <img src="/img/logo.png">
+
         <div class="dropdown">
             <button class="btn btn-default dropdown-toggle menuBar" type="button" id="dropdownMenu1"
                     data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -131,6 +134,11 @@
             </button>
             <ul class="dropdown-menu dropOption" aria-labelledby="dropdownMenu1">
                 {% if not is_login %}
+                    <li role="separator" class="divider"></li>
+                    <li><a href="/search_teacher">寻找教练</a></li>
+                    <li role="separator" class="divider"></li>
+                    <li><a href="http://forum.fibar.cn/">飞吧社区</a></li>
+                    <li role="separator" class="divider"></li>
                     <li><a href="/login" class="sm-title">登录</a></li>
                     <li role="separator" class="divider"></li>
                     <li><a href="/register" class="sm-title">注册</a></li>
@@ -140,6 +148,10 @@
                 {% if login_type == 'student' %}
                     <li><a><img style="width: 30px;height: 30px;border-radius: 50%"
                                 src="{{ active_user.avatar }}"/><span>{{ active_user.nick }}</span></a></li>
+                    <li role="separator" class="divider"></li>
+                    <li><a href="/search_teacher">寻找教练</a></li>
+                    <li role="separator" class="divider"></li>
+                    <li><a href="http://forum.fibar.cn/">飞吧社区</a></li>
                     <li role="separator" class="divider"></li>
                     <li><a href="/user/complete_mes">我的档案</a></li>
                     <li role="separator" class="divider"></li>

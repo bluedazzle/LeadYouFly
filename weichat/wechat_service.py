@@ -1,5 +1,6 @@
 # coding: utf-8
 from __future__ import unicode_literals
+import StringIO
 import json
 import requests
 from weichat.models import WeChatAdmin, Channel, Promotion, Question
@@ -153,9 +154,8 @@ class WechatService(object):
         img_req = requests.get(url)
         print url
         try:
-            with open('tmppic.{0}'.format(ext), 'wrb') as f1:
-                f1.write(img_req.content)
-                res = self.wechat.upload_media('image', f1)
+            tmp_io = StringIO.StringIO(img_req.content)
+            res = self.wechat.upload_media('image', tmp_io, extension='jpg')
             print res
             return res.get('media_id', '')
         except Exception, e:

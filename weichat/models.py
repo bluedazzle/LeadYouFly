@@ -41,6 +41,8 @@ class Promotion(BaseModel):
 class Question(BaseModel):
     question = models.CharField(max_length=200, default='')
     answer = models.TextField(default='')
+    image = models.CharField(max_length=512, default='')
+    have_image = models.BooleanField(default=False)
 
     def __unicode__(self):
         return self.question

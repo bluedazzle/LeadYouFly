@@ -38,6 +38,7 @@ def get_answer(question=''):
                 'chat_type': 0}
     r2 = requests.post('http://ask.1006.tv/question/loldata', data=req_data)
     answer = json.loads(r2.content)['result']['answer']
+    answer_image = json.loads(r2.content)['result']['answer_images']
     answer = unicode(answer).replace('小问', '小飞')
     answer = answer.replace('快问', '小飞')
     if u'张建奇' in question:
@@ -46,5 +47,11 @@ def get_answer(question=''):
         answer = u'小飞只会回答游戏相关的问题哦～'
     answer = '{0}\n <a href="http://www.fibar.cn"> 来飞吧游戏教练，让教练一对一教你{1}</a>'.format(answer, question)
     new_question = Question(question=question, answer=answer)
+    if answer_image != '':
+        new_question.image = answer_image
+        new_question.have_image = True
     new_question.save()
-    return answer
+    return new_question
+
+
+

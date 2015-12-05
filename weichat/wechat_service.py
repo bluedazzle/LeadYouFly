@@ -1,6 +1,7 @@
 # coding: utf-8
 from __future__ import unicode_literals
 import json
+import requests
 from weichat.models import WeChatAdmin, Channel, Promotion, Question
 from wechat_sdk import WechatBasic
 from kw import get_answer
@@ -77,9 +78,12 @@ class WechatService(object):
                        'scan': self.event_manage,
                        'view': self.event_manage,
                        }
-        result = manage_dict[message.type](message)
-        response_text = self.wechat.response_text(result)
-        return response_text
+        is_pic, result = manage_dict[message.type](message)
+        if is_pic:
+            response = self.wechat.response_image(result)
+        else:
+            response = self.wechat.response_text(result)
+        return response
 
 
     def text_manage(self, message):
@@ -94,8 +98,14 @@ class WechatService(object):
         # if not result.exists():
         #     result = Question.objects.filter(question__icontains=question)
         if result.exists():
-            return result[0].answer
-        return get_answer(message.content)
+            if result[0].have_image:
+                return True, self.upload_picture(result[0].image)
+            return False, result[0].answer
+        answer = get_answer(question)
+        if answer.have_image:
+            return True, answer.image
+        else:
+            return False, answer.answer
 
 
     def event_manage(self, message):
@@ -107,9 +117,9 @@ class WechatService(object):
                 promotion = self.get_promotion_info(open_id, channel)
                 promotion.cancel = False
                 promotion.save()
-                return promotion.channel.welcome_text
+                return False, promotion.channel.welcome_text
             else:
-                return '''嘿！欢迎关注飞吧游戏教练。
+                return False,  '''嘿！欢迎关注飞吧游戏教练。
 
 直接发送文字消息，提出关于LOL的任何问题，小飞都会第一时间给你答复。Try it~[坏笑]
 
@@ -118,7 +128,7 @@ class WechatService(object):
             promotion = self.get_promotion_info(open_id)
             promotion.cancel = True
             promotion.save()
-            return ''
+            return False, ''
         elif message.type == 'view':
             user_list = Promotion.objects.filter(open_id=open_id)
             if user_list.exists():
@@ -128,11 +138,19 @@ class WechatService(object):
                 user = user_list[0]
                 user.reply = '{0}; 点击菜单：{1}'.format(user.reply, menu_dict.get(message.key, '菜单'))
                 user.save()
-            return ''
+            return False, ''
         else:
             promotion = self.get_promotion_info(open_id)
-            return promotion.channel.welcome_text
+            return False, promotion.channel.welcome_text
 
 
     def other_manage(self, message):
-        return '小飞现在还不能识别其他类型的消息呢，请发文字～'
+        return False, '小飞现在还不能识别其他类型的消息呢，请发文字～'
+
+
+    def upload_picture(self, url):
+        ext = str(url).split('.')[-1]
+        img_req = requests.get(url)
+        res = self.wechat.upload_media('image', img_req.content)
+        print res
+        return res.get('media_id', '')

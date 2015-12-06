@@ -238,9 +238,9 @@ def confirm_order(request):
         return HttpResponseRedirect('/login')
     return_content['referer'] = refer_url
     student = return_content['active_user']
-    if student.phone == '' or student.qq == '':
-        next_page = request.get_full_path()
-        return HttpResponseRedirect('/user/complete_mes?next_page=%s' % next_page)
+    # if student.phone == '' or student.qq == '':
+    #     next_page = request.get_full_path()
+    #     return HttpResponseRedirect('/user/complete_mes?next_page=%s' % next_page)
     if request.method == 'GET':
         course_id = request.GET.get('course_id')
         if not course_id:
@@ -280,11 +280,16 @@ def create_order(req):
     if not return_content['login_type'] == 'student':
         raise Http404
     cid = req.POST.get('course_id', None)
+    qq = req.POST.get('qq', None)
+    phone = req.POST.get('phone', None)
     course = get_object_or_404(Course, id=cid)
     mentor = course.belong
     if mentor.status == 3:
         return HttpResponseRedirect('/mentor_detail?mentor_id=' + mentor.id)
     student = return_content['active_user']
+    student.phone = phone
+    student.qq = qq
+    student.save()
     order_id = create_order_id(student.id, mentor.id)
     pay_url = create_alipay_order(order_id, course.name, course.price)
     # now_time = datetime.datetime.now(tz=get_current_timezone())

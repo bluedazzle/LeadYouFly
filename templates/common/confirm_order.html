@@ -15,11 +15,16 @@
 
             <p class="cOther">导师：{{ course.belong.nick }}</p>
 
-            <p class="cOther">你的电话：{{ active_user.phone }}</p>
+            <form class="cOther" action="/user/create_order/" id="pcForm" target="_blank" method="post" onsubmit="return pcFormCheck()">
+                <p class="cOther">你的电话：<input type="text" placeholder="请输入联系方式" class="form-inline" id="pcPhone"
+                                              name="phone"
+                                              value="{{ active_user.phone }}"/></p>
 
-            <p class="cOther">你的QQ：{{ active_user.qq }}</p>
+                <p class="cOther">你的Q&nbspQ：<input type="text" placeholder="请输入QQ号码" class="form-inline" id="pcQq"
+                                                   name="qq"
+                                                   value="{{ active_user.qq }}"/></p>
 
-            <form class="cOther" action="/user/create_order/" target="_blank" method="post">
+
                 {% csrf_token %}
                 <div class="form-inline">
                     <label for=""><p>学习大区：{% if course.belong.teach_area == '0' %}
@@ -33,7 +38,7 @@
                 <input type="hidden" name="course_id" value="{{ course.id }}"/>
 
                 <p class="text-right">
-                    <button class="btn btn-primary btn-lg" onclick="toPay()" target="_Blank" type="submit">立即支付</button>
+                    <button class="btn btn-primary btn-lg" target="_Blank" type="submit">立即支付</button>
                 </p>
             </form>
 
@@ -46,10 +51,12 @@
         <div>
             <p class="cMobile">导师：{{ course.belong.nick }}</p>
 
-            <form class="" action="/user/create_order/" target="_blank" method="post">
-                <p class="cMobile">你的电话：<input placeholder="请输入联系方式" id="phone" name="phone" value="{{ active_user.phone }}"></p>
+            <form class="" action="/user/create_order/" target="_blank" method="post" onsubmit="return mobileFormCheck()">
+                <p class="cMobile">你的电话：<input placeholder="请输入联系方式" id="phone" name="phone"
+                                               value="{{ active_user.phone }}"></p>
 
-                <p class="cMobile">你的&nbsp&nbspQQ：<input placeholder="请输入QQ号码" id="qq" name="qq" value="{{ active_user.qq }}"></p>
+                <p class="cMobile">你的&nbsp&nbspQQ：<input placeholder="请输入QQ号码" id="qq" name="qq"
+                                                         value="{{ active_user.qq }}"></p>
 
                 {% csrf_token %}
                 <div class="form-inline cMobile">
@@ -69,7 +76,7 @@
                 <input type="hidden" name="course_id" value="{{ course.id }}">
 
                 <p class="text-right cMobile cInput">
-                    <button class="btn btn-primary btn-lg" onclick="toPay()" target="_Blank" type="submit">立即支付</button>
+                    <button class="btn btn-primary btn-lg"  target="_Blank" type="submit">立即支付</button>
                 </p>
             </form>
         </div>
@@ -97,9 +104,24 @@
 {% endblock %}
 {% block script %}
     <script>
+        function pcFormCheck() {
+            if ($('#pcPhone')[0].value === '' || $('#pcQq')[0].value === '') {
+                alert('请完善联系信息');
+                return false;
+            }else{
+                $('#payModal').modal({backdrop: 'static', keyboard: false});
+                return true;
+            }
+        };
         $("select").select2({dropdownCssClass: 'dropdown-inverse'});
-        function toPay() {
-            $('#payModal').modal({backdrop: 'static', keyboard: false});
-        }
+        function mobileFormCheck() {
+            if ($('#phone')[0].value === '' || $('#qq')[0].value === '') {
+                alert('请完善联系信息');
+                return false;
+            }else{
+                $('#payModal').modal({backdrop: 'static', keyboard: false});
+                return true;
+            }
+        };
     </script>
 {% endblock %}

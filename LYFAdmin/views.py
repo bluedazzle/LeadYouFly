@@ -923,7 +923,7 @@ def admin_message_new(req):
 
 @login_require
 def admin_wechat(req):
-    channel_list = Channel.objects.all()
+    channel_list = Channel.objects.all().order_by('-create_time')
     we_admin = WeChatAdmin.objects.all()[0]
     return render_to_response('wechat_admin.html', {'channel_list': channel_list,
                                                     'wechat_admin': we_admin}, context_instance=RequestContext(req))

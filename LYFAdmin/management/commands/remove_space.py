@@ -8,6 +8,6 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
         channel_list = Channel.objects.all()
         for channel in channel_list:
-            channel.phone = str(channel.phone).strip()
+            channel.phone = unicode(channel.phone).strip()
             channel.save()
         print 'mission complete'

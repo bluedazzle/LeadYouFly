@@ -934,7 +934,7 @@ def admin_wechat_new_channel(req):
     area = req.POST.get('area', None)
     scene = req.POST.get('scene', None)
     welcome = req.POST.get('welcome', None)
-    phone = str(req.POST.get('phone', None)).strip()
+    phone = unicode(req.POST.get('phone', None)).strip()
 
     if (area and scene and welcome and phone) is not None:
         WS = WechatService()

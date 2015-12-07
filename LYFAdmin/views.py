@@ -934,7 +934,7 @@ def admin_wechat_new_channel(req):
     area = req.POST.get('area', None)
     scene = req.POST.get('scene', None)
     welcome = req.POST.get('welcome', None)
-    phone = req.POST.get('phone', None)
+    phone = str(req.POST.get('phone', None)).strip()
 
     if (area and scene and welcome and phone) is not None:
         WS = WechatService()
@@ -984,6 +984,8 @@ def promotion_login(req):
             channel = channel_list[0]
             re_url = '/admin/wechat/channel/detail/{0}/'.format(channel.id)
             return HttpResponseRedirect(re_url)
+        else:
+            return render_to_response('promotion_login.html')
     else:
         return render_to_response('promotion_login.html')
 

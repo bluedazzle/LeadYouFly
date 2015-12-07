@@ -1,3 +1,5 @@
+from __future__ import unicode_literals
+
 # -*- coding: utf-8 -*-
 from django.core.management.base import BaseCommand
 from weichat.models import Channel

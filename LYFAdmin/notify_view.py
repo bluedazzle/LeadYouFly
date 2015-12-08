@@ -89,3 +89,8 @@ def alipay_batch_notify(req):
         return HttpResponse('success')
     else:
         return HttpResponse('fail')
+
+
+@csrf_exempt
+def wechat_notify(req):
+    pass

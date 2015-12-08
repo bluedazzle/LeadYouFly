@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from django.conf.urls import patterns, include, url
-from LYFAdmin.notify_view import alipay_notify, alipay_batch_notify
+from LYFAdmin.notify_view import alipay_notify, alipay_batch_notify, wechat_notify
 from views import *
 import user_view
 import teacher_view
@@ -64,4 +64,5 @@ urlpatterns = patterns('',
                        #异步通知
                        url(r'^alipay_notify/$', alipay_notify),
                        url(r'^batch_notify/$', alipay_batch_notify),
+                       url(r'^wechat_notify/$', wechat_notify)
                        )

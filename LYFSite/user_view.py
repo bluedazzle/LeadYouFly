@@ -2,7 +2,7 @@
 from django.shortcuts import get_object_or_404
 from LYFAdmin.message import EXP_MES, LVLUP_MES
 from LYFAdmin.order_operation import create_order_id
-from LYFAdmin.utils import area_convert
+from LYFAdmin.utils import area_convert, encodejson
 from views import *
 import time
 
@@ -274,6 +274,7 @@ def repay_order(req):
 
 
 def create_order(req):
+    body = {}
     return_content = utils.is_login(req)
     if not return_content:
         return HttpResponseRedirect('/login')
@@ -282,10 +283,14 @@ def create_order(req):
     cid = req.POST.get('course_id', None)
     qq = req.POST.get('qq', None)
     phone = req.POST.get('phone', None)
+    channel = req.POST.get('channel', None)
     course = get_object_or_404(Course, id=cid)
     mentor = course.belong
     if mentor.status == 3:
-        return HttpResponseRedirect('/mentor_detail?mentor_id=' + mentor.id)
+        url = '/mentor_detail?mentor_id={0}'.format(mentor.id)
+        body['redirect_url'] = url
+        body['err_msg'] = u'教练休息中，无法下单'
+        return HttpResponse(encodejson(2, body), content_type='application/json')
     student = return_content['active_user']
     student.phone = phone
     student.qq = qq
@@ -312,7 +317,9 @@ def create_order(req):
                       teach_start_time=start_time,
                       teach_by=mentor)
     new_order.save()
-    return HttpResponseRedirect(pay_url)
+    body['redirect_url'] = pay_url
+    body['channel'] = channel
+    return HttpResponse(encodejson(1, body), content_type='application/json')
 
 
 def complain(request):

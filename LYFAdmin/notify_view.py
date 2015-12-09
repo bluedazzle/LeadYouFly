@@ -10,7 +10,10 @@ from LYFAdmin.order_operation import create_charge_record, create_money_record
 from LYFAdmin.sms import send_order_msg, send_confirm_msg
 from LYFAdmin.utils import check_start_time
 
+import xmltodict
 import datetime
+from LYFAdmin.wechat_pay import dict_to_xml
+
 
 @csrf_exempt
 def alipay_notify(req):
@@ -93,4 +96,38 @@ def alipay_batch_notify(req):
 
 @csrf_exempt
 def wechat_notify(req):
-    pass
+    body = {}
+    data = xmltodict.parse(req.body)['xml']
+    return_code = data['return_code']
+    if return_code == 'SUCCESS':
+        result_code = data['result_code']
+        if result_code == 'SUCCESS':
+            order_no = data['out_trade_no']
+            price = float(data['total_fee']) / 100
+            order_list = Order.objects.filter(order_id=order_no)
+            if not order_list.exists():
+                body['return_code'] = 'FAIL'
+                body['return_msg'] = 'order {0} is not exist'.format(order_no)
+                return HttpResponse(dict_to_xml(body), content_type='application/xml')
+            order = order_list[0]
+            if order.status == 6:
+                order.status = 1
+                start_time = check_start_time(order.teach_by)
+                order.teach_start_time = start_time
+                order.teach_end_time = start_time + datetime.timedelta(hours=1.5)
+                order.if_pay = True
+                order.save()
+                create_charge_record(order.belong, price, order_id=order_no)
+                send_order_msg(str(order.order_id).encode('utf-8'),
+                               str(order.belong.phone).encode('utf-8'),
+                               str(order.belong.qq).encode('utf-8'),
+                               str(order.teach_by.phone).encode('utf-8'))
+                order.teach_by.iden_income += order.order_price
+                order.teach_by.total_income += order.order_price
+                order.teach_by.save()
+                send_confirm_msg(str(order.belong.phone), str(order.teach_by.phone))
+                order_mes = ORDER_BUY_MES % order.belong.nick
+                create_new_message(order_mes, belong=order.belong)
+        body['return_code'] = 'SUCCESS'
+        body['return_msg'] = 'OK'
+        return HttpResponse(dict_to_xml(body), content_type='application/xml')

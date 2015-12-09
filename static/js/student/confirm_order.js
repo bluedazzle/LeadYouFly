@@ -37,7 +37,8 @@ function createOrder(platform) {
             if (data.status == 1) {
                 if (channel == 'alipay') {
                     $('#payModal').modal({backdrop: 'static', keyboard: false});
-                    window.open(data.body.redirect_url);
+                    var tempwindow=window.open('_blank');
+                    tempwindow.location = data.body.redirect_url;
                 } else {
                     //wechat
                 }

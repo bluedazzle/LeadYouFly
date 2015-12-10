@@ -249,7 +249,7 @@ def confirm_order(request):
         course_id = request.GET.get('course_id')
         if student.wx_open_id == '':
             code = request.GET.get('code', False)
-            is_wx = True if request.GET.get('wechat', False) == 1 else False
+            is_wx = True if str(request.GET.get('wechat', False)) == '1' else False
             print is_wx
             if is_wx:
                 if not code:

@@ -50,7 +50,7 @@ def get_answer(question=''):
         answer = u'叫你爸爸做什么？'
     if u'这里是游戏问答平台，你能换个游戏问题么？' in answer:
         answer = u'小飞只会回答游戏相关的问题哦～'
-    answer = '{0}\n <a href="http://www.fibar.cn"> 来飞吧游戏教练，让教练一对一教你{1}</a>'.format(answer, question)
+    answer = '{0}\n <a href="http://lol.fibar.cn/search_teacher"> 来飞吧游戏教练，让教练一对一教你{1}</a>'.format(answer, question)
     new_question = Question(question=question, answer=answer)
     if answer_image != '':
         new_question.image = answer_image

@@ -40,6 +40,7 @@ function createOrder(platform) {
                     openwin(data.body.data);
                 } else {
                     var params = data.body.data;
+                    $('#payModal').modal({backdrop: 'static', keyboard: false});
                     WeixinJSBridge.invoke(
                            'getBrandWCPayRequest', params,
                            function(res){

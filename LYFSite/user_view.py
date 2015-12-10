@@ -1,9 +1,12 @@
 # -*- coding: utf-8 -*-
+import urllib
 from django.shortcuts import get_object_or_404
 from LYFAdmin.message import EXP_MES, LVLUP_MES
 from LYFAdmin.order_operation import create_order_id
 from LYFAdmin.utils import area_convert, encodejson
+from LeadYouFly.settings import HOST
 from views import *
+from weichat.wechat_service import WechatService
 import time
 
 exp_dic = {
@@ -243,6 +246,22 @@ def confirm_order(request):
     #     return HttpResponseRedirect('/user/complete_mes?next_page=%s' % next_page)
     if request.method == 'GET':
         course_id = request.GET.get('course_id')
+        if student.wx_open_id == '':
+            code = request.GET.get('code', False)
+            if not code:
+                current_url = '{0}{1}'.format(HOST, request.get_full_path()[1:])
+                encode_url = urllib.quote_plus(current_url)
+                get_code_url = '''https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxed29f94c7e513349&redirect_uri={0}&response_type=code&scope=snsapi_base#wechat_redirect'''.format(encode_url)
+                print get_code_url
+                return HttpResponseRedirect(get_code_url)
+            else:
+                wx = WechatService()
+                data = wx.get_user_info_by_code(code)
+                open_id = data['openid']
+                union_id = data['unionid']
+                student.wx_open_id = open_id
+                student.wx_union_id = union_id
+                student.save()
         if not course_id:
             raise Http404
         try:

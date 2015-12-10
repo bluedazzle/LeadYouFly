@@ -212,6 +212,8 @@ class Student(AbstractBaseUser, BaseModel):
     money = models.FloatField(default=0.0)
     exp = models.IntegerField(default=0)
     follow = models.ManyToManyField(Mentor, related_name='my_students', null=True, blank=True)
+    wx_open_id = models.CharField(max_length=128, default='')
+    wx_union_id = models.CharField(max_length=123, default='')
 
 
     USERNAME_FIELD = 'account'

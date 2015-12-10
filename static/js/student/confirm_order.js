@@ -40,7 +40,7 @@ function createOrder(platform) {
                     openwin(data.body.data);
                 } else {
                     var params = data.body.data;
-                    alert(params);
+                    alert(params.appId);
                     WeixinJSBridge.invoke(
                            'getBrandWCPayRequest', params,
                            function(res){

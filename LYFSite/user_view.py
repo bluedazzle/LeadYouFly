@@ -250,7 +250,6 @@ def confirm_order(request):
         if student.wx_open_id == '':
             code = request.GET.get('code', False)
             is_wx = True if str(request.GET.get('wechat', False)) == '1' else False
-            print is_wx
             if is_wx:
                 if not code:
                     current_url = '{0}{1}'.format(HOST, request.get_full_path()[1:])
@@ -325,7 +324,6 @@ def create_order(req):
                   'openid': student.wx_open_id,
                   'total_fee': int(float(course.price) * 100)}
         repay_data = build_form_by_params(params)
-        print repay_data
         body['data'] = repay_data
     else:
         pay_url = create_alipay_order(order_id, course.name, course.price)

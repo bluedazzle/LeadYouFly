@@ -324,6 +324,7 @@ def create_order(req):
                   'openid': student.wx_open_id,
                   'total_fee': (float(course.price) * 100)}
         repay_data = build_form_by_params(params)
+        print repay_data
         body['data'] = repay_data
     else:
         pay_url = create_alipay_order(order_id, course.name, course.price)

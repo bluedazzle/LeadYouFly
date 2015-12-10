@@ -37,7 +37,7 @@ function createOrder(platform) {
             if (data.status == 1) {
                 if (channel == 'alipay') {
                     $('#payModal').modal({backdrop: 'static', keyboard: false});
-                    window.open(data.body.redirect_url);
+                    openwin(data.body.redirect_url);
                 } else {
                     //wechat
                 }
@@ -48,4 +48,13 @@ function createOrder(platform) {
         },
         dataType: 'json'
     });
+}
+
+function openwin(url) {
+    var a = document.createElement("a");
+    a.setAttribute("href", url);
+    a.setAttribute("target", "_blank");
+    a.setAttribute("id", "openwin");
+    document.body.appendChild(a);
+    a.click();
 }

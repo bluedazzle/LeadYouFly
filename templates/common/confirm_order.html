@@ -25,19 +25,18 @@
 
 
             {% csrf_token %}
-            <div class="form-inline">
-                <label for=""><p>学习大区：{% if course.belong.teach_area == '0' %}
+                <p class="cOther">学习大区：{% if course.belong.teach_area == '0' %}
                     全区
                 {% elif course.belong.teach_area == '1' %}
                     电信
                 {% else %}
                     联通
-                {% endif %}</p></label>
+                {% endif %}</p>
             </div>
             <input type="hidden" id="pcCourse" name="course_id" value="{{ course.id }}"/>
 
             <p class="text-right">
-                <button class="btn btn-primary btn-lg" onclick="createOrder('pc')">立即支付</button>
+                <button class="cOther btn btn-primary btn-lg" onclick="createOrder('pc')">立即支付</button>
             </p>
         </div>
 
@@ -102,6 +101,7 @@
     <script>
         var wechatInfo = navigator.userAgent.match(/MicroMessenger\/([\d\.]+)/i);
         if (wechatInfo) {
+            alert('亲，请单击右上角菜单选择“在浏览器中打开”哦，否则将无法完成付款～');
             if (wechatInfo[1] < "5.0") {
                 alert("亲，你的微信版本号过低，请在右上角点击“在浏览器中打开“，用其他方式支付哟～");
             }

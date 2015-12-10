@@ -4,6 +4,7 @@ from django.shortcuts import get_object_or_404
 from LYFAdmin.message import EXP_MES, LVLUP_MES
 from LYFAdmin.order_operation import create_order_id
 from LYFAdmin.utils import area_convert, encodejson
+from LYFAdmin.wechat_pay import build_form_by_params
 from LeadYouFly.settings import HOST
 from views import *
 from weichat.wechat_service import WechatService
@@ -248,20 +249,21 @@ def confirm_order(request):
         course_id = request.GET.get('course_id')
         if student.wx_open_id == '':
             code = request.GET.get('code', False)
-            if not code:
-                current_url = '{0}{1}'.format(HOST, request.get_full_path()[1:])
-                encode_url = urllib.quote_plus(current_url)
-                get_code_url = '''https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxed29f94c7e513349&redirect_uri={0}&response_type=code&scope=snsapi_base#wechat_redirect'''.format(encode_url)
-                print get_code_url
-                return HttpResponseRedirect(get_code_url)
-            else:
-                wx = WechatService()
-                data = wx.get_user_info_by_code(code)
-                open_id = data['openid']
-                union_id = data['unionid']
-                student.wx_open_id = open_id
-                student.wx_union_id = union_id
-                student.save()
+            is_wx = True if request.GET.get('wechat', False) == 1 else False
+            if is_wx:
+                if not code:
+                    current_url = '{0}{1}'.format(HOST, request.get_full_path()[1:])
+                    encode_url = urllib.quote_plus(current_url)
+                    get_code_url = '''https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxed29f94c7e513349&redirect_uri={0}&response_type=code&scope=snsapi_base#wechat_redirect'''.format(encode_url)
+                    return HttpResponseRedirect(get_code_url)
+                else:
+                    wx = WechatService()
+                    data = wx.get_user_info_by_code(code)
+                    open_id = data['openid']
+                    union_id = data['unionid']
+                    student.wx_open_id = open_id
+                    student.wx_union_id = union_id
+                    student.save()
         if not course_id:
             raise Http404
         try:
@@ -315,7 +317,17 @@ def create_order(req):
     student.qq = qq
     student.save()
     order_id = create_order_id(student.id, mentor.id)
-    pay_url = create_alipay_order(order_id, course.name, course.price)
+    if channel == 'wechat':
+        params = {'body': course.name,
+                  'out_trade_no': order_id,
+                  'spbill_create_ip': req.META.get('REMOTE_ADDR', '127.0.0.1'),
+                  'openid': student.wx_open_id,
+                  'total_fee': (float(course.price) * 100)}
+        repay_data = build_form_by_params(params)
+        body['data'] = repay_data
+    else:
+        pay_url = create_alipay_order(order_id, course.name, course.price)
+        body['data'] = pay_url
     # now_time = datetime.datetime.now(tz=get_current_timezone())
     # pre_time = now_time.replace(hour=0, minute=0, second=0)
     # order_num = Order.objects.filter(create_time__range=(pre_time, now_time), status=2, teach_by=mentor).count()
@@ -336,7 +348,6 @@ def create_order(req):
                       teach_start_time=start_time,
                       teach_by=mentor)
     new_order.save()
-    body['redirect_url'] = pay_url
     body['channel'] = channel
     return HttpResponse(encodejson(1, body), content_type='application/json')
 

@@ -17,7 +17,12 @@ function toConfirmOrder(courseId, mentor_status){
     Notify("教练休息中，无法下单");
     return false
   }
-  window.location = "/confirm_order?course_id=" + courseId;
+    var wechatInfo = navigator.userAgent.match(/MicroMessenger\/([\d\.]+)/i);
+    if (wechatInfo) {
+        window.location = "/confirm_order?wechat=1&course_id=" + courseId;}
+    else{
+        window.location = "/confirm_order?wechat=0&course_id=" + courseId;
+    }
 }
 
 function followMentor(teacherId){

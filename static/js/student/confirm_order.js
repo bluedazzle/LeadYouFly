@@ -37,7 +37,7 @@ function createOrder(platform) {
             if (data.status == 1) {
                 if (channel == 'alipay') {
                     $('#payModal').modal({backdrop: 'static', keyboard: false});
-                    openwin(data.body.redirect_url);
+                    openwin(data.body.data);
                 } else {
                     var params = data.body.data;
                     WeixinJSBridge.invoke(

@@ -41,6 +41,8 @@ def get_answer(question=''):
     answer_image = json.loads(r2.content)['result']['answer_images']
     answer = unicode(answer).replace('小问', '小飞')
     answer = answer.replace('快问', '小飞')
+    answer = answer.replace('1006', '小飞')
+    answer = answer.replace('的指导员', '')
     if u'张建奇' in question:
         answer = u'叫你爸爸做什么？'
     if u'这里是游戏问答平台，你能换个游戏问题么？' in answer:

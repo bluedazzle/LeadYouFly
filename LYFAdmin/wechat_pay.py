@@ -12,7 +12,7 @@ import string
 config = {
     'appId': 'wxed29f94c7e513349',
     'Mchid': '1265828801',
-    'Key': '',
+    'Key': 'OdCy3QlJ0S2E64PDMGYgWLqUj9NRiKew',
     'notify_url': 'http://lol.fibar.cn/wechat_notify/'
 }
 

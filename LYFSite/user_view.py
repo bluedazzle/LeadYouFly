@@ -322,7 +322,7 @@ def create_order(req):
                   'out_trade_no': order_id,
                   'spbill_create_ip': req.META.get('REMOTE_ADDR', '127.0.0.1'),
                   'openid': student.wx_open_id,
-                  'total_fee': (float(course.price) * 100)}
+                  'total_fee': int(float(course.price) * 100)}
         repay_data = build_form_by_params(params)
         print repay_data
         body['data'] = repay_data

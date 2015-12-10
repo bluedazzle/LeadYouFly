@@ -250,6 +250,7 @@ def confirm_order(request):
         if student.wx_open_id == '':
             code = request.GET.get('code', False)
             is_wx = True if request.GET.get('wechat', False) == 1 else False
+            print is_wx
             if is_wx:
                 if not code:
                     current_url = '{0}{1}'.format(HOST, request.get_full_path()[1:])

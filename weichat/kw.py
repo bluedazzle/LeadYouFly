@@ -37,6 +37,9 @@ def get_answer(question=''):
                 'mid': 0,
                 'chat_type': 0}
     r2 = requests.post('http://ask.1006.tv/question/loldata', data=req_data)
+    err_code = json.loads(r2.content)['error_code']
+    if err_code != 0:
+        return Question.objects.get(question='nonoreply')
     answer = json.loads(r2.content)['result']['answer']
     answer_image = json.loads(r2.content)['result']['answer_images']
     answer = unicode(answer).replace('小问', '小飞')
@@ -54,6 +57,8 @@ def get_answer(question=''):
         new_question.have_image = True
     new_question.save()
     return new_question
+
+
 
 
 

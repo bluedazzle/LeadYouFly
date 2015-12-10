@@ -43,9 +43,7 @@ class WechatService(object):
 
 
     def get_user_info_by_code(self, code):
-        req_url = '''
-        https://api.weixin.qq.com/sns/oauth2/access_token?appid={0}&secret={1}&code={2}&grant_type=authorization_code
-        '''.format(self.wechat_admin.app_id, self.wechat_admin.app_secret, code)
+        req_url = '''https://api.weixin.qq.com/sns/oauth2/access_token?appid={0}&secret={1}&code={2}&grant_type=authorization_code'''.format(self.wechat_admin.app_id, self.wechat_admin.app_secret, code)
         result = requests.get(req_url)
         return json.loads(result.content)
 

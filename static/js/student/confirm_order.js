@@ -37,7 +37,7 @@ function createOrder(platform) {
             if (data.status == 1) {
                 $('#payModal').modal({backdrop: 'static', keyboard: false});
                 if (channel == 'alipay') {
-                    $('#extraInfo').html('(无法支付请在浏览器地址栏右侧允许本网站弹框或点击下方"前往支付"按钮)');
+                    $('#payInfo').append('(无法支付请在浏览器地址栏右侧允许本网站弹框或点击下方"前往支付"按钮)');
                     var url = data.body.data;
                     var a = document.createElement("a");
                     $('#repay').attr("href", url);

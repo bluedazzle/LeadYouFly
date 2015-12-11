@@ -39,6 +39,7 @@ function createOrder(platform) {
                 if (channel == 'alipay') {
                     var url = data.body.data;
                     var a = document.createElement("a");
+                    $('#repay').attr("href", url);
                     a.setAttribute("href", url);
                     a.setAttribute("target", "_blank");
                     a.setAttribute("id", "openwin");

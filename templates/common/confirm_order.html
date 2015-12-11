@@ -88,24 +88,11 @@
             <h4 class="modal-title" id="myModalLabel">支付操作</h4>
         </div>
         <div class="modal-body">
-            <p>正在支付...(无法支付请在浏览器地址栏右侧允许本网站弹框或点击下方"前往支付"按钮)</p>
+            <p>正在支付...</p>
+            <p id="extraInfo"></p>
         </div>
         <div class="modal-footer">
             <a class="btn btn-primary" onclick="setDisabled()" href="" id="repay" target="_blank">前往支付</a>
-            <a href="/user/my_orders" type="button" class="btn btn-primary">支付完成</a>
-            <a href="https://cshall.alipay.com/hall/index.htm" type="button" class="btn btn-default">支付遇到问题</a>
-        </div>
-    </div>
-    <div class="modal fade" id="wepayModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-    <div class="modal-dialog" role="document">
-    <div class="modal-content">
-        <div class="modal-header">
-            <h4 class="modal-title" id="myModalLabel">支付操作</h4>
-        </div>
-        <div class="modal-body">
-            <p>正在支付...</p>
-        </div>
-        <div class="modal-footer">
             <a href="/user/my_orders" type="button" class="btn btn-primary">支付完成</a>
             <a href="https://cshall.alipay.com/hall/index.htm" type="button" class="btn btn-default">支付遇到问题</a>
         </div>

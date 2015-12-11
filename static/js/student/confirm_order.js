@@ -35,8 +35,9 @@ function createOrder(platform) {
         data: post_dict,
         success: function (data) {
             if (data.status == 1) {
+                $('#payModal').modal({backdrop: 'static', keyboard: false});
                 if (channel == 'alipay') {
-                    $('#payModal').modal({backdrop: 'static', keyboard: false});
+                    $('#extraInfo').html('(无法支付请在浏览器地址栏右侧允许本网站弹框或点击下方"前往支付"按钮)');
                     var url = data.body.data;
                     var a = document.createElement("a");
                     $('#repay').attr("href", url);
@@ -46,7 +47,6 @@ function createOrder(platform) {
                     document.body.appendChild(a);
                     a.click();
                 } else {
-                    $('#wepayModal').modal({backdrop: 'static', keyboard: false});
                     var params = data.body.data;
                     WeixinJSBridge.invoke(
                         'getBrandWCPayRequest', params,

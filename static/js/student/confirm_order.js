@@ -35,8 +35,8 @@ function createOrder(platform) {
         data: post_dict,
         success: function (data) {
             if (data.status == 1) {
-                $('#payModal').modal({backdrop: 'static', keyboard: false});
                 if (channel == 'alipay') {
+                    $('#payModal').modal({backdrop: 'static', keyboard: false});
                     var url = data.body.data;
                     var a = document.createElement("a");
                     $('#repay').attr("href", url);
@@ -46,6 +46,7 @@ function createOrder(platform) {
                     document.body.appendChild(a);
                     a.click();
                 } else {
+                    $('#wepayModal').modal({backdrop: 'static', keyboard: false});
                     var params = data.body.data;
                     WeixinJSBridge.invoke(
                         'getBrandWCPayRequest', params,

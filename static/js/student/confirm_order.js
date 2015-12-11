@@ -64,3 +64,8 @@ function createOrder(platform) {
         dataType: 'json'
     });
 }
+
+function setDisabled(){
+    $('#repay').attr('disabled',"true");
+    $('#repay').hide();
+}

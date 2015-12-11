@@ -37,7 +37,13 @@ function createOrder(platform) {
             if (data.status == 1) {
                 $('#payModal').modal({backdrop: 'static', keyboard: false});
                 if (channel == 'alipay') {
-                    openwin(data.body.data);
+                    var url = data.body.data;
+                    var a = document.createElement("a");
+                    a.setAttribute("href", url);
+                    a.setAttribute("target", "_blank");
+                    a.setAttribute("id", "openwin");
+                    document.body.appendChild(a);
+                    a.click();
                 } else {
                     var params = data.body.data;
                     WeixinJSBridge.invoke(
@@ -56,13 +62,4 @@ function createOrder(platform) {
         },
         dataType: 'json'
     });
-}
-
-function openwin(url) {
-    var a = document.createElement("a");
-    a.setAttribute("href", url);
-    a.setAttribute("target", "_blank");
-    a.setAttribute("id", "openwin");
-    document.body.appendChild(a);
-    a.click();
 }

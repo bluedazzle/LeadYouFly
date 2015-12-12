@@ -272,7 +272,7 @@ def output_promotion(file_name, promotion_list):
     ws.write(0, 7, "是否取关")
     i = 1
     for item in promotion_list:
-        ws.write(i, 0, item.create_time, style0)
+        ws.write(i, 0, datetime_to_string(item.create_time), style0)
         ws.write(i, 1, item.nick, style0)
         ws.write(i, 2, item.channel.name, style0)
         ws.write(i, 3, item.province)

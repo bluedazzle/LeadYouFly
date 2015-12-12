@@ -250,7 +250,7 @@ class Course(BaseModel):
     belong = models.ForeignKey(Mentor, related_name='men_courses')
 
     def __unicode__(self):
-        return self.name
+        return '{0}:{1}'.format(self.belong.nick, self.name)
 
 
 #教练账款纪录

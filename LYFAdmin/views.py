@@ -22,7 +22,7 @@ from LYFAdmin.order_operation import create_money_record
 from forms import MentorDetailContentForm, NoticeContentForm
 from decorator import login_require
 from utils import upload_picture, datetime_to_string, auth_admin, hero_convert, order_status_convert, \
-    mentor_status_convert, order_search, output_data, student_search, report_convert, get_day_info
+    mentor_status_convert, order_search, output_data, student_search, report_convert, get_day_info, output_promotion
 from qn import upload_file_qn, list_file, QINIU_DOMAIN, VIDEO_CONVERT_PARAM, VIDEO_POSTER_PARAM, data_handle, \
     delete_data, put_block_data
 from message import push_custom_message
@@ -970,6 +970,14 @@ def admin_wechat_detail(req, pid):
                                                            'valid_count': valid_promotions,
                                                            'total_count': total_promotions,
                                                            'channel': channel})
+
+
+def admin_wechat_output(req, pid):
+    channel = get_object_or_404(Channel, id=pid)
+    promotion_list = Promotion.objects.filter(channel=channel).order_by('-create_time')
+    file_name = 'promotion' + str(time.time()) + '.xls'
+    output_path = output_promotion(file_name, promotion_list)
+    return HttpResponse(output_path)
 
 
 def promotion(req):

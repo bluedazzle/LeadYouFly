@@ -257,6 +257,35 @@ def output_data(file_name, order_list):
     return '/output/' + file_name
 
 
+def output_promotion(file_name, promotion_list):
+    wb = xlwt.Workbook(encoding='utf-8')
+    now_time = time.time()
+    ws = wb.add_sheet(str(now_time))
+    style0 = xlwt.easyxf('font: name Times New Roman, color-index red, bold on')
+    ws.write(0, 0, "关注时间")
+    ws.write(0, 1, "昵称")
+    ws.write(0, 2, "渠道")
+    ws.write(0, 3, "省份")
+    ws.write(0, 4, "城市")
+    ws.write(0, 5, "性别")
+    ws.write(0, 6, "交互内容")
+    ws.write(0, 7, "是否取关")
+    i = 1
+    for item in promotion_list:
+        ws.write(i, 0, item.create_time, style0)
+        ws.write(i, 1, item.nick, style0)
+        ws.write(i, 2, item.channel.name, style0)
+        ws.write(i, 3, item.province)
+        ws.write(i, 4, item.city)
+        ws.write(i, 5, item.sex)
+        ws.write(i, 6, item.reply)
+        ws.write(i, 7, item.cancel)
+        i += 1
+    output_path = "static/output/" + file_name
+    wb.save(output_path)
+    return '/output/' + file_name
+
+
 def create_random_avatar():
     r_num = random.randint(1, 68)
     file_name = '/img/avatar/%i.png' % r_num

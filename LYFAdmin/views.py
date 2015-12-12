@@ -977,7 +977,7 @@ def admin_wechat_output(req, pid):
     promotion_list = Promotion.objects.filter(channel=channel).order_by('-create_time')
     file_name = 'promotion' + str(time.time()) + '.xls'
     output_path = output_promotion(file_name, promotion_list)
-    return HttpResponse(output_path)
+    return HttpResponseRedirect(output_path)
 
 
 def promotion(req):

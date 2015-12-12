@@ -1,0 +1,43 @@
+{% extends "admin_base.html" %}
+{% block title %}微信管理{% endblock %}
+{% block page %}兼职卫士渠道管理{% endblock %}
+{% block content %}
+    <div class="my_contianer">
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <h3 class="panel-title">二维码推广管理</h3>
+            </div>
+            <div class="panel-body">
+                <br/>
+                <table class="table table-hover" data-toggle="table">
+                    <thead>
+                    <tr>
+                        <th data-sortable="true">推广渠道</th>
+                        <th data-sortable="true">生成时间</th>
+                        <th data-sortable="true">联系人</th>
+                        <th data-sortable="true">scene</th>
+                        <th data-sortable="true">二维码</th>
+                        <th data-sortable="true">欢迎文字</th>
+                        <th data-sortable="true">推广数</th>
+                        <th data-sortable="true">推广详情</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for channel in channel_list %}
+                        <tr>
+                            <td>{{ channel.name }}</td>
+                            <td>{{ channel.create_time | date:"F j, Y" }}</td>
+                            <td>{{ channel.phone }}</td>
+                            <td>{{ channel.scene }}</td>
+                            <td><a class="btn btn-primary" href="https://mp.weixin.qq.com/cgi-bin/showqrcode?ticket={{ channel.ticket }}">查看</a></td>
+                            <td>{{ channel.welcome_text|slice:"10" }}...</td>
+                            <td>{{ channel.get_channel_promotion }}</td>
+                            <td><a class="btn btn-primary" href="/admin/wechat/channel/detail/{{ channel.id }}/">查看</a></td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+{% endblock %}

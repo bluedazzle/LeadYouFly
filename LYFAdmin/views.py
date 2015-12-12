@@ -929,6 +929,11 @@ def admin_wechat(req):
                                                     'wechat_admin': we_admin}, context_instance=RequestContext(req))
 
 
+def admin_wechat_jzws(req):
+    channel_list = Channel.objects.filter(name__icontains=u'兼职卫士').order_by('-create_time')
+    return render_to_response('admin_wechat_jzws.html', {'channel_list': channel_list}, context_instance=RequestContext(req))
+
+
 @login_require
 def admin_wechat_new_channel(req):
     area = req.POST.get('area', None)

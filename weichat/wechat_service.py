@@ -3,7 +3,7 @@ from __future__ import unicode_literals
 import StringIO
 import json
 import requests
-from weichat.models import WeChatAdmin, Channel, Promotion, Question
+from weichat.models import WeChatAdmin, Channel, Promotion, Question, Message
 from wechat_sdk import WechatBasic
 from kw import get_answer
 
@@ -28,6 +28,25 @@ class WechatService(object):
         self.wechat_admin.access_token = token
         self.wechat_admin.save()
         return token
+
+
+    def get_kefu_list(self):
+        result = self.wechat.grant_token()
+        token = result['access_token']
+        req_url = 'https://api.weixin.qq.com/cgi-bin/customservice/getkflist?access_token={0}'.format(token)
+        result = requests.get(req_url)
+        return json.loads(result.content)
+
+
+    def distribution_kefu(self, open_id, account):
+        result = self.wechat.grant_token()
+        token = result['access_token']
+        req_url = ' https://api.weixin.qq.com/customservice/kfsession/create?access_token={0}'.format(token)
+        data = {'kf_account': account,
+                'openid': open_id,
+                'text': '学员问题咨询'}
+        result = requests.post(req_url, data=json.dumps(data))
+        return result
 
 
     def create_promotion_qrcode(self, name, scene, welcome, phone):
@@ -97,10 +116,15 @@ class WechatService(object):
         question = message.content
         open_id = message.source
         user_list = Promotion.objects.filter(open_id=open_id)
+        new_message = Message(open_id=open_id,
+                              content=question,
+                              nick='')
         if user_list.exists():
             user = user_list[0]
             user.reply = '{0}; 回复内容：{1}'.format(user.reply, question)
             user.save()
+            new_message.nick = user.nick
+        new_message.save()
         result = Question.objects.filter(question=question)
         # if not result.exists():
         #     result = Question.objects.filter(question__icontains=question)

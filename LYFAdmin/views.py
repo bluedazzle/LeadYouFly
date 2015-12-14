@@ -1005,5 +1005,23 @@ def promotion_login(req):
         return render_to_response('promotion_login.html')
 
 
+@login_require
+def admin_wechat_kefu(req):
+    message_list = Message.objects.all().order_by('-create_time')
+    wx = WechatService()
+    kefu_list = wx.get_kefu_list()['kf_list']
+    return render_to_response('wechat_kefu_admin.html', {'message_list': message_list,
+                                                         'kefu_list': kefu_list})
+
+
+@login_require
+def admin_wechat_kefu_distribution(req):
+    open_id = req.GET.get('openid', '')
+    account = req.GET.get('account', '')
+    wx = WechatService()
+    wx.distribution_kefu(open_id, account)
+    return HttpResponseRedirect('/admin/wechat/kefu')
+
+
 
 

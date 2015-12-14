@@ -28,7 +28,7 @@ from qn import upload_file_qn, list_file, QINIU_DOMAIN, VIDEO_CONVERT_PARAM, VID
 from message import push_custom_message
 
 # Create your views here.
-from weichat.models import Channel, WeChatAdmin, Promotion
+from weichat.models import Channel, WeChatAdmin, Promotion, WechatMessage
 from weichat.wechat_service import WechatService
 
 
@@ -1007,7 +1007,7 @@ def promotion_login(req):
 
 @login_require
 def admin_wechat_kefu(req):
-    message_list = Message.objects.all().order_by('-create_time')
+    message_list = WechatMessage.objects.all().order_by('-create_time')
     wx = WechatService()
     kefu_list = wx.get_kefu_list()['kf_list']
     return render_to_response('wechat_kefu_admin.html', {'message_list': message_list,

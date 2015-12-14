@@ -57,7 +57,7 @@ class Reward(BaseModel):
         return '{0}:{1}'.format(self.user.nick, self.reward)
 
 
-class Message(BaseModel):
+class WechatMessage(BaseModel):
     open_id = models.CharField(max_length=128, default='')
     content = models.TextField(default='')
     nick = models.CharField(max_length=128)

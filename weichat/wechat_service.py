@@ -3,7 +3,7 @@ from __future__ import unicode_literals
 import StringIO
 import json
 import requests
-from weichat.models import WeChatAdmin, Channel, Promotion, Question, Message
+from weichat.models import WeChatAdmin, Channel, Promotion, Question, Message, WechatMessage
 from wechat_sdk import WechatBasic
 from kw import get_answer
 
@@ -116,9 +116,9 @@ class WechatService(object):
         question = message.content
         open_id = message.source
         user_list = Promotion.objects.filter(open_id=open_id)
-        new_message = Message(open_id=open_id,
-                              content=question,
-                              nick='')
+        new_message = WechatMessage(open_id=open_id,
+                                    content=question,
+                                    nick='')
         if user_list.exists():
             user = user_list[0]
             user.reply = '{0}; 回复内容：{1}'.format(user.reply, question)

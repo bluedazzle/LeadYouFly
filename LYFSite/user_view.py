@@ -291,7 +291,6 @@ def big_wheel(req):
     else:
         wx = WechatService()
         data = wx.get_user_info_by_code(code)
-        print data
         open_id = data['openid']
         promotion_list = Promotion.objects.filter(open_id=open_id)
         if promotion_list.exists():
@@ -301,15 +300,15 @@ def big_wheel(req):
         reward_list = Reward.objects.all().order_by('-create_time')
         content = '''[{"id":0,"prize":"大奖降临：TCL32寸智能液晶电视","v":0.0},{"id":1,"prize":"一等奖：30元百业汇消费券","v":0.0},{"id":2,"prize":"二等奖：10元百业汇消费券","v":0.0},{"id":3,"prize":"三等奖：5元百业汇消费券","v":1.0},{"id":4,"prize":"幸运奖：3角移动话费","v":19.0}]'''
         if not promotion.play:
-            render_to_response('user/bigwheel.html', {'status': 1,
-                                                      'content': content,
-                                                      'open_id': promotion.open_id,
-                                                      'reward_list': reward_list})
+            return render_to_response('user/bigwheel.html', {'status': 1,
+                                                             'content': content,
+                                                             'open_id': promotion.open_id,
+                                                             'reward_list': reward_list})
         else:
-            render_to_response('user/bigwheel.html', {'status': 0,
-                                                      'content': content,
-                                                      'open_id': promotion.open_id,
-                                                      'reward_list': reward_list})
+            return render_to_response('user/bigwheel.html', {'status': 0,
+                                                             'content': content,
+                                                             'open_id': promotion.open_id,
+                                                             'reward_list': reward_list})
 
 
 def get_reward_result(req):

@@ -3,7 +3,7 @@ from __future__ import unicode_literals
 import StringIO
 import json
 import requests
-from weichat.models import WeChatAdmin, Channel, Promotion, Question, Message, WechatMessage
+from weichat.models import WeChatAdmin, Channel, Promotion, Question, WechatMessage
 from wechat_sdk import WechatBasic
 from kw import get_answer
 

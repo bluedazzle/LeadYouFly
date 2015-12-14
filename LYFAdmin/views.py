@@ -1007,7 +1007,7 @@ def promotion_login(req):
 
 @login_require
 def admin_wechat_kefu(req):
-    message_list = WechatMessage.objects.all().order_by('-create_time')
+    message_list = WechatMessage.objects.all().order_by('-create_time').distinct('open_id')
     wx = WechatService()
     kefu_list = wx.get_kefu_list()['kf_list']
     return render_to_response('wechat_kefu_admin.html', {'message_list': message_list,

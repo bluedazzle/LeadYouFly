@@ -16,8 +16,8 @@
             {% for message in message_list %}
                 <tr>
                     <td>{{ message.nick }}</td>
-                    <td>{{ message.create_time }}</td>
-                    <td>{{ message.content }}</td>
+                    <td>{{ message.create_time | date:"Y-m-d H:i:s"}}</td>
+                    <td>{{ message.content | slice:"10"}}</td>
                     <td>
                         <form action="/admin/wechat/kefu/distribution" method="get">
                             <input type="hidden" name="openid" value="{{ message.open_id }}"/>

@@ -1,0 +1,220 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta name="viewport" content="width=640">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>LUCKY 大转盘</title>
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+
+<!-- 可选的Bootstrap主题文件（一般不用引入） -->
+    <link rel="stylesheet" href="css/bootstrap-theme.min.css">
+
+<!-- jQuery文件。务必在bootstrap.min.js 之前引入 -->
+    <script src="js/jquery.min.js"></script>
+
+<!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
+    <script src="js/bootstrap.min.js"></script>
+<script type="text/javascript" src="http://www.js-css.cn/jscode/jquery.min.js"></script>
+<script type="text/javascript" src="js/jQueryRotate.js"></script>
+<!-- <script type="text/javascript" src="js/script.js"></script> -->
+
+<style type="text/css">
+body{background:url(images/bg.png) 0 0 repeat;}
+.rotate-con-pan{background:url(images/dropkick.jpg) no-repeat 0 0;background-size:100% 100%;position:relative;width:480px;height:480px;box-sizing:border-box;-moz-box-sizing:border-box;-webkit-box-sizing:border-box;margin:0 auto}
+.rotate-con-zhen{width:112px;height:224px;background:url(images/start.png) no-repeat 0 0;background-size:100% 100%;cursor:pointer;margin: 0 auto;margin-top: -340px;}
+</style>
+</head>
+<body>
+    {% ifequal status '0' %}
+        <script>
+            alert('木有抽奖机会啦～');
+        </script>
+    {% endifequal %}
+    <div class="container">
+	<div class="rotate-con-pan">
+
+	</div>
+    <div class="rotate-con-zhen"></div>
+    <div style="margin-top: 100px;">
+        <div>
+			<h3>奖品设置</h3>
+	        <ul class="list-group">
+				    <li class="list-group-item">大奖降临:TCL32寸智能液晶电视</li>
+                    <li class="list-group-item">一等奖:百业汇联盟商家30元通用消费券</li>
+				    <li class="list-group-item">二等奖:百业汇联盟商家10元通用消费券</li>
+				    <li class="list-group-item">三等奖:百业汇联盟商家5元通用消费券</li>
+                    <li class="list-group-item">幸运奖:百业汇公司0.3元手机话费抵用券</li>
+			</ul>
+		</div>
+        <div>
+            <h3>中奖信息</h3>
+            <ul class="list-group">
+                {% for itm in reward_list %}
+                    <li class="list-group-item">{{ itm.create_time | date:"Y-m-d H:i:s" }} {{ itm.user.nick | truncatechars:10 }}抽中{{ itm.reward }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+    </div>
+<script type="text/javascript">
+$(function(){
+	$(".rotate-con-pan").rotate({
+		bind:{
+			click:function(){
+				var a = runzp();
+				 $(this).rotate({
+					 	duration:9000,               //转动时间
+					 	angle: 0,                    //起始角度
+            			animateTo:1440+a.angle,      //结束的角度
+						easing: $.easing.easeOutSine,//动画效果，需加载jquery.easing.min.js
+						callback: function(){
+							alert(a.prize+a.message);//简单的弹出获奖信息
+						}
+				 });
+			}
+		}
+	});
+});
+$(function(){
+	$(".rotate-con-zhen").rotate({
+		bind:{
+			click:function(){
+				var a = runzp();
+				 $(".rotate-con-pan").rotate({
+					 	duration:9000,               //转动时间
+					 	angle: 0,                    //起始角度
+            			animateTo:1440+a.angle,      //结束的角度
+						easing: $.easing.easeOutSine,//动画效果，需加载jquery.easing.min.js
+						callback: function(){
+							alert(a.prize+a.message);//简单的弹出获奖信息
+						}
+				 });
+			}
+		}
+	});
+});
+</script>
+<script type="text/javascript">
+	function randomnum(smin, smax) {// 获取2个值之间的随机数
+	var Range = smax - smin;
+	var Rand = Math.random();
+	return (smin + Math.round(Rand * Range));
+}
+
+function runzp() {
+    var myreturn = new Object;
+    var data = '{{ content | safe }}';
+	var obj = eval('(' + data + ')');
+	var result = randomnum(1, 100);
+	var line = 0;
+	var temp = 0;
+	var returnobj = "0";
+	var index = 0;
+
+	// alert("随机数"+result);
+	for ( var i = 0; i < obj.length; i++) {
+		var obj2 = obj[i];
+		var c = parseFloat(obj2.v);
+		temp = temp + c;
+		line = 100 - temp;
+		if (c != 0) {
+			if (result > line && result <= (line + c)) {
+				index = i;
+				// alert(i+"中奖"+line+"<result"+"<="+(line + c));
+				returnobj = obj2;
+				break;
+			}
+		}
+	}
+	var angle = 330;
+	var message = "";
+    var rtype = -1;
+	if (returnobj != "0") {// 有奖
+		message = "\r\n恭喜您中奖！！";
+        var angle0 = [ 170, 190 ];
+		var angle1 = [ 350, 375 ];
+		var angle2 = [ 115, 135 ];
+		var angle3 = [ 220, 245 ];
+		var angle4 = [ 55, 80 ];
+		switch (index) {
+		case 0:// 特等奖
+			var r0 = randomnum(angle0[0], angle0[1]);
+            rtype = 10;
+			angle = r0;
+			break;
+		case 1:// 一等奖
+			var r1 = randomnum(angle1[0], angle1[1]);
+            rtype = 1;
+			angle = r1;
+			break;
+		case 2:// 二等奖
+			var r2 = randomnum(angle2[0], angle2[1]);
+            rtype = 2;
+			angle = r2;
+			break;
+		case 3:// 三等奖
+			var r3 = randomnum(angle3[0], angle3[1]);
+            rtype = 3;
+			angle = r3;
+			break;
+		case 4:// 幸运奖
+			var r4 = randomnum(angle4[0], angle4[1]);
+            rtype = 0;
+			angle = r4;
+			break;
+
+		}
+		myreturn.prize = returnobj.prize;
+	} else {// 没有
+        rtype = -1;
+		message = "再接再厉";
+		var angle5 = [ 30, 40 ];
+		var angle6 = [ 90, 100 ];
+		var angle7 = [ 140, 160 ];
+		var angle8 = [ 260, 330 ];
+		var r = randomnum(5, 8);
+		var angle;
+		switch (r) {
+		case 5:
+			var r5 = randomnum(angle5[0], angle5[1]);
+			angle = r5;
+			break;
+		case 6:
+			var r6 = randomnum(angle6[0], angle6[1]);
+			angle = r6;
+			break;
+		case 7:
+			var r7 = randomnum(angle7[0], angle7[1]);
+			angle = r7;
+			break;
+		case 8:
+			var r8 = randomnum(angle8[0], angle8[1]);
+			angle = r8;
+			break;
+		}
+		myreturn.prize = "继续努力!";
+
+	}
+	myreturn.angle = angle;
+	myreturn.message = message;
+    var id = {{ open_id }}
+            $.ajax({
+                        type: 'GET',
+                        url: 'index',
+                        data: {'rtype':rtype,
+                               'content':message,
+                               'openid': id},
+                        success: function(data){
+{#                            if(data == 'T') {#}
+{#                                window.location.href = 'operate_get'#}
+{#                            }else {#}
+{#                                alert('添加订单失败!')#}
+{#                            }#}
+                        },
+                        dataType: 'json'
+                    });
+	return myreturn;
+}// JavaScript Document
+</script>
+</body>
+</html>

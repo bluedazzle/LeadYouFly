@@ -7,6 +7,7 @@ from LYFAdmin.utils import area_convert, encodejson
 from LYFAdmin.wechat_pay import build_form_by_params
 from LeadYouFly.settings import HOST
 from views import *
+from weichat.models import Promotion, Reward
 from weichat.wechat_service import WechatService
 import time
 
@@ -247,23 +248,23 @@ def confirm_order(request):
     #     return HttpResponseRedirect('/user/complete_mes?next_page=%s' % next_page)
     if request.method == 'GET':
         course_id = request.GET.get('course_id')
-        if student.wx_open_id == '':
-            code = request.GET.get('code', False)
-            is_wx = True if str(request.GET.get('wechat', False)) == '1' else False
-            if is_wx:
-                if not code:
-                    current_url = '{0}{1}'.format(HOST, request.get_full_path()[1:])
-                    encode_url = urllib.quote_plus(current_url)
-                    get_code_url = '''https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxed29f94c7e513349&redirect_uri={0}&response_type=code&scope=snsapi_base#wechat_redirect'''.format(encode_url)
-                    return HttpResponseRedirect(get_code_url)
-                else:
-                    wx = WechatService()
-                    data = wx.get_user_info_by_code(code)
-                    open_id = data['openid']
-                    union_id = data['unionid']
-                    student.wx_open_id = open_id
-                    student.wx_union_id = union_id
-                    student.save()
+        # if student.wx_open_id == '':
+        code = request.GET.get('code', False)
+        is_wx = True if str(request.GET.get('wechat', False)) == '1' else False
+        if is_wx:
+            if not code:
+                current_url = '{0}{1}'.format(HOST, request.get_full_path()[1:])
+                encode_url = urllib.quote_plus(current_url)
+                get_code_url = '''https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxed29f94c7e513349&redirect_uri={0}&response_type=code&scope=snsapi_base#wechat_redirect'''.format(encode_url)
+                return HttpResponseRedirect(get_code_url)
+            else:
+                wx = WechatService()
+                data = wx.get_user_info_by_code(code)
+                open_id = data['openid']
+                union_id = data['unionid']
+                student.wx_open_id = open_id
+                student.wx_union_id = union_id
+                student.save()
         if not course_id:
             raise Http404
         try:
@@ -278,6 +279,53 @@ def confirm_order(request):
         return render_to_response('common/confirm_order.html',
                                   return_content,
                                   context_instance=RequestContext(request))
+
+
+def big_wheel(req):
+    code = req.GET.get('code', False)
+    if not code:
+        current_url = '{0}{1}'.format(HOST, req.get_full_path()[1:])
+        encode_url = urllib.quote_plus(current_url)
+        get_code_url = '''https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxed29f94c7e513349&redirect_uri={0}&response_type=code&scope=snsapi_base#wechat_redirect'''.format(encode_url)
+        return HttpResponseRedirect(get_code_url)
+    else:
+        wx = WechatService()
+        data = wx.get_user_info_by_code(code)
+        open_id = data['openid']
+        promotion_list = Promotion.objects.filter(open_id=open_id)
+        if promotion_list.exists():
+            promotion = promotion_list[0]
+        else:
+            promotion = wx.get_promotion_info(open_id)
+        reward_list = Reward.objects.all().order_by('-create_time')
+        content = '''[{"id":0,"prize":"大奖降临：TCL32寸智能液晶电视","v":0.0},{"id":1,"prize":"一等奖：30元百业汇消费券","v":0.0},{"id":2,"prize":"二等奖：10元百业汇消费券","v":0.0},{"id":3,"prize":"三等奖：5元百业汇消费券","v":1.0},{"id":4,"prize":"幸运奖：3角移动话费","v":19.0}]'''
+        if not promotion.play:
+            render_to_response('user/bigwheel.html', {'status': 1,
+                                                      'content': content,
+                                                      'open_id': promotion.open_id,
+                                                      'reward_list': reward_list})
+        else:
+            render_to_response('user/bigwheel.html', {'status': 0,
+                                                      'content': content,
+                                                      'open_id': promotion.open_id,
+                                                      'reward_list': reward_list})
+
+
+def get_reward_result(req):
+    open_id = req.GET.get('openid', False)
+    rtype = str(req.GET.get('rtype', -1))
+    content = req.GET.get('content', '')
+    if open_id:
+        promotion = get_object_or_404(Promotion, open_id=open_id)
+        promotion.play = True
+        promotion.save()
+        if rtype != -1:
+            new_reward = Reward(user=promotion,
+                                content=content)
+            new_reward.save()
+    return HttpResponse('success')
+
+
 
 
 def repay_order(req):

@@ -33,6 +33,7 @@ class Promotion(BaseModel):
     city = models.CharField(max_length=20, default='')
     sex = models.CharField(max_length=10, default='')
     reply = models.TextField(default='')
+    play = models.BooleanField(default=False)
 
     def __unicode__(self):
         return self.nick
@@ -46,3 +47,11 @@ class Question(BaseModel):
 
     def __unicode__(self):
         return self.question
+
+
+class Reward(BaseModel):
+    user = models.OneToOneField(Promotion, related_name='user_reward')
+    reward = models.CharField(max_length=50, default='')
+
+    def __unicode__(self):
+        return '{0}:{1}'.format(self.user.nick, self.reward)

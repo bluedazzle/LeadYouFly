@@ -291,6 +291,7 @@ def big_wheel(req):
     else:
         wx = WechatService()
         data = wx.get_user_info_by_code(code)
+        print data
         open_id = data['openid']
         promotion_list = Promotion.objects.filter(open_id=open_id)
         if promotion_list.exists():

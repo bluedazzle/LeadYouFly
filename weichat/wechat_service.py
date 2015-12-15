@@ -113,11 +113,12 @@ class WechatService(object):
 
 
     def text_manage(self, message):
+        exclude_words = ['狮子狗', '永猎双子', '寒冰射手']
         new_reply = ['白羊', '金牛', '双子', '巨蟹', '狮子', '处女', '天秤', '天蝎', '射手', '摩羯', '水瓶', '双鱼']
         question = message.content
         open_id = message.source
         for itm in new_reply:
-            if itm in unicode(message.content):
+            if itm in unicode(message.content) and unicode(message.content) not in exclude_words:
                 self.news_reply_manage(open_id, itm)
                 return False, '点击图文查看你的星座哟'
         user_list = Promotion.objects.filter(open_id=open_id)

@@ -118,7 +118,8 @@ class WechatService(object):
         open_id = message.source
         for itm in new_reply:
             if itm in unicode(message.content):
-                return False, self.news_reply_manage(open_id, itm)
+                self.news_reply_manage(open_id, itm)
+                return False, '点击上方图文查看你的星座哟'
         user_list = Promotion.objects.filter(open_id=open_id)
         new_message = WechatMessage(open_id=open_id,
                                     content=question,

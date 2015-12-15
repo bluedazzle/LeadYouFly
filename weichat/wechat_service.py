@@ -113,8 +113,13 @@ class WechatService(object):
 
 
     def text_manage(self, message):
+        new_reply = ['白羊', '金牛', '双子', '巨蟹', '狮子', '处女', '天秤', '天蝎', '射手', '摩羯', '水瓶', '双鱼']
         question = message.content
         open_id = message.source
+        for itm in new_reply:
+            if itm in unicode(message.content):
+                print self.news_reply_manage(open_id, itm)
+                exit()
         user_list = Promotion.objects.filter(open_id=open_id)
         new_message = WechatMessage(open_id=open_id,
                                     content=question,
@@ -137,6 +142,15 @@ class WechatService(object):
             return True, self.upload_picture(answer.image)
         else:
             return False, answer.answer
+
+
+    def news_reply_manage(self, open_id, content):
+        reply_dict = {'白羊': {'title': '白羊座打游戏遇到坑货...', 'description': '白羊座打游戏遇到坑货', 'picurl': '', 'url': 'http://mp.weixin.qq.com/s?__biz=MzI4ODAzNzI5OA==&mid=402366388&idx=1&sn=5fea602e1a1c80ae2f220d3beaf860fc#rd'},
+                      '金牛': {'title': '金牛座打游戏遇到坑货...', 'description': '金牛座打游戏遇到坑货', 'picurl': '', 'url': 'http://mp.weixin.qq.com/s?__biz=MzI4ODAzNzI5OA==&mid=402366574&idx=1&sn=bfaba59399f5cef31441d6a43b20ee70#rd'},
+                      '双子': {'title': '双子座打游戏遇到坑货...', 'description': '双子座打游戏遇到坑货', 'picurl': '', 'url': 'http://mp.weixin.qq.com/s?__biz=MzI4ODAzNzI5OA==&mid=402366561&idx=1&sn=dcca9291f5ea3219db9f4ac91e6091ff#rd'}}
+        article = [reply_dict.get(content, None)]
+        return self.wechat.send_article_message(open_id, article)
+
 
 
     def event_manage(self, message):

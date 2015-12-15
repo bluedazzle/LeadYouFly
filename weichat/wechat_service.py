@@ -119,7 +119,7 @@ class WechatService(object):
         for itm in new_reply:
             if itm in unicode(message.content):
                 self.news_reply_manage(open_id, itm)
-                return False, '点击上方图文查看你的星座哟'
+                return False, '点击图文查看你的星座哟'
         user_list = Promotion.objects.filter(open_id=open_id)
         new_message = WechatMessage(open_id=open_id,
                                     content=question,
@@ -145,9 +145,9 @@ class WechatService(object):
 
 
     def news_reply_manage(self, open_id, content):
-        reply_dict = {'白羊': {'title': '白羊座打游戏遇到坑货...', 'description': '白羊座打游戏遇到坑货', 'picurl': '', 'url': 'http://mp.weixin.qq.com/s?__biz=MzI4ODAzNzI5OA==&mid=402366388&idx=1&sn=5fea602e1a1c80ae2f220d3beaf860fc#rd'},
-                      '金牛': {'title': '金牛座打游戏遇到坑货...', 'description': '金牛座打游戏遇到坑货', 'picurl': '', 'url': 'http://mp.weixin.qq.com/s?__biz=MzI4ODAzNzI5OA==&mid=402366574&idx=1&sn=bfaba59399f5cef31441d6a43b20ee70#rd'},
-                      '双子': {'title': '双子座打游戏遇到坑货...', 'description': '双子座打游戏遇到坑货', 'picurl': '', 'url': 'http://mp.weixin.qq.com/s?__biz=MzI4ODAzNzI5OA==&mid=402366561&idx=1&sn=dcca9291f5ea3219db9f4ac91e6091ff#rd'}}
+        reply_dict = {'白羊': {'title': '白羊座打游戏遇到坑货...', 'description': '白羊座打游戏遇到坑货', 'picurl': 'https://mmbiz.qlogo.cn/mmbiz/QuFfaBichozdPpkNa93EVvpLOsnyDT6FYLWVX3EUEQMEibA96ibxXVribdQvdnay90oB36fI8iaoBpHOhKJ1qUcEvQA/0?wx_fmt=jpeg', 'url': 'http://mp.weixin.qq.com/s?__biz=MzI4ODAzNzI5OA==&mid=402366388&idx=1&sn=5fea602e1a1c80ae2f220d3beaf860fc#rd'},
+                      '金牛': {'title': '金牛座打游戏遇到坑货...', 'description': '金牛座打游戏遇到坑货', 'picurl': 'https://mmbiz.qlogo.cn/mmbiz/QuFfaBichozdPpkNa93EVvpLOsnyDT6FYGSIMeDQpfO3pYAGy9fLyINNcM8POZ56vJQ7jTaUYqkicBlsjwkKJtcQ/0?wx_fmt=jpeg', 'url': 'http://mp.weixin.qq.com/s?__biz=MzI4ODAzNzI5OA==&mid=402366574&idx=1&sn=bfaba59399f5cef31441d6a43b20ee70#rd'},
+                      '双子': {'title': '双子座打游戏遇到坑货...', 'description': '双子座打游戏遇到坑货', 'picurl': 'https://mmbiz.qlogo.cn/mmbiz/QuFfaBichozdPpkNa93EVvpLOsnyDT6FY9MLZ7s2AoWS8uvnvseGbI5T0yYH1ib8eOgcHiaUa70XPicZ1SYUiaPem3w/0?wx_fmt=jpeg', 'url': 'http://mp.weixin.qq.com/s?__biz=MzI4ODAzNzI5OA==&mid=402366561&idx=1&sn=dcca9291f5ea3219db9f4ac91e6091ff#rd'}}
         article = [reply_dict.get(content, None)]
         return self.wechat.send_article_message(open_id, article)
 

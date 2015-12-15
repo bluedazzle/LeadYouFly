@@ -118,8 +118,7 @@ class WechatService(object):
         open_id = message.source
         for itm in new_reply:
             if itm in unicode(message.content):
-                print self.news_reply_manage(open_id, itm)
-                exit()
+                return False, self.news_reply_manage(open_id, itm)
         user_list = Promotion.objects.filter(open_id=open_id)
         new_message = WechatMessage(open_id=open_id,
                                     content=question,

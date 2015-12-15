@@ -20,6 +20,7 @@
                     <td>{{ message.content | slice:"10"}}</td>
                     <td>
                         <form action="/admin/wechat/kefu/distribution" method="get">
+                            <input type="hidden" name="text" value="{{ message.content }}"/>
                             <input type="hidden" name="openid" value="{{ message.open_id }}"/>
                             <select name="account" id="">
                                 {% for kefu in kefu_list %}

@@ -38,13 +38,13 @@ class WechatService(object):
         return json.loads(result.content)
 
 
-    def distribution_kefu(self, open_id, account):
+    def distribution_kefu(self, open_id, account, extra_mes):
         result = self.wechat.grant_token()
         token = result['access_token']
         req_url = 'https://api.weixin.qq.com/customservice/kfsession/create?access_token={0}'.format(token)
         data = {'kf_account': account,
                 'openid': open_id,
-                'text': '学员问题咨询'}
+                'text': extra_mes}
         result = requests.post(req_url, data=json.dumps(data))
         return result
 

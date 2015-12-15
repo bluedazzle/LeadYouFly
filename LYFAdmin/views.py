@@ -1018,8 +1018,9 @@ def admin_wechat_kefu(req):
 def admin_wechat_kefu_distribution(req):
     open_id = req.GET.get('openid', '')
     account = req.GET.get('account', '')
+    content = req.GET.get('text', '')
     wx = WechatService()
-    wx.distribution_kefu(open_id, account)
+    wx.distribution_kefu(open_id, account, content)
     return HttpResponseRedirect('/admin/wechat/kefu')
 
 

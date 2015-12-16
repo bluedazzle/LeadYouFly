@@ -340,7 +340,8 @@ def get_reward_result(req):
             print 'send message'
             print message
             res = send_message('osnf7w4_sQQNFYhAjX_nLcGekApI', message)
-    return HttpResponse(res)
+            return HttpResponse(res)
+    return HttpResponse('false')
 
 
 

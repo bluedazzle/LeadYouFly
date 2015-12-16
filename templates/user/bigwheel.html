@@ -25,7 +25,7 @@ body{background:url(img/bg.png) 0 0 repeat;}
 </style>
 </head>
 <body>
-    {% ifequal status '0' %}
+    {% ifequal status 0 %}
         <script>
             alert('木有抽奖机会啦～');
         </script>
@@ -39,11 +39,11 @@ body{background:url(img/bg.png) 0 0 repeat;}
         <div>
 			<h3>奖品设置</h3>
 	        <ul class="list-group">
-				    <li class="list-group-item">大奖降临:TCL32寸智能液晶电视</li>
-                    <li class="list-group-item">一等奖:百业汇联盟商家30元通用消费券</li>
-				    <li class="list-group-item">二等奖:百业汇联盟商家10元通用消费券</li>
-				    <li class="list-group-item">三等奖:百业汇联盟商家5元通用消费券</li>
-                    <li class="list-group-item">幸运奖:百业汇公司0.3元手机话费抵用券</li>
+				    <li class="list-group-item">大奖降临:雷蛇 Taipan 太攀皇蛇游戏鼠标</li>
+                    <li class="list-group-item">一等奖:LOL1000点券点卡</li>
+				    <li class="list-group-item">二等奖:LOL500点券点卡</li>
+				    <li class="list-group-item">三等奖:LOL双倍经验卡一日</li>
+                    <li class="list-group-item">幸运奖:LOL100点券点卡</li>
 			</ul>
 		</div>
         <div>
@@ -110,7 +110,10 @@ function runzp() {
 	var temp = 0;
 	var returnobj = "0";
 	var index = 0;
-
+    var play = {{ status }};
+	if(play<=1){
+        alert('你已经木有机会了哦');
+    }
 	// alert("随机数"+result);
 	for ( var i = 0; i < obj.length; i++) {
 		var obj2 = obj[i];
@@ -197,6 +200,7 @@ function runzp() {
 	}
 	myreturn.angle = angle;
 	myreturn.message = message;
+    play = play - 1;
     var id = '{{ open_id }}';
             $.ajax({
                         type: 'GET',

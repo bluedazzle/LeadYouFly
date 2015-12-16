@@ -12,15 +12,17 @@ class Command(BaseCommand):
         promotion_list = Promotion.objects.all()
         total = promotion_list.count()
         for i, promotion in enumerate(promotion_list):
-            user_info = wx.wechat.get_user_info(promotion.open_id)
-            sex = '男'
-            get_sex = str(user_info.get('sex', '1'))
-            if get_sex == '2':
-                sex = '女'
-            elif get_sex == '0':
-                sex = '未知'
-            promotion.sex = sex
-            promotion.save()
-            print 'total:{0}, current{1}, sex:{2}'.format(total, i, get_sex)
-            time.sleep(0.01)
+            try:
+                user_info = wx.wechat.get_user_info(promotion.open_id)
+                sex = '男'
+                get_sex = str(user_info.get('sex', '1'))
+                if get_sex == '2':
+                    sex = '女'
+                elif get_sex == '0':
+                    sex = '未知'
+                promotion.sex = sex
+                promotion.save()
+                print 'total:{0}, current{1}, sex:{2}'.format(total, i, get_sex)
+            except Exception, e:
+                pass
         print 'mission complete!'

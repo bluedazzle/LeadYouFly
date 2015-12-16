@@ -3,6 +3,7 @@ from __future__ import unicode_literals
 import StringIO
 import json
 import requests
+import simplejson
 from weichat.models import WeChatAdmin, Channel, Promotion, Question, WechatMessage
 from wechat_sdk import WechatBasic
 from kw import get_answer
@@ -37,7 +38,7 @@ class WechatService(object):
         data = {'touser': open_id,
                 'msgtype': 'text',
                 'text': {'content': message}}
-        result = requests.post(req_url, data=json.dumps(data, ensure_ascii=False))
+        result = requests.post(req_url, data=simplejson.dumps(data))
         return json.loads(result.content)
 
 

@@ -298,7 +298,7 @@ def big_wheel(req):
         else:
             promotion = wx.get_promotion_info(open_id)
         reward_list = Reward.objects.all().order_by('-create_time')
-        content = '''[{"id":0,"prize":"大奖降临：大奖降临:雷蛇 Taipan 太攀皇蛇游戏鼠标","v":0.0001},{"id":1,"prize":"一等奖：LOL1000点券点卡","v":0.001},{"id":2,"prize":"二等奖：LOL500点券点卡","v":0.002},{"id":3,"prize":"三等奖：LOL双倍经验卡一日","v":1.0},{"id":4,"prize":"幸运奖：LOL100点券点卡","v":8.0}]'''
+        content = '''[{"id":0,"prize":"大奖降临：大奖降临:雷蛇 Taipan 太攀皇蛇游戏鼠标","v":0.0001},{"id":1,"prize":"一等奖：LOL1000点券点卡","v":0.001},{"id":2,"prize":"二等奖：LOL500点券点卡","v":0.002},{"id":3,"prize":"三等奖：LOL双倍经验卡一日","v":1.0},{"id":4,"prize":"幸运奖：LOL100点券点卡","v":90.0}]'''
         if not promotion.play:
             return render_to_response('user/bigwheel.html', {'status': 1,
                                                              'content': content,

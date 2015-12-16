@@ -316,7 +316,7 @@ def big_wheel(req):
 
 
 def get_reward_result(req):
-    open_id = req.GET.get('openid', False)
+    open_id = str(req.GET.get('openid', False))
     rtype = int(req.GET.get('rtype', -1))
     content = req.GET.get('content', '')
     if open_id:
@@ -338,8 +338,7 @@ def get_reward_result(req):
         我们将在24小时内将自动为你充值。
 
         如24小时未收到点券，请电话010-53355989'''.format(content)
-            print 'send message'
-            print message
+            print open_id
             res = send_message(open_id, message)
             return HttpResponse(res)
     return HttpResponse('false')

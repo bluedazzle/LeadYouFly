@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
-from weichat.wechat_service import WechatService
 
+from weichat.wechat_service import WechatService
 from django.core.management.base import BaseCommand
 from weichat.models import Promotion
 
@@ -19,5 +19,5 @@ class Command(BaseCommand):
                 sex = '未知'
             promotion.sex = sex
             promotion.save()
-            print 'total:{0}, current{1}, sex:{2}'.format(total, i, sex)
+            print 'total:{0}, current{1}, sex:{2}'.format(total, i, user_info['sex'])
         print 'mission complete!'

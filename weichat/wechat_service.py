@@ -38,7 +38,7 @@ class WechatService(object):
         message = message.decode('utf-8')
         data = {'touser': open_id,
                 'msgtype': 'text',
-                'text': {'content': '测试'}}
+                'text': {'content': str('测试')}}
         result = requests.post(req_url, data=simplejson.dumps(data))
         return json.loads(result.content)
 

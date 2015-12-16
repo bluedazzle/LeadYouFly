@@ -23,6 +23,6 @@ class Command(BaseCommand):
                 promotion.sex = sex
                 promotion.save()
                 print 'total:{0}, current{1}, sex:{2}'.format(total, i, get_sex)
-            except Exception, e:
+            except:
                 pass
         print 'mission complete!'

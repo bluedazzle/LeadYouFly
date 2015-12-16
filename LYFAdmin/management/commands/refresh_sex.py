@@ -9,7 +9,8 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
         wx = WechatService()
         promotion_list = Promotion.objects.all()
-        for promotion in promotion_list:
+        total = promotion_list.count()
+        for i, promotion in enumerate(promotion_list):
             user_info = wx.wechat.get_user_info(promotion.open_id)
             sex = '男'
             if str(user_info['sex']) == '2':
@@ -18,4 +19,5 @@ class Command(BaseCommand):
                 sex = '未知'
             promotion.sex = sex
             promotion.save()
+            print 'total:{0}, current{1}, sex:{2}'.format(total, i, sex)
         print 'mission complete!'

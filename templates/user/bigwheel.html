@@ -95,6 +95,7 @@ $(function(){
 });
 </script>
 <script type="text/javascript">
+    var play = {{ status }};
 	function randomnum(smin, smax) {// 获取2个值之间的随机数
 	var Range = smax - smin;
 	var Rand = Math.random();
@@ -110,7 +111,6 @@ function runzp() {
 	var temp = 0;
 	var returnobj = "0";
 	var index = 0;
-    var play = {{ status }};
 	if(play<=0){
         alert('你已经木有机会了哦');
         return false;

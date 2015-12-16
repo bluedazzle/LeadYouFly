@@ -10,6 +10,7 @@ from views import *
 from weichat.models import Promotion, Reward
 from weichat.wechat_service import WechatService
 import time
+from weichat.wtf import send_message
 
 exp_dic = {
     1: 0,
@@ -336,8 +337,7 @@ qq540249125（注意只能是英文字母qq+QQ账号哦），
 我们将在24小时内将自动为你充值。
 
 如24小时未收到点券，请电话010-53355989'''.format(content)
-            wx = WechatService()
-            wx.send_message(open_id, message)
+            send_message(open_id, message.encode('utf-8'))
     return HttpResponse('success')
 
 

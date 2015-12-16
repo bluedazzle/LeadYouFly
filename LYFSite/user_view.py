@@ -313,13 +313,15 @@ def big_wheel(req):
 
 def get_reward_result(req):
     open_id = req.GET.get('openid', False)
-    rtype = str(req.GET.get('rtype', -1))
+    rtype = int(req.GET.get('rtype', -1))
     content = req.GET.get('content', '')
     if open_id:
         promotion = get_object_or_404(Promotion, open_id=open_id)
+        if promotion.play is True:
+            return HttpResponse('fail')
         promotion.play = True
         promotion.save()
-        if rtype != '-1':
+        if rtype != -1:
             new_reward = Reward(user=promotion,
                                 content=content)
             new_reward.save()

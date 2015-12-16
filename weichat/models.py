@@ -34,6 +34,7 @@ class Promotion(BaseModel):
     sex = models.CharField(max_length=10, default='')
     reply = models.TextField(default='')
     play = models.BooleanField(default=False)
+    qq = models.CharField(max_length=30, default='')
 
     def __unicode__(self):
         return self.nick

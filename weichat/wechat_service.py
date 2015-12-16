@@ -115,12 +115,16 @@ class WechatService(object):
     def text_manage(self, message):
         exclude_words = ['狮子狗', '永猎双子', '寒冰射手']
         new_reply = ['白羊', '金牛', '双子', '巨蟹', '狮子', '处女', '天秤', '天蝎', '射手', '摩羯', '水瓶', '双鱼']
-        question = message.content
+        question = unicode(message.content)
         open_id = message.source
         for itm in new_reply:
             if itm in unicode(message.content) and unicode(message.content) not in exclude_words:
                 self.news_reply_manage(open_id, itm)
                 return False, '点击图文查看你的星座哟'
+        question = question.lower()
+        if question.startswith('qq'):
+            self.get_qq(question, open_id)
+            return False, 'QQ号绑定成功！'
         user_list = Promotion.objects.filter(open_id=open_id)
         new_message = WechatMessage(open_id=open_id,
                                     content=question,
@@ -143,6 +147,14 @@ class WechatService(object):
             return True, self.upload_picture(answer.image)
         else:
             return False, answer.answer
+
+
+    def get_qq(self, message, open_id):
+        user = Promotion.objects.get(open_id=open_id)
+        message = message.replace('qq', '')
+        user.qq = message
+        user.save()
+        return True
 
 
     def news_reply_manage(self, open_id, content):

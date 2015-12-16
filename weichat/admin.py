@@ -14,5 +14,4 @@ admin.site.register(Promotion, PromotionAdmin)
 admin.site.register(Channel)
 admin.site.register(Question)
 admin.site.register(Reward)
-from __future__ import unicode_literals
 

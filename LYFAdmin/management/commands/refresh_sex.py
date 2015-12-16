@@ -4,6 +4,7 @@ from __future__ import unicode_literals
 from weichat.wechat_service import WechatService
 from django.core.management.base import BaseCommand
 from weichat.models import Promotion
+import time
 
 class Command(BaseCommand):
     def handle(self, *args, **options):
@@ -13,11 +14,13 @@ class Command(BaseCommand):
         for i, promotion in enumerate(promotion_list):
             user_info = wx.wechat.get_user_info(promotion.open_id)
             sex = '男'
-            if str(user_info['sex']) == '2':
+            get_sex = str(user_info.get('sex', '1'))
+            if get_sex == '2':
                 sex = '女'
-            elif str(user_info['sex']) == '0':
+            elif get_sex == '0':
                 sex = '未知'
             promotion.sex = sex
             promotion.save()
-            print 'total:{0}, current{1}, sex:{2}'.format(total, i, user_info['sex'])
+            print 'total:{0}, current{1}, sex:{2}'.format(total, i, get_sex)
+            time.sleep(0.1)
         print 'mission complete!'

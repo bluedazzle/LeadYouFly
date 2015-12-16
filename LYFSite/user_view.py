@@ -323,7 +323,7 @@ def get_reward_result(req):
         promotion.save()
         if rtype != -1:
             new_reward = Reward(user=promotion,
-                                content=content)
+                                reward=content)
             new_reward.save()
     return HttpResponse('success')
 

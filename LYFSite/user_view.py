@@ -328,7 +328,7 @@ def get_reward_result(req):
             new_reward = Reward(user=promotion,
                                 reward=content)
             new_reward.save()
-            message = u'''恭喜你获得{0}，
+            message = '''恭喜你获得{0}，
 
 请回复【qq+QQ号】例如:
 
@@ -337,7 +337,7 @@ qq540249125（注意只能是英文字母qq+QQ账号哦），
 我们将在24小时内将自动为你充值。
 
 如24小时未收到点券，请电话010-53355989'''.format(content)
-            send_message(open_id, message.encode('utf-8'))
+            send_message(open_id, message)
     return HttpResponse('success')
 
 

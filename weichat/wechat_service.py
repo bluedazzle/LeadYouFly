@@ -35,6 +35,7 @@ class WechatService(object):
         result = self.wechat.grant_token()
         token = result['access_token']
         req_url = 'https://api.weixin.qq.com/cgi-bin/message/custom/send?access_token={0}'.format(token)
+        message = message.encode('utf-8')
         data = {'touser': open_id,
                 'msgtype': 'text',
                 'text': {'content': message}}

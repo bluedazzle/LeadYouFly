@@ -291,9 +291,8 @@ def big_wheel(req):
     else:
         wx = WechatService()
         data = wx.get_user_info_by_code(code)
-        try:
-            open_id = data['openid']
-        except Exception, e:
+        open_id = data.get('openid', None)
+        if open_id is None:
             return HttpResponseRedirect('/luckyDraw')
         promotion_list = Promotion.objects.filter(open_id=open_id)
         if promotion_list.exists():

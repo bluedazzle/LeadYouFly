@@ -340,7 +340,7 @@ def get_reward_result(req):
         如24小时未收到点券，请电话010-53355989'''.format(content)
             print 'send message'
             print message
-            res = send_message('osnf7w4_sQQNFYhAjX_nLcGekApI', message)
+            res = send_message(open_id, message)
             return HttpResponse(res)
     return HttpResponse('false')
 

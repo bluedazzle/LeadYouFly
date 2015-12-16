@@ -315,32 +315,31 @@ def big_wheel(req):
 
 
 def get_reward_result(req):
-    content = req.GET.get('content')
-    # open_id = req.GET.get('openid', False)
-    # rtype = int(req.GET.get('rtype', -1))
-    # content = req.GET.get('content', '')
-    # if open_id:
-    #     promotion = get_object_or_404(Promotion, open_id=open_id)
-    #     if promotion.play is True:
-    #         return HttpResponse('fail')
-    #     promotion.play = True
-    #     promotion.save()
-    #     if rtype != -1:
-    #         new_reward = Reward(user=promotion,
-    #                             reward=content)
-    #         new_reward.save()
-    message = '''恭喜你获得{0}，
+    open_id = req.GET.get('openid', False)
+    rtype = int(req.GET.get('rtype', -1))
+    content = req.GET.get('content', '')
+    if open_id:
+        promotion = get_object_or_404(Promotion, open_id=open_id)
+        if promotion.play is True:
+            return HttpResponse('fail')
+        promotion.play = True
+        promotion.save()
+        if rtype != -1:
+            new_reward = Reward(user=promotion,
+                                reward=content)
+            new_reward.save()
+            message = '''恭喜你获得{0}，
 
-请回复【qq+QQ号】例如:
+        请回复【qq+QQ号】例如:
 
-qq540249125（注意只能是英文字母qq+QQ账号哦），
+        qq540249125（注意只能是英文字母qq+QQ账号哦），
 
-我们将在24小时内将自动为你充值。
+        我们将在24小时内将自动为你充值。
 
-如24小时未收到点券，请电话010-53355989'''.format(content)
-    print 'send message'
-    print message
-    res = send_message('osnf7w4_sQQNFYhAjX_nLcGekApI', message)
+        如24小时未收到点券，请电话010-53355989'''.format(content)
+            print 'send message'
+            print message
+            res = send_message('osnf7w4_sQQNFYhAjX_nLcGekApI', message)
     return HttpResponse(res)
 
 

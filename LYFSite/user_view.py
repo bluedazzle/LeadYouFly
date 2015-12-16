@@ -355,7 +355,7 @@ def get_reward_list(req):
         body['QQ'] = itm.user.qq
         body['时间'] = datetime_to_string(itm.create_time)
         data.append(body)
-    return HttpResponse(json.dumps(data), content_type='application/json')
+    return HttpResponse(json.dumps(data, ensure_ascii=False), content_type='application/json')
 
 
 def repay_order(req):

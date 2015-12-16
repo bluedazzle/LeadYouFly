@@ -12,3 +12,4 @@ def send_message(open_id, message):
             'text': {'content': message}}
     result = requests.post(req_url, data=json.dumps(data, ensure_ascii=False))
     print result.content
+    return result.content

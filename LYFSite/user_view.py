@@ -327,7 +327,7 @@ def get_reward_result(req):
             new_reward = Reward(user=promotion,
                                 reward=content)
             new_reward.save()
-            message = '''恭喜你获得{0}，
+            message = u'''恭喜你获得{0}，
 
 请回复【qq+QQ号】例如:
 

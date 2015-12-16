@@ -1,5 +1,5 @@
 from django.contrib import admin
-from weichat.models import WeChatAdmin, Promotion, Channel, Question
+from weichat.models import WeChatAdmin, Promotion, Channel, Question, Reward
 
 # Register your models here.
 
@@ -12,3 +12,4 @@ admin.site.register(WeChatAdmin)
 admin.site.register(Promotion, PromotionAdmin)
 admin.site.register(Channel)
 admin.site.register(Question)
+admin.site.register(Reward)

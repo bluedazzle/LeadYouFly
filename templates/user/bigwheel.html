@@ -111,8 +111,9 @@ function runzp() {
 	var returnobj = "0";
 	var index = 0;
     var play = {{ status }};
-	if(play<=1){
+	if(play<=0){
         alert('你已经木有机会了哦');
+        return false;
     }
 	// alert("随机数"+result);
 	for ( var i = 0; i < obj.length; i++) {

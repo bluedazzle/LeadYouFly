@@ -970,7 +970,7 @@ def admin_wechat_detail(req, pid):
     channel = get_object_or_404(Channel, id=pid)
     promotion_list = Promotion.objects.filter(channel=channel).order_by('-create_time')
     total_promotions = promotion_list.count()
-    valid_promotions = promotion_list.filter(cancel=False).exclude(reply='').count()
+    valid_promotions = promotion_list.filter(cancel=False, sex='男').exclude(reply='').count()
     focus_promotions = promotion_list.filter(cancel=False).count()
     return render_to_response('wechat_detail_admin.html', {'promotion_list': promotion_list,
                                                            'valid_count': valid_promotions,

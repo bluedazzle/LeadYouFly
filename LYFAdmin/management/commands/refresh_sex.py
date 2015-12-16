@@ -22,5 +22,5 @@ class Command(BaseCommand):
             promotion.sex = sex
             promotion.save()
             print 'total:{0}, current{1}, sex:{2}'.format(total, i, get_sex)
-            time.sleep(0.1)
+            time.sleep(0.01)
         print 'mission complete!'

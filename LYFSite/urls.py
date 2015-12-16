@@ -61,6 +61,7 @@ urlpatterns = patterns('',
                        url('^user/cancel_order$', user_view.cancel_order),
                        url('^luckyDraw$', user_view.big_wheel),
                        url('^drawResult$', user_view.get_reward_result),
+                       url('^rewardList$', user_view.get_reward_list),
 
 
                        #异步通知

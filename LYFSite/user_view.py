@@ -1,9 +1,10 @@
 # -*- coding: utf-8 -*-
 import urllib
 from django.shortcuts import get_object_or_404
+from dss import Serializer
 from LYFAdmin.message import EXP_MES, LVLUP_MES
 from LYFAdmin.order_operation import create_order_id
-from LYFAdmin.utils import area_convert, encodejson
+from LYFAdmin.utils import area_convert, encodejson, datetime_to_string
 from LYFAdmin.wechat_pay import build_form_by_params
 from LeadYouFly.settings import HOST
 from views import *
@@ -344,6 +345,17 @@ def get_reward_result(req):
     return HttpResponse('false')
 
 
+def get_reward_list(req):
+    reward_list = Reward.objects.all().order_by('-create_time')
+    data = []
+    for itm in reward_list:
+        body = {}
+        body['奖品'] = itm.reward
+        body['微信昵称'] = itm.user.nick
+        body['QQ'] = itm.user.qq
+        body['时间'] = datetime_to_string(itm.create_time)
+        data.append(body)
+    return HttpResponse(json.dumps(data), content_type='application/json')
 
 
 def repay_order(req):

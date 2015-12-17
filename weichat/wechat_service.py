@@ -200,7 +200,7 @@ class WechatService(object):
                 promotion = self.get_promotion_info(open_id, channel)
                 promotion.cancel = False
                 promotion.save()
-                if '兼职卫士' in promotion.channel:
+                if '兼职卫士' in channel.name:
                     return False, '''嘿！同学，你迟到了。
 
 发送文字消息，提出关于LOL的任何问题，我们都会第一时间给你答复。Try it[勾引]

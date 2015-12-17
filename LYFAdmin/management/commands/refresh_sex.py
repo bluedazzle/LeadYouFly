@@ -24,5 +24,5 @@ class Command(BaseCommand):
                 promotion.save()
                 print 'total:{0}, current{1}, sex:{2}'.format(total, i, get_sex)
             except:
-                pass
+                print 'a'
         print 'mission complete!'

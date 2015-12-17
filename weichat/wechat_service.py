@@ -130,6 +130,8 @@ class WechatService(object):
         new_reply = ['白羊', '金牛', '双子', '巨蟹', '狮子', '处女', '天秤', '天蝎', '射手', '摩羯', '水瓶', '双鱼']
         question = unicode(message.content)
         open_id = message.source
+        if question == '抽奖':
+            return False, '点击抽奖：http://lol.fibar.cn/luckyDraw'
         for itm in new_reply:
             if itm in unicode(message.content) and unicode(message.content) not in exclude_words:
                 self.news_reply_manage(open_id, itm)
@@ -209,7 +211,7 @@ class WechatService(object):
 
 帮助你掌握方法，成为真正的高手。
 
-<a href="lol.fibar.cn/luckyDraw">抽奖</a>'''
+点击抽奖：http://lol.fibar.cn/luckyDraw'''
                 return False, promotion.channel.welcome_text
             else:
                 return False,  '''嘿！欢迎关注飞吧游戏教练。

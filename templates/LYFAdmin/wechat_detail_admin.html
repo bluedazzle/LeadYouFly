@@ -3,7 +3,7 @@
 {% block page %}微信管理{% endblock %}
 {% block content %}
     <div class="my_contianer">
-        <span>渠道：{{ channel.name }}   总推广人数：{{ total_count }}人，未取关人数：{{ focus_count }}，有效推广人数：{{ valid_count }}人</span>
+        <span>渠道：{{ channel.name }}   总推广人数：{{ total_count }}人，未取关人数：{{ focus_count }}，有效推广人数：{{ valid_count }}人 {{ female }}</span>
         <span><a href="/admin/wechat/channel/output/{{ channel.id }}/" class="btn btn-primary">导出数据</a></span>
         <table class="table table-hover" data-toggle="table">
             <thead>

@@ -337,7 +337,9 @@ def get_reward_result(req):
 
         我们将在24小时内将自动为你充值。
 
-        如24小时未收到点券，请电话010-53355989'''.format(content)
+        如24小时未收到点券，请电话010-53355989
+
+        有什么能帮到你的，现在就可以发送文字消息噢。'''.format(content)
             res = send_message(open_id, message)
             return HttpResponse(res)
         message = '''谢谢参与，很遗憾这次没能给你奖品。[糗大了]

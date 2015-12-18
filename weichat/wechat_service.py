@@ -212,13 +212,21 @@ class WechatService(object):
 帮助你掌握方法，成为真正的高手。
 
 点击抽奖：http://lol.fibar.cn/luckyDraw'''
-                return False, promotion.channel.welcome_text
+                return False, '''嘿！同学，你迟到了。
+
+发送文字消息，提出关于LOL的任何问题，我们都会第一时间给你答复。Try it[勾引]
+
+更有专业教练一对一教学服务。
+
+帮助你掌握方法，成为真正的高手。'''
             else:
-                return False,  '''嘿！欢迎关注飞吧游戏教练。
+                return False,  '''嘿！同学，你迟到了。
 
-直接发送文字消息，提出关于LOL的任何问题，小飞都会第一时间给你答复。Try it~[坏笑]
+发送文字消息，提出关于LOL的任何问题，我们都会第一时间给你答复。Try it[勾引]
 
-更有大神教练提供一对一游戏教学服务，讲道理的话，这里是教你快速上分的不二之选。'''
+更有专业教练一对一教学服务。
+
+帮助你掌握方法，成为真正的高手。'''
         elif message.type == 'unsubscribe':
             promotion = self.get_promotion_info(open_id)
             promotion.cancel = True

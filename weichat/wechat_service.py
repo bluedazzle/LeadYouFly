@@ -85,6 +85,7 @@ class WechatService(object):
         if result.exists():
             return result[0]
         user_info = self.wechat.get_user_info(openID)
+        print user_info
         nick = user_info['nickname']
         city = user_info['city']
         province = user_info['province']
@@ -197,6 +198,7 @@ class WechatService(object):
         open_id = message.source
         if message.type == 'subscribe':
             channel_list = Channel.objects.filter(ticket=message.ticket)
+            print message.ticket
             if channel_list.exists():
                 channel = channel_list[0]
                 promotion = self.get_promotion_info(open_id, channel)
@@ -236,7 +238,13 @@ class WechatService(object):
             return False, ''
         else:
             promotion = self.get_promotion_info(open_id)
-            return False, promotion.channel.welcome_text
+            return False, '''嘿！同学，你迟到了。
+
+发送文字消息，提出关于LOL的任何问题，我们都会第一时间给你答复。Try it[勾引]
+
+更有专业教练一对一教学服务。
+
+帮助你掌握方法，成为真正的高手。'''
 
 
     def other_manage(self, message):

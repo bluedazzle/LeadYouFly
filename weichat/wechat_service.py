@@ -219,14 +219,6 @@ class WechatService(object):
 更有专业教练一对一教学服务。
 
 帮助你掌握方法，成为真正的高手。'''
-            else:
-                return False,  '''嘿！同学，你迟到了。
-
-发送文字消息，提出关于LOL的任何问题，我们都会第一时间给你答复。Try it[勾引]
-
-更有专业教练一对一教学服务。
-
-帮助你掌握方法，成为真正的高手。'''
         elif message.type == 'unsubscribe':
             promotion = self.get_promotion_info(open_id)
             promotion.cancel = True

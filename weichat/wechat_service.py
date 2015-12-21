@@ -85,10 +85,9 @@ class WechatService(object):
         if result.exists():
             return result[0]
         user_info = self.wechat.get_user_info(openID)
-        print user_info
-        nick = user_info['nickname']
-        city = user_info['city']
-        province = user_info['province']
+        nick = user_info.get('nickname', None)
+        city = user_info.get('city', None)
+        province = user_info.get('province', None)
         sex = '男'
         if str(user_info['sex']) == '2':
             sex = '女'

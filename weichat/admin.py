@@ -1,6 +1,6 @@
 # coding: utf-8
 from django.contrib import admin
-from weichat.models import WeChatAdmin, Promotion, Channel, Question, Reward
+from weichat.models import WeChatAdmin, Promotion, Channel, Question, Reward, WechatMessage
 
 # Register your models here.
 
@@ -14,4 +14,5 @@ admin.site.register(Promotion, PromotionAdmin)
 admin.site.register(Channel)
 admin.site.register(Question)
 admin.site.register(Reward)
+admin.site.register(WechatMessage)
 

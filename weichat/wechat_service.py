@@ -133,9 +133,10 @@ class WechatService(object):
         if question == '抽奖':
             return False, '点击抽奖：http://lol.fibar.cn/luckyDraw'
         for itm in new_reply:
-            if itm in unicode(message.content) and unicode(message.content) not in exclude_words:
-                self.news_reply_manage(open_id, itm)
-                return False, '点击图文查看你的星座哟'
+            for ex_itm in exclude_words:
+                if itm in unicode(message.content) and ex_itm not in unicode(message.content):
+                    self.news_reply_manage(open_id, itm)
+                    return False, '点击图文查看你的星座哟'
         question = question.lower()
         if question.startswith('qq'):
             self.get_qq(question, open_id)

@@ -331,9 +331,9 @@ def get_reward_result(req):
             new_reward.save()
             message = '''恭喜你获得{0}，
 
-        请回复【qq+QQ号】例如:
+        请回复【qq+QQ号+大区名称】例如:
 
-        qq540249125（注意只能是英文字母qq+QQ账号哦），
+        qq540249125德玛西亚（注意只能是英文字母qq+QQ账号哦），
 
         我们将在24小时内将自动为你充值。
 

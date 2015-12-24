@@ -196,39 +196,30 @@ class WechatService(object):
     def event_manage(self, message):
         open_id = message.source
         if message.type == 'subscribe':
-            try:
-                ticket = message.ticket
-                channel_list = Channel.objects.filter(ticket=message.ticket)
-                if channel_list.exists():
-                    channel = channel_list[0]
-                    promotion = self.get_promotion_info(open_id, channel)
-                    promotion.cancel = False
-                    promotion.save()
-                    if '兼职卫士' in channel.name:
-                        return False, '''嘿！同学，你迟到了。
-
-    发送文字消息，提出关于LOL的任何问题，我们都会第一时间给你答复。Try it[勾引]
-
-    更有专业教练一对一教学服务。
-
-    帮助你掌握方法，成为真正的高手。
-
-    点击抽奖：http://lol.fibar.cn/luckyDraw'''
+            ticket = message.ticket
+            channel_list = Channel.objects.filter(ticket=message.ticket)
+            if channel_list.exists():
+                channel = channel_list[0]
+                promotion = self.get_promotion_info(open_id, channel)
+                promotion.cancel = False
+                promotion.save()
+                if '兼职卫士' in channel.name:
                     return False, '''嘿！同学，你迟到了。
 
-    发送文字消息，提出关于LOL的任何问题，我们都会第一时间给你答复。Try it[勾引]
+发送文字消息，提出关于LOL的任何问题，我们都会第一时间给你答复。Try it[勾引]
 
-    更有专业教练一对一教学服务。
+更有专业教练一对一教学服务。
 
-    帮助你掌握方法，成为真正的高手。'''
-                else:
-                    return False, '''嘿！同学，你迟到了。
+帮助你掌握方法，成为真正的高手。
 
-    发送文字消息，提出关于LOL的任何问题，我们都会第一时间给你答复。Try it[勾引]
+点击抽奖：http://lol.fibar.cn/luckyDraw'''
+            return False, '''嘿！同学，你迟到了。
 
-    更有专业教练一对一教学服务。
+发送文字消息，提出关于LOL的任何问题，我们都会第一时间给你答复。Try it[勾引]
 
-    帮助你掌握方法，成为真正的高手。'''
+更有专业教练一对一教学服务。
+
+帮助你掌握方法，成为真正的高手。'''
         elif message.type == 'unsubscribe':
             promotion = self.get_promotion_info(open_id)
             promotion.cancel = True

@@ -195,7 +195,6 @@ class WechatService(object):
 
     def event_manage(self, message):
         open_id = message.source
-        print message
         if message.type == 'subscribe':
             try:
                 ticket = message.ticket
@@ -222,9 +221,8 @@ class WechatService(object):
     更有专业教练一对一教学服务。
 
     帮助你掌握方法，成为真正的高手。'''
-            except:
-                print 'no ticket'
-                return False, '''嘿！同学，你迟到了。
+                else:
+                    return False, '''嘿！同学，你迟到了。
 
     发送文字消息，提出关于LOL的任何问题，我们都会第一时间给你答复。Try it[勾引]
 

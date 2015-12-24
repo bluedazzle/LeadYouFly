@@ -222,6 +222,7 @@ class WechatService(object):
 
     帮助你掌握方法，成为真正的高手。'''
             except:
+                print 'no ticket'
                 return False, '''嘿！同学，你迟到了。
 
     发送文字消息，提出关于LOL的任何问题，我们都会第一时间给你答复。Try it[勾引]

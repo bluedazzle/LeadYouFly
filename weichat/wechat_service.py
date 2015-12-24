@@ -195,6 +195,7 @@ class WechatService(object):
 
     def event_manage(self, message):
         open_id = message.source
+        print message
         if message.type == 'subscribe':
             try:
                 ticket = message.ticket

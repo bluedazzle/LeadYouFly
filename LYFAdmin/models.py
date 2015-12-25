@@ -426,3 +426,4 @@ class Coupon(BaseModel):
 
     def __unicode__(self):
         return u'{0}:{1}元'.format(self.belong.account, self.money)
+

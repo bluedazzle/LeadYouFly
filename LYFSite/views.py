@@ -358,6 +358,7 @@ def class_detail(request):
     return render_to_response('common/class_detail.html', {'course': course,
                                                            'lesson': lesson,
                                                            'comment': comment,
+                                                           'comment_count': total,
                                                            'comment_list': comment_list})
 
 

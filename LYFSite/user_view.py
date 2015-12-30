@@ -3,7 +3,7 @@ import urllib
 from django.shortcuts import get_object_or_404
 from dss import Serializer
 from LYFAdmin.message import EXP_MES, LVLUP_MES
-from LYFAdmin.order_operation import create_order_id
+from LYFAdmin.order_operation import create_order_id, create_class_id
 from LYFAdmin.utils import area_convert, encodejson, datetime_to_string
 from LYFAdmin.wechat_pay import build_form_by_params
 from LeadYouFly.settings import HOST
@@ -249,7 +249,8 @@ def confirm_order(request):
     #     next_page = request.get_full_path()
     #     return HttpResponseRedirect('/user/complete_mes?next_page=%s' % next_page)
     if request.method == 'GET':
-        course_id = request.GET.get('course_id')
+        course_id = request.GET.get('course_id', None)
+        course_class_id = request.GET.get('courseClassId', None)
         # if student.wx_open_id == '':
         code = request.GET.get('code', False)
         is_wx = True if str(request.GET.get('wechat', False)) == '1' else False
@@ -267,20 +268,28 @@ def confirm_order(request):
                 student.wx_open_id = open_id
                 student.wx_union_id = union_id
                 student.save()
-        if not course_id:
-            raise Http404
-        try:
-            course = Course.objects.get(id=course_id)
-        except Course.DoesNotExist:
-            raise Http404
-        mentor = course.belong
-        if mentor.status == 3:
-            return HttpResponseRedirect('/mentor_detail?mentor_id=' + mentor.id)
-        return_content['hero_list'] = mentor.hero_list.all()
-        return_content['course'] = course
-        return render_to_response('common/confirm_order.html',
-                                  return_content,
-                                  context_instance=RequestContext(request))
+        if course_id:
+            try:
+                course = Course.objects.get(id=course_id)
+            except Course.DoesNotExist:
+                raise Http404
+            mentor = course.belong
+            return_content['course'] = course
+            return_content['hero_list'] = mentor.hero_list.all()
+            if mentor.status == 3:
+                return HttpResponseRedirect('/mentor_detail?mentor_id=' + mentor.id)
+            return render_to_response('common/confirm_order.html',
+                                      return_content,
+                                      context_instance=RequestContext(request))
+        elif course_class_id:
+            try:
+                course = CourseClass.objects.get(id=course_class_id)
+            except CourseClass.DoesNotExist:
+                raise Http404
+            return_content['course'] = course
+            return render_to_response('common/confirm_class.html',
+                                      return_content,
+                                      context_instance=RequestContext(request))
 
 
 def big_wheel(req):
@@ -392,20 +401,27 @@ def create_order(req):
     qq = req.POST.get('qq', None)
     phone = req.POST.get('phone', None)
     channel = req.POST.get('channel', None)
-    course = get_object_or_404(Course, id=cid)
-    mentor = course.belong
-    if mentor.status == 3:
-        url = '/mentor_detail?mentor_id={0}'.format(mentor.id)
-        body['redirect_url'] = url
-        body['err_msg'] = u'教练休息中，无法下单'
-        return HttpResponse(encodejson(2, body), content_type='application/json')
+    if_class = True if str(req.POST.get('if_class', None)) == '1' else False
     student = return_content['active_user']
     student.phone = phone
     student.qq = qq
     student.save()
-    order_id = create_order_id(student.id, mentor.id)
+    if if_class:
+        order_id = create_class_id()
+        course = get_object_or_404(CourseClass, id=cid)
+        name = course.title
+    else:
+        order_id = create_order_id(student.id, mentor.id)
+        course = get_object_or_404(Course, id=cid)
+        name = course.name
+        mentor = course.belong
+        if mentor.status == 3:
+            url = '/mentor_detail?mentor_id={0}'.format(mentor.id)
+            body['redirect_url'] = url
+            body['err_msg'] = u'教练休息中，无法下单'
+            return HttpResponse(encodejson(2, body), content_type='application/json')
     if channel == 'wechat':
-        params = {'body': course.name,
+        params = {'body': name,
                   'out_trade_no': order_id,
                   'spbill_create_ip': req.META.get('REMOTE_ADDR', '127.0.0.1'),
                   'openid': student.wx_open_id,
@@ -413,7 +429,7 @@ def create_order(req):
         repay_data = build_form_by_params(params)
         body['data'] = repay_data
     else:
-        pay_url = create_alipay_order(order_id, course.name, course.price)
+        pay_url = create_alipay_order(order_id, name, course.price)
         body['data'] = pay_url
     # now_time = datetime.datetime.now(tz=get_current_timezone())
     # pre_time = now_time.replace(hour=0, minute=0, second=0)
@@ -421,19 +437,35 @@ def create_order(req):
     # wait_hours = order_num * 1.5
     # delta_hours = datetime.timedelta(hours=wait_hours)
     # wait_time = now_time + delta_hours
-    learn_area = area_convert(str(mentor.teach_area))
     start_time = datetime.datetime(year=1970, month=1, day=1, tzinfo=get_current_timezone())
-    new_order = Order(order_id=order_id,
-                      order_price=course.price,
-                      course_name=course.name,
-                      course_intro=course.course_info,
-                      learn_area=learn_area,
-                      learn_hero='',
-                      learn_type='',
-                      belong=student,
-                      teach_end_time=start_time,
-                      teach_start_time=start_time,
-                      teach_by=mentor)
+    if if_class:
+        new_order = Order(order_id=order_id,
+                          order_price=course.price,
+                          course_name=course.title,
+                          course_intro=course.title,
+                          learn_area='',
+                          learn_hero='',
+                          learn_type='',
+                          belong=student,
+                          teach_end_time=start_time,
+                          teach_start_time=start_time,
+                          teach_by=None,
+                          order_type=2,
+                          lesson=course.lesson,
+                          class_info=course)
+    else:
+        learn_area = area_convert(str(mentor.teach_area))
+        new_order = Order(order_id=order_id,
+                          order_price=course.price,
+                          course_name=course.name,
+                          course_intro=course.course_info,
+                          learn_area=learn_area,
+                          learn_hero='',
+                          learn_type='',
+                          belong=student,
+                          teach_end_time=start_time,
+                          teach_start_time=start_time,
+                          teach_by=mentor)
     new_order.save()
     body['channel'] = channel
     return HttpResponse(encodejson(1, body), content_type='application/json')

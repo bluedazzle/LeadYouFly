@@ -1,0 +1,153 @@
+{% extends 'base.html' %}
+{% block css %}
+    <link href="/css/custom/class_detail.css" rel="stylesheet"/>
+{% endblock %}
+{% block define %}
+    <div class="col-lg-12 col-md-12 teacher-detail-box">
+        <div class="container" style="background-color: #ffffff;padding: 20px; min-width: 1200px;">
+            <div class="" style="float: left; overflow: hidden;">
+                <img src="{{ course.lesson.cover }}" height="400px" width="500px"/>
+            </div>
+            <div class="text-left"
+                 style="width: 660px; float: right; margin-top: -18px; color: #000000;">
+
+                <ul id="class_info">
+                    <li><h3 style="color: black;font-weight: 400;">{{ course.title }}</h3></li>
+                    <li style="height: 50px; background-color: #f9f9f9;"><span style="color:#aaa;">价格：</span><span
+                            style="font-size: 32px; color: #fc6238;">¥{{ course.price }}</span></li>
+                    <li style="color: "><span style="color: #aaa">开始时间：</span><span
+                            style="color: #000000;">{{ course.start_time | date:'Y-m-d H:i:s' }}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span>截止时间：</span><span
+                            style="color: black;">{{ course.end_time | date:'Y-m-d H:i:s' }}</span></li>
+                    <li><span>开课时间：</span><span
+                            style="color:#000000;">{{ course.class_time | date:'Y-m-d H:i:s' }}</span></li>
+                    <li><span style="width: 100px;float:left;">报名人数：</span>
+
+                        <div class="progress" style="width: 520px; float: right; margin-top: 10px;">
+                            <div class="progress-bar" role="progressbar" aria-valuenow="{{ course.apply_number }}0%"
+                                 aria-valuemin="0"
+                                 aria-valuemax="{{ course.limit_number }}" style="width: {{ course.apply_number }}0%;">
+                                {{ course.apply_number }}/{{ course.limit_number }}
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <a href="/confirm_order?wechat=0&courseClassId={{ course.id }}" class="btn btn-lg btn-danger" style=" margin-top: 10px;">立即报名</a>
+                        <a href="http://wpa.qq.com/msgrd?v=3&uin=765566978&site=qq&menu=yes" target="_blank"
+                           style="margin-left: 10px;font-size: 15px;">联系客服</a></li>
+                    <li><span>承诺：</span><span style="color:#000000;">无效退款</span></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-12 col-mg-12 detail-navbar">
+        <div>
+            <!-- Nav tabs -->
+            <ul class="nav nav-detail" role="tablist">
+                <li role="presentation" class="active">
+                    <a href="#class-intro" aria-controls="class-intro" role="tab" data-toggle="tab">
+                        <span>课程介绍</span>
+                    </a>
+                </li>
+                <li role="presentation">
+                    <a href="#content" aria-controls="content" role="tab" data-toggle="tab">
+                        <span>课程目录</span>
+                    </a>
+                </li>
+                <li role="presentation">
+                    <a href="#comment" aria-controls="comment" role="tab" data-toggle="tab">
+                        <span>课程评价</span>
+                    </a>
+                </li>
+            </ul>
+
+            <!-- Tab panes -->
+            <div class="tab-content container">
+                <div role="tabpanel" class="tab-pane active" id="class-intro">
+                    <p>{{ lesson.intro | safe }}</p>
+
+                    <div class="text-center">
+                        <a href="/confirm_order?wechat=0&courseClassId={{ course.id }}" class="btn btn-lg btn-danger" style="width:300px;">立即报名</a>
+                    </div>
+                </div>
+                <div role="tabpanel" class="tab-pane" id="comment">
+                    {% if lesson.ord_les.all.count == 0 %}
+                        <h6 class="text-center">暂时没有评价</h6>
+                    {% endif %}
+                    {% for comment in comment_list %}
+                        <div class="col-lg-12 col-md-12 comment-box" style="padding-left: 0; padding-right: 0px;">
+                            <div class="col-lg-1 col-md-1" style="padding-left: 0px;">
+                                <img src="{{ comment.comment_by.avatar }}" class="student-header"/>
+                            </div>
+                            <div class="col-lg-11 col-md-11" style="padding-right: 0px;">
+                                <div class="col-lg-5 col-md-5" style="padding-left: 0">
+                                    <h5 class="comment-by-name"
+                                        style="color:#000000; font-weight: 200;font-size: 24px;margin-left: -20px">
+                                        {{ comment.comment_by.nick }}
+                                        <span style="color:dimgray;">{{ comment.comment_by.rank }}级学员</span>
+                                    </h5>
+                                </div>
+                                <div class="col-lg-7 col-md-7 text-right" style="padding-right: 0px;margin-top: 15px;">
+                                    <p>{{ comment.create_time | date:'m-d' }}&nbsp;&nbsp;&nbsp;评分：{{ comment.mark }}</p>
+                                </div>
+                                <div class="col-lg-12 col-md-12" style="padding-left: 0">
+                                    <p class="comment-content"
+                                       style="margin-bottom: 50px;margin-left: -20px">{{ comment.content }}</p>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                    <nav class="col-md-12 col-lg-12 col-sm-12 text-center">
+                        <ul class="pagination">
+                            <li>
+                                <a href="/mentor_detail?mentor_id={{ mentor_detail.id }}&page={{ paginator.first }}"
+                                   aria-label="Previous">
+                                    <span aria-hidden="true" class="glyphicon glyphicon-menu-left"></span>
+                                </a>
+                            </li>
+
+                            {% for page in paginator.page_list %}
+                                {% if page.page == paginator.current %}
+                                    <li class="active pagination-page"><a href="#">{{ page.page }}</a></li>
+                                {% else %}
+                                    <li class="pagination-page"><a
+                                            href="/mentor_detail?mentor_id={{ mentor_detail.id }}&page={{ page.page }}">{{ page.page }}</a>
+                                    </li>
+                                {% endif %}
+                            {% endfor %}
+                            <li>
+                                <a href="/mentor_detail?mentor_id={{ mentor_detail.id }}&page={{ paginator.last }}"
+                                   aria-label="Next">
+                                    <span aria-hidden="true" class="glyphicon glyphicon-menu-right"></span>
+                                </a>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
+                <div role="tabpanel" class="tab-pane" id="content">
+                    <br/>
+                    <br/>
+                    <table class="table table-hover">
+                        <thead>
+                        <tr>
+                            <th>课程名称</th>
+                            <th>时长</th>
+                            <th>课程内容</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td>第一课</td>
+                            <td>1.5h</td>
+                            <td>teste</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+{% block script %}
+    <script src="/js/common/teacher_detail.js"></script>
+    <script src="//vjs.zencdn.net/4.7/video.js"></script>
+{% endblock %}

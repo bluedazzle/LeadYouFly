@@ -24,6 +24,11 @@ def create_order_id(stu_id=None, men_id=None):
     return order_id
 
 
+def create_class_id(stu_id=None, class_id=None):
+    order_id = 'C%s%s%s' % (WEBSITE_SIGN, str(datetime.date.today()).replace('-', '')[2:], str(time.time()).replace('.', ''))
+    return order_id
+
+
 def create_charge_record(student, money, ctype=1, order_id=None):
     '''
         type: 1、订单支付 2、充值

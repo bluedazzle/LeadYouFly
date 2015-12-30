@@ -27,6 +27,7 @@ function createOrder(platform) {
         'phone': phone,
         'course_id': course_id,
         'channel': channel,
+        'if_class': 1,
         'csrfmiddlewaretoken': csrf_token
     };
     $.ajax({

@@ -34,23 +34,32 @@ def alipay_notify(req):
             new_pay_info.save()
             if status == 'TRADE_SUCCESS':
                 if order.status == 6:
-                    order.status = 1
-                    start_time = check_start_time(order.teach_by)
-                    order.teach_start_time = start_time
-                    order.teach_end_time = start_time + datetime.timedelta(hours=1.5)
-                    order.if_pay = True
-                    order.save()
-                    create_charge_record(order.belong, price, order_id=order_id)
-                    send_order_msg(str(order.order_id).encode('utf-8'),
-                                   str(order.belong.phone).encode('utf-8'),
-                                   str(order.belong.qq).encode('utf-8'),
-                                   str(order.teach_by.phone).encode('utf-8'))
-                    order.teach_by.iden_income += order.order_price
-                    order.teach_by.total_income += order.order_price
-                    order.teach_by.save()
-                    send_confirm_msg(str(order.belong.phone), str(order.teach_by.phone))
-                    order_mes = ORDER_BUY_MES % order.belong.nick
-                    create_new_message(order_mes, belong=order.belong)
+                    if order.order_type == 1:
+                        order.status = 1
+                        start_time = check_start_time(order.teach_by)
+                        order.teach_start_time = start_time
+                        order.teach_end_time = start_time + datetime.timedelta(hours=1.5)
+                        order.if_pay = True
+                        order.save()
+                        create_charge_record(order.belong, price, order_id=order_id)
+                        send_order_msg(str(order.order_id).encode('utf-8'),
+                                       str(order.belong.phone).encode('utf-8'),
+                                       str(order.belong.qq).encode('utf-8'),
+                                       str(order.teach_by.phone).encode('utf-8'))
+                        order.teach_by.iden_income += order.order_price
+                        order.teach_by.total_income += order.order_price
+                        order.teach_by.save()
+                        send_confirm_msg(str(order.belong.phone), str(order.teach_by.phone))
+                        order_mes = ORDER_BUY_MES % order.belong.nick
+                        create_new_message(order_mes, belong=order.belong)
+                    else:
+                        order.status = 2
+                        order.teach_start_time = order.class_info.class_time
+                        order.if_pay = True
+                        order.save()
+                        create_charge_record(order.belong, price, order_id=order_id)
+                        order_mes = ORDER_BUY_MES % order.belong.nick
+                        create_new_message(order_mes, belong=order.belong)
             elif status == 'TRADE_FINISHED':
                 order.status = 3
             return HttpResponse('success')
@@ -111,23 +120,32 @@ def wechat_notify(req):
                 return HttpResponse(dict_to_xml(body), content_type='application/xml')
             order = order_list[0]
             if order.status == 6:
-                order.status = 1
-                start_time = check_start_time(order.teach_by)
-                order.teach_start_time = start_time
-                order.teach_end_time = start_time + datetime.timedelta(hours=1.5)
-                order.if_pay = True
-                order.save()
-                create_charge_record(order.belong, price, order_id=order_no)
-                send_order_msg(str(order.order_id).encode('utf-8'),
-                               str(order.belong.phone).encode('utf-8'),
-                               str(order.belong.qq).encode('utf-8'),
-                               str(order.teach_by.phone).encode('utf-8'))
-                order.teach_by.iden_income += order.order_price
-                order.teach_by.total_income += order.order_price
-                order.teach_by.save()
-                send_confirm_msg(str(order.belong.phone), str(order.teach_by.phone))
-                order_mes = ORDER_BUY_MES % order.belong.nick
-                create_new_message(order_mes, belong=order.belong)
+                if order.order_type == 1:
+                    order.status = 1
+                    start_time = check_start_time(order.teach_by)
+                    order.teach_start_time = start_time
+                    order.teach_end_time = start_time + datetime.timedelta(hours=1.5)
+                    order.if_pay = True
+                    order.save()
+                    create_charge_record(order.belong, price, order_id=order_no)
+                    send_order_msg(str(order.order_id).encode('utf-8'),
+                                   str(order.belong.phone).encode('utf-8'),
+                                   str(order.belong.qq).encode('utf-8'),
+                                   str(order.teach_by.phone).encode('utf-8'))
+                    order.teach_by.iden_income += order.order_price
+                    order.teach_by.total_income += order.order_price
+                    order.teach_by.save()
+                    send_confirm_msg(str(order.belong.phone), str(order.teach_by.phone))
+                    order_mes = ORDER_BUY_MES % order.belong.nick
+                    create_new_message(order_mes, belong=order.belong)
+                else:
+                    order.status = 2
+                    order.teach_start_time = order.class_info.class_time
+                    order.if_pay = True
+                    order.save()
+                    create_charge_record(order.belong, price, order_id=order_no)
+                    order_mes = ORDER_BUY_MES % order.belong.nick
+                    create_new_message(order_mes, belong=order.belong)
         body['return_code'] = 'SUCCESS'
         body['return_msg'] = 'OK'
         return HttpResponse(dict_to_xml(body), content_type='application/xml')

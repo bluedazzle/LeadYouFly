@@ -329,6 +329,38 @@ def teacher_detail(request):
                                   context_instance=RequestContext(request))
 
 
+def class_detail(request):
+    course = CourseClass.objects.all()[0]
+    lesson = Lesson.objects.all()[0]
+    comment_list = lesson.get_comments()
+    total = comment_list.count()
+    total_page = math.ceil(float(total) / 50.0)
+    paginator = Paginator(comment_list, 50)
+    page_num = 1
+    comment = False
+    try:
+        page_num = int(request.GET.get('page'))
+        comment_list = paginator.page(page_num)
+        comment = True
+    except PageNotAnInteger:
+        comment_list = paginator.page(1)
+    except EmptyPage:
+        comment_list = []
+    except:
+        comment_list = paginator.page(page_num)
+    first_page = 1
+    last_page = int(total_page)
+    page_list = [{'page': i} for i in range(1, int(total_page) + 1)]
+    paginator_dict = {'first': first_page,
+                      'last': last_page,
+                      'current': page_num,
+                      'page_list': page_list}
+    return render_to_response('common/class_detail.html', {'course': course,
+                                                           'lesson': lesson,
+                                                           'comment': comment,
+                                                           'comment_list': comment_list})
+
+
 def about_us(request):
     return_content = utils.is_login(request)
     if not return_content:

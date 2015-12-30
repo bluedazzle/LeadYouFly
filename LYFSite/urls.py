@@ -62,6 +62,8 @@ urlpatterns = patterns('',
                        url('^luckyDraw$', user_view.big_wheel),
                        url('^drawResult$', user_view.get_reward_result),
                        url('^rewardList$', user_view.get_reward_list),
+                       url('^tt', user_view.class_detail),
+
 
 
                        #异步通知

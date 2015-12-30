@@ -266,19 +266,50 @@ class MoneyRecord(BaseModel):
         return self.action
 
 
+class Lesson(BaseModel):
+    name = models.CharField(max_length=50)
+    intro = models.TextField(default='')
+    cover = models.CharField(max_length=100, default='')
+
+    def __unicode__(self):
+        return self.name
+
+    def get_comments(self):
+        return self.les_comments.all().order_by('-create_time')
+
+
 class Comment(BaseModel):
     mark = models.FloatField(default=0.0)
     content = models.CharField(max_length=50000, default='')
     comment_by = models.ForeignKey(Student, related_name='stu_comments', null=True, blank=True, on_delete=models.SET_NULL)
     comment_mentor = models.ForeignKey(Mentor, related_name='men_comments', null=True, blank=True, on_delete=models.SET_NULL)
+    comment_lesson = models.ForeignKey(Lesson, related_name='les_comments', null=True, blank=True, on_delete=models.SET_NULL)
 
     def __unicode__(self):
         return self.content
 
 
+class CourseClass(BaseModel):
+    limit_number = models.IntegerField(default=10)
+    apply_number = models.IntegerField(default=0)
+    title = models.CharField(max_length=50, default='')
+    price = models.FloatField(default=0.0)
+    start_time = models.DateTimeField()
+    end_time = models.DateTimeField()
+    class_time = models.DateTimeField()
+    lesson = models.ForeignKey(Lesson, related_name='cls_les', on_delete=models.SET_NULL, null=True, blank=True)
+
+    def __unicode__(self):
+        return self.title
+
+
 class Order(BaseModel):
+    order_type_dict = {(1, u'教练订单'),
+                       (2, u'课程订单')}
+
     order_id = models.CharField(max_length=28, unique=True)
     order_price = models.FloatField(default=0.0)
+    order_type = models.IntegerField(default=1, choices=order_type_dict)
     pay_type = models.IntegerField(default=1)
     course_name = models.CharField(max_length=50, default='')
     course_intro = models.CharField(max_length=500, default='')
@@ -298,9 +329,15 @@ class Order(BaseModel):
     teach_start_time = models.DateTimeField(null=True, blank=True)
     teach_end_time = models.DateTimeField()
     belong = models.ForeignKey(Student, related_name='stu_orders')
-    teach_by = models.ForeignKey(Mentor, related_name='men_orders')
+    teach_by = models.ForeignKey(Mentor, related_name='men_orders', null=True, blank=True, on_delete=models.SET_NULL)
     comment = models.ForeignKey(Comment, related_name='comment_order', null=True, blank=True, on_delete=models.SET_NULL)
     if_pay = models.BooleanField(default=False)
+
+    lesson = models.ForeignKey(Lesson, related_name='ord_les', on_delete=models.SET_NULL, null=True, blank=True)
+    class_info = models.ForeignKey(CourseClass, related_name='ord_cls', on_delete=models.SET_NULL, null=True, blank=True)
+
+
+
 
     def __unicode__(self):
         return self.order_id

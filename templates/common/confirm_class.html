@@ -1,0 +1,93 @@
+{% extends 'base.html' %}
+{% block css %}
+    <link href="/css/custom/confirm_order.css" rel="stylesheet"/>
+{% endblock %}
+{% block define %}
+    <div class="container">
+        <h4 class="text-center">确认订单</h4>
+
+        <div class="jumbotron">
+            <h5 class="text-center">{{ course.title }}</h5>
+
+            <p class="cName">课程名称：{{ course.title }}</p>
+
+            <p class="cOther">价格：￥{{ course.price }}</p>
+
+            <p class="cOther">你的电话：<input type="text" placeholder="请输入联系方式" class="form-inline" id="pcPhone"
+                                          name="phone"
+                                          value="{{ active_user.phone }}"/></p>
+
+            <p class="cOther">你的Q&nbspQ：<input type="text" placeholder="请输入QQ号码" class="form-inline" id="pcQq"
+                                               name="qq"
+                                               value="{{ active_user.qq }}"/></p>
+
+
+            {% csrf_token %}
+            </div>
+            <input type="hidden" id="pcCourse" name="course_id" value="{{ course.id }}"/>
+            <input type="hidden" id="ifClass" name="if_class" value="1"/>
+
+            <p class="text-right">
+                <button class="cOther btn btn-primary btn-lg" onclick="createOrder('pc')">立即支付</button>
+            </p>
+        </div>
+
+
+        <!--mobile-->
+
+
+        <div>
+            <p class="cMobile">你的电话：<input placeholder="请输入联系方式" id="phone" name="phone"
+                                           value="{{ active_user.phone }}"></p>
+
+            <p class="cMobile">你的&nbsp&nbspQQ：<input placeholder="请输入QQ号码" id="qq" name="qq"
+                                                     value="{{ active_user.qq }}"></p>
+
+            {% csrf_token %}
+
+            <p class="cMobile">需要支付：<span class="cPrice">￥{{ course.price }}</span></p>
+
+            <input type="hidden" id="course" name="course_id" value="{{ course.id }}">
+            <input type="hidden" id="ifClassm" name="if_class" value="1">
+
+            <p class="text-right cMobile cInput">
+                <button class="btn btn-primary btn-lg" onclick="createOrder('mobile')">立即支付</button>
+            </p>
+        </div>
+
+
+        <!--end mobile-->
+
+
+    </div>
+    <!-- Modal -->
+    <div class="modal fade" id="payModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h4 class="modal-title" id="myModalLabel">支付操作</h4>
+        </div>
+        <div class="modal-body" id="payInfo">
+            <p>正在支付...</p>
+        </div>
+        <div class="modal-footer">
+            <a class="btn btn-primary" onclick="setDisabled()" href="" id="repay" target="_blank">前往支付</a>
+            <a href="/user/my_orders" type="button" class="btn btn-primary">支付完成</a>
+            <a href="https://cshall.alipay.com/hall/index.htm" type="button" class="btn btn-default">支付遇到问题</a>
+        </div>
+    </div>
+{% endblock %}
+{% block script %}
+    <script src="/js/student/confirm_order.js"></script>
+    <script>
+        var wechatInfo = navigator.userAgent.match(/MicroMessenger\/([\d\.]+)/i);
+        if (wechatInfo) {
+{#            alert('亲，请单击右上角菜单选择“在浏览器中打开”哦，否则将无法完成付款～');#}
+            if (wechatInfo[1] < "5.0") {
+                alert("亲，你的微信版本号过低，请在右上角点击“在浏览器中打开“，用其他方式支付哟～");
+            }
+        }
+
+        $("select").select2({dropdownCssClass: 'dropdown-inverse'});
+    </script>
+{% endblock %}

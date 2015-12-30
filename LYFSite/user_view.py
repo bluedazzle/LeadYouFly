@@ -421,7 +421,7 @@ def create_order(req):
             return HttpResponse(encodejson(2, body), content_type='application/json')
 
     else:
-        order_id = create_order_id(student.id, mentor.id)
+        order_id = create_order_id(student.id)
         course = get_object_or_404(Course, id=cid)
         name = course.name
         mentor = course.belong

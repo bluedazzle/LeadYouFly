@@ -57,6 +57,7 @@ def alipay_notify(req):
                         order.teach_start_time = order.class_info.class_time
                         order.if_pay = True
                         order.save()
+                        order.class_info.get_apply_number()
                         create_charge_record(order.belong, price, order_id=order_id)
                         order_mes = ORDER_BUY_MES % order.belong.nick
                         create_new_message(order_mes, belong=order.belong)
@@ -143,6 +144,7 @@ def wechat_notify(req):
                     order.teach_start_time = order.class_info.class_time
                     order.if_pay = True
                     order.save()
+                    order.class_info.get_apply_number()
                     create_charge_record(order.belong, price, order_id=order_no)
                     order_mes = ORDER_BUY_MES % order.belong.nick
                     create_new_message(order_mes, belong=order.belong)

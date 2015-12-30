@@ -143,20 +143,24 @@ def appraise_order(request):
             new_comment = Comment()
             new_comment.mark = float(form_data['stars'])
             new_comment.content = form_data['content']
-            new_comment.comment_mentor = order.teach_by
+            if order.order_type == 1:
+                new_comment.comment_mentor = order.teach_by
+            else:
+                new_comment.comment_lesson = order.lesson
             new_comment.comment_by = return_content['active_user']
             new_comment.save()
             order.comment = new_comment
             order.save()
-            mentor = order.teach_by
-            all_order_grades = 0
-            for order in mentor.men_orders.filter(status=4):
-                if order.comment:
-                    all_order_grades += order.comment.mark * 2
-            all_order_count = mentor.men_orders.filter(status=4).count()
-            last_grade = (all_order_grades + 90) / (all_order_count + 10)
-            mentor.mark = round(last_grade, 1)
-            mentor.save()
+            if order.order_type == 1:
+                mentor = order.teach_by
+                all_order_grades = 0
+                for order in mentor.men_orders.filter(status=4):
+                    if order.comment:
+                        all_order_grades += order.comment.mark * 2
+                all_order_count = mentor.men_orders.filter(status=4).count()
+                last_grade = (all_order_grades + 90) / (all_order_count + 10)
+                mentor.mark = round(last_grade, 1)
+                mentor.save()
             user = return_content['active_user']
             user.exp += int(order.order_price)
             for key, value in exp_dic.items():
@@ -410,6 +414,12 @@ def create_order(req):
         order_id = create_class_id()
         course = get_object_or_404(CourseClass, id=cid)
         name = course.title
+        number = course.get_apply_number()
+        if number >= course.limit_number:
+            body['redirect_url'] = '/college'
+            body['err_msg'] = u'课程人数已满，无法下单'
+            return HttpResponse(encodejson(2, body), content_type='application/json')
+
     else:
         order_id = create_order_id(student.id, mentor.id)
         course = get_object_or_404(Course, id=cid)

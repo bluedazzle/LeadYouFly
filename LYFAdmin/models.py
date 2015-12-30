@@ -302,6 +302,12 @@ class CourseClass(BaseModel):
     def __unicode__(self):
         return self.title
 
+    def get_apply_number(self):
+        number = Order.objects.filter(order_type=2, class_info=self).exclude(status=5).exclude(status=6).count()
+        self.apply_number = number
+        self.save()
+        return number
+
 
 class Order(BaseModel):
     order_type_dict = {(1, u'教练订单'),

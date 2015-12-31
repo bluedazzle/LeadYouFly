@@ -972,7 +972,7 @@ def admin_wechat_detail(req, pid):
     total_promotions = promotion_list.count()
     valid_promotions = promotion_list.filter(cancel=False).exclude(reply='').exclude(sex='女').count()
     female_promotions = int(promotion_list.filter(cancel=False, sex='女').exclude(reply='').count() * 0.2)
-    valid_promotions += female_promotions
+    # valid_promotions += female_promotions
     focus_promotions = promotion_list.filter(cancel=False).count()
     return render_to_response('wechat_detail_admin.html', {'promotion_list': promotion_list,
                                                            'valid_count': valid_promotions,

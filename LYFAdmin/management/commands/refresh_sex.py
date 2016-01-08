@@ -20,8 +20,9 @@ class Command(BaseCommand):
                     sex = '女'
                 elif get_sex == '0':
                     sex = '未知'
-                promotion.sex = sex
-                promotion.save()
+                if promotion.sex != '女':
+                    promotion.sex = sex
+                    promotion.save()
                 print 'total:{0}, current{1}, sex:{2}'.format(total, i, get_sex)
             except:
                 print 'a'

@@ -6,6 +6,7 @@ from LYFAdmin.message import EXP_MES, LVLUP_MES
 from LYFAdmin.order_operation import create_order_id, create_class_id
 from LYFAdmin.utils import area_convert, encodejson, datetime_to_string
 from LYFAdmin.wechat_pay import build_form_by_params
+from LYFSite.utils import get_floor
 from LeadYouFly.settings import HOST
 from views import *
 from weichat.models import Promotion, Reward
@@ -465,8 +466,12 @@ def create_order(req):
                           class_info=course)
     else:
         learn_area = area_convert(str(mentor.teach_area))
+        m_price = get_floor(course.price * 0.8)
+        p_price = get_floor(course.price * 0.2)
         new_order = Order(order_id=order_id,
                           order_price=course.price,
+                          mentor_money=m_price,
+                          platform_money=p_price,
                           course_name=course.name,
                           course_intro=course.course_info,
                           learn_area=learn_area,

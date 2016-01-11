@@ -46,8 +46,9 @@ def alipay_notify(req):
                                        str(order.belong.phone).encode('utf-8'),
                                        str(order.belong.qq).encode('utf-8'),
                                        str(order.teach_by.phone).encode('utf-8'))
-                        order.teach_by.iden_income += order.order_price
-                        order.teach_by.total_income += order.order_price
+                        order.teach_by.iden_income += order.mentor_money
+                        order.teach_by.total_income += order.mentor_money
+                        order.teach_by.commission += order.platform_money
                         order.teach_by.save()
                         send_confirm_msg(str(order.belong.phone), str(order.teach_by.phone))
                         order_mes = ORDER_BUY_MES % order.belong.nick
@@ -133,8 +134,9 @@ def wechat_notify(req):
                                    str(order.belong.phone).encode('utf-8'),
                                    str(order.belong.qq).encode('utf-8'),
                                    str(order.teach_by.phone).encode('utf-8'))
-                    order.teach_by.iden_income += order.order_price
-                    order.teach_by.total_income += order.order_price
+                    order.teach_by.iden_income += order.mentor_money
+                    order.teach_by.total_income += order.mentor_money
+                    order.teach_by.commission += order.platform_money
                     order.teach_by.save()
                     send_confirm_msg(str(order.belong.phone), str(order.teach_by.phone))
                     order_mes = ORDER_BUY_MES % order.belong.nick

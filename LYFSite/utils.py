@@ -26,6 +26,10 @@ def send_verify_code(phone):
         return False
 
 
+def get_floor(number):
+    return float(unicode('%0.2f' % number)[:-1])
+
+
 def get_verify_code(request):
     if request.method == 'GET':
         phone = request.GET.get('phone')

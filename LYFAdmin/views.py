@@ -728,6 +728,14 @@ def admin_pay_thaw(req, mid):
     return HttpResponseRedirect('/admin/pay/')
 
 
+@login_require
+def admin_get_commission(req, mid):
+    mentor = get_object_or_404(Mentor, id=mid)
+    mentor.commission = 0.0
+    mentor.save()
+    return HttpResponseRedirect('/admin/pay/')
+
+
 #冻结教练
 @login_require
 def admin_pay_freeze(req, mid):

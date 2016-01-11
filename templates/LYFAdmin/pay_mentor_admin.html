@@ -12,6 +12,7 @@
                 <th>可提款额度</th>
                 <th>总账款额度</th>
                 <th>待确认付款</th>
+                <th>提成金额</th>
                 <th>状态</th>
                 <th>操作</th>
             </tr>
@@ -25,6 +26,7 @@
                 <td>{{ mentor.cash_income }}</td>
                 <td>{{ mentor.total_income }}</td>
                 <td>{{ mentor.iden_income }}</td>
+                <td>{{ mentor.commission }}</td>
                 <td>{% ifequal mentor.freeze True %}
                     冻结
                     {% else %}
@@ -35,7 +37,9 @@
                     <a href="/admin/pay/thaw/{{ mentor.id }}/" class="btn btn-primary">解冻</a>
                     {% else %}
                     <a href="/admin/pay/freeze/{{ mentor.id }}/" class="btn btn-warning">冻结</a>
-                    {% endifequal %}</td>
+                    {% endifequal %}
+                    <a href="/admin/pay/commission/{{ mentor.id }}/" class="btn btn-primary">提出抽成</a>
+                </td>
             </tr>
             {% endfor %}
             </tbody>

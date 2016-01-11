@@ -162,6 +162,7 @@ class Mentor(AbstractBaseUser, BaseModel):
     total_income = models.FloatField(default=0.0)
     iden_income = models.FloatField(default=0.0)
     cash_income = models.FloatField(default=0.0)
+    commission = models.FloatField(default=0.0)
     mark = models.FloatField(default=0.0)
     freeze = models.BooleanField(default=False)
     priority = models.IntegerField(default=0)
@@ -338,6 +339,8 @@ class Order(BaseModel):
     teach_by = models.ForeignKey(Mentor, related_name='men_orders', null=True, blank=True, on_delete=models.SET_NULL)
     comment = models.ForeignKey(Comment, related_name='comment_order', null=True, blank=True, on_delete=models.SET_NULL)
     if_pay = models.BooleanField(default=False)
+    mentor_money = models.FloatField(default=0.0)
+    platform_money = models.FloatField(default=0.0)
 
     lesson = models.ForeignKey(Lesson, related_name='ord_les', on_delete=models.SET_NULL, null=True, blank=True)
     class_info = models.ForeignKey(CourseClass, related_name='ord_cls', on_delete=models.SET_NULL, null=True, blank=True)

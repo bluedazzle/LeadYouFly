@@ -159,9 +159,9 @@ body{
         margin: 0 auto;
     }
 
-    .teacherLogin {
-        display: none;
-    }
+    /*.teacherLogin {*/
+        /*display: none;*/
+    /*}*/
 
     .loginTitle {
         display: none;

@@ -153,7 +153,7 @@ def login_qq_callback(request):
         qq_client.get_access_token(code=code, endpoint='token')
         qq_client.get_openid()
         ret = qq_client.get_user_info()
-        return HttpResponse(ret)
+        return HttpResponse(ret.nickname)
 
 
 

@@ -151,9 +151,20 @@ def login_qq_callback(request):
     qq_client = APIClient(QQ_APP_ID, QQ_APP_KEY, redirect_uri='http://lol.fibar.cn/qq_login_callback')
     if code:
         qq_client.get_access_token(code=code, endpoint='token')
-        qq_client.get_openid()
+        open_id = qq_client.get_openid()
         ret = qq_client.get_user_info()
-        return HttpResponse(ret.nickname)
+        user = Student.objects.filter(account=open_id)
+        request.session['student'] = open_id
+        if not user.exists():
+            new_qq_user = Student(account=open_id,
+                                  nick=ret.nickname,
+                                  avatar=ret.figureurl_qq_1,
+                                  qq_open_id=open_id)
+            new_qq_user.save()
+        return HttpResponseRedirect('/search_teacher')
+    else:
+        return HttpResponse('授权失败')
+
 
 
 

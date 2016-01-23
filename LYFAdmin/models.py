@@ -203,7 +203,7 @@ class Mentor(AbstractBaseUser, BaseModel):
         return self.men_comments.all().order_by('-create_time')
 
 class Student(AbstractBaseUser, BaseModel):
-    account = models.CharField(max_length=11, unique=True)
+    account = models.CharField(max_length=64, unique=True)
     nick = models.CharField(max_length=20, null=True, blank=True, default="Mentor")
     rank = models.IntegerField(default=1)
     qq = models.CharField(max_length=20, null=True, blank=True, default='')
@@ -215,6 +215,7 @@ class Student(AbstractBaseUser, BaseModel):
     follow = models.ManyToManyField(Mentor, related_name='my_students', null=True, blank=True)
     wx_open_id = models.CharField(max_length=128, default='')
     wx_union_id = models.CharField(max_length=123, default='')
+    qq_open_id = models.CharField(max_length=128, default='')
 
 
     USERNAME_FIELD = 'account'

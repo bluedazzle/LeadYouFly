@@ -12,10 +12,12 @@ from django.core.paginator import EmptyPage
 from django.contrib.auth.decorators import login_required
 import datetime
 from django.db.models import Q
+from LYFAdmin.qq_oauth import APIClient
 from LYFSite.utils import check_status
 from LYFAdmin.utils import create_random_avatar
 from LYFAdmin.message import REG_MES, create_new_message
 from LYFAdmin.online_pay import create_alipay_order
+from LeadYouFly.settings import QQ_APP_ID, QQ_APP_KEY
 from models import *
 import json
 import utils
@@ -136,6 +138,23 @@ def login(request):
         request.session['student'] = student_has[0].account
         body['status'] = 'success'
         return HttpResponse(json.dumps(body))
+
+
+def login_qq(request):
+    qq_client = APIClient(QQ_APP_ID, QQ_APP_KEY, redirect_uri='http://lol.fibar.cn/qq_login_callback')
+    url = qq_client.get_authorize_url(scopes=['get_user_info'])
+    return HttpResponseRedirect(url)
+
+
+def login_qq_callback(request):
+    code = request.GET.get('code', None)
+    qq_client = APIClient(QQ_APP_ID, QQ_APP_KEY, redirect_uri='http://lol.fibar.cn/qq_login_callback')
+    if code:
+        qq_client.get_access_token(code=code, endpoint='token')
+        qq_client.get_openid()
+        ret = qq_client.get_user_info()
+        return HttpResponse(ret)
+
 
 
 def logout(request):

@@ -12,6 +12,7 @@ urlpatterns = patterns('',
 
                        # common
                        url('^login$', login),
+                       url('^qq_login$', login_qq),
                        url('^register$', register),
                        url('^forget_password$', forget_password),
                        url('^get_verify_sms_forget$', utils.get_verify_code_forget),
@@ -69,5 +70,8 @@ urlpatterns = patterns('',
                        #异步通知
                        url(r'^alipay_notify/$', alipay_notify),
                        url(r'^batch_notify/$', alipay_batch_notify),
-                       url(r'^wechat_notify/$', wechat_notify)
+                       url(r'^wechat_notify/$', wechat_notify),
+
+                       #qq登陆
+                       url(r'^qq_login_callback$', login_qq_callback),
                        )

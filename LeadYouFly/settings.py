@@ -130,3 +130,6 @@ STATIC_ROOT = './static/'
 MEDIA_ROOT = './static/upload/'
 MEDIA_URL = './upload/'
 MEDIA_TMP = './static/tmp/'
+
+QQ_APP_ID = '101284935'
+QQ_APP_KEY = 'dd0afc099033522cbbce0229174df168'

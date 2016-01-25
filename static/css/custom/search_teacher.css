@@ -18,6 +18,10 @@
     width: 240px;
 }
 
+.navbar-hidden {
+    display: none;
+}
+
 
 .teacher-info-panel-head{
     height: 180px;

@@ -161,7 +161,7 @@ def login_by_wechat_callback(request):
     app_secret = 'd4624c36b6795d1d99dcf0547af5443d'
     code = request.GET.get('code', None)
     if code:
-        url = '''https://api.weixin.qq.com/sns/oauth2/access_token?appid={0}&secret={1}&code={2}&grant_type=authorization_code'''.format(app_id, app_secret, code)
+        url = 'https://api.weixin.qq.com/sns/oauth2/access_token?appid={0}&secret={1}&code={2}&grant_type=authorization_code'.format(app_id, app_secret, code)
         result = requests.get(url).content()
         json_data = json.loads(result)
         access_token = json_data.get('access_token', None)

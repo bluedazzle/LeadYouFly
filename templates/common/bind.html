@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+{% block css %}
+  <link href="/css/custom/LR.css" rel="stylesheet"/>
+{% endblock %}
+{% block define %}
+  <div class="container">
+    <div class="jumbotron input-group-box">
+        <div>
+            <span>欢迎您: {{ nickname }} <img src="{{ avatar }}" width="50px" height="50px" alt=""></span>
+        </div>
+      <div>
+        <img src="/img/logo.png">
+      </div>
+      <p class="loginTitle text-left">与 飞吧 游戏教练账号绑定:</p>
+      <form>
+        {% csrf_token %}
+        <div class="form-control input-with-icon">
+          <span class="glyphicon glyphicon-phone"></span>
+          <i class="input-ver">&nbsp;</i>
+          <input type="text" class="login-input" id="username" name="username" placeholder="手机号"/>
+        </div>
+        <div class="form-control input-with-icon">
+          <span class="glyphicon glyphicon-lock"></span>
+          <i class="input-ver">&nbsp;</i>
+          <input type="password" class="login-input" id="password" name="password" placeholder="用户密码"/>
+        </div>
+          <input type="hidden" value="{{ refer }}" id="refer" name="refer"/>
+      </form>
+      <a type="button" id="login_submit" class="btn btn-primary btn-lg btn-block btn-login">绑&nbsp;&nbsp;定</a>
+        <a href="/search_teacher" style="margin-top: 5px;font-size: 15px;">暂不绑定,直接进入</a>
+      </div>
+    </div>
+  </div>
+{% endblock %}
+{% block script %}
+  <script src="/js/common/bind.js"></script>
+{% endblock %}

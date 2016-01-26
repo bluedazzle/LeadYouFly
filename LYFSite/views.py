@@ -201,11 +201,42 @@ def login_by_qq_callback(request):
                                   avatar=ret.figureurl_qq_1,
                                   qq_open_id=open_id)
             new_qq_user.save()
+            return HttpResponseRedirect('/bind')
+        else:
+            if user[0].account == user[0].qq_open_id:
+                return HttpResponseRedirect('/bind')
         return HttpResponseRedirect('/search_teacher')
     else:
         return HttpResponse('授权失败,请重试')
 
 
+def account_bind_page(request):
+    token = request.session.get('student')
+    user = Student.objects.filter(account=token)[0]
+    return render_to_response({'nickname': user.nick,
+                               'avatar': user.avatar}, 'common/bind.html')
+
+
+def account_bind(request):
+    account = request.POST.get('account')
+    password = request.POST.get('password')
+    student_has = Student.objects.filter(account=account)
+    if student_has.count() == 0:
+        body['status'] = "用户名或者密码错误"
+        return HttpResponse(json.dumps(body))
+    if not student_has[0].check_password(password):
+        body['status'] = "用户名或者密码错误"
+        return HttpResponse(json.dumps(body))
+    token = request.session.get('student')
+    student = student_has[0]
+    bind_user_list = Student.objects.filter(wx_union_id=token) | Student.objects.filter(qq_open_id=token)
+    if bind_user_list.exists():
+        bind_user = bind_user_list[0]
+        #change
+        #delete
+    request.session['student'] = student.account
+    body['status'] = 'success'
+    return HttpResponse((json.dumps(body)))
 
 
 def logout(request):

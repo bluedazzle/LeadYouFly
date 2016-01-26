@@ -216,6 +216,8 @@ class Student(AbstractBaseUser, BaseModel):
     wx_open_id = models.CharField(max_length=128, default='')
     wx_union_id = models.CharField(max_length=123, default='')
     qq_open_id = models.CharField(max_length=128, default='')
+    # bind_qq = models.BooleanField(default=False)
+    # bind_wechat = models.BooleanField(default=False)
 
 
     USERNAME_FIELD = 'account'

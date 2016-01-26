@@ -183,8 +183,7 @@ def login_by_wechat_callback(request):
                                               wx_union_id=union_id)
                     new_wechat_user.save()
                 return HttpResponseRedirect('/search_teacher')
-    else:
-        return HttpResponse('授权失败,请重试')
+    return HttpResponse('授权失败,请重试')
 
 
 def login_by_qq_callback(request):

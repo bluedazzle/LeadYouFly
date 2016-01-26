@@ -1,4 +1,7 @@
 # -*- coding: utf-8 -*-
+import urllib
+
+import requests
 from django.shortcuts import render_to_response
 from django.views.decorators.csrf import csrf_exempt
 import math
@@ -140,13 +143,51 @@ def login(request):
         return HttpResponse(json.dumps(body))
 
 
-def login_qq(request):
+def login_by_qq(request):
     qq_client = APIClient(QQ_APP_ID, QQ_APP_KEY, redirect_uri='http://lol.fibar.cn/qq_login_callback')
     url = qq_client.get_authorize_url(scopes=['get_user_info'])
     return HttpResponseRedirect(url)
 
 
-def login_qq_callback(request):
+def login_by_wechat(request):
+    app_id = 'wx451b53fb7aec307e'
+    encode_url = urllib.quote_plus('http://lol.fibar.cn/wechat_login_callback')
+    url = 'https://open.weixin.qq.com/connect/qrconnect?appid={0}&redirect_uri={1}&response_type=code&scope=snsapi_login&state=STATE#wechat_redirect'.format(app_id, encode_url)
+    return HttpResponseRedirect(url)
+
+
+def login_by_wechat_callback(request):
+    app_id = 'wx451b53fb7aec307e'
+    app_secret = 'd4624c36b6795d1d99dcf0547af5443d'
+    code = request.GET.get('code', None)
+    if code:
+        url = '''https://api.weixin.qq.com/sns/oauth2/access_token?appid={0}&secret={1}&code={2}&grant_type=authorization_code'''.format(app_id, app_secret, code)
+        result = requests.get(url).content()
+        json_data = json.loads(result)
+        access_token = json_data.get('access_token', None)
+        open_id = json_data.get('openid', None)
+        if access_token and open_id:
+            url = '''https://api.weixin.qq.com/sns/userinfo?access_token={0}&openid={1}'''.format(access_token, open_id)
+            result = requests.get(url).content()
+            json_data = json.loads(result)
+            nick_name = json_data.get('nickname', '')
+            avatar = json_data.get('headimgurl', '')
+            union_id = json_data.get('unionid', None)
+            if union_id:
+                request.session['student'] = union_id
+                wechat_user = Student.objects.filter(account=union_id)
+                if not wechat_user.exists():
+                    new_wechat_user = Student(account=union_id,
+                                              nick=nick_name,
+                                              avatar=avatar,
+                                              wx_union_id=union_id)
+                    new_wechat_user.save()
+                return HttpResponseRedirect('/search_teacher')
+    else:
+        return HttpResponse('授权失败,请重试')
+
+
+def login_by_qq_callback(request):
     code = request.GET.get('code', None)
     qq_client = APIClient(QQ_APP_ID, QQ_APP_KEY, redirect_uri='http://lol.fibar.cn/qq_login_callback')
     if code:
@@ -163,7 +204,7 @@ def login_qq_callback(request):
             new_qq_user.save()
         return HttpResponseRedirect('/search_teacher')
     else:
-        return HttpResponse('授权失败')
+        return HttpResponse('授权失败,请重试')
 
 
 

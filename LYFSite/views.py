@@ -162,13 +162,13 @@ def login_by_wechat_callback(request):
     code = request.GET.get('code', None)
     if code:
         url = 'https://api.weixin.qq.com/sns/oauth2/access_token?appid={0}&secret={1}&code={2}&grant_type=authorization_code'.format(app_id, app_secret, code)
-        result = requests.get(url).content()
+        result = requests.get(url).content
         json_data = json.loads(result)
         access_token = json_data.get('access_token', None)
         open_id = json_data.get('openid', None)
         if access_token and open_id:
             url = '''https://api.weixin.qq.com/sns/userinfo?access_token={0}&openid={1}'''.format(access_token, open_id)
-            result = requests.get(url).content()
+            result = requests.get(url).content
             json_data = json.loads(result)
             nick_name = json_data.get('nickname', '')
             avatar = json_data.get('headimgurl', '')

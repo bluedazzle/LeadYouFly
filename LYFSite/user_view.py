@@ -269,8 +269,8 @@ def confirm_order(request):
                 wx = WechatService()
                 data = wx.get_user_info_by_code(code)
                 print data
-                open_id = data['openid']
-                union_id = data['unionid']
+                open_id = data.get('openid')
+                union_id = data.get('unionid')
                 student.wx_open_id = open_id
                 student.wx_union_id = union_id
                 student.save()

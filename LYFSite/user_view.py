@@ -271,9 +271,10 @@ def confirm_order(request):
                 print data
                 open_id = data.get('openid')
                 union_id = data.get('unionid')
-                student.wx_open_id = open_id
-                student.wx_union_id = union_id
-                student.save()
+                if open_id:
+                    student.wx_open_id = open_id
+                    student.wx_union_id = union_id
+                    student.save()
         if course_id:
             try:
                 course = Course.objects.get(id=course_id)

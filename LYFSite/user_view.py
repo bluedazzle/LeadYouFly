@@ -268,7 +268,6 @@ def confirm_order(request):
             else:
                 wx = WechatService()
                 data = wx.get_user_info_by_code(code)
-                print data
                 open_id = data.get('openid')
                 union_id = data.get('unionid')
                 if open_id:

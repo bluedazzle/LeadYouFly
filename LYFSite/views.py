@@ -201,10 +201,10 @@ def login_by_qq_callback(request):
                                   avatar=ret.figureurl_qq_1,
                                   qq_open_id=open_id)
             new_qq_user.save()
-            return HttpResponseRedirect('/bind')
-        else:
-            if user[0].account == user[0].qq_open_id:
-                return HttpResponseRedirect('/bind')
+        #     return HttpResponseRedirect('/bind')
+        # else:
+        #     if user[0].account == user[0].qq_open_id:
+        #         return HttpResponseRedirect('/bind')
         return HttpResponseRedirect('/search_teacher')
     else:
         return HttpResponse('授权失败,请重试')

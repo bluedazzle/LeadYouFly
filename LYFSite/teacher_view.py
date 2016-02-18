@@ -258,8 +258,8 @@ def order_accept(request):
                     order.save()
                     if mentor.men_orders.filter(status=1).count() == 0:
                         mentor.status = 1
-                    mentor.cash_income += order.order_price
-                    mentor.iden_income -= order.order_price
+                    mentor.cash_income += order.mentor_money
+                    mentor.iden_income -= order.mentor_money
                     if mentor.iden_income < 0:
                         mentor.iden_income = 0.0
                     mentor.save()

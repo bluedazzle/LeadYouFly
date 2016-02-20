@@ -96,10 +96,10 @@ def alipay_batch_notify(req):
                 cash_rec.success = False
                 cash_rec.info = f_detail
                 cash_rec.save()
-                mentor = cash_rec.belong
-                mentor.iden_income -= float(cash_rec.money)
-                mentor.cash_income += float(cash_rec.money)
-                mentor.save()
+                # mentor = cash_rec.belong
+                # mentor.iden_income -= float(cash_rec.money)
+                # mentor.cash_income += float(cash_rec.money)
+                # mentor.save()
         return HttpResponse('success')
     else:
         return HttpResponse('fail')

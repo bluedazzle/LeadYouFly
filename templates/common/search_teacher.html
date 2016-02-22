@@ -162,7 +162,7 @@
 
                     <li>
         <span class="heroPic">
-          <img class="hero-header-sm" src="{{ hero.hero_picture }}">
+          <img class="hero-header-sm" src="{{ hero.hero_picture }}" alt="{{ hero.hero_name }}">
         </span>
 
         <span>
@@ -243,14 +243,14 @@
                                 擅长英雄:
                                 {% if mentor.expert_hero1 %}
                                     <img src="{{ mentor.expert_hero1.hero_picture }}" data-toggle="tooltip"
-                                         data-placement="top" title="{{ mentor_detail.expert_hero1.hero_name }}"
+                                         data-placement="top" alt="{{ mentor_detail.expert_hero1.hero_name }}" title="{{ mentor_detail.expert_hero1.hero_name }}"
                                          class="hero-header"/>
                                 {% endif %}
                                 {% if mentor.expert_hero2 %}
-                                    <img src="{{ mentor.expert_hero2.hero_picture }}" class="hero-header"/>
+                                    <img src="{{ mentor.expert_hero2.hero_picture }}" alt="{{ mentor.expert_hero2.hero_name }}" class="hero-header"/>
                                 {% endif %}
                                 {% if mentor.expert_hero3 %}
-                                    <img src="{{ mentor.expert_hero3.hero_picture }}" class="hero-header"/>
+                                    <img src="{{ mentor.expert_hero3.hero_picture }}" alt="{{ mentor.expert_hero3.hero_name }}" class="hero-header"/>
                                 {% endif %}
                             </p>
 
@@ -349,7 +349,7 @@
                     {#            <br/>#}
                     {#          {% endif %}#}
                     <span>
-            <img class="hero-header-sm" src="{{ hero.hero_picture }}">
+            <img class="hero-header-sm" src="{{ hero.hero_picture }}" alt="{{ hero.hero_name }}">
           </span>
                     <a href="{{ seo_host }}/search_teacher?teach_hero={{ hero.id }}&teach_area={{ teach_area }}&teach_position={{ teach_position }}">{{ hero.hero_name }}</a>
                     <br/>

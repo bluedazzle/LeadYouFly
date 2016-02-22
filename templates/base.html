@@ -37,7 +37,7 @@
                     {#            <span class="icon-bar"></span>#}
                     {#          </button>#}
                     <a href="/">
-                        <img class="nav-logo" src="/img/logo.png"/>
+                        <img class="nav-logo" src="/img/logo.png" alt="logo" />
                     </a>
                     <i class="divide-line"></i>
                 </div>
@@ -72,7 +72,7 @@
                                     <a href="#" class="dropdown-toggle" id="student-route" data-toggle="dropdown"
                                        role="button" aria-haspopup="true" aria-expanded="false">
                                         <img style="width: 30px;height: 30px;border-radius: 50%"
-                                             src="{{ active_user.avatar }}"/>
+                                             src="{{ active_user.avatar }}" alt="avatar" />
                                         <span id="user-position">个人中心</span>
                                         <span class="caret"></span>
                                     </a>
@@ -135,7 +135,7 @@
         <a href="{{ referer }}" class="btn menuBar pull-left back">
             <i class="glyphicon glyphicon-chevron-left"></i>
         </a>
-        <img src="{{ seo_host }}/img/logo.png">
+        <img src="{{ seo_host }}/img/logo.png" alt="logo">
 
         <div class="dropdown">
             <button class="btn btn-default dropdown-toggle menuBar" type="button" id="dropdownMenu1"
@@ -156,7 +156,7 @@
 
                 {% if login_type == 'student' %}
                     <li><a><img style="width: 30px;height: 30px;border-radius: 50%"
-                                src="{{ active_user.avatar }}"/><span>{{ active_user.nick }}</span></a></li>
+                                src="{{ active_user.avatar }}" alt="avatar" /><span>{{ active_user.nick }}</span></a></li>
                     <li role="separator" class="divider"></li>
                     <li><a href="{{ seo_host }}/search_teacher">寻找教练</a></li>
                     <li role="separator" class="divider"></li>

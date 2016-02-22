@@ -5,11 +5,13 @@
     <meta property="qc:admins" content="17044503076612126367" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
     <link href="/img/shortcut.png" rel="shortcut icon"/>
-    <title>LOL游戏教练-飞吧游戏教练</title>
+    <title>{% block title %}LOL游戏教练-飞吧游戏教练{% endblock %}</title>
     <link href="/css/bootstrap.min.css" rel="stylesheet"/>
     <link href="/css/flat-ui.min.css" rel="stylesheet">
     <link href="/css/custom/leadFlyBase.css" rel="stylesheet"/>
     <link href="http://cdn.bootcss.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
+    {% block meta %}
+    {% endblock %}
     {% block css %}
     {% endblock %}
     {#  <script src="http://cdn.bootcss.com/jquery/1.11.2/jquery.min.js"></script>#}
@@ -57,13 +59,13 @@
 {#                               style="font-size: 16px;font-weight: 700;"><i class="fa fa-wechat"></i>关注我们</a></li>#}
                     <li><a href="http://wpa.qq.com/msgrd?v=3&uin=765566978&site=qq&menu=yes" class="lg-title" target="_blank"
                                style="font-size: 16px;font-weight: 700;"><i class="fa fa-qq"></i>在线客服</a></li>
-                        <li><a href="/search_teacher" class="lg-title"
+                        <li><a href="{{ seo_host }}/search_teacher" class="lg-title"
                                style="font-size: 16px;font-weight: 700;">寻找教练</a></li>
                         <li><a href="http://forum.fibar.cn/" class="lg-title"
                                style="font-size: 16px;font-weight: 700;">社区</a></li>
                         {% if not is_login %}
-                            <li><a href="/login" class="sm-title">登录</a></li>
-                            <li><a href="/register" class="sm-title">注册</a></li>
+                            <li><a href="{{ seo_host }}/login" class="sm-title">登录</a></li>
+                            <li><a href="{{ seo_host }}/register" class="sm-title">注册</a></li>
                         {% else %}
                             {% if login_type == 'student' %}
                                 <li class="dropdown" id="stu-option-list">
@@ -76,23 +78,23 @@
                                     </a>
                                     <ul class="dropdown-menu user-position-list" style="margin-top: 0;right: -1px;">
                                         <h6>资料</h6>
-                                        <a href="/user/complete_mes">我的档案</a>
+                                        <a href="{{ seo_host }}/user/complete_mes">我的档案</a>
                                         <br/>
-                                        <a href="/user/my_orders">我的订单</a>
+                                        <a href="{{ seo_host }}/user/my_orders">我的订单</a>
                                         <br/>
-                                        <a href="/user/my_follow_mentors">关注教练</a>
+                                        <a href="{{ seo_host }}/user/my_follow_mentors">关注教练</a>
                                         <br/>
-                                        <a href="/user/message">消息</a>
+                                        <a href="{{ seo_host }}/user/message">消息</a>
                                         <br/>
                                         <h6>服务</h6>
-                                        <a href="/user/security_center">安全中心</a>
+                                        <a href="{{ seo_host }}/user/security_center">安全中心</a>
                                         <br/>
-                                        <a href="/user/complain">投诉</a>
+                                        <a href="{{ seo_host }}/user/complain">投诉</a>
                                         <br/>
 
                                         <div class="position-list-footer">
                                             飞吧，{{ active_user.nick }}
-                                            <a href="/logout">退出</a>
+                                            <a href="{{ seo_host }}/logout">退出</a>
                                         </div>
                                     </ul>
                                 </li>
@@ -114,8 +116,8 @@
                                     <ul class="dropdown-menu">
                                         <li><a href="#" onclick="changeMentorStatus(1)">立即授课</a></li>
                                         <li><a href="#" onclick="changeMentorStatus(3)">休息中</a></li>
-                                        <li><a href="/teacher/host">个人中心</a></li>
-                                        <li><a href="/logout">退出</a></li>
+                                        <li><a href="{{ seo_host }}/teacher/host">个人中心</a></li>
+                                        <li><a href="{{ seo_host }}/logout">退出</a></li>
                                     </ul>
                                 </li>
                             {% endif %}
@@ -133,7 +135,7 @@
         <a href="{{ referer }}" class="btn menuBar pull-left back">
             <i class="glyphicon glyphicon-chevron-left"></i>
         </a>
-        <img src="/img/logo.png">
+        <img src="{{ seo_host }}/img/logo.png">
 
         <div class="dropdown">
             <button class="btn btn-default dropdown-toggle menuBar" type="button" id="dropdownMenu1"
@@ -142,13 +144,13 @@
             </button>
             <ul class="dropdown-menu dropOption" aria-labelledby="dropdownMenu1">
                 {% if not is_login %}
-                    <li><a href="/search_teacher">寻找教练</a></li>
+                    <li><a href="{{ seo_host }}/search_teacher">寻找教练</a></li>
                     <li role="separator" class="divider"></li>
                     <li><a href="http://forum.fibar.cn/">飞吧社区</a></li>
                     <li role="separator" class="divider"></li>
-                    <li><a href="/login" class="sm-title">登录</a></li>
+                    <li><a href="{{ seo_host }}/login" class="sm-title">登录</a></li>
                     <li role="separator" class="divider"></li>
-                    <li><a href="/register" class="sm-title">注册</a></li>
+                    <li><a href="{{ seo_host }}/register" class="sm-title">注册</a></li>
                 {% else %}
                 {% endif %}
 
@@ -156,23 +158,23 @@
                     <li><a><img style="width: 30px;height: 30px;border-radius: 50%"
                                 src="{{ active_user.avatar }}"/><span>{{ active_user.nick }}</span></a></li>
                     <li role="separator" class="divider"></li>
-                    <li><a href="/search_teacher">寻找教练</a></li>
+                    <li><a href="{{ seo_host }}/search_teacher">寻找教练</a></li>
                     <li role="separator" class="divider"></li>
                     <li><a href="http://forum.fibar.cn/">飞吧社区</a></li>
                     <li role="separator" class="divider"></li>
-                    <li><a href="/user/complete_mes">我的档案</a></li>
+                    <li><a href="{{ seo_host }}/user/complete_mes">我的档案</a></li>
                     <li role="separator" class="divider"></li>
-                    <li><a href="/user/my_orders">我的订单</a></li>
+                    <li><a href="{{ seo_host }}/user/my_orders">我的订单</a></li>
                     <li role="separator" class="divider"></li>
-                    <li><a href="/user/my_follow_mentors">关注教练</a></li>
+                    <li><a href="{{ seo_host }}/user/my_follow_mentors">关注教练</a></li>
                     <li role="separator" class="divider"></li>
-                    <li><a href="/user/message">消息</a></li>
+                    <li><a href="{{ seo_host }}/user/message">消息</a></li>
                     <li role="separator" class="divider"></li>
-                    <li><a href="/user/security_center">安全中心</a></li>
+                    <li><a href="{{ seo_host }}/user/security_center">安全中心</a></li>
                     <li role="separator" class="divider"></li>
-                    <li><a href="/user/complain">投诉</a></li>
+                    <li><a href="{{ seo_host }}/user/complain">投诉</a></li>
                     <li role="separator" class="divider"></li>
-                    <li><a href="/logout">退出</a></li>
+                    <li><a href="{{ seo_host }}/logout">退出</a></li>
 
                 {% elif login_type == 'teacher' %}
                 {% endif %}
@@ -197,22 +199,22 @@
             <div class="container">
                 <div class="footer-two">
                     <div class="col-lg-2 col-md-2 col-sm-2">
-                        <a href="/about_us">关于我们</a>
+                        <a href="{{ seo_host }}/about_us">关于我们</a>
                     </div>
                     <div class="col-lg-2 col-md-2 col-sm-2">
-                        <a href="/contact_us">联系我们</a>
+                        <a href="{{ seo_host }}/contact_us">联系我们</a>
                     </div>
                     <div class="col-lg-2 col-md-2 col-sm-2">
-                        <a href="/become_mentor">成为教练</a>
+                        <a href="{{ seo_host }}/become_mentor">成为教练</a>
                     </div>
                     <div class="col-lg-2 col-md-2 col-sm-2">
-                        <a href="/laws">法律声明</a>
+                        <a href="{{ seo_host }}/laws">法律声明</a>
                     </div>
                     <div class="col-lg-2 col-md-2 col-sm-2">
-                        <a href="/problems">常见问题</a>
+                        <a href="{{ seo_host }}/problems">常见问题</a>
                     </div>
                     <div class="col-lg-2 col-md-2 col-sm-2">
-                        <a href="/service">服务指南</a>
+                        <a href="{{ seo_host }}/service">服务指南</a>
                     </div>
                 </div>
                 <div class="text-center col-sm-12">

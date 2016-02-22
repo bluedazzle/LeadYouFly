@@ -9,7 +9,7 @@
     <div class="notices-list">
         {% for notice in notices %}
           <h6>
-            <a href="/notice_detail?id={{ notice.id }}" target="_blank">{{ notice.title }}</a>
+            <a href="{{ seo_host }}/notice_detail?id={{ notice.id }}" target="_blank">{{ notice.title }}</a>
             <span>{{ notice.create_time | date:"Y-m-d" }}</span>
           </h6>
         {% endfor %}
@@ -19,7 +19,7 @@
         <ul class="pagination">
           {% if notices.has_previous %}
             <li>
-              <a href="/notices_list?page={{ notices.previous_page_number }}" aria-label="Previous">
+              <a href="{{ seo_host }}/notices_list?page={{ notices.previous_page_number }}" aria-label="Previous">
                 <span aria-hidden="true" class="glyphicon glyphicon-menu-left"></span>
               </a>
             </li>
@@ -35,13 +35,13 @@
             {% if page == notices.number %}
               <li class="active"><a href="#">{{ page }}</a></li>
             {% else %}
-              <li><a href="/notices_list?page={{ page }}">{{ page }}</a></li>
+              <li><a href="{{ seo_host }}/notices_list?page={{ page }}">{{ page }}</a></li>
             {% endif %}
           {% endfor %}
 
           {% if notices.has_next %}
             <li>
-              <a href="/notices_list?page_num={{ notices.next_page_number }}" aria-label="Next">
+              <a href="{{ seo_host }}/notices_list?page_num={{ notices.next_page_number }}" aria-label="Next">
                 <span aria-hidden="true" class="glyphicon glyphicon-menu-right"></span>
               </a>
             </li>

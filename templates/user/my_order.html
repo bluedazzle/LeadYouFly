@@ -64,9 +64,9 @@
             </td>
             <td class="order-operation">
               {% if order.status == 3 %}
-                <a href="/user/appraise_order?order_id={{ order.order_id }}">评价</a>
+                <a href="{{ seo_host }}/user/appraise_order?order_id={{ order.order_id }}">评价</a>
               {% elif order.status == 6 %}
-                <a href="/user/repay_order/?order_id={{ order.order_id }}" target="_blank" ">支付</a>
+                <a href="{{ seo_host }}/user/repay_order/?order_id={{ order.order_id }}" target="_blank" ">支付</a>
                 <a href="#" onclick="cancelOrder('{{ order.id }}')">撤销</a>
               {% endif %}
             </td>
@@ -87,7 +87,7 @@
           <ul class="pagination">
             {% if orders.has_previous %}
               <li>
-                <a href="/user/my_orders?page_num={{ orders.previous_page_number }}" aria-label="Previous">
+                <a href="{{ seo_host }}/user/my_orders?page_num={{ orders.previous_page_number }}" aria-label="Previous">
                   <span aria-hidden="true" class="glyphicon glyphicon-menu-left"></span>
                 </a>
               </li>
@@ -103,13 +103,13 @@
               {% if page == orders.number %}
                 <li class="active pagination-page"><a href="#">{{ page }}</a></li>
               {% else %}
-                <li class="pagination-page"><a href="/user/my_orders?page_num={{ page }}">{{ page }}</a></li>
+                <li class="pagination-page"><a href="{{ seo_host }}/user/my_orders?page_num={{ page }}">{{ page }}</a></li>
               {% endif %}
             {% endfor %}
 
             {% if orders.has_next %}
               <li>
-                <a href="/user/my_orders?page_num={{ orders.next_page_number }}" aria-label="Next">
+                <a href="{{ seo_host }}/user/my_orders?page_num={{ orders.next_page_number }}" aria-label="Next">
                   <span aria-hidden="true" class="glyphicon glyphicon-menu-right"></span>
                 </a>
               </li>
@@ -156,7 +156,7 @@
           <p>正在支付...</p>
         </div>
         <div class="modal-footer">
-          <a href="/user/my_orders" type="button" class="btn btn-primary">支付完成</a>
+          <a href="{{ seo_host }}/user/my_orders" type="button" class="btn btn-primary">支付完成</a>
           <a href="https://cshall.alipay.com/hall/index.htm" type="button" class="btn btn-default">支付遇到问题</a>
         </div>
       </div>

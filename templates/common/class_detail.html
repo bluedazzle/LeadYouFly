@@ -38,7 +38,7 @@
                             <span style="font-size: 15px;color: #000000;"><a href="http://wpa.qq.com/msgrd?v=3&uin=765566978&site=qq&menu=yes" target="_blank"
                                      style="margin-left: 10px;font-size: 15px;">联系客服</a>抢先预约下期课程</span></li>
                         {% else %}
-                            <a href="/confirm_order?wechat=0&courseClassId={{ course.id }}"
+                            <a href="{{ seo_host }}/confirm_order?wechat=0&courseClassId={{ course.id }}"
                                class="btn btn-lg btn-danger"
                                style=" margin-top: 10px;">立即报名</a>
                             <a href="http://wpa.qq.com/msgrd?v=3&uin=765566978&site=qq&menu=yes" target="_blank"
@@ -88,7 +88,7 @@
                         </div>
                     {% else %}
                         <div class="text-center">
-                            <a href="/confirm_order?wechat=0&courseClassId={{ course.id }}"
+                            <a href="{{ seo_host }}/confirm_order?wechat=0&courseClassId={{ course.id }}"
                                class="btn btn-lg btn-danger" style="width:300px;">立即报名</a>
                         </div>
 
@@ -124,7 +124,7 @@
                     <nav class="col-md-12 col-lg-12 col-sm-12 text-center">
                         <ul class="pagination">
                             <li>
-                                <a href="/mentor_detail?mentor_id={{ mentor_detail.id }}&page={{ paginator.first }}"
+                                <a href="{{ seo_host }}/mentor_detail?mentor_id={{ mentor_detail.id }}&page={{ paginator.first }}"
                                    aria-label="Previous">
                                     <span aria-hidden="true" class="glyphicon glyphicon-menu-left"></span>
                                 </a>
@@ -135,12 +135,12 @@
                                     <li class="active pagination-page"><a href="#">{{ page.page }}</a></li>
                                 {% else %}
                                     <li class="pagination-page"><a
-                                            href="/mentor_detail?mentor_id={{ mentor_detail.id }}&page={{ page.page }}">{{ page.page }}</a>
+                                            href="{{ seo_host }}/mentor_detail?mentor_id={{ mentor_detail.id }}&page={{ page.page }}">{{ page.page }}</a>
                                     </li>
                                 {% endif %}
                             {% endfor %}
                             <li>
-                                <a href="/mentor_detail?mentor_id={{ mentor_detail.id }}&page={{ paginator.last }}"
+                                <a href="{{ seo_host }}/mentor_detail?mentor_id={{ mentor_detail.id }}&page={{ paginator.last }}"
                                    aria-label="Next">
                                     <span aria-hidden="true" class="glyphicon glyphicon-menu-right"></span>
                                 </a>

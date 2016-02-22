@@ -33,6 +33,8 @@ WEBSITE_SIGN = 'L'
 
 HOST = 'http://lol.fibar.cn/'
 
+SEO_HOST = 'http://lol.fibar.cn'
+
 
 # Application definition
 

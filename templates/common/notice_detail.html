@@ -1,5 +1,11 @@
 {% extends 'base.html' %}
-
+{% block title %}
+    {{ notice.title }}-飞吧游戏教练
+{% endblock %}
+{% block meta %}
+    <meta name="description" content="{{ notice.title }}, lol, 陪玩, 教练, 代练, 竞技游戏, 电子游戏, 陪练">
+    <meta name="keywords" content="{{ notice.title }}, lol, 陪玩, 教练, 代练, 竞技游戏, 电子游戏, 陪练">
+{% endblock %}
 {% block css %}
   <link href="/css/custom/notice_detail.css" rel="stylesheet"/>
 {% endblock %}

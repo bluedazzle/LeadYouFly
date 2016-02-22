@@ -1,4 +1,11 @@
 {% extends 'base.html' %}
+{% block title %}
+    寻找教练-飞吧游戏教练
+{% endblock %}
+{% block meta %}
+    <meta name="description" content="寻找教练, lol, 陪玩, 教练, 代练, 竞技游戏, 电子游戏, 陪练">
+    <meta name="keywords" content="寻找教练, lol, 陪玩, 教练, 代练, 竞技游戏, 电子游戏, 陪练">
+{% endblock %}
 {% block css %}
     <link href="/css/custom/search_teacher.css" rel="stylesheet"/>
 {% endblock %}
@@ -77,13 +84,13 @@
             </button>
             <ul class="otherSelector dropdown-menu">
                 <li>
-                    <a href="/search_teacher?teach_area=0&teach_postion={{ teach_position }}&teach_hero={{ teach_hero.id }}&search={{ search }}">全区</a>
+                    <a href="{{ seo_host }}/search_teacher?teach_area=0&teach_postion={{ teach_position }}&teach_hero={{ teach_hero.id }}&search={{ search }}">全区</a>
                 </li>
                 <li>
-                    <a href="/search_teacher?teach_area=1&teach_postion={{ teach_position }}&teach_hero={{ teach_hero.id }}">电信</a>
+                    <a href="{{ seo_host }}/search_teacher?teach_area=1&teach_postion={{ teach_position }}&teach_hero={{ teach_hero.id }}">电信</a>
                 </li>
                 <li>
-                    <a href="/search_teacher?teach_area=2&teach_postion={{ teach_position }}&teach_hero={{ teach_hero.id }}">网通</a>
+                    <a href="{{ seo_host }}/search_teacher?teach_area=2&teach_postion={{ teach_position }}&teach_hero={{ teach_hero.id }}">网通</a>
                 </li>
             </ul>
         </div>
@@ -109,22 +116,22 @@
             </button>
             <ul class="otherSelector dropdown-menu">
                 <li>
-                    <a href="/search_teacher?teach_position=0&teach_area={{ teach_area }}&teach_hero={{ teach_hero.id }}">全部位置</a>
+                    <a href="{{ seo_host }}/search_teacher?teach_position=0&teach_area={{ teach_area }}&teach_hero={{ teach_hero.id }}">全部位置</a>
                 </li>
                 <li>
-                    <a href="/search_teacher?teach_position=1&teach_area={{ teach_area }}&teach_hero={{ teach_hero.id }}">中单</a>
+                    <a href="{{ seo_host }}/search_teacher?teach_position=1&teach_area={{ teach_area }}&teach_hero={{ teach_hero.id }}">中单</a>
                 </li>
                 <li>
-                    <a href="/search_teacher?teach_position=2&teach_area={{ teach_area }}&teach_hero={{ teach_hero.id }}">上单</a>
+                    <a href="{{ seo_host }}/search_teacher?teach_position=2&teach_area={{ teach_area }}&teach_hero={{ teach_hero.id }}">上单</a>
                 </li>
                 <li>
-                    <a href="/search_teacher?teach_position=3&teach_area={{ teach_area }}&teach_hero={{ teach_hero.id }}">ADC</a>
+                    <a href="{{ seo_host }}/search_teacher?teach_position=3&teach_area={{ teach_area }}&teach_hero={{ teach_hero.id }}">ADC</a>
                 </li>
                 <li>
-                    <a href="/search_teacher?teach_position=4&teach_area={{ teach_area }}&teach_hero={{ teach_hero.id }}">打野</a>
+                    <a href="{{ seo_host }}/search_teacher?teach_position=4&teach_area={{ teach_area }}&teach_hero={{ teach_hero.id }}">打野</a>
                 </li>
                 <li>
-                    <a href="/search_teacher?teach_position=5&teach_area={{ teach_area }}&teach_hero={{ teach_hero.id }}">辅助</a>
+                    <a href="{{ seo_host }}/search_teacher?teach_position=5&teach_area={{ teach_area }}&teach_hero={{ teach_hero.id }}">辅助</a>
                 </li>
             </ul>
         </div>
@@ -142,7 +149,7 @@
             </button>
             <ul class="heroSelector dropdown-menu pull-right">
                 <li><span><a
-                        href="/search_teacher?teach_hero=0&teach_area={{ teach_area }}&teach_position={{ teach_position }}">所有英雄</a></span>
+                        href="{{ seo_host }}/search_teacher?teach_hero=0&teach_area={{ teach_area }}&teach_position={{ teach_position }}">所有英雄</a></span>
                 </li>
                 {% for hero in heroes %}
                     {#          {% if teach_position and teach_position != '0' and hero.hero_type == teach_position %}#}
@@ -159,7 +166,7 @@
         </span>
 
         <span>
-          <a href="/search_teacher?teach_hero={{ hero.id }}&teach_area={{ teach_area }}&teach_position={{ teach_position }}">{{ hero.hero_name }}</a>
+          <a href="{{ seo_host }}/search_teacher?teach_hero={{ hero.id }}&teach_area={{ teach_area }}&teach_position={{ teach_position }}">{{ hero.hero_name }}</a>
         </span>
                     </li>
                 {% endfor %}
@@ -205,7 +212,7 @@
                             </p>
 
                             <p class="teacher-info-name">
-                                <a href="/mentor_detail?mentor_id={{ mentor.id }}" target="_blank"
+                                <a href="{{ seo_host }}/mentor_detail?mentor_id={{ mentor.id }}" target="_blank"
                                    style="color: #000000;">{{ mentor.nick }}</a>
                                 <span class="teacher-info-value">￥{{ mentor.men_courses.first.price }}</span>
                             </p>
@@ -264,7 +271,7 @@
                     <ul class="pagination">
                         {% if mentors.has_previous %}
                             <li>
-                                <a href="/search_teacher?page_num={{ mentors.previous_page_number }}&teach_area={{ teach_area }}&teach_postion={{ teach_position }}&teach_hero={{ teach_hero.id }}&search={{ search }}"
+                                <a href="{{ seo_host }}/search_teacher?page_num={{ mentors.previous_page_number }}&teach_area={{ teach_area }}&teach_postion={{ teach_position }}&teach_hero={{ teach_hero.id }}&search={{ search }}"
                                    aria-label="Previous">
                                     <span aria-hidden="true" class="glyphicon glyphicon-menu-left"></span>
                                 </a>
@@ -282,14 +289,14 @@
                                 <li class="active"><a href="#">{{ page }}</a></li>
                             {% else %}
                                 <li>
-                                    <a href="/search_teacher?page_num={{ page }}&teach_area={{ teach_area }}&teach_postion={{ teach_position }}&teach_hero={{ teach_hero.id }}&search={{ search }}">{{ page }}</a>
+                                    <a href="{{ seo_host }}/search_teacher?page_num={{ page }}&teach_area={{ teach_area }}&teach_postion={{ teach_position }}&teach_hero={{ teach_hero.id }}&search={{ search }}">{{ page }}</a>
                                 </li>
                             {% endif %}
                         {% endfor %}
 
                         {% if mentors.has_next %}
                             <li>
-                                <a href="/search_teacher?page_num={{ mentors.next_page_number }}&teach_area={{ teach_area }}&teach_postion={{ teach_position }}&teach_hero={{ teach_hero.id }}&search={{ search }}"
+                                <a href="{{ seo_host }}/search_teacher?page_num={{ mentors.next_page_number }}&teach_area={{ teach_area }}&teach_postion={{ teach_position }}&teach_hero={{ teach_hero.id }}&search={{ search }}"
                                    aria-label="Next">
                                     <span aria-hidden="true" class="glyphicon glyphicon-menu-right"></span>
                                 </a>
@@ -311,27 +318,27 @@
     <div class="select-screen" onclick="closeSelectScreen()">
         <div>
             <div class="col-lg-11 col-md-11 col-sm-11 select-screen-area" style="float: right">
-                <a href="/search_teacher?teach_area=0&teach_postion={{ teach_position }}&teach_hero={{ teach_hero.id }}&search={{ search }}">全区</a>
+                <a href="{{ seo_host }}/search_teacher?teach_area=0&teach_postion={{ teach_position }}&teach_hero={{ teach_hero.id }}&search={{ search }}">全区</a>
                 <br/>
-                <a href="/search_teacher?teach_area=1&teach_postion={{ teach_position }}&teach_hero={{ teach_hero.id }}">电信</a>
+                <a href="{{ seo_host }}/search_teacher?teach_area=1&teach_postion={{ teach_position }}&teach_hero={{ teach_hero.id }}">电信</a>
                 <br/>
-                <a href="/search_teacher?teach_area=2&teach_postion={{ teach_position }}&teach_hero={{ teach_hero.id }}">网通</a>
+                <a href="{{ seo_host }}/search_teacher?teach_area=2&teach_postion={{ teach_position }}&teach_hero={{ teach_hero.id }}">网通</a>
             </div>
             <div class="col-lg-9 col-md-9 col-sm-9 select-screen-position" style="float: right">
-                <a href="/search_teacher?teach_position=0&teach_area={{ teach_area }}&teach_hero={{ teach_hero.id }}">全部位置</a>
+                <a href="{{ seo_host }}/search_teacher?teach_position=0&teach_area={{ teach_area }}&teach_hero={{ teach_hero.id }}">全部位置</a>
                 <br/>
-                <a href="/search_teacher?teach_position=1&teach_area={{ teach_area }}&teach_hero={{ teach_hero.id }}">中单</a>
+                <a href="{{ seo_host }}/search_teacher?teach_position=1&teach_area={{ teach_area }}&teach_hero={{ teach_hero.id }}">中单</a>
                 <br/>
-                <a href="/search_teacher?teach_position=2&teach_area={{ teach_area }}&teach_hero={{ teach_hero.id }}">上单</a>
+                <a href="{{ seo_host }}/search_teacher?teach_position=2&teach_area={{ teach_area }}&teach_hero={{ teach_hero.id }}">上单</a>
                 <br/>
-                <a href="/search_teacher?teach_position=3&teach_area={{ teach_area }}&teach_hero={{ teach_hero.id }}">ADC</a>
+                <a href="{{ seo_host }}/search_teacher?teach_position=3&teach_area={{ teach_area }}&teach_hero={{ teach_hero.id }}">ADC</a>
                 <br/>
-                <a href="/search_teacher?teach_position=4&teach_area={{ teach_area }}&teach_hero={{ teach_hero.id }}">打野</a>
+                <a href="{{ seo_host }}/search_teacher?teach_position=4&teach_area={{ teach_area }}&teach_hero={{ teach_hero.id }}">打野</a>
                 <br/>
-                <a href="/search_teacher?teach_position=5&teach_area={{ teach_area }}&teach_hero={{ teach_hero.id }}">辅助</a>
+                <a href="{{ seo_host }}/search_teacher?teach_position=5&teach_area={{ teach_area }}&teach_hero={{ teach_hero.id }}">辅助</a>
             </div>
             <div class="col-lg-7 col-md-7 col-sm-7 select-screen-hero">
-                <a href="/search_teacher?teach_hero=0&teach_area={{ teach_area }}&teach_position={{ teach_position }}">所有英雄</a>
+                <a href="{{ seo_host }}/search_teacher?teach_hero=0&teach_area={{ teach_area }}&teach_position={{ teach_position }}">所有英雄</a>
                 <br/>
                 {% for hero in heroes %}
                     {#          {% if teach_position and teach_position != '0' and hero.hero_type == teach_position %}#}
@@ -344,7 +351,7 @@
                     <span>
             <img class="hero-header-sm" src="{{ hero.hero_picture }}">
           </span>
-                    <a href="/search_teacher?teach_hero={{ hero.id }}&teach_area={{ teach_area }}&teach_position={{ teach_position }}">{{ hero.hero_name }}</a>
+                    <a href="{{ seo_host }}/search_teacher?teach_hero={{ hero.id }}&teach_area={{ teach_area }}&teach_position={{ teach_position }}">{{ hero.hero_name }}</a>
                     <br/>
                 {% endfor %}
             </div>

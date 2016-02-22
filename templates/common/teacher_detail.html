@@ -1,4 +1,11 @@
 {% extends 'base.html' %}
+{% block title %}
+{{ mentor_detail.nick }}-飞吧游戏教练
+{% endblock %}
+{% block meta %}
+    <meta name="description" content="{{ mentor_detail.nick }}, {{ mentor_detail.game_level }}, {{ mentor_detail.intro }}, lol, 陪玩, 教练, 代练, 竞技游戏, 电子游戏, 陪练">
+    <meta name="keywords" content="{{ mentor_detail.nick }}, lol, 陪玩, 教练, 代练, 竞技游戏, 电子游戏, 陪练">
+{% endblock %}
 {% block css %}
     <link href="/css/custom/teacher_detail.css" rel="stylesheet"/>
 {% endblock %}
@@ -272,7 +279,7 @@
                     <nav class="col-md-12 col-lg-12 col-sm-12 text-center">
                         <ul class="pagination">
                             <li>
-                                <a href="/mentor_detail?mentor_id={{ mentor_detail.id }}&page={{ paginator.first }}"
+                                <a href="{{ seo_host }}/mentor_detail?mentor_id={{ mentor_detail.id }}&page={{ paginator.first }}"
                                    aria-label="Previous">
                                     <span aria-hidden="true" class="glyphicon glyphicon-menu-left"></span>
                                 </a>
@@ -283,12 +290,12 @@
                                     <li class="active pagination-page"><a href="#">{{ page.page }}</a></li>
                                 {% else %}
                                     <li class="pagination-page"><a
-                                            href="/mentor_detail?mentor_id={{ mentor_detail.id }}&page={{ page.page }}">{{ page.page }}</a>
+                                            href="{{ seo_host }}/mentor_detail?mentor_id={{ mentor_detail.id }}&page={{ page.page }}">{{ page.page }}</a>
                                     </li>
                                 {% endif %}
                             {% endfor %}
                             <li>
-                                <a href="/mentor_detail?mentor_id={{ mentor_detail.id }}&page={{ paginator.last }}"
+                                <a href="{{ seo_host }}/mentor_detail?mentor_id={{ mentor_detail.id }}&page={{ paginator.last }}"
                                    aria-label="Next">
                                     <span aria-hidden="true" class="glyphicon glyphicon-menu-right"></span>
                                 </a>

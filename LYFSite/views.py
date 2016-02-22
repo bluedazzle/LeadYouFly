@@ -57,10 +57,10 @@ def test(request):
 
 def host(request):
     return_content = utils.is_login(request)
-    if return_content:
-        return_content['is_login'] = True
-    else:
-        return_content = dict()
+    # if return_content:
+    #     return_content['is_login'] = True
+    # else:
+    #     return_content = dict()
 
     if request.method == 'GET':
         index_data = IndexAdmin.objects.all().first()
@@ -79,10 +79,10 @@ def host(request):
 
 def notices_list(request):
     return_content = utils.is_login(request)
-    if return_content:
-        return_content['is_login'] = True
-    else:
-        return_content = dict()
+    # if return_content:
+    #     return_content['is_login'] = True
+    # else:
+    #     return_content = dict()
     if request.method == 'GET':
         page = request.GET.get('page')
         notices = Notice.objects.order_by('-create_time').all()
@@ -101,10 +101,10 @@ def notices_list(request):
 
 def notice_detail(request):
     return_content = utils.is_login(request)
-    if return_content:
-        return_content['is_login'] = True
-    else:
-        return_content = dict()
+    # if return_content:
+    #     return_content['is_login'] = True
+    # else:
+    #     return_content = dict()
 
     if request.method == 'GET':
         notice_id = request.GET.get('id')
@@ -283,12 +283,12 @@ def register(request):
 def search_teacher(request):
     refer_url = request.META.get('HTTP_REFERER', '')
     return_content = utils.is_login(request)
-    if return_content:
-        # if return_content['login_type'] == 'teacher':
-        #     return HttpResponseRedirect('/login')
-        return_content['is_login'] = True
-    else:
-        return_content = dict()
+    # if return_content:
+    #     # if return_content['login_type'] == 'teacher':
+    #     #     return HttpResponseRedirect('/login')
+    #     return_content['is_login'] = True
+    # else:
+    #     return_content = dict()
 
     heroes = Hero.objects.all()
 
@@ -372,12 +372,12 @@ def search_teacher(request):
 def teacher_detail(request):
     refer_url = request.META.get('HTTP_REFERER', '')
     return_content = utils.is_login(request)
-    if return_content:
-        # if return_content['login_type'] == 'teacher':
-        #     return HttpResponseRedirect('/login')
-        return_content['is_login'] = True
-    else:
-        return_content = dict()
+    # if return_content:
+    #     # if return_content['login_type'] == 'teacher':
+    #     #     return HttpResponseRedirect('/login')
+    #     return_content['is_login'] = True
+    # else:
+    #     return_content = dict()
 
     if request.method == 'GET':
         mentor_id = request.GET.get('mentor_id')
@@ -465,8 +465,8 @@ def class_detail(request):
 
 def about_us(request):
     return_content = utils.is_login(request)
-    if not return_content:
-        return_content = dict()
+    # if not return_content:
+    #     return_content = dict()
 
     if request.method == 'GET':
         return render_to_response('common/about_us.html',
@@ -476,8 +476,8 @@ def about_us(request):
 
 def contact_us(request):
     return_content = utils.is_login(request)
-    if not return_content:
-        return_content = dict()
+    # if not return_content:
+    #     return_content = dict()
 
     if request.method == 'GET':
         return render_to_response('common/contact_us.html',
@@ -487,8 +487,8 @@ def contact_us(request):
 
 def laws(request):
     return_content = utils.is_login(request)
-    if not return_content:
-        return_content = dict()
+    # if not return_content:
+    #     return_content = dict()
 
     if request.method == 'GET':
         return render_to_response('common/laws.html',
@@ -498,8 +498,8 @@ def laws(request):
 
 def problems(request):
     return_content = utils.is_login(request)
-    if not return_content:
-        return_content = dict()
+    # if not return_content:
+    #     return_content = dict()
 
     if request.method == 'GET':
         return render_to_response('common/problems.html',
@@ -509,8 +509,8 @@ def problems(request):
 
 def service(request):
     return_content = utils.is_login(request)
-    if not return_content:
-        return_content = dict()
+    # if not return_content:
+    #     return_content = dict()
 
     if request.method == 'GET':
         return render_to_response('common/service.html',
@@ -520,8 +520,8 @@ def service(request):
 
 def become_teacher(request):
     return_content = utils.is_login(request)
-    if not return_content:
-        return_content = dict()
+    # if not return_content:
+    #     return_content = dict()
 
     if request.method == 'GET':
         return render_to_response('common/become_teacher.html',
@@ -531,9 +531,7 @@ def become_teacher(request):
 
 def update_header(request):
     return_content = utils.is_login(request)
-    if return_content:
-        return_content['is_login'] = True
-    else:
+    if not return_content['is_login']:
         raise Http404
 
     if return_content['login_type'] == 'student':

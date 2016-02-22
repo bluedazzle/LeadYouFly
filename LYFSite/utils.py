@@ -6,6 +6,8 @@ from django.http import HttpResponse
 import json
 import datetime
 
+from LeadYouFly.settings import SEO_HOST
+
 
 def send_verify_code(phone):
     verify_code = str(random.randint(100000, 999999))
@@ -81,6 +83,8 @@ def is_login(request):
     content = dict()
     student_account = request.session.get('student')
     teacher_account = request.session.get('teacher')
+    content['seo_host'] = SEO_HOST
+    content['login_type'] = None
     if student_account:
         content['login_type'] = "student"
         content['active_user'] = Student.objects.get(account=request.session.get('student'))
@@ -105,7 +109,8 @@ def is_login(request):
         content['is_login'] = True
         return content
     else:
-        return False
+        content['is_login'] = False
+        return content
 
 
 def get_all_heroes(request):

@@ -26,7 +26,7 @@ def teacher_login(request):
 
 def teacher_host(request):
     return_content = utils.is_login(request)
-    if not return_content:
+    if not return_content['is_login']:
         return HttpResponseRedirect('/login')
     if not return_content['login_type'] == 'teacher':
         raise Http404
@@ -111,7 +111,7 @@ def teacher_host(request):
 
 def change_mentor_status(request):
     return_content = utils.is_login(request)
-    if not return_content:
+    if not return_content['is_login']:
         return HttpResponseRedirect('/login')
     if not return_content['login_type'] == 'teacher':
         raise Http404
@@ -136,7 +136,7 @@ def change_mentor_status(request):
 
 def teacher_contact(request):
     return_content = utils.is_login(request)
-    if not return_content:
+    if not return_content['is_login']:
         return HttpResponseRedirect('/login')
     if not return_content['login_type'] == 'teacher':
         raise Http404
@@ -161,7 +161,7 @@ def teacher_contact(request):
 
 def teacher_indemnity(request):
     return_content = utils.is_login(request)
-    if not return_content:
+    if not return_content['is_login']:
         return HttpResponseRedirect('/login')
     if not return_content['login_type'] == 'teacher':
         raise Http404
@@ -202,7 +202,7 @@ def teacher_indemnity(request):
 
 def order_accept(request):
     return_content = utils.is_login(request)
-    if not return_content:
+    if not return_content['is_login']:
         return HttpResponseRedirect('/login')
     if not return_content['login_type'] == 'teacher':
         raise Http404
@@ -275,7 +275,7 @@ def order_accept(request):
 
 def manage_courses(request):
     return_content = utils.is_login(request)
-    if not return_content:
+    if not return_content['is_login']:
         return HttpResponseRedirect('/login')
     if not return_content['login_type'] == 'teacher':
         raise Http404
@@ -311,7 +311,7 @@ def manage_courses(request):
 
 def teacher_video_upload(request):
     return_content = utils.is_login(request)
-    if not return_content:
+    if not return_content['is_login']:
         return HttpResponseRedirect('/login')
     if not return_content['login_type'] == 'teacher':
         raise Http404
@@ -375,7 +375,7 @@ def utils_upload_video(video_data, video_format, order_id, support_format):
 
 def poll_order(request):
     return_content = utils.is_login(request)
-    if not return_content:
+    if not return_content['is_login']:
         return HttpResponseRedirect('/login')
     if not return_content['login_type'] == 'teacher':
         raise Http404

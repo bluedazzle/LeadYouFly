@@ -17,21 +17,21 @@
     <div class="carousel-inner" role="listbox">
       {% if index_data.index_pic1 %}
         <div class="item active">
-          <a href="/search_teacher">
+          <a href="{{ seo_host }}/search_teacher">
             <img src="{{ index_data.index_pic1 }}" alt="Picture">
           </a>
         </div>
       {% endif %}
       {% if index_data.index_pic2 %}
         <div class="item">
-          <a href="/search_teacher">
+          <a href="{{ seo_host }}/search_teacher">
             <img src="{{ index_data.index_pic2 }}" alt="Picture">
           </a>
         </div>
       {% endif %}
       {% if index_data.index_pic3 %}
         <div class="item">
-          <a href="/search_teacher">
+          <a href="{{ seo_host }}/search_teacher">
             <img src="{{ index_data.index_pic3 }}" alt="Picture">
           </a>
         </div>
@@ -53,7 +53,7 @@
     <div class="col-lg-6 col-md-6">
       <h6 class="host-title">
         最新消息
-        <a class="more-notices" href="/notices_list">more</a>
+        <a class="more-notices" href="{{ seo_host }}/notices_list">more</a>
       </h6>
       <table class="table table-host">
         <tbody>
@@ -61,7 +61,7 @@
           <tr>
             <td>
               <div class="table-host-ver">&nbsp;</div>
-              <a href="/notice_detail?id={{ notice.id }}">
+              <a href="{{ seo_host }}/notice_detail?id={{ notice.id }}">
                 {{ notice.title }}
               </a>
             </td>
@@ -74,7 +74,7 @@
   <div class="container recommend-teacher-container">
     <h6 class="host-title col-lg-12 col-md-12">
       推荐教练
-        <a class="more-notices" href="/search_teacher">more</a>
+        <a class="more-notices" href="{{ seo_host }}/search_teacher">more</a>
     </h6>
     {% for mentor in recommend %}
       {% if mentor %}

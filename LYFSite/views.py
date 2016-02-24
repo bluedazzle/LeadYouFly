@@ -3,6 +3,7 @@ import urllib
 
 import requests
 from django.shortcuts import render_to_response
+from django.views.decorators.gzip import gzip_page
 from django.views.decorators.csrf import csrf_exempt
 import math
 from LYFAdmin.models import *
@@ -280,6 +281,7 @@ def register(request):
         return HttpResponse(json.dumps("success"))
 
 
+@gzip_page
 def search_teacher(request):
     refer_url = request.META.get('HTTP_REFERER', '')
     return_content = utils.is_login(request)
@@ -369,6 +371,7 @@ def search_teacher(request):
                                   return_content)
 
 
+@gzip_page
 def teacher_detail(request):
     refer_url = request.META.get('HTTP_REFERER', '')
     return_content = utils.is_login(request)

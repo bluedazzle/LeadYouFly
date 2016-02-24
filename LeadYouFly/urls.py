@@ -1,9 +1,19 @@
 from django.conf.urls import patterns, include, url
 from django.contrib import admin
+from LeadYouFly.sitemaps import IndexPageSitemap, SearchPageSitemap, ArticleSitemap, MentorSitemap, StaticPageSitemap
+
 import settings
 import LYFSite.urls
 import LYFAdmin.urls
 import weichat.urls
+
+sitemaps = {
+    'article': ArticleSitemap,
+    'mentor': MentorSitemap,
+    'index': IndexPageSitemap,
+    'search': SearchPageSitemap,
+    'static': StaticPageSitemap
+}
 
 urlpatterns = patterns('',
                        # Examples:
@@ -12,6 +22,7 @@ urlpatterns = patterns('',
 
                        url(r'^site_admin/', include(admin.site.urls)),
                        url(r'^service/v1/', include(weichat.urls)),
+                       (r'^sitemap.xml$', 'django.contrib.sitemaps.views.sitemap', {'sitemaps': sitemaps}),
                        url(r'^css/(?P<path>.*)$', 'django.views.static.serve', {'document_root': settings.CSS_DIR}),
                        url(r'^img/(?P<path>.*)$', 'django.views.static.serve', {'document_root': settings.IMG_DIR}),
                        url(r'^js/(?P<path>.*)$', 'django.views.static.serve', {'document_root': settings.JS_DIR}),

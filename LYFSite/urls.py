@@ -9,6 +9,7 @@ import utils
 
 urlpatterns = patterns('',
                        url('^$', host),
+                       url('^robots.txt$', robots)
 
                        # common
                        url('^login$', login),

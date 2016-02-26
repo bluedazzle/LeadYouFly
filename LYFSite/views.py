@@ -56,6 +56,10 @@ def test(request):
     return render_to_response('test.html', {'mentors': test_list})
 
 
+def robots(request):
+    return render_to_response('robots.txt', content_type='text/plain')
+
+
 def host(request):
     return_content = utils.is_login(request)
     # if return_content:

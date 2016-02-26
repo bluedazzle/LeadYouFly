@@ -200,7 +200,7 @@
                             <td>{{ course.price }}</td>
                             <td>
                                 <button type="button" class="btn btn-primary" data-toggle="modal"
-                                        data-target="#cPriceModel{{ course.id }}">修改价格
+                                        data-target="#cPriceModel{{ course.id }}">修改
                                 </button>
                                 <a href="/admin/mentor/detail/{{ mentor.id }}/del_course/{{ course.id }}/"
                                    class="btn btn-warning">删除</a>
@@ -213,16 +213,26 @@
                                                 <button type="button" class="close" data-dismiss="modal"
                                                         aria-label="Close"><span
                                                         aria-hidden="true">&times;</span></button>
-                                                <h4 class="modal-title" id="myModalLabel">修改价格</h4>
+                                                <h4 class="modal-title" id="myModalLabel">修改</h4>
                                             </div>
                                             <div class="modal-body">
                                                 <form action="/admin/mentor/detail/{{ mentor.id }}/change_price/{{ course.id }}/"
                                                       method="get">
                                                     {% csrf_token %}
                                                     <div class="form-group">
+                                                        <label for="price">新标题</label>
+                                                        <input type="text" class="form-control" name="new_title"
+                                                               placeholder="标题" value="{{ course.name }}">
+                                                    </div>
+                                                    <div class="form-group">
                                                         <label for="price">新价格</label>
                                                         <input type="number" class="form-control" name="new_price"
-                                                               placeholder="价格">
+                                                               placeholder="价格" value="{{ course.price }}">
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="price">新简介</label>
+                                                        <input type="text" class="form-control" name="new_info"
+                                                               placeholder="简介" value="{{ course.course_info }}">
                                                     </div>
                                                     <div class="modal-footer">
                                                         <button type="button" class="btn btn-default"

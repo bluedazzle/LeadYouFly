@@ -579,8 +579,11 @@ def admin_mentor_change_price(req, mid, cid):
     if course.belong != mentor:
         raise Http404
     new_price = float(req.GET.get('new_price'))
+    new_title = req.GET.get('new_title')
+    new_info = req.GET.get('new_info')
     course.price = new_price
-    print new_price
+    course.name = new_title
+    course.course_info = new_info
     course.save()
     re_url = '/admin/mentor/detail/' + mid + '/'
     return HttpResponseRedirect(re_url)

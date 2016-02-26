@@ -123,7 +123,7 @@ def login(request):
     body = {}
     if request.method == 'GET':
         refer_url = request.META.get('HTTP_REFERER', '')
-        if 'lol.fibar.cn' in refer_url and 'login' not in refer_url and 'register' not in refer_url:
+        if 'fibar.cn' in refer_url and 'login' not in refer_url and 'register' not in refer_url:
             return render_to_response('common/login.html', {'refer': refer_url},
                                       context_instance=RequestContext(request))
         return render_to_response('common/login.html', context_instance=RequestContext(request))

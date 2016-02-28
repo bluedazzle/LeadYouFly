@@ -83,8 +83,6 @@ def is_login(request):
     content = dict()
     student_account = request.session.get('student')
     teacher_account = request.session.get('teacher')
-    print student_account
-    print teacher_account
     content['seo_host'] = SEO_HOST
     content['login_type'] = "student"
     if student_account:

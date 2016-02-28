@@ -83,7 +83,6 @@ def my_orders(request):
     refer_url = request.META.get('HTTP_REFERER', '')
     return_content = utils.is_login(request)
     return_content['referer'] = refer_url
-    print return_content['login_type']
     if not return_content['is_login']:
         return HttpResponseRedirect('/login')
     if not return_content['login_type'] == 'student':

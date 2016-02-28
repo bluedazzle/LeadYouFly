@@ -200,6 +200,7 @@ def login_by_qq_callback(request):
         ret = qq_client.get_user_info()
         user = Student.objects.filter(account=open_id)
         request.session['student'] = open_id
+        print request.session['student']
         if not user.exists():
             new_qq_user = Student(account=open_id,
                                   nick=ret.nickname,

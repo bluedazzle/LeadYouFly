@@ -84,7 +84,7 @@ def is_login(request):
     student_account = request.session.get('student')
     teacher_account = request.session.get('teacher')
     content['seo_host'] = SEO_HOST
-    content['login_type'] = None
+    content['login_type'] = "student"
     if student_account:
         content['login_type'] = "student"
         content['active_user'] = Student.objects.get(account=request.session.get('student'))

@@ -149,14 +149,14 @@ def login(request):
 
 
 def login_by_qq(request):
-    qq_client = APIClient(QQ_APP_ID, QQ_APP_KEY, redirect_uri='http://lol.fibar.cn/qq_login_callback')
+    qq_client = APIClient(QQ_APP_ID, QQ_APP_KEY, redirect_uri='http://www.fibar.cn/qq_login_callback')
     url = qq_client.get_authorize_url(scopes=['get_user_info'])
     return HttpResponseRedirect(url)
 
 
 def login_by_wechat(request):
     app_id = 'wx451b53fb7aec307e'
-    encode_url = urllib.quote_plus('http://lol.fibar.cn/wechat_login_callback')
+    encode_url = urllib.quote_plus('http://www.fibar.cn/wechat_login_callback')
     url = 'https://open.weixin.qq.com/connect/qrconnect?appid={0}&redirect_uri={1}&response_type=code&scope=snsapi_login&state=STATE#wechat_redirect'.format(app_id, encode_url)
     return HttpResponseRedirect(url)
 

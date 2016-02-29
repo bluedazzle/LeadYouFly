@@ -6,6 +6,7 @@ import settings
 import LYFSite.urls
 import LYFAdmin.urls
 import weichat.urls
+import LYFApi.urls
 
 sitemaps = {
     'article': ArticleSitemap,
@@ -22,6 +23,7 @@ urlpatterns = patterns('',
 
                        url(r'^site_admin/', include(admin.site.urls)),
                        url(r'^service/v1/', include(weichat.urls)),
+                       url(r'^api/v1/', include(LYFApi.urls)),
                        (r'^sitemap.xml$', 'django.contrib.sitemaps.views.sitemap', {'sitemaps': sitemaps}),
                        url(r'^css/(?P<path>.*)$', 'django.views.static.serve', {'document_root': settings.CSS_DIR}),
                        url(r'^img/(?P<path>.*)$', 'django.views.static.serve', {'document_root': settings.IMG_DIR}),

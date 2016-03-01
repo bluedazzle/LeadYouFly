@@ -27,13 +27,13 @@ DEBUG = True
 
 TEMPLATE_DEBUG = False
 
-ALLOWED_HOSTS = ['lol.fibar.cn']
+ALLOWED_HOSTS = ['www.fibar.cn']
 
 WEBSITE_SIGN = 'L'
 
-HOST = 'http://lol.fibar.cn/'
+HOST = 'http://www.fibar.cn/'
 
-SEO_HOST = 'http://lol.fibar.cn'
+SEO_HOST = 'http://www.fibar.cn'
 
 
 # Application definition

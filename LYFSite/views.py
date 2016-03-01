@@ -193,7 +193,7 @@ def login_by_wechat_callback(request):
 
 def login_by_qq_callback(request):
     code = request.GET.get('code', None)
-    qq_client = APIClient(QQ_APP_ID, QQ_APP_KEY, redirect_uri='http://lol.fibar.cn/qq_login_callback')
+    qq_client = APIClient(QQ_APP_ID, QQ_APP_KEY, redirect_uri='http://www.fibar.cn/qq_login_callback')
     if code:
         qq_client.get_access_token(code=code, endpoint='token')
         open_id = qq_client.get_openid()

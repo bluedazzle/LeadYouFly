@@ -131,7 +131,7 @@ class WechatService(object):
         question = unicode(message.content)
         open_id = message.source
         if question == '抽奖':
-            return False, '点击抽奖：http://lol.fibar.cn/luckyDraw'
+            return False, '点击抽奖：http://www.fibar.cn/luckyDraw'
         for itm in new_reply:
             if itm in unicode(message.content) and unicode(message.content) not in exclude_words and len(message.content) <= 3:
                 self.news_reply_manage(open_id, itm)
@@ -212,7 +212,7 @@ class WechatService(object):
 
 帮助你掌握方法，成为真正的高手。
 
-点击抽奖：http://lol.fibar.cn/luckyDraw'''
+点击抽奖：http://www.fibar.cn/luckyDraw'''
             return False, '''嘿！同学，你迟到了。
 
 发送文字消息，提出关于LOL的任何问题，我们都会第一时间给你答复。Try it[勾引]

@@ -13,7 +13,7 @@ config = {
     'appId': 'wxed29f94c7e513349',
     'Mchid': '1265828801',
     'Key': 'OdCy3QlJ0S2E64PDMGYgWLqUj9NRiKew',
-    'notify_url': 'http://lol.fibar.cn/wechat_notify/'
+    'notify_url': 'http://www.fibar.cn/wechat_notify/'
 }
 
 def build_sign(params):

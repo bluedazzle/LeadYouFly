@@ -1,9 +1,9 @@
 {% extends 'base.html' %}
 {% block title %}
-{{ mentor_detail.nick }}-飞吧游戏教练
+{{ mentor_detail.expert_hero1.hero_name }},{{ mentor_detail.expert_hero2.hero_name }},{{ mentor_detail.expert_hero3.hero_name }}在线视频教学－{{ mentor_detail.nick }}|飞吧游戏教练
 {% endblock %}
 {% block meta %}
-    <meta name="description" content="{{ mentor_detail.nick }}, {{ mentor_detail.game_level }}, {{ mentor_detail.intro }}, lol, 陪玩, 教练, 代练, 竞技游戏, 电子游戏, 陪练">
+    <meta name="description" content="{{ mentor_detail.nick }}, {{ mentor_detail.game_level }}, {{ mentor_detail.intro }}">
     <meta name="keywords" content="{{ mentor_detail.nick }}, lol, 陪玩, 教练, 代练, 竞技游戏, 电子游戏, 陪练">
 {% endblock %}
 {% block css %}

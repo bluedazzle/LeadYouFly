@@ -33,7 +33,7 @@ WEBSITE_SIGN = 'L'
 
 HOST = 'http://www.fibar.cn/'
 
-SEO_HOST = 'http://www.fibar.cn'
+SEO_HOST = 'http://localhost:8000'
 
 
 # Application definition

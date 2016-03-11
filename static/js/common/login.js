@@ -41,4 +41,13 @@ $(document).ready(function () {
             Notify("请填写正确的信息");
         }
     });
+
+    $('#wechat_login').click(function () {
+        var wechatInfo = navigator.userAgent.match(/MicroMessenger\/([\d\.]+)/i);
+        if(wechatInfo){
+            window.location.href = 'http://www.fibar.cn/wechat_inside_login'
+        }else {
+            window.location.href = 'http://www.fibar.cn/wechat_login'
+        }
+    })
 });

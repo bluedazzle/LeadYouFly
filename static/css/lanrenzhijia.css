@@ -3,7 +3,6 @@
 a,img{border:0;}
 a{text-decoration:none;}
 a:hover{text-decoration:underline;}
-body{font:12px/180% Arial, Helvetica, sans-serif, "新宋体";color:#333333;}
 
 /* 主要css样式*/
 .main-im{position:fixed;right:10px;top:300px;z-index:100;width:110px;height:272px;}

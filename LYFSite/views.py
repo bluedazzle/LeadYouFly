@@ -21,7 +21,7 @@ from LYFSite.utils import check_status
 from LYFAdmin.utils import create_random_avatar
 from LYFAdmin.message import REG_MES, create_new_message
 from LYFAdmin.online_pay import create_alipay_order
-from LeadYouFly.settings import QQ_APP_ID, QQ_APP_KEY
+from LeadYouFly.settings import QQ_APP_ID, QQ_APP_KEY, HOST
 from models import *
 import json
 import utils
@@ -159,6 +159,36 @@ def login_by_wechat(request):
     encode_url = urllib.quote_plus('http://www.fibar.cn/wechat_login_callback')
     url = 'https://open.weixin.qq.com/connect/qrconnect?appid={0}&redirect_uri={1}&response_type=code&scope=snsapi_login&state=STATE#wechat_redirect'.format(app_id, encode_url)
     return HttpResponseRedirect(url)
+
+
+def login_by_wechat_inside(request):
+    code = request.GET.get('code', None)
+    if not code:
+        current_url = '{0}{1}'.format(HOST, 'wechat_inside_login')
+        encode_url = urllib.quote_plus(current_url)
+        get_code_url = '''https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxed29f94c7e513349&redirect_uri={0}&response_type=code&scope=snsapi_userinfo#wechat_redirect'''.format(encode_url)
+        return HttpResponseRedirect(get_code_url)
+    else:
+        req_url = 'https://api.weixin.qq.com/sns/oauth2/access_token?appid=wxed29f94c7e513349&secret=db22f19fa5b7f2da43feb4f5c4173bf9&code={0}&grant_type=authorization_code'.format(code)
+        response = requests.get(req_url)
+        json_res = json.loads(response.content)
+        access_token = json_res.get('access_token')
+        openid = json_res.get('openid')
+        req_url = 'https://api.weixin.qq.com/sns/userinfo?access_token={0}&openid={1}&lang=zh_CN'.format(access_token, openid)
+        response = requests.get(req_url)
+        json_res = json.loads(response.content)
+        union_id = json_res.get('unionid', None)
+        if union_id:
+                request.session['student'] = union_id
+                wechat_user = Student.objects.filter(account=union_id)
+                if not wechat_user.exists():
+                    new_wechat_user = Student(account=union_id,
+                                              nick=json_res.get('nickname', ''),
+                                              avatar=json_res.get('headimgurl', ''),
+                                              wx_union_id=union_id)
+                    new_wechat_user.save()
+                return HttpResponseRedirect('/search_teacher')
+        return HttpResponse('授权失败,请重试')
 
 
 def login_by_wechat_callback(request):

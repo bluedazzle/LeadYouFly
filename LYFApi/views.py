@@ -48,7 +48,8 @@ def get_pending_orders(req):
     if not token == 'rapospectreonly':
         body['message'] = '接口访问权限不足'
         return HttpResponse(encodejson(2, body), content_type='application/json')
-    order_list = Order.objects.filter(status=1)
+    # order_list = Order.objects.filter(status=1)
+    order_list = Order.objects.all()[0:2]
     result = []
     if order_list.exists():
         for order in order_list:

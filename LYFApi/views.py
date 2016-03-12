@@ -10,7 +10,7 @@ from LYFAdmin.models import Student, Order
 
 import json
 
-from LYFAdmin.utils import datetime_to_string
+from LYFAdmin.utils import datetime_to_string, get_day_info
 from LeadYouFly.settings import SEO_HOST
 
 
@@ -51,6 +51,9 @@ def get_pending_orders(req):
     order_list = Order.objects.filter(status=1)
     # order_list = Order.objects.all()[0:2]
     result = []
+    day_num, day_income = get_day_info()
+    body['count'] = day_num
+    body['income'] = day_income
     if order_list.exists():
         for order in order_list:
             order_info = {}

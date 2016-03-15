@@ -379,7 +379,7 @@ def search_teacher(request):
             search = ''
 
         mentors = mentors.distinct()
-        mentors = mentors.filter(disabled=False)
+        mentors = mentors.filter(disabled=False, type=1)
         mentors = mentors.order_by('status', '-priority', '-mark')
         for mentor in mentors:
             res = check_status(mentor)

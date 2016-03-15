@@ -443,7 +443,7 @@ def admin_order_output(req):
 #教练管理
 @login_require
 def admin_mentor(req):
-    raw_mentor_list = Mentor.objects.all().order_by('-create_time')
+    raw_mentor_list = Mentor.objects.filter(type=1).order_by('-create_time')
     mentor_list = serializer(raw_mentor_list, datetime_format='string')
     for i, mentor in enumerate(raw_mentor_list):
         mentor_list[i]['total_orders'] = mentor.men_orders.filter(Q(status=1) |
@@ -454,6 +454,20 @@ def admin_mentor(req):
     return render_to_response('mentor_admin.html', {'mentor_list': mentor_list}, context_instance=RequestContext(req))
 
 
+#教练管理
+@login_require
+def admin_patner(req):
+    raw_mentor_list = Mentor.objects.filter(type=2).order_by('-create_time')
+    mentor_list = serializer(raw_mentor_list, datetime_format='string')
+    for i, mentor in enumerate(raw_mentor_list):
+        mentor_list[i]['total_orders'] = mentor.men_orders.filter(Q(status=1) |
+                                           Q(status=2) |
+                                           Q(status=3) |
+                                           Q(status=4)).count()
+        mentor_list[i]['status'] = mentor_status_convert(mentor.status)
+    return render_to_response('patner_admin.html', {'mentor_list': mentor_list}, context_instance=RequestContext(req))
+
+
 #添加教练
 @login_require
 def admin_mentor_new_mentor(req):
@@ -461,6 +475,7 @@ def admin_mentor_new_mentor(req):
         raise Http404
     account = req.POST.get('mentor_account', '')
     passwd = req.POST.get('mentor_passwd', '')
+    m_type = req.POST.get('type', '1')
     nick = req.POST.get('mentor_nick', '')
     if account == '' or passwd == '':
         raise Http404
@@ -471,9 +486,13 @@ def admin_mentor_new_mentor(req):
     hash_pass = hashlib.md5(passwd).hexdigest()
     new_mentor = Mentor(account=account,
                         password=hash_pass,
+                        type=m_type,
                         nick=nick)
     new_mentor.save()
-    return HttpResponseRedirect('/admin/mentor')
+    if m_type == '1':
+        return HttpResponseRedirect('/admin/mentor/')
+    else:
+        return HttpResponseRedirect('/admin/patner/')
 
 
 #教练改变介绍视频

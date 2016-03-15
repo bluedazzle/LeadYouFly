@@ -5,7 +5,7 @@ from django.http import HttpResponse
 from django.shortcuts import render
 from django.views.decorators.csrf import csrf_exempt
 
-from LYFAdmin.models import Student, Order
+from LYFAdmin.models import Student, Order, Mentor
 # Create your views here.
 
 import json
@@ -27,6 +27,15 @@ def login(req):
     username = req.POST.get('username', None)
     password = req.POST.get('password', None)
     user_list = Student.objects.filter(account=username)
+    mentor_list = Mentor.objects.filter(account=username)
+    if mentor_list.exists():
+        user = mentor_list[0]
+        if user.check_password(password):
+            body['username'] = username
+            body['nick'] = user.nick
+            body['mail'] = '{0}@qq.com'.format(user.qq)
+            body['avatar'] = '{0}{1}'.format(SEO_HOST, user.avatar)
+            return HttpResponse(encodejson(1, body), content_type='application/json')
     if user_list.exists():
         user = user_list[0]
         if user.check_password(password):

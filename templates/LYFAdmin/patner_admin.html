@@ -1,17 +1,17 @@
 {% extends "admin_base.html" %}
-{% block title %}教练管理{% endblock %}
-{% block page %}教练管理{% endblock %}
+{% block title %}陪练管理{% endblock %}
+{% block page %}陪练管理{% endblock %}
 {% block content %}
     <div class="my_contianer">
         <div>
-            <button class="btn btn-primary" data-toggle="modal" data-target="#myModal">增加教练</button>
+            <button class="btn btn-primary" data-toggle="modal" data-target="#myModal">增加陪练</button>
             <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
                 <div class="modal-dialog" role="document">
                     <div class="modal-content">
                         <div class="modal-header">
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
                                     aria-hidden="true">&times;</span></button>
-                            <h4 class="modal-title" id="myModalLabel">新教练</h4>
+                            <h4 class="modal-title" id="myModalLabel">新陪练</h4>
                         </div>
                         <div class="modal-body">
                             <form action="/admin/mentor/new_mentor" method="post">
@@ -31,7 +31,7 @@
                                     <input type="text" class="form-control" name="mentor_passwd" id="mentor_passwd"
                                            placeholder="密码">
                                 </div>
-                                <input type="hidden" name="type" value="1">
+                                <input type="hidden" name="type" value="2">
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-default" data-dismiss="modal">关闭
                                     </button>

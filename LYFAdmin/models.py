@@ -140,6 +140,7 @@ class Mentor(AbstractBaseUser, BaseModel):
     nick = models.CharField(max_length=20, null=True, blank=True, default="Mentor")
     real_name = models.CharField(max_length=50, default='', null=True, blank=True)
     alipay_account = models.CharField(max_length=100, default='', null=True, blank=True)
+    type = models.IntegerField(default=1)
     status = models.IntegerField(default=3)
     intro = models.CharField(max_length=100, default='')
     good_at = models.CharField(max_length=5, default='')
@@ -201,6 +202,7 @@ class Mentor(AbstractBaseUser, BaseModel):
 
     def get_comment_list(self):
         return self.men_comments.all().order_by('-create_time')
+
 
 class Student(AbstractBaseUser, BaseModel):
     account = models.CharField(max_length=64, unique=True)

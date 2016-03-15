@@ -65,6 +65,13 @@ $(document).ready(function(){
     var account = $('#username').val();
     var verify_code = $('#verify_code').val();
     var password = $('#password').val();
+    var source = window.location.search;
+    var redirectUrl = '';
+    if (source === '?source=bbs'){
+      redirectUrl = 'http://bbs.fibar.cn/index.php?m=u&c=login';
+    }else {
+      redirectUrl = 'http://www.fibar.cn/login';
+    }
     if (phone && phone.length == 11 && account && verify_code && password){
       $.ajax({
             url: "/register",
@@ -79,7 +86,7 @@ $(document).ready(function(){
             dataType: "json",
             success: function(data, status){
               if(data === "success"){
-                window.location = "/login"
+                window.location = redirectUrl;
               } else{
                 Notify(data);
               }

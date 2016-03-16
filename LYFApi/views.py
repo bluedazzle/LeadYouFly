@@ -31,8 +31,8 @@ def login(req):
     if mentor_list.exists():
         user = mentor_list[0]
         if user.check_password(password):
-            body['username'] = '教练`{0}'.format(username)
-            body['nick'] = user.nick
+            body['username'] = username
+            body['nick'] = '教练`{0}'.format(user.nick)
             body['mail'] = '{0}@qq.com'.format(user.qq)
             body['avatar'] = '{0}{1}'.format(SEO_HOST, user.avatar)
             return HttpResponse(encodejson(1, body), content_type='application/json')

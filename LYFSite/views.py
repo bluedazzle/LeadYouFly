@@ -43,6 +43,10 @@ area_dic = {'0': u'全区',
             '2': u'网通'}
 
 
+def test_kefu(req):
+    return render_to_response('test.html')
+
+
 def test(request):
     test_list = range(0, 11)
     paginator = Paginator(test_list, 1)

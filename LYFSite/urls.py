@@ -10,6 +10,7 @@ import utils
 urlpatterns = patterns('',
                        url('^$', host),
                        url('^robots.txt$', robots),
+                       # url('^test$', test_kefu),
 
                        # common
                        url('^login$', login),

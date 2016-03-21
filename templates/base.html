@@ -2,7 +2,7 @@
 <html>
 <head lang="en">
     <meta charset="UTF-8">
-    <meta property="qc:admins" content="17044503076612126367" />
+    <meta property="qc:admins" content="17044503076612126367"/>
     <meta name="applicable-device" content="pc, mobile">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
     {% block meta %}
@@ -12,7 +12,7 @@
     <link href="/css/bootstrap.min.css" rel="stylesheet"/>
     <link href="/css/flat-ui.min.css" rel="stylesheet">
     <link href="/css/custom/leadFlyBase.css" rel="stylesheet"/>
-    <link href="css/lanrenzhijia.css" rel="stylesheet" type="text/css" />
+    <link href="css/lanrenzhijia.css" rel="stylesheet" type="text/css"/>
     <link href="http://cdn.bootcss.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
     {% block css %}
     {% endblock %}
@@ -27,7 +27,8 @@
 
 <div id="container">
     <div id="header">
-        <nav class="navbar navbar-default" style="margin-bottom: 0;border-radius: 0;padding: 0; z-index: 9999;width: 100%;">
+        <nav class="navbar navbar-default"
+             style="margin-bottom: 0;border-radius: 0;padding: 0; z-index: 9999;width: 100%;">
             <div class="container-fluid">
                 <!-- Brand and toggle get grouped for better mobile display -->
                 <div class="navbar-header nav-host">
@@ -39,7 +40,7 @@
                     {#            <span class="icon-bar"></span>#}
                     {#          </button>#}
                     <a href="/">
-                        <img class="nav-logo" src="/img/logo.png" alt="logo" />
+                        <img class="nav-logo" src="/img/logo.png" alt="logo"/>
                     </a>
                     <i class="divide-line"></i>
                 </div>
@@ -57,8 +58,8 @@
                         </div>
                     </form>
                     <ul class="nav navbar-nav navbar-right">
-{#                    <li><a href="http://wpa.qq.com/msgrd?v=3&uin=765566978&site=qq&menu=yes" class="lg-title" target="_blank"#}
-{#                               style="font-size: 16px;font-weight: 700;"><i class="fa fa-wechat"></i>关注我们</a></li>#}
+                        {#                    <li><a href="http://wpa.qq.com/msgrd?v=3&uin=765566978&site=qq&menu=yes" class="lg-title" target="_blank"#}
+                        {#                               style="font-size: 16px;font-weight: 700;"><i class="fa fa-wechat"></i>关注我们</a></li>#}
                         <li><a href="{{ seo_host }}/search_teacher" class="lg-title"
                                style="font-size: 16px;font-weight: 700;">寻找教练</a></li>
                         <li><a href="http://forum.fibar.cn/" class="lg-title"
@@ -72,7 +73,7 @@
                                     <a href="#" class="dropdown-toggle" id="student-route" data-toggle="dropdown"
                                        role="button" aria-haspopup="true" aria-expanded="false">
                                         <img style="width: 30px;height: 30px;border-radius: 50%"
-                                             src="{{ active_user.avatar }}" alt="avatar" />
+                                             src="{{ active_user.avatar }}" alt="avatar"/>
                                         <span id="user-position">个人中心</span>
                                         <span class="caret"></span>
                                     </a>
@@ -156,7 +157,8 @@
 
                 {% if login_type == 'student' %}
                     <li><a><img style="width: 30px;height: 30px;border-radius: 50%"
-                                src="{{ active_user.avatar }}" alt="avatar" /><span>{{ active_user.nick }}</span></a></li>
+                                src="{{ active_user.avatar }}" alt="avatar"/><span>{{ active_user.nick }}</span></a>
+                    </li>
                     <li role="separator" class="divider"></li>
                     <li><a href="{{ seo_host }}/search_teacher">寻找教练</a></li>
                     <li role="separator" class="divider"></li>
@@ -221,17 +223,21 @@
                     <div class="col-lg-2"></div>
                     <div class="col-lg-2 col-md-3"></div>
                     <div class="col-lg-2 col-md-3">
-                        <a href="http://webscan.360.cn/index/checkwebsite/url/www.fibar.cn" target="_blank" rel="nofollow"><img border="0" src="/img/webscan.png"/></a>
+                        <a href="http://webscan.360.cn/index/checkwebsite/url/www.fibar.cn" target="_blank"
+                           rel="nofollow"><img border="0" src="/img/webscan.png"/></a>
                     </div>
                     <div class="col-lg-2 col-md-3">
-                        <a href="http://pinggu.zx110.org/checkWebsite.do?lt=1&wd=www.fibar.cn" target="_blank" rel="nofollow"><img border="0" src="/img/wlshzx.png"/></a>
+                        <a href="http://pinggu.zx110.org/checkWebsite.do?lt=1&wd=www.fibar.cn" target="_blank"
+                           rel="nofollow"><img border="0" src="/img/wlshzx.png"/></a>
                     </div>
-{#                    <div class="col-lg-2 col-md-2 col-sm-2">#}
-{#                        <a href="http://315web.duowan.com/index.jsp" target="_blank"><img border="0" src="/img/xfwq.png"/></a>#}
-{#                    </div>#}
+                    {#                    <div class="col-lg-2 col-md-2 col-sm-2">#}
+                    {#                        <a href="http://315web.duowan.com/index.jsp" target="_blank"><img border="0" src="/img/xfwq.png"/></a>#}
+                    {#                    </div>#}
                 </div>
                 <div class="text-center col-sm-12">
-                    <p style="color: #95a5a6;font-size: 14px">Copyright© 北京江山如画网络科技有限责任公司 版权所有&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;鲁ICP备15029913号<script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1257721625'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s4.cnzz.com/z_stat.php%3Fid%3D1257721625%26show%3Dpic1' type='text/javascript'%3E%3C/script%3E"));</script>
+                    <p style="color: #95a5a6;font-size: 14px">Copyright© 北京江山如画网络科技有限责任公司 版权所有&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;鲁ICP备15029913号
+                        <script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+                        document.write(unescape("%3Cspan id='cnzz_stat_icon_1257721625'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s4.cnzz.com/z_stat.php%3Fid%3D1257721625%26show%3Dpic1' type='text/javascript'%3E%3C/script%3E"));</script>
                     </p>
                 </div>
             </div>
@@ -252,8 +258,19 @@
         </div>
     </div>
 </div>
-<script src="http://www.sobot.com/chat/pc/pc.min.js?sysNum=d75560c490ee4dd991aca87ab0df0cfb" id="zhichiload" ></script>
-
+<script src="http://www.sobot.com/chat/h5/h5.min.js?sysNum=d75560c490ee4dd991aca87ab0df0cfb" ></script>
+<script>
+    var width = parseInt(screen.width);
+    var hm = document.createElement("script");
+    hm.id = "zhichiload";
+    if (width <= 500) {
+        hm.src = "http://www.sobot.com/chat/h5/h5.min.js?sysNum=d75560c490ee4dd991aca87ab0df0cfb";
+    } else {
+        hm.src = "http://www.sobot.com/chat/pc/pc.min.js?sysNum=d75560c490ee4dd991aca87ab0df0cfb";
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(hm, s);
+</script>
 {#<div class="main-im">#}
 {#	<div id="open_im" class="open-im">&nbsp;</div>#}
 {#	<div class="im_main" id="im_main">#}
@@ -311,13 +328,13 @@
 {% endif %}
 <script src="/js/common/common.js"></script>
 <script>
-var _hmt = _hmt || [];
-(function() {
-  var hm = document.createElement("script");
-  hm.src = "//hm.baidu.com/hm.js?b869be2db39b736d46f1d807be9875ad";
-  var s = document.getElementsByTagName("script")[0];
-  s.parentNode.insertBefore(hm, s);
-})();
+    var _hmt = _hmt || [];
+    (function () {
+        var hm = document.createElement("script");
+        hm.src = "//hm.baidu.com/hm.js?b869be2db39b736d46f1d807be9875ad";
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+    })();
 </script>
 
 {% if login_type == 'teacher' %}

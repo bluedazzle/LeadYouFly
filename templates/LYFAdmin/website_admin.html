@@ -29,7 +29,76 @@
                             <td><img src="{{ hero.hero_picture }}" width="50px" height="50px" alt=""/></td>
                             <td><img src="{{ hero.hero_background }}" width="100px" height="50px" alt=""/></td>
                             <td>{{ hero.hero_type }}</td>
-                            <td><a href="/admin/website/del_hero?hid={{ hero.id }}" class="btn btn-warning">删除</a></td>
+                            <td><a href="/admin/website/del_hero?hid={{ hero.id }}" class="btn btn-warning">删除</a>
+                                <a type="button" class="btn btn-primary"  data-toggle="modal" data-target="#hmodal{{ hero.id }}">修改</a>
+                                <div class="modal fade" id="hmodal{{ hero.id }}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel1">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                                            aria-hidden="true">&times;</span></button>
+                                    <h4 class="modal-title" id="myModalLabel">修改英雄</h4>
+                                </div>
+                                <div class="modal-body">
+                                    <form action="/admin/website/modify_hero" method="post" enctype="multipart/form-data">
+                                        {% csrf_token %}
+                                        <input type="hidden" value="{{ hero.id }}" name="id">
+                                        <div class="form-group">
+                                            <label for="">英雄名称：</label>
+                                            <input type="text" class="form-control" name="hero_name" id="hero_name"
+                                                   placeholder="英雄名称" value="{{ hero.hero_name }}">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="InputFile">英雄图标(50X50)</label>
+                                            <input type="file" id="picture" name="picture" class="btn btn-primary">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="InputFile">英雄背景</label>
+                                            <input type="file" id="background" name="background"
+                                                   class="btn btn-primary">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="InputFile">英雄类型：</label>
+
+                                            <div class="checkbox-inline hero_type_selcet">
+                                                <label class="hero_type_selcet">
+                                                    <input type="checkbox" name="hero_type" value="1">中单
+                                                </label>
+                                            </div>
+                                            <div class="checkbox-inline hero_type_selcet">
+                                                <label class="hero_type_selcet">
+                                                    <input type="checkbox" name="hero_type" value="2">上单
+                                                </label>
+                                            </div>
+                                            <div class="checkbox-inline hero_type_selcet">
+                                                <label class="hero_type_selcet">
+                                                    <input type="checkbox" name="hero_type" value="3">ADC
+                                                </label>
+                                            </div>
+                                            <div class="checkbox-inline hero_type_selcet">
+                                                <label class="hero_type_selcet">
+                                                    <input type="checkbox" name="hero_type" value="4">打野
+                                                </label>
+                                            </div>
+                                            <div class="checkbox-inline hero_type_selcet">
+                                                <label class="hero_type_selcet">
+                                                    <input type="checkbox" name="hero_type" value="5">辅助
+                                                </label>
+                                            </div>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-default" data-dismiss="modal">关闭
+                                            </button>
+                                            <button type="submit" class="btn btn-primary">确定</button>
+                                        </div>
+                                    </form>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                            </td>
+
                         </tr>
                     {% endfor %}
                     </tbody>

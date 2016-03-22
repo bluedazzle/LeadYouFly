@@ -29,7 +29,8 @@
                             <td><img src="{{ hero.hero_picture }}" width="50px" height="50px" alt=""/></td>
                             <td><img src="{{ hero.hero_background }}" width="100px" height="50px" alt=""/></td>
                             <td>{{ hero.hero_type }}</td>
-                            <td><a href="/admin/website/del_hero?hid={{ hero.id }}" class="btn btn-warning">删除</a>
+                            <td>
+{#                                <a href="/admin/website/del_hero?hid={{ hero.id }}" class="btn btn-warning">删除</a>#}
                                 <a type="button" class="btn btn-primary"  data-toggle="modal" data-target="#hmodal{{ hero.id }}">修改</a>
                                 <div class="modal fade" id="hmodal{{ hero.id }}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel1">
                         <div class="modal-dialog" role="document">

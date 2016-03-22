@@ -353,6 +353,34 @@ def admin_website_new_hero(req):
     return HttpResponseRedirect('/admin/website')
 
 
+#修改英雄
+@login_require
+def admin_website_modify_hero(req):
+    if req.method != 'POST':
+        raise Http404
+    hero_pic = req.FILES.get('picture', None)
+    hero_name = req.POST.get('hero_name', None)
+    h_id = req.POST.get('id', None)
+    hero_type = req.POST.getlist('hero_type', None)
+    hero = get_object_or_404(Hero, id=h_id)
+    h_type = ''
+    for itm in hero_type:
+        h_type += itm
+    if h_type != '':
+        hero.hero_type = h_type
+    if hero_name:
+        hero.hero_name = hero_name
+    background = req.FILES.get('background', None)
+    if hero_pic:
+        pic_path, full_path = upload_picture(hero_pic)
+        hero.hero_picture = pic_path
+    if background:
+        back_path, full_path = upload_picture(background, 'hback/')
+        hero.hero_background = back_path
+    hero.save()
+    return HttpResponseRedirect('/admin/website')
+
+
 #订单管理
 @login_require
 def admin_order(req):

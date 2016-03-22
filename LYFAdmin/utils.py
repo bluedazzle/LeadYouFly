@@ -21,11 +21,12 @@ from LYFAdmin.models import Admin, Order, Student
 UPLOAD_PATH = os.path.dirname(os.path.dirname(__file__)) + '/static'
 
 def upload_picture(pic_file, folder='hero/'):
-    pic_name = str(int(time.time())) + str(random.randint(10000, 99999)) + '.png'
+    ext = str(pic_file.name).lower().split('.')[-1]
+    pic_name = "{0}{1}.{2}".format(str(int(time.time())), str(random.randint(10000, 99999)), ext)
     pic_path = '/upload/' + folder + pic_name
     save_path = UPLOAD_PATH + pic_path
     img = Image.open(pic_file)
-    img.save(save_path, "png")
+    img.save(save_path)
     return pic_path, save_path
 
 

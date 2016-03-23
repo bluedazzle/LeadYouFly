@@ -259,7 +259,7 @@ def admin_portal_change_password(req):
 #网站管理
 @login_require
 def admin_website(req):
-    hero_list = Hero.objects.all()
+    hero_list = Hero.objects.all().order_by('modify_time')
     notice_list = Notice.objects.all()
     for itm in hero_list:
         itm.hero_type = hero_convert(itm.hero_type)

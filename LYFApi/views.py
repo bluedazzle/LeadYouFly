@@ -85,6 +85,7 @@ def test(request):
     body['query_string'] = meta.get('QUERY_STRING')
     body['server_name'] = meta.get('SERVER_NAME')
     body['remote_addr'] = meta.get('REMOTE_ADDR')
+    body['http_x_forward_for'] = meta.get('HTTP_X_FORWARDED_FOR')
     body['user_agent'] = meta.get('HTTP_USER_AGENT')
     body['accept_encoding'] = meta.get('HTTP_ACCEPT_ENCODING')
     body['content_type'] = meta.get('CONTENT_TYPE')

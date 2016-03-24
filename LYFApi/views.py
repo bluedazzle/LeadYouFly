@@ -76,3 +76,19 @@ def get_pending_orders(req):
         body['new'] = False
     body['order_list'] = result
     return HttpResponse(encodejson(1, body), content_type='application/json')
+
+@csrf_exempt
+def test(request):
+    meta = request.META
+    body = {}
+    body['cookie'] = meta.get('HTTP_COOKIE')
+    body['query_string'] = meta.get('QUERY_STRING')
+    body['server_name'] = meta.get('SERVER_NAME')
+    body['remote_addr'] = meta.get('REMOTE_ADDR')
+    body['user_agent'] = meta.get('HTTP_USER_AGENT')
+    body['accept_encoding'] = meta.get('HTTP_ACCEPT_ENCODING')
+    body['content_type'] = meta.get('CONTENT_TYPE')
+    body['http_host'] = meta.get('HTTP_HOST')
+    body['remote_host'] = meta.get('REMOTE_HOST')
+    json_body = json.dumps(body)
+    return HttpResponse(json_body, content_type='application/json')

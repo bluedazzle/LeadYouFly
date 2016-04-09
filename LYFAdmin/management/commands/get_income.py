@@ -11,6 +11,8 @@ class Command(BaseCommand):
         total = 0.0
         ti = 0.0
         for order in mentor.men_orders.all():
+            if order.status != 3 and order.status != 4:
+                continue
             if order.mentor_money == 0.0:
                 total += order.order_price
             else:

@@ -16,4 +16,4 @@ class Command(BaseCommand):
             else:
                 total += order.mentor_money
                 ti += order.platform_money
-        print '收入: {0}, 提成: {1}'.format(total, ti)
+        print 'total: {0}, tichen: {1}'.format(total, ti)

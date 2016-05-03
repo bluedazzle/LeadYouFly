@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 from LYFAdmin.models import *
-import LYFAdmin.sms
+import LYFAdmin.yunpian
 import random
 from django.http import HttpResponse
 import json
@@ -11,7 +11,7 @@ from LeadYouFly.settings import SEO_HOST
 
 def send_verify_code(phone):
     verify_code = str(random.randint(100000, 999999))
-    sms_res = LYFAdmin.sms.send_msg(str(phone), verify_code)
+    sms_res = LYFAdmin.yunpian.send_sms(str(phone), verify_code)
     if sms_res:
         try:
             phone_has = PhoneVerify.objects.get(phone=phone)

@@ -7,7 +7,7 @@ from LYFAdmin.message import ORDER_BUY_MES, create_new_message
 from LYFAdmin.models import Order, PayInfo, CashRecord, MoneyRecord
 from LYFAdmin.online_pay import check_notify_id
 from LYFAdmin.order_operation import create_charge_record, create_money_record
-from LYFAdmin.sms import send_order_msg, send_confirm_msg
+from LYFAdmin.yunpian import send_order_msg, send_confirm_msg
 from LYFAdmin.utils import check_start_time
 
 import xmltodict

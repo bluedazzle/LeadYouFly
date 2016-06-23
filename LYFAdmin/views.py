@@ -78,10 +78,11 @@ def admin_index(req):
             index_video_list.append(copy.copy(items))
     return render_to_response('index_admin.html', {'index_admin': index_admin,
                                                    'mentor_list': mentor_list,
-                                                   'video_list': index_video_list}, context_instance=RequestContext(req))
+                                                   'video_list': index_video_list},
+                              context_instance=RequestContext(req))
 
 
-#标示获取
+# 标示获取
 @login_require
 def admin_get_status(req):
     body = {}
@@ -152,8 +153,7 @@ def admin_index_new_video(req):
     return HttpResponse(ujson.dumps(message), content_type='application/json')
 
 
-
-#更改推荐教练
+# 更改推荐教练
 @login_require
 def admin_index_change_recommend(req):
     if req.method != 'POST':
@@ -175,7 +175,7 @@ def admin_index_change_recommend(req):
     return HttpResponseRedirect('/admin/index')
 
 
-#更改轮播图片
+# 更改轮播图片
 @login_require
 def admin_index_change_picture(req):
     if req.method != 'POST':
@@ -197,7 +197,7 @@ def admin_index_change_picture(req):
     return HttpResponseRedirect('/admin/index')
 
 
-#个人信息
+# 个人信息
 @login_require
 def admin_portal(req):
     token = req.session.get('token', None)
@@ -207,7 +207,7 @@ def admin_portal(req):
                                                         'status': 0}, context_instance=RequestContext(req))
 
 
-#投诉处理
+# 投诉处理
 @login_require
 def admin_complain(req):
     raw_report_list = Report.objects.all()
@@ -217,14 +217,14 @@ def admin_complain(req):
     return render_to_response('complain_admin.html', {'report_list': report_list}, context_instance=RequestContext(req))
 
 
-#投诉图片
+# 投诉图片
 @login_require
 def admin_complain_picture(req, rid):
     report = get_object_or_404(Report, id=rid)
     return render_to_response('complain_pic_admin.html', {'report': report})
 
 
-#投诉处理
+# 投诉处理
 @login_require
 def admin_complain_finish(req, rid):
     report = get_object_or_404(Report, id=rid)
@@ -233,7 +233,7 @@ def admin_complain_finish(req, rid):
     return HttpResponseRedirect('/admin/complain')
 
 
-#管理员更改密码
+# 管理员更改密码
 @login_require
 def admin_portal_change_password(req):
     old_password = req.POST.get('old_password', None)
@@ -254,9 +254,7 @@ def admin_portal_change_password(req):
                                                     'status': 2}, context_instance=RequestContext(req))
 
 
-
-
-#网站管理
+# 网站管理
 @login_require
 def admin_website(req):
     hero_list = Hero.objects.all().order_by('modify_time')
@@ -271,12 +269,13 @@ def admin_website(req):
                                                      'form': form,
                                                      'notice_list': notice_list}, context_instance=RequestContext(req))
 
+
 def admin_website_notice_detail(req, nid):
     notice = get_object_or_404(Notice, id=nid)
     return render_to_response('wesite_admin_notice.html', {'notice': notice})
 
 
-#删除公告
+# 删除公告
 def admin_website_del_notice(req, nid):
     notice = get_object_or_404(Notice, id=nid)
     notice.delete()
@@ -303,9 +302,7 @@ def admin_website_modify(req, nid):
     return HttpResponseRedirect('/admin/website')
 
 
-
-
-#新公告
+# 新公告
 @login_require
 def admin_website_new_notice(req):
     title = req.POST.get('notice_name', None)
@@ -320,7 +317,7 @@ def admin_website_new_notice(req):
     return HttpResponseRedirect('/admin/website')
 
 
-#删除英雄
+# 删除英雄
 @login_require
 def admin_website_del_hero(req):
     hid = req.GET.get('hid')
@@ -329,7 +326,7 @@ def admin_website_del_hero(req):
     return HttpResponseRedirect('/admin/website')
 
 
-#添加英雄
+# 添加英雄
 @login_require
 def admin_website_new_hero(req):
     if req.method != 'POST':
@@ -353,7 +350,7 @@ def admin_website_new_hero(req):
     return HttpResponseRedirect('/admin/website')
 
 
-#修改英雄
+# 修改英雄
 @login_require
 def admin_website_modify_hero(req):
     if req.method != 'POST':
@@ -381,7 +378,7 @@ def admin_website_modify_hero(req):
     return HttpResponseRedirect('/admin/website')
 
 
-#订单管理
+# 订单管理
 @login_require
 def admin_order(req):
     day = {}
@@ -418,7 +415,7 @@ def admin_order(req):
                                                    'day': day}, context_instance=RequestContext(req))
 
 
-#订单查询
+# 订单查询
 @login_require
 def admin_order_search(req):
     day = {}
@@ -457,7 +454,7 @@ def admin_order_search(req):
                                                    'day': day}, context_instance=RequestContext(req))
 
 
-#订单导出
+# 订单导出
 @login_require
 def admin_order_output(req):
     search_text = req.POST.get('search_text', '')
@@ -468,35 +465,35 @@ def admin_order_output(req):
     return HttpResponse(ujson.dumps(output_path))
 
 
-#教练管理
+# 教练管理
 @login_require
 def admin_mentor(req):
     raw_mentor_list = Mentor.objects.filter(type=1).order_by('-create_time')
     mentor_list = serializer(raw_mentor_list, datetime_format='string')
     for i, mentor in enumerate(raw_mentor_list):
         mentor_list[i]['total_orders'] = mentor.men_orders.filter(Q(status=1) |
-                                           Q(status=2) |
-                                           Q(status=3) |
-                                           Q(status=4)).count()
+                                                                  Q(status=2) |
+                                                                  Q(status=3) |
+                                                                  Q(status=4)).count()
         mentor_list[i]['status'] = mentor_status_convert(mentor.status)
     return render_to_response('mentor_admin.html', {'mentor_list': mentor_list}, context_instance=RequestContext(req))
 
 
-#教练管理
+# 教练管理
 @login_require
 def admin_patner(req):
     raw_mentor_list = Mentor.objects.filter(type=2).order_by('-create_time')
     mentor_list = serializer(raw_mentor_list, datetime_format='string')
     for i, mentor in enumerate(raw_mentor_list):
         mentor_list[i]['total_orders'] = mentor.men_orders.filter(Q(status=1) |
-                                           Q(status=2) |
-                                           Q(status=3) |
-                                           Q(status=4)).count()
+                                                                  Q(status=2) |
+                                                                  Q(status=3) |
+                                                                  Q(status=4)).count()
         mentor_list[i]['status'] = mentor_status_convert(mentor.status)
     return render_to_response('patner_admin.html', {'mentor_list': mentor_list}, context_instance=RequestContext(req))
 
 
-#添加教练
+# 添加教练
 @login_require
 def admin_mentor_new_mentor(req):
     if req.method != 'POST':
@@ -523,7 +520,7 @@ def admin_mentor_new_mentor(req):
         return HttpResponseRedirect('/admin/patner/')
 
 
-#教练改变介绍视频
+# 教练改变介绍视频
 @login_require
 def admin_mentor_change_video(req, mid):
     video_name = req.POST.get('video_radio', '')
@@ -542,7 +539,7 @@ def admin_mentor_change_video(req, mid):
     return HttpResponseRedirect(new_url)
 
 
-#新增教练课程
+# 新增教练课程
 @login_require
 def admin_mentor_new_course(req, mid):
     new_name = req.POST.get('new_name', None)
@@ -559,7 +556,7 @@ def admin_mentor_new_course(req, mid):
     return HttpResponseRedirect(new_url)
 
 
-#删除教练课程
+# 删除教练课程
 @login_require
 def admin_mentor_del_course(req, mid, cid):
     mentor = get_object_or_404(Mentor, id=mid)
@@ -570,8 +567,7 @@ def admin_mentor_del_course(req, mid, cid):
     return HttpResponseRedirect(new_url)
 
 
-
-#教练添加新视频
+# 教练添加新视频
 @login_require
 def admin_mentor_new_video(req, mid):
     video_format = ['mp4', 'flv', 'avi', 'rmvb', 'webm', 'ogg']
@@ -600,7 +596,7 @@ def admin_mentor_new_video(req, mid):
     return HttpResponseRedirect(new_url)
 
 
-#教练添加新图片
+# 教练添加新图片
 @login_require
 def admin_mentor_new_picture(req, mid):
     pic_format = ['png', 'jpg', 'bmp', 'gif', 'jpeg']
@@ -617,8 +613,7 @@ def admin_mentor_new_picture(req, mid):
     return HttpResponseRedirect(new_url)
 
 
-
-#教练课程价格变更
+# 教练课程价格变更
 @login_require
 def admin_mentor_change_price(req, mid, cid):
     mentor = get_object_or_404(Mentor, id=mid)
@@ -636,7 +631,7 @@ def admin_mentor_change_price(req, mid, cid):
     return HttpResponseRedirect(re_url)
 
 
-#更改教练优先级
+# 更改教练优先级
 @login_require
 def admin_mentor_change_priority(req, mid):
     mentor = get_object_or_404(Mentor, id=mid)
@@ -647,8 +642,7 @@ def admin_mentor_change_priority(req, mid):
     return HttpResponseRedirect('/admin/mentor')
 
 
-
-#教练英雄池删除英雄
+# 教练英雄池删除英雄
 @login_require
 def admin_mentor_del_hero(req, mid, hid):
     mentor = get_object_or_404(Mentor, id=mid)
@@ -660,7 +654,7 @@ def admin_mentor_del_hero(req, mid, hid):
     return HttpResponseRedirect(re_url)
 
 
-#教练英雄池添加英雄
+# 教练英雄池添加英雄
 @login_require
 def admin_mentor_add_hero(req, mid):
     new_hero_id = req.POST.get('new_hero_select', '')
@@ -674,7 +668,7 @@ def admin_mentor_add_hero(req, mid):
     return HttpResponseRedirect(re_url)
 
 
-#教练详情更新
+# 教练详情更新
 @login_require
 def admin_mentor_update_detail(req, mid):
     form = MentorDetailContentForm(req.POST)
@@ -705,6 +699,7 @@ def admin_student(req):
         stu_list[i]['total_expense'] = total_expense
         stu_list[i]['last_order_time'] = last_time
     return render_to_response('student_admin.html', {'stu_list': stu_list}, context_instance=RequestContext(req))
+
 
 @login_require
 def admin_student_search(req):
@@ -766,10 +761,11 @@ def admin_audit_reject(req, oid):
 def admin_pay(req):
     mentor_list = Mentor.objects.all().order_by('-create_time')
     mentor_list = serializer(mentor_list, datetime_format='string')
-    return render_to_response('pay_mentor_admin.html', {'mentor_list': mentor_list}, context_instance=RequestContext(req))
+    return render_to_response('pay_mentor_admin.html', {'mentor_list': mentor_list},
+                              context_instance=RequestContext(req))
 
 
-#解冻教练
+# 解冻教练
 @login_require
 def admin_pay_thaw(req, mid):
     mentor = get_object_or_404(Mentor, id=mid)
@@ -786,7 +782,7 @@ def admin_get_commission(req, mid):
     return HttpResponseRedirect('/admin/pay/')
 
 
-#冻结教练
+# 冻结教练
 @login_require
 def admin_pay_freeze(req, mid):
     mentor = get_object_or_404(Mentor, id=mid)
@@ -795,7 +791,7 @@ def admin_pay_freeze(req, mid):
     return HttpResponseRedirect('/admin/pay/')
 
 
-#学员充值纪录
+# 学员充值纪录
 @login_require
 def admin_pay_stu_rec(req):
     charge_list = ChargeRecord.objects.all().order_by('-create_time')
@@ -803,15 +799,16 @@ def admin_pay_stu_rec(req):
     return render_to_response('pay_stu_rec.html', {'charge_list': charge_list}, context_instance=RequestContext(req))
 
 
-#教练收支纪录
+# 教练收支纪录
 @login_require
 def admin_pay_mentor_rec(req):
     money_rec_list = MoneyRecord.objects.all().order_by('-create_time')
     money_rec_list = serializer(money_rec_list, datetime_format='string', deep=True)
-    return render_to_response('pay_mentor_rec.html', {'record_list': money_rec_list}, context_instance=RequestContext(req))
+    return render_to_response('pay_mentor_rec.html', {'record_list': money_rec_list},
+                              context_instance=RequestContext(req))
 
 
-#同意提款
+# 同意提款
 @login_require
 def admin_pay_agree_cash(req, cid):
     record = get_object_or_404(CashRecord, id=cid)
@@ -828,7 +825,7 @@ def admin_pay_agree_cash(req, cid):
     return HttpResponseRedirect(url)
 
 
-#驳回提款
+# 驳回提款
 @login_require
 def admin_pay_rejected_cash(req, cid):
     record = get_object_or_404(CashRecord, id=cid)
@@ -841,7 +838,7 @@ def admin_pay_rejected_cash(req, cid):
     return HttpResponseRedirect('/admin/pay/cash/')
 
 
-#教练提现请求
+# 教练提现请求
 @login_require
 def admin_pay_cash(req):
     cash_list = CashRecord.objects.all().order_by('-create_time').order_by('manage')
@@ -849,7 +846,7 @@ def admin_pay_cash(req):
     return render_to_response('pay_cash.html', {'cash_record': cash_list}, context_instance=RequestContext(req))
 
 
-#教练详情
+# 教练详情
 @login_require
 def admin_mentor_detail(req, mid):
     mentor = get_object_or_404(Mentor, id=mid)
@@ -857,7 +854,7 @@ def admin_mentor_detail(req, mid):
     hero_pool = Hero.objects.all()
     course_list = mentor.men_courses.all()
     sign = 'video_mentor_' + str(mid)
-    res, data_list = list_file((sign, 'poster', ))
+    res, data_list = list_file((sign, 'poster',))
     video_list = []
     for itm in data_list:
         items = {}
@@ -870,10 +867,11 @@ def admin_mentor_detail(req, mid):
                                                            'hero_list': hero_list,
                                                            'mentor': mentor,
                                                            'course_list': course_list,
-                                                           'hero_pool': hero_pool}, context_instance=RequestContext(req))
+                                                           'hero_pool': hero_pool},
+                              context_instance=RequestContext(req))
 
 
-#教练信息
+# 教练信息
 @login_require
 def admin_mentor_info(req, mid):
     mentor = get_object_or_404(Mentor, id=mid)
@@ -881,7 +879,7 @@ def admin_mentor_info(req, mid):
     return render_to_response('mentor_info_admin.html', {'mentor': mentor}, context_instance=RequestContext(req))
 
 
-#教练订单
+# 教练订单
 @login_require
 def admin_mentor_order(req, mid):
     mentor = get_object_or_404(Mentor, id=mid)
@@ -893,7 +891,7 @@ def admin_mentor_order(req, mid):
                                                           'mentor': mentor}, context_instance=RequestContext(req))
 
 
-#学员信息
+# 学员信息
 @login_require
 def admin_student_info(req, sid):
     student = get_object_or_404(Student, id=sid)
@@ -918,7 +916,7 @@ def admin_student_modify_exp(req, sid):
     return HttpResponseRedirect(new_url)
 
 
-#学员订单
+# 学员订单
 @login_require
 def admin_student_order(req, sid):
     student = get_object_or_404(Student, id=sid)
@@ -927,10 +925,11 @@ def admin_student_order(req, sid):
     for order in order_list:
         order['status'] = order_status_convert(order['status'])
     return render_to_response('student_order_admin.html', {'student': student,
-                                                           'order_list': order_list}, context_instance=RequestContext(req))
+                                                           'order_list': order_list},
+                              context_instance=RequestContext(req))
 
 
-#消息中心
+# 消息中心
 @login_require
 def admin_message(req):
     message_list = Message.objects.all()
@@ -959,7 +958,7 @@ def admin_message(req):
                                                      'paginator': paginator_dict}, context_instance=RequestContext(req))
 
 
-#新消息
+# 新消息
 @login_require
 def admin_message_new(req):
     content = req.POST.get('new_mes', None)
@@ -972,7 +971,7 @@ def admin_message_new(req):
             elif '，' in send_to:
                 send_list = tuple(send_to.split('，'))
             else:
-                send_list = (send_to, )
+                send_list = (send_to,)
             push_custom_message(content, send_list)
         elif mes_type == 2:
             push_custom_message(content, send_all=True)
@@ -989,7 +988,8 @@ def admin_wechat(req):
 
 def admin_wechat_jzws(req):
     channel_list = Channel.objects.filter(name__icontains=u'兼职卫士').order_by('-create_time')
-    return render_to_response('admin_wechat_jzws.html', {'channel_list': channel_list}, context_instance=RequestContext(req))
+    return render_to_response('admin_wechat_jzws.html', {'channel_list': channel_list},
+                              context_instance=RequestContext(req))
 
 
 @login_require
@@ -1083,7 +1083,3 @@ def admin_wechat_kefu_distribution(req):
     wx = WechatService()
     wx.distribution_kefu(open_id, account, content)
     return HttpResponseRedirect('/admin/wechat/kefu')
-
-
-
-

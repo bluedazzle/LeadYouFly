@@ -217,6 +217,7 @@ def login_by_wechat_callback(request):
                 wechat_user = Student.objects.filter(account=union_id)
                 if not wechat_user.exists():
                     new_wechat_user = Student(account=union_id,
+                                              last_login=datetime.datetime.now(tz=get_current_timezone()),
                                               nick=nick_name,
                                               avatar=avatar,
                                               wx_union_id=union_id)
@@ -237,6 +238,7 @@ def login_by_qq_callback(request):
         if not user.exists():
             new_qq_user = Student(account=open_id,
                                   nick=ret.nickname,
+                                  last_login=datetime.datetime.now(tz=get_current_timezone()),
                                   avatar=ret.figureurl_qq_1,
                                   qq_open_id=open_id)
             new_qq_user.save()

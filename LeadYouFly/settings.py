@@ -47,10 +47,10 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'django.contrib.sitemaps',
     'LYFAdmin',
-    'LYFSite',
-    'DjangoUeditor',
+    # 'LYFSite',
+    # 'DjangoUeditor',
     'weichat',
-    'LYFApi',
+    # 'LYFApi',
 )
 
 MIDDLEWARE_CLASSES = (

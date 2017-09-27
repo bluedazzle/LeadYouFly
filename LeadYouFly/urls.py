@@ -36,7 +36,7 @@ urlpatterns = patterns('',
                            {'document_root': settings.UPLOAD_DIR}),
                        url(r'^output/(?P<path>.*)$', 'django.views.static.serve',
                            {'document_root': settings.OUTPUT_DIR}),
-                       url(r'^', include(LYFSite.urls)),
+                       # url(r'^', include(LYFSite.urls)),
                        url(r'^admin/', include(LYFAdmin.urls)),
                        url(r'^ueditor/', include('DjangoUeditor.urls')),
 )

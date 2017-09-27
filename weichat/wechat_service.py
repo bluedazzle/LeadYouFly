@@ -126,72 +126,113 @@ class WechatService(object):
 
 
     def text_manage(self, message):
-        exclude_words = ['狮子狗', '永猎双子', '寒冰射手']
-        new_reply = ['白羊', '金牛', '双子', '巨蟹', '狮子', '处女', '天秤', '天蝎', '射手', '摩羯', '水瓶', '双鱼']
-        question = unicode(message.content)
-        open_id = message.source
-        if question == '抽奖':
-            return False, '点击抽奖：http://www.fibar.cn/luckyDraw'
-        for itm in new_reply:
-            if itm in unicode(message.content) and unicode(message.content) not in exclude_words and len(message.content) <= 3:
-                self.news_reply_manage(open_id, itm)
-                return False, '点击图文查看你的星座哟'
-        question = question.lower()
-        if question.startswith('qq'):
-            self.get_qq(question, open_id)
-            return False, 'QQ号绑定成功！'
-        user_list = Promotion.objects.filter(open_id=open_id)
-        new_message = WechatMessage(open_id=open_id,
-                                    content=question,
-                                    nick='')
-        if user_list.exists():
-            user = user_list[0]
-            user.reply = '{0}; 回复内容：{1}'.format(user.reply, question)
-            user.save()
-            new_message.nick = user.nick
-        new_message.save()
-        result = Question.objects.filter(question=question)
-        # if not result.exists():
-        #     result = Question.objects.filter(question__icontains=question)
-        if result.exists():
-            if result[0].have_image:
-                return True, self.upload_picture(result[0].image)
-            return False, result[0].answer
-        answer = get_answer(question)
-        if answer.have_image:
-            return True, self.upload_picture(answer.image)
-        else:
-            return False, answer.answer
+        # exclude_words = ['狮子狗', '永猎双子', '寒冰射手']
+        # new_reply = ['白羊', '金牛', '双子', '巨蟹', '狮子', '处女', '天秤', '天蝎', '射手', '摩羯', '水瓶', '双鱼']
+        # question = unicode(message.content)
+        # open_id = message.source
+        # if question == '抽奖':
+        #     return False, '点击抽奖：http://www.fibar.cn/luckyDraw'
+        # for itm in new_reply:
+        #     if itm in unicode(message.content) and unicode(message.content) not in exclude_words and len(message.content) <= 3:
+        #         self.news_reply_manage(open_id, itm)
+        #         return False, '点击图文查看你的星座哟'
+        # question = question.lower()
+        # if question.startswith('qq'):
+        #     self.get_qq(question, open_id)
+        #     return False, 'QQ号绑定成功！'
+        # user_list = Promotion.objects.filter(open_id=open_id)
+        # new_message = WechatMessage(open_id=open_id,
+        #                             content=question,
+        #                             nick='')
+        # if user_list.exists():
+        #     user = user_list[0]
+        #     user.reply = '{0}; 回复内容：{1}'.format(user.reply, question)
+        #     user.save()
+        #     new_message.nick = user.nick
+        # new_message.save()
+        # result = Question.objects.filter(question=question)
+        # # if not result.exists():
+        # #     result = Question.objects.filter(question__icontains=question)
+        # if result.exists():
+        #     if result[0].have_image:
+        #         return True, self.upload_picture(result[0].image)
+        #     return False, result[0].answer
+        # answer = get_answer(question)
+        # if answer.have_image:
+        #     return True, self.upload_picture(answer.image)
+        # else:
+        #     return False, answer.answer
+        return False, '欢迎关注'
 
 
-    def get_qq(self, message, open_id):
-        user = Promotion.objects.get(open_id=open_id)
-        message = message.replace('qq', '')
-        user.qq = message
-        user.save()
-        return True
+    # def get_qq(self, message, open_id):
+    #     user = Promotion.objects.get(open_id=open_id)
+    #     message = message.replace('qq', '')
+    #     user.qq = message
+    #     user.save()
+    #     return True
 
 
-    def news_reply_manage(self, open_id, content):
-        reply_dict = {'白羊': {'title': '白羊座打游戏遇到坑货...', 'description': '白羊座打游戏遇到坑货', 'picurl': 'https://mmbiz.qlogo.cn/mmbiz/QuFfaBichozdPpkNa93EVvpLOsnyDT6FYLWVX3EUEQMEibA96ibxXVribdQvdnay90oB36fI8iaoBpHOhKJ1qUcEvQA/0?wx_fmt=jpeg', 'url': 'http://mp.weixin.qq.com/s?__biz=MzI4ODAzNzI5OA==&mid=402366388&idx=1&sn=5fea602e1a1c80ae2f220d3beaf860fc#rd'},
-                      '金牛': {'title': '金牛座打游戏遇到坑货...', 'description': '金牛座打游戏遇到坑货', 'picurl': 'https://mmbiz.qlogo.cn/mmbiz/QuFfaBichozdPpkNa93EVvpLOsnyDT6FYGSIMeDQpfO3pYAGy9fLyINNcM8POZ56vJQ7jTaUYqkicBlsjwkKJtcQ/0?wx_fmt=jpeg', 'url': 'http://mp.weixin.qq.com/s?__biz=MzI4ODAzNzI5OA==&mid=402366574&idx=1&sn=bfaba59399f5cef31441d6a43b20ee70#rd'},
-                      '双子': {'title': '双子座打游戏遇到坑货...', 'description': '双子座打游戏遇到坑货', 'picurl': 'https://mmbiz.qlogo.cn/mmbiz/QuFfaBichozdPpkNa93EVvpLOsnyDT6FY9MLZ7s2AoWS8uvnvseGbI5T0yYH1ib8eOgcHiaUa70XPicZ1SYUiaPem3w/0?wx_fmt=jpeg', 'url': 'http://mp.weixin.qq.com/s?__biz=MzI4ODAzNzI5OA==&mid=402366561&idx=1&sn=dcca9291f5ea3219db9f4ac91e6091ff#rd'},
-                      '巨蟹': {'title': '巨蟹座打游戏遇到坑货...', 'description': '巨蟹座打游戏遇到坑货', 'picurl': 'https://mmbiz.qlogo.cn/mmbiz/QuFfaBichozdPpkNa93EVvpLOsnyDT6FYcYp9kHVia3fDWfLSSDTGBUvjGD1ys8LNpzwsibKVEfTGLPUcazXpicWAQ/0?wx_fmt=jpeg', 'url': 'http://mp.weixin.qq.com/s?__biz=MzI4ODAzNzI5OA==&mid=402366583&idx=1&sn=34b51f06d9b33d2c78f1f35a345a3c77#rd'},
-                      '狮子': {'title': '狮子座打游戏遇到坑货...', 'description': '狮子座打游戏遇到坑货', 'picurl': 'https://mmbiz.qlogo.cn/mmbiz/QuFfaBichozdPpkNa93EVvpLOsnyDT6FY54uoAMvNLXMzKiaLxibTKU9VIto5xVIe2QK7cBrURojvI4NsjuaI6tDQ/0?wx_fmt=jpeg', 'url': 'http://mp.weixin.qq.com/s?__biz=MzI4ODAzNzI5OA==&mid=402366595&idx=1&sn=a98f3b07a8de28f8e5b6a2a07bd53339#rd'},
-                      '处女': {'title': '处女座打游戏遇到坑货...', 'description': '处女座打游戏遇到坑货', 'picurl': 'https://mmbiz.qlogo.cn/mmbiz/QuFfaBichozdPpkNa93EVvpLOsnyDT6FYffX5H8BQepX2jKAgKOkuE68QhUkwORhjmiaLmoGtqVTboWRAibrdN9Tw/0?wx_fmt=jpeg', 'url': 'http://mp.weixin.qq.com/s?__biz=MzI4ODAzNzI5OA==&mid=402366607&idx=1&sn=a165af8d3288af2d92499c3354c3675a#rd'},
-                      '天秤': {'title': '天秤座打游戏遇到坑货...', 'description': '天秤座打游戏遇到坑货', 'picurl': 'https://mmbiz.qlogo.cn/mmbiz/QuFfaBichozdPpkNa93EVvpLOsnyDT6FYHgdHeA4iaBygEyv5PMRDOJeAlhC7xnMcDicEHzJAOvOITTvhHw681FPw/0?wx_fmt=jpeg', 'url': 'http://mp.weixin.qq.com/s?__biz=MzI4ODAzNzI5OA==&mid=402366626&idx=1&sn=5ac98699e3d25b27e646dd3f8d544c27#rd'},
-                      '天蝎': {'title': '天蝎座打游戏遇到坑货...', 'description': '天蝎座打游戏遇到坑货', 'picurl': 'https://mmbiz.qlogo.cn/mmbiz/QuFfaBichozdPpkNa93EVvpLOsnyDT6FYpFfs6vb9dA6ybuVERqH48VLtWnQQLARibibeHLibnkDSJibBZyA5nvDTTg/0?wx_fmt=jpeg', 'url': 'http://mp.weixin.qq.com/s?__biz=MzI4ODAzNzI5OA==&mid=402366637&idx=1&sn=0b717708d5b2f2939a9f80006624b61f#rd'},
-                      '射手': {'title': '射手座打游戏遇到坑货...', 'description': '射手座打游戏遇到坑货', 'picurl': 'https://mmbiz.qlogo.cn/mmbiz/QuFfaBichozdPpkNa93EVvpLOsnyDT6FYtzvqZC3Yc4QoCvdb0AhjlF7SSic1oXicJ47dsMGEIRFkrj8DqS4NNia2A/0?wx_fmt=jpeg', 'url': 'http://mp.weixin.qq.com/s?__biz=MzI4ODAzNzI5OA==&mid=402366667&idx=1&sn=1c255cd82abfdb3f8828ab6a634856ee#rd'},
-                      '摩羯': {'title': '摩羯座打游戏遇到坑货...', 'description': '摩羯座打游戏遇到坑货', 'picurl': 'https://mmbiz.qlogo.cn/mmbiz/QuFfaBichozdPpkNa93EVvpLOsnyDT6FYbDlGrIMqjtLnNy9TxNicYh4a1UjZyWum31UBdpS01gbslHRIHvvupOg/0?wx_fmt=jpeg', 'url': 'http://mp.weixin.qq.com/s?__biz=MzI4ODAzNzI5OA==&mid=402366693&idx=1&sn=e6da7a2d5348c5df470dbc44e027f3bc#rd'},
-                      '水瓶': {'title': '水瓶座打游戏遇到坑货...', 'description': '水瓶座打游戏遇到坑货', 'picurl': 'https://mmbiz.qlogo.cn/mmbiz/QuFfaBichozdPpkNa93EVvpLOsnyDT6FYhKoMtBEc4RfrVXtnMFmT2UYpxu6ibMP6bm9EDic2YbR7pgNfXDbw2Mzg/0?wx_fmt=jpeg', 'url': 'http://mp.weixin.qq.com/s?__biz=MzI4ODAzNzI5OA==&mid=402366723&idx=1&sn=6e5baf07ac2ccd190c3e7d96ec1f90cb#rd'},
-                      '双鱼': {'title': '双鱼座打游戏遇到坑货...', 'description': '双鱼座打游戏遇到坑货', 'picurl': 'https://mmbiz.qlogo.cn/mmbiz/QuFfaBichozdPpkNa93EVvpLOsnyDT6FYib08WkRonp67zhpEHhtnVFC9lHcOZBa6BDUnt9JvyMFdEiaWNYzZxhjQ/0?wx_fmt=jpeg', 'url': 'http://mp.weixin.qq.com/s?__biz=MzI4ODAzNzI5OA==&mid=402366756&idx=1&sn=3125feb301deea415010ece29ba4f564#rd'},
+    # def news_reply_manage(self, open_id, content):
+    #     reply_dict = {'白羊': {'title': '白羊座打游戏遇到坑货...', 'description': '白羊座打游戏遇到坑货', 'picurl': 'https://mmbiz.qlogo.cn/mmbiz/QuFfaBichozdPpkNa93EVvpLOsnyDT6FYLWVX3EUEQMEibA96ibxXVribdQvdnay90oB36fI8iaoBpHOhKJ1qUcEvQA/0?wx_fmt=jpeg', 'url': 'http://mp.weixin.qq.com/s?__biz=MzI4ODAzNzI5OA==&mid=402366388&idx=1&sn=5fea602e1a1c80ae2f220d3beaf860fc#rd'},
+    #                   '金牛': {'title': '金牛座打游戏遇到坑货...', 'description': '金牛座打游戏遇到坑货', 'picurl': 'https://mmbiz.qlogo.cn/mmbiz/QuFfaBichozdPpkNa93EVvpLOsnyDT6FYGSIMeDQpfO3pYAGy9fLyINNcM8POZ56vJQ7jTaUYqkicBlsjwkKJtcQ/0?wx_fmt=jpeg', 'url': 'http://mp.weixin.qq.com/s?__biz=MzI4ODAzNzI5OA==&mid=402366574&idx=1&sn=bfaba59399f5cef31441d6a43b20ee70#rd'},
+    #                   '双子': {'title': '双子座打游戏遇到坑货...', 'description': '双子座打游戏遇到坑货', 'picurl': 'https://mmbiz.qlogo.cn/mmbiz/QuFfaBichozdPpkNa93EVvpLOsnyDT6FY9MLZ7s2AoWS8uvnvseGbI5T0yYH1ib8eOgcHiaUa70XPicZ1SYUiaPem3w/0?wx_fmt=jpeg', 'url': 'http://mp.weixin.qq.com/s?__biz=MzI4ODAzNzI5OA==&mid=402366561&idx=1&sn=dcca9291f5ea3219db9f4ac91e6091ff#rd'},
+    #                   '巨蟹': {'title': '巨蟹座打游戏遇到坑货...', 'description': '巨蟹座打游戏遇到坑货', 'picurl': 'https://mmbiz.qlogo.cn/mmbiz/QuFfaBichozdPpkNa93EVvpLOsnyDT6FYcYp9kHVia3fDWfLSSDTGBUvjGD1ys8LNpzwsibKVEfTGLPUcazXpicWAQ/0?wx_fmt=jpeg', 'url': 'http://mp.weixin.qq.com/s?__biz=MzI4ODAzNzI5OA==&mid=402366583&idx=1&sn=34b51f06d9b33d2c78f1f35a345a3c77#rd'},
+    #                   '狮子': {'title': '狮子座打游戏遇到坑货...', 'description': '狮子座打游戏遇到坑货', 'picurl': 'https://mmbiz.qlogo.cn/mmbiz/QuFfaBichozdPpkNa93EVvpLOsnyDT6FY54uoAMvNLXMzKiaLxibTKU9VIto5xVIe2QK7cBrURojvI4NsjuaI6tDQ/0?wx_fmt=jpeg', 'url': 'http://mp.weixin.qq.com/s?__biz=MzI4ODAzNzI5OA==&mid=402366595&idx=1&sn=a98f3b07a8de28f8e5b6a2a07bd53339#rd'},
+    #                   '处女': {'title': '处女座打游戏遇到坑货...', 'description': '处女座打游戏遇到坑货', 'picurl': 'https://mmbiz.qlogo.cn/mmbiz/QuFfaBichozdPpkNa93EVvpLOsnyDT6FYffX5H8BQepX2jKAgKOkuE68QhUkwORhjmiaLmoGtqVTboWRAibrdN9Tw/0?wx_fmt=jpeg', 'url': 'http://mp.weixin.qq.com/s?__biz=MzI4ODAzNzI5OA==&mid=402366607&idx=1&sn=a165af8d3288af2d92499c3354c3675a#rd'},
+    #                   '天秤': {'title': '天秤座打游戏遇到坑货...', 'description': '天秤座打游戏遇到坑货', 'picurl': 'https://mmbiz.qlogo.cn/mmbiz/QuFfaBichozdPpkNa93EVvpLOsnyDT6FYHgdHeA4iaBygEyv5PMRDOJeAlhC7xnMcDicEHzJAOvOITTvhHw681FPw/0?wx_fmt=jpeg', 'url': 'http://mp.weixin.qq.com/s?__biz=MzI4ODAzNzI5OA==&mid=402366626&idx=1&sn=5ac98699e3d25b27e646dd3f8d544c27#rd'},
+    #                   '天蝎': {'title': '天蝎座打游戏遇到坑货...', 'description': '天蝎座打游戏遇到坑货', 'picurl': 'https://mmbiz.qlogo.cn/mmbiz/QuFfaBichozdPpkNa93EVvpLOsnyDT6FYpFfs6vb9dA6ybuVERqH48VLtWnQQLARibibeHLibnkDSJibBZyA5nvDTTg/0?wx_fmt=jpeg', 'url': 'http://mp.weixin.qq.com/s?__biz=MzI4ODAzNzI5OA==&mid=402366637&idx=1&sn=0b717708d5b2f2939a9f80006624b61f#rd'},
+    #                   '射手': {'title': '射手座打游戏遇到坑货...', 'description': '射手座打游戏遇到坑货', 'picurl': 'https://mmbiz.qlogo.cn/mmbiz/QuFfaBichozdPpkNa93EVvpLOsnyDT6FYtzvqZC3Yc4QoCvdb0AhjlF7SSic1oXicJ47dsMGEIRFkrj8DqS4NNia2A/0?wx_fmt=jpeg', 'url': 'http://mp.weixin.qq.com/s?__biz=MzI4ODAzNzI5OA==&mid=402366667&idx=1&sn=1c255cd82abfdb3f8828ab6a634856ee#rd'},
+    #                   '摩羯': {'title': '摩羯座打游戏遇到坑货...', 'description': '摩羯座打游戏遇到坑货', 'picurl': 'https://mmbiz.qlogo.cn/mmbiz/QuFfaBichozdPpkNa93EVvpLOsnyDT6FYbDlGrIMqjtLnNy9TxNicYh4a1UjZyWum31UBdpS01gbslHRIHvvupOg/0?wx_fmt=jpeg', 'url': 'http://mp.weixin.qq.com/s?__biz=MzI4ODAzNzI5OA==&mid=402366693&idx=1&sn=e6da7a2d5348c5df470dbc44e027f3bc#rd'},
+    #                   '水瓶': {'title': '水瓶座打游戏遇到坑货...', 'description': '水瓶座打游戏遇到坑货', 'picurl': 'https://mmbiz.qlogo.cn/mmbiz/QuFfaBichozdPpkNa93EVvpLOsnyDT6FYhKoMtBEc4RfrVXtnMFmT2UYpxu6ibMP6bm9EDic2YbR7pgNfXDbw2Mzg/0?wx_fmt=jpeg', 'url': 'http://mp.weixin.qq.com/s?__biz=MzI4ODAzNzI5OA==&mid=402366723&idx=1&sn=6e5baf07ac2ccd190c3e7d96ec1f90cb#rd'},
+    #                   '双鱼': {'title': '双鱼座打游戏遇到坑货...', 'description': '双鱼座打游戏遇到坑货', 'picurl': 'https://mmbiz.qlogo.cn/mmbiz/QuFfaBichozdPpkNa93EVvpLOsnyDT6FYib08WkRonp67zhpEHhtnVFC9lHcOZBa6BDUnt9JvyMFdEiaWNYzZxhjQ/0?wx_fmt=jpeg', 'url': 'http://mp.weixin.qq.com/s?__biz=MzI4ODAzNzI5OA==&mid=402366756&idx=1&sn=3125feb301deea415010ece29ba4f564#rd'},
+    #
+    #
+    #     }
+    #     article = [reply_dict.get(content, None)]
+    #     return self.wechat.send_article_message(open_id, article)
+    def create_channel(self, openid):
+        # todo 验证重复
+        user_info = self.wechat.get_user_info(openid)
+        data = {"action_name": "QR_LIMIT_STR_SCENE", "action_info": {"scene": {"scene_str": scene}}}
+        ticket = self.wechat.create_qrcode(data)['ticket']
+        qr_url = 'https://mp.weixin.qq.com/cgi-bin/showqrcode?ticket={0}'.format(ticket)
+        channel = Channel()
+        channel.name = user_info.get('nickname')
+        channel.scene = openid
+        channel.ticket = ticket
+        channel.pic = self.create_pic(channel.name, user_info.get('avatar'), qr_url, openid)
+        channel.save()
+        return channel.pic
 
+    def create_pic(self, nick, avatar, qr_url, openid):
+        from PIL import Image, ImageOps, ImageDraw, ImageFont
+        import urllib, cStringIO
+        from LeadYouFly.settings import MEDIA_TMP
+        region = Image.open(cStringIO.StringIO(urllib.urlopen(qr_url).read()))
 
-        }
-        article = [reply_dict.get(content, None)]
-        return self.wechat.send_article_message(open_id, article)
+        base_img = Image.open('{0}base.png'.format(MEDIA_TMP))
+        box = (360, 1265, 500, 1405)
+        ava_box = (357, 1000, 477, 1120)
+        region.thumbnail((140, 140))
+        base_img.paste(region, box)
+        avatar = Image.open(cStringIO.StringIO(urllib.urlopen(avatar).read()))
+        size = (120, 120)
+        mask = Image.new('L', size, 0)
+        draw = ImageDraw.Draw(mask)
+        draw.ellipse((0, 0) + size, fill=255)
+        output = ImageOps.fit(avatar, mask.size, centering=(0.5, 0.5))
+        output.putalpha(mask)
 
-
+        final1 = Image.new("RGBA", base_img.size)
+        final1.paste(base_img, (0,0), base_img)
+        final1.paste(output, ava_box, output)
+        draw = ImageDraw.Draw(final1)
+        ttfont = ImageFont.truetype("{0}fzpc.ttf".format(MEDIA_TMP), 20)
+        draw.text((375, 1185), nick, font=ttfont)
+        save_path = '{0}{1}.jpg'.format(MEDIA_TMP, openid)
+        final1.save(save_path)
+        return '/static/tmp/{0}.jpg'.format(openid)
 
     def event_manage(self, message):
         open_id = message.source
@@ -203,51 +244,31 @@ class WechatService(object):
                 promotion = self.get_promotion_info(open_id, channel)
                 promotion.cancel = False
                 promotion.save()
-                if '兼职卫士' in channel.name:
-                    return False, '''嘿！同学，你迟到了。
-
-发送文字消息，提出关于LOL的任何问题，我们都会第一时间给你答复。Try it[勾引]
-
-更有专业教练一对一教学服务。
-
-帮助你掌握方法，成为真正的高手。
-
-点击抽奖：http://www.fibar.cn/luckyDraw'''
-            return False, '''嘿！同学，你迟到了。
-
-发送文字消息，提出关于LOL的任何问题，我们都会第一时间给你答复。Try it[勾引]
-
-更有专业教练一对一教学服务。
-
-帮助你掌握方法，成为真正的高手。'''
+                # todo 关注发消息
+            return True, self.create_channel(open_id)
         elif message.type == 'unsubscribe':
             promotion = self.get_promotion_info(open_id)
             promotion.cancel = True
             promotion.save()
             return False, ''
-        elif message.type == 'view':
-            user_list = Promotion.objects.filter(open_id=open_id)
-            if user_list.exists():
-                menu_dict = {'http://www.fibar.cn': '寻找教练',
-                             'http://mp.weixin.qq.com/mp/getmasssendmsg?__biz=MzI4ODAzNzI5OA==#wechat_webview_type=1&wechat_redirect': '发现好玩',
-                             'http://forum.fibar.cn': '飞吧社区'}
-                user = user_list[0]
-                user.reply = '{0}; 点击菜单：{1}'.format(user.reply, menu_dict.get(message.key, '菜单'))
-                user.save()
-            return False, ''
+        # elif message.type == 'view':
+            # user_list = Promotion.objects.filter(open_id=open_id)
+            # if user_list.exists():
+            #     menu_dict = {'http://www.fibar.cn': '寻找教练',
+            #                  'http://mp.weixin.qq.com/mp/getmasssendmsg?__biz=MzI4ODAzNzI5OA==#wechat_webview_type=1&wechat_redirect': '发现好玩',
+            #                  'http://forum.fibar.cn': '飞吧社区'}
+            #     user = user_list[0]
+            #     user.reply = '{0}; 点击菜单：{1}'.format(user.reply, menu_dict.get(message.key, '菜单'))
+            #     user.save()
+            # return False, ''
         else:
             promotion = self.get_promotion_info(open_id)
-            return False, '''嘿！同学，你迟到了。
-
-发送文字消息，提出关于LOL的任何问题，我们都会第一时间给你答复。Try it[勾引]
-
-更有专业教练一对一教学服务。
-
-帮助你掌握方法，成为真正的高手。'''
+            # todo
+            return False, '''默认关注'''
 
 
     def other_manage(self, message):
-        return False, '小飞现在还不能识别其他类型的消息呢，请发文字～'
+        return False, '我现在还不能识别其他类型的消息呢，请发文字～'
 
 
     def upload_picture(self, url):

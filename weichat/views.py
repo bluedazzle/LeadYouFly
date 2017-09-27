@@ -14,6 +14,7 @@ from wechat_service import WechatService
 def wechat_service(req):
     WS = WechatService()
     if req.method == 'GET':
+        WS.create_pic('test', 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1506546292291&di=d6d521043a6052b5e7ab256a08b9b8c9&imgtype=0&src=http%3A%2F%2Fv1.qzone.cc%2Favatar%2F201310%2F12%2F15%2F42%2F5258fd6f0db4b914.jpg%2521200x200.jpg', 'https://mp.weixin.qq.com/cgi-bin/showqrcode?ticket=gQGK8DwAAAAAAAAAAS5odHRwOi8vd2VpeGluLnFxLmNvbS9xLzAyY3ZNbDBVZktheFUxMDAwMHcwN3IAAgR6ystZAwQAAAAA', 'ttttt')
         signature = req.GET.get('signature', '')  # Request 中 GET 参数 signature
         timestamp = req.GET.get('timestamp', '')  # Request 中 GET 参数 timestamp
         nonce = req.GET.get('nonce', '')

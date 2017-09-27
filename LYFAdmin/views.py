@@ -45,7 +45,7 @@ def admin_login(req):
     if user is None:
         return render_to_response('admin_login.html', {'fail': True}, context_instance=RequestContext(req))
     req.session['token'] = user.token
-    return HttpResponseRedirect('/admin/index')
+    return HttpResponseRedirect('/admin/wechat')
 
 
 def admin_login_page(req):

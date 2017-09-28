@@ -8,7 +8,7 @@ import requests
 from celery import Celery
 from wechat_sdk import WechatBasic
 from PIL import Image, ImageOps, ImageDraw, ImageFont
-import urllib, cStringIO
+import urllib, cStringIO, StringIO
 
 app = Celery('weichat.ctasks', backend='redis://localhost:6379/0', broker='redis://localhost:6379/0')
 

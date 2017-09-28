@@ -109,6 +109,7 @@ class WechatService(object):
                        'unsubscribe': self.event_manage,
                        'scan': self.event_manage,
                        'view': self.event_manage,
+                       'voice': self.other_manage
                        }
         is_pic, result = manage_dict[message.type](message)
         if is_pic:
@@ -208,12 +209,16 @@ class WechatService(object):
         region = Image.open(cStringIO.StringIO(urllib.urlopen(qr_url).read()))
 
         base_img = Image.open('{0}base.png'.format(MEDIA_TMP))
-        box = (360, 1265, 500, 1405)
-        ava_box = (357, 1000, 477, 1120)
-        region.thumbnail((140, 140))
+        # box = (360, 1265, 500, 1405)
+        # ava_box = (357, 1000, 477, 1120)
+        box = (180, 632, 250, 702)
+        ava_box = (178, 500, 238, 560)
+        # region.thumbnail((140, 140))
+        region.thumbnail((70, 70))
         base_img.paste(region, box)
         avatar = Image.open(cStringIO.StringIO(urllib.urlopen(avatar).read()))
-        size = (120, 120)
+        # size = (120, 120)
+        size = (60, 60)
         mask = Image.new('L', size, 0)
         draw = ImageDraw.Draw(mask)
         draw.ellipse((0, 0) + size, fill=255)
@@ -224,19 +229,22 @@ class WechatService(object):
         final1.paste(base_img, (0, 0), base_img)
         final1.paste(output, ava_box, output)
         draw = ImageDraw.Draw(final1)
-        ttfont = ImageFont.truetype("{0}fzpc.ttf".format(MEDIA_TMP), 20)
-        draw.text((375, 1185), nick, font=ttfont)
+        ttfont = ImageFont.truetype("{0}fzpc.ttf".format(MEDIA_TMP), 12)
+        # draw.text((375, 1185), nick, font=ttfont)
+        draw.text((187, 592), nick, font=ttfont)
         save_path = '{0}{1}.jpg'.format(MEDIA_TMP, openid)
         final1 = final1.convert('RGB')
-        final1.save(save_path)
+
         try:
             tmp_io = StringIO.StringIO(final1)
             res = self.wechat.upload_media('image', tmp_io, extension='jpg')
-            print res
+            print 'upload pic to wechat as media', res
             mid = res.get('media_id', '')
+            final1.save(save_path)
             return '/static/tmp/{0}.jpg'.format(openid), mid
         except Exception, e:
             print e
+            final1.save(save_path)
             return '/static/tmp/{0}.jpg'.format(openid), ''
 
     def event_manage(self, message):

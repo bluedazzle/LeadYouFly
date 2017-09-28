@@ -187,7 +187,7 @@ class WechatService(object):
         if cn.exists():
             return cn[0].mid
         user_info = self.wechat.get_user_info(openid)
-        data = {"action_name": "QR_LIMIT_STR_SCENE", "action_info": {"scene": {"scene_str": scene}}}
+        data = {"action_name": "QR_LIMIT_STR_SCENE", "action_info": {"scene": {"scene_str": openid}}}
         ticket = self.wechat.create_qrcode(data)['ticket']
         qr_url = 'https://mp.weixin.qq.com/cgi-bin/showqrcode?ticket={0}'.format(ticket)
         path, mid = self.create_pic(channel.name, user_info.get('avatar'), qr_url, openid)

@@ -234,17 +234,17 @@ class WechatService(object):
         draw.text((187, 592), nick, font=ttfont)
         save_path = '{0}{1}.jpg'.format(MEDIA_TMP, openid)
         final1 = final1.convert('RGB')
+        final1.save(save_path)
 
         try:
-            tmp_io = StringIO.StringIO(final1)
+            tmp_io = StringIO.StringIO()
+            final1.save(tmp_io)
             res = self.wechat.upload_media('image', tmp_io, extension='jpg')
             print 'upload pic to wechat as media', res
             mid = res.get('media_id', '')
-            final1.save(save_path)
             return '/static/tmp/{0}.jpg'.format(openid), mid
         except Exception, e:
             print e
-            final1.save(save_path)
             return '/static/tmp/{0}.jpg'.format(openid), ''
 
     def event_manage(self, message):

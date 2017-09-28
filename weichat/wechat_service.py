@@ -238,7 +238,7 @@ class WechatService(object):
 
         try:
             tmp_io = StringIO.StringIO()
-            final1.save(tmp_io)
+            final1.save(tmp_io, 'jpg')
             res = self.wechat.upload_media('image', tmp_io, extension='jpg')
             print 'upload pic to wechat as media', res
             mid = res.get('media_id', '')

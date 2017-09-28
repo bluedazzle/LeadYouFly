@@ -7,6 +7,7 @@ import simplejson
 from weichat.models import WeChatAdmin, Channel, Promotion, Question, WechatMessage
 from wechat_sdk import WechatBasic
 from kw import get_answer
+import redis
 
 
 class WechatService(object):
@@ -202,7 +203,8 @@ class WechatService(object):
         ticket = self.wechat.create_qrcode(data)['ticket']
         qr_url = 'https://mp.weixin.qq.com/cgi-bin/showqrcode?ticket={0}'.format(ticket)
         name = user_info.get('nickname')
-        gen_pic_and_send.apply_async((name, user_info.get('headimgurl'), qr_url, openid, self.get_token(), self.wechat_admin.app_id, self.wechat_admin.app_secret))
+        gen_pic_and_send.apply_async((name, user_info.get('headimgurl'), qr_url, openid, self.get_token(),
+                                      self.wechat_admin.app_id, self.wechat_admin.app_secret))
         # path, mid = self.create_pic(name, , qr_url, openid)
         channel = Channel()
         channel.name = name

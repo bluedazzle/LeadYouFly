@@ -7,3 +7,4 @@
 LYFAdmin/migrations/
 *.xls
 weichat/migrations/
+fabfile.py

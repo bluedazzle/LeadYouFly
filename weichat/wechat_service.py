@@ -183,7 +183,7 @@ class WechatService(object):
     #     article = [reply_dict.get(content, None)]
     #     return self.wechat.send_article_message(open_id, article)
     def create_channel(self, openid):
-        cn = Channel.objects.filter(openid=openid)
+        cn = Channel.objects.filter(scene=openid)
         if cn.exists():
             return cn[0].mid
         user_info = self.wechat.get_user_info(openid)

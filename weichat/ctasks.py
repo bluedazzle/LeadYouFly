@@ -7,6 +7,8 @@ import requests
 
 from celery import Celery
 from wechat_sdk import WechatBasic
+from PIL import Image, ImageOps, ImageDraw, ImageFont
+import urllib, cStringIO
 
 app = Celery('weichat.ctasks', backend='redis://localhost:6379/0', broker='redis://localhost:6379/0')
 
@@ -32,8 +34,6 @@ def upload_picture(url, token, appid, secret):
 @app.task
 def gen_pic_and_send(nick, avatar, qr_url, openid, token, appid, secret):
     logging.info('Start notify url to baidu')
-    from PIL import Image, ImageOps, ImageDraw, ImageFont
-    import urllib, cStringIO
     from LeadYouFly.settings import MEDIA_TMP
     region = Image.open(cStringIO.StringIO(urllib.urlopen(qr_url).read()))
     base_img = Image.open('{0}base.png'.format(MEDIA_TMP))

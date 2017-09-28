@@ -155,6 +155,7 @@ class WechatService(object):
         #     return True, self.upload_picture(answer.image)
         # else:
         #     return False, answer.answer
+        self.send_message(open_id, 'test')
         return True, self.create_channel(open_id)
 
     # def get_qq(self, message, open_id):

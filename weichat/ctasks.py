@@ -8,7 +8,7 @@ import requests
 from celery import Celery
 from wechat_sdk import WechatBasic
 
-app = Celery('ctasks', backend='redis://localhost:6379/0', broker='redis://localhost:6379/0')
+app = Celery('weichat.ctasks', backend='redis://localhost:6379/0', broker='redis://localhost:6379/0')
 
 
 # app.config_from_object('celery_config')

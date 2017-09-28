@@ -190,9 +190,10 @@ class WechatService(object):
         data = {"action_name": "QR_LIMIT_STR_SCENE", "action_info": {"scene": {"scene_str": openid}}}
         ticket = self.wechat.create_qrcode(data)['ticket']
         qr_url = 'https://mp.weixin.qq.com/cgi-bin/showqrcode?ticket={0}'.format(ticket)
-        path, mid = self.create_pic(channel.name, user_info.get('avatar'), qr_url, openid)
+        name = user_info.get('nickname')
+        path, mid = self.create_pic(name, user_info.get('avatar'), qr_url, openid)
         channel = Channel()
-        channel.name = user_info.get('nickname')
+        channel.name = name
         channel.scene = openid
         channel.ticket = ticket
         channel.pic = path

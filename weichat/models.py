@@ -17,6 +17,7 @@ class Channel(BaseModel):
     welcome_text = models.TextField(default='')
     phone = models.CharField(max_length=20, default='')
     pic = models.CharField(max_length=256, default='')
+    mid = models.CharField(max_length=256, default='')
 
     def get_channel_promotion(self):
         return self.cnl_pros.all().count()

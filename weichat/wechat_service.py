@@ -22,14 +22,12 @@ class WechatService(object):
                                   appsecret=self.wechat_admin.app_secret,
                                   token=self.wechat_admin.access_token)
 
-
     def refresh_token(self):
         result = self.wechat.grant_token()
         token = result['access_token']
         self.wechat_admin.access_token = token
         self.wechat_admin.save()
         return token
-
 
     def send_message(self, open_id, message):
         result = self.wechat.grant_token()
@@ -42,14 +40,12 @@ class WechatService(object):
         result = requests.post(req_url, data=simplejson.dumps(data))
         return json.loads(result.content)
 
-
     def get_kefu_list(self):
         result = self.wechat.grant_token()
         token = result['access_token']
         req_url = 'https://api.weixin.qq.com/cgi-bin/customservice/getkflist?access_token={0}'.format(token)
         result = requests.get(req_url)
         return json.loads(result.content)
-
 
     def distribution_kefu(self, open_id, account, extra_mes):
         result = self.wechat.grant_token()
@@ -60,7 +56,6 @@ class WechatService(object):
                 'text': extra_mes}
         result = requests.post(req_url, data=json.dumps(data))
         return result
-
 
     def create_promotion_qrcode(self, name, scene, welcome, phone):
         data = {"action_name": "QR_LIMIT_STR_SCENE", "action_info": {"scene": {"scene_str": scene}}}
@@ -73,12 +68,11 @@ class WechatService(object):
         new_channel.save()
         return new_channel
 
-
     def get_user_info_by_code(self, code):
-        req_url = '''https://api.weixin.qq.com/sns/oauth2/access_token?appid={0}&secret={1}&code={2}&grant_type=authorization_code'''.format(self.wechat_admin.app_id, self.wechat_admin.app_secret, code)
+        req_url = '''https://api.weixin.qq.com/sns/oauth2/access_token?appid={0}&secret={1}&code={2}&grant_type=authorization_code'''.format(
+            self.wechat_admin.app_id, self.wechat_admin.app_secret, code)
         result = requests.get(req_url)
         return json.loads(result.content)
-
 
     def get_promotion_info(self, openID, channel=None):
         result = Promotion.objects.filter(open_id=openID)
@@ -102,7 +96,6 @@ class WechatService(object):
         new_promotion.save()
         return new_promotion
 
-
     def message_manage(self, message_body):
         self.wechat.parse_data(message_body)
         message = self.wechat.get_message()
@@ -124,12 +117,11 @@ class WechatService(object):
             response = self.wechat.response_text(result)
         return response
 
-
     def text_manage(self, message):
         # exclude_words = ['狮子狗', '永猎双子', '寒冰射手']
         # new_reply = ['白羊', '金牛', '双子', '巨蟹', '狮子', '处女', '天秤', '天蝎', '射手', '摩羯', '水瓶', '双鱼']
         # question = unicode(message.content)
-        # open_id = message.source
+        open_id = message.source
         # if question == '抽奖':
         #     return False, '点击抽奖：http://www.fibar.cn/luckyDraw'
         # for itm in new_reply:
@@ -162,8 +154,7 @@ class WechatService(object):
         #     return True, self.upload_picture(answer.image)
         # else:
         #     return False, answer.answer
-        return False, '欢迎关注'
-
+        return True, self.create_channel(open_id)
 
     # def get_qq(self, message, open_id):
     #     user = Promotion.objects.get(open_id=open_id)
@@ -192,18 +183,22 @@ class WechatService(object):
     #     article = [reply_dict.get(content, None)]
     #     return self.wechat.send_article_message(open_id, article)
     def create_channel(self, openid):
-        # todo 验证重复
+        cn = Channel.objects.filter(openid=openid)
+        if cn.exists():
+            return cn[0].mid
         user_info = self.wechat.get_user_info(openid)
         data = {"action_name": "QR_LIMIT_STR_SCENE", "action_info": {"scene": {"scene_str": scene}}}
         ticket = self.wechat.create_qrcode(data)['ticket']
         qr_url = 'https://mp.weixin.qq.com/cgi-bin/showqrcode?ticket={0}'.format(ticket)
+        path, mid = self.create_pic(channel.name, user_info.get('avatar'), qr_url, openid)
         channel = Channel()
         channel.name = user_info.get('nickname')
         channel.scene = openid
         channel.ticket = ticket
-        channel.pic = self.create_pic(channel.name, user_info.get('avatar'), qr_url, openid)
+        channel.pic = path
+        channel.mid = mid
         channel.save()
-        return channel.pic
+        return channel.mid
 
     def create_pic(self, nick, avatar, qr_url, openid):
         from PIL import Image, ImageOps, ImageDraw, ImageFont
@@ -225,14 +220,22 @@ class WechatService(object):
         output.putalpha(mask)
 
         final1 = Image.new("RGBA", base_img.size)
-        final1.paste(base_img, (0,0), base_img)
+        final1.paste(base_img, (0, 0), base_img)
         final1.paste(output, ava_box, output)
         draw = ImageDraw.Draw(final1)
         ttfont = ImageFont.truetype("{0}fzpc.ttf".format(MEDIA_TMP), 20)
         draw.text((375, 1185), nick, font=ttfont)
         save_path = '{0}{1}.jpg'.format(MEDIA_TMP, openid)
         final1.save(save_path)
-        return '/static/tmp/{0}.jpg'.format(openid)
+        try:
+            tmp_io = StringIO.StringIO(final1)
+            res = self.wechat.upload_media('image', tmp_io, extension='jpg')
+            print res
+            mid = res.get('media_id', '')
+            return '/static/tmp/{0}.jpg'.format(openid), mid
+        except Exception, e:
+            print e
+            return '/static/tmp/{0}.jpg'.format(openid), ''
 
     def event_manage(self, message):
         open_id = message.source
@@ -245,13 +248,14 @@ class WechatService(object):
                 promotion.cancel = False
                 promotion.save()
                 # todo 关注发消息
-            return True, self.create_channel(open_id)
+            mid = self.create_channel(open_id)
+            return True, mid
         elif message.type == 'unsubscribe':
             promotion = self.get_promotion_info(open_id)
             promotion.cancel = True
             promotion.save()
             return False, ''
-        # elif message.type == 'view':
+            # elif message.type == 'view':
             # user_list = Promotion.objects.filter(open_id=open_id)
             # if user_list.exists():
             #     menu_dict = {'http://www.fibar.cn': '寻找教练',
@@ -266,10 +270,8 @@ class WechatService(object):
             # todo
             return False, '''默认关注'''
 
-
     def other_manage(self, message):
         return False, '我现在还不能识别其他类型的消息呢，请发文字～'
-
 
     def upload_picture(self, url):
         ext = str(url).split('.')[-1]

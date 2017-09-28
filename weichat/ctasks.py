@@ -17,8 +17,8 @@ app = Celery('weichat.ctasks', backend='redis://localhost:6379/0', broker='redis
 
 
 def upload_picture(url, token, appid, secret):
-    wechat = WechatBasic(token, appid, secret)
     # ext = str(url).split('.')[-1]
+    wechat = WechatBasic(token, appid, secret)
     img_req = requests.get(url)
     print url
     try:
@@ -34,7 +34,7 @@ def upload_picture(url, token, appid, secret):
 @app.task
 def gen_pic_and_send(nick, avatar, qr_url, openid, token, appid, secret):
     logging.info('Start notify url to baidu')
-    from LeadYouFly.settings import MEDIA_TMP
+    MEDIA_TMP = './static/tmp/'
     region = Image.open(cStringIO.StringIO(urllib.urlopen(qr_url).read()))
     base_img = Image.open('{0}base.png'.format(MEDIA_TMP))
     # box = (360, 1265, 500, 1405)
@@ -64,6 +64,8 @@ def gen_pic_and_send(nick, avatar, qr_url, openid, token, appid, secret):
     final1 = final1.convert('RGB')
     final1.save(save_path)
     mid = upload_picture('http://sy.datoushow.com/static/tmp/{0}.jpg'.format(openid), token, appid, secret)
+    wechat = WechatBasic(token, appid, secret)
+    token = wechat.grant_token()['access_token']
     req_url = 'https://api.weixin.qq.com/cgi-bin/message/custom/send?access_token={0}'.format(token)
     # message = message.decode('utf-8')
     data = {'touser': openid,
@@ -75,6 +77,8 @@ def gen_pic_and_send(nick, avatar, qr_url, openid, token, appid, secret):
 @app.task
 def send_pic(openid, token, appid, secret):
     mid = upload_picture('http://sy.datoushow.com/static/tmp/{0}.jpg'.format(openid), token, appid, secret)
+    wechat = WechatBasic(token, appid, secret)
+    token = wechat.grant_token()['access_token']
     req_url = 'https://api.weixin.qq.com/cgi-bin/message/custom/send?access_token={0}'.format(token)
     # message = message.decode('utf-8')
     data = {'touser': openid,

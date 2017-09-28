@@ -227,7 +227,7 @@ class WechatService(object):
         ttfont = ImageFont.truetype("{0}fzpc.ttf".format(MEDIA_TMP), 20)
         draw.text((375, 1185), nick, font=ttfont)
         save_path = '{0}{1}.jpg'.format(MEDIA_TMP, openid)
-        final1.convert('RGB')
+        final1 = final1.convert('RGB')
         final1.save(save_path)
         try:
             tmp_io = StringIO.StringIO(final1)

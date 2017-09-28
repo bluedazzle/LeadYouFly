@@ -16,22 +16,32 @@ class WechatService(object):
     #     if cls.__instance is None:
     #         cls.__instance = super(WechatService, cls).__new__(cls, *args, **kwargs)
 
-    def __init__(self):
-        self.wechat_admin = WeChatAdmin.objects.all()[0]
-        self.wechat = WechatBasic(appid=self.wechat_admin.app_id,
-                                  appsecret=self.wechat_admin.app_secret,
-                                  token=self.wechat_admin.access_token)
+    def __init__(self, app_id=None, app_secret=None):
+        self.redis = redis.StrictRedis(host='localhost', port=6379, db=1)
+        if not app_id:
+            self.wechat_admin = WeChatAdmin.objects.all()[0]
+            self.wechat = WechatBasic(appid=self.wechat_admin.app_id,
+                                      appsecret=self.wechat_admin.app_secret,
+                                      token=self.wechat_admin.access_token)
+        else:
+            self.wechat_admin = None
+            self.wechat = WechatBasic(appid=app_id, appsecret=app_secret)
 
-    def refresh_token(self):
-        result = self.wechat.grant_token()
-        token = result['access_token']
-        self.wechat_admin.access_token = token
-        self.wechat_admin.save()
+        self.get_token()
+
+    def get_token(self):
+        token = self.redis.get('wx_token')
+        if not token:
+            res = self.wechat.grant_token()
+            token = res.get('access_token')
+            self.redis.set('wx_token', token, 3600)
+            if self.wechat_admin:
+                self.wechat_admin.access_token = token
+                self.wechat_admin.save()
         return token
 
     def send_message(self, open_id, message):
-        result = self.wechat.grant_token()
-        token = result['access_token']
+        token = self.get_token()
         req_url = 'https://api.weixin.qq.com/cgi-bin/message/custom/send?access_token={0}'.format(token)
         message = message.decode('utf-8')
         data = {'touser': open_id,
@@ -41,15 +51,13 @@ class WechatService(object):
         return json.loads(result.content)
 
     def get_kefu_list(self):
-        result = self.wechat.grant_token()
-        token = result['access_token']
+        token = self.get_token()
         req_url = 'https://api.weixin.qq.com/cgi-bin/customservice/getkflist?access_token={0}'.format(token)
         result = requests.get(req_url)
         return json.loads(result.content)
 
     def distribution_kefu(self, open_id, account, extra_mes):
-        result = self.wechat.grant_token()
-        token = result['access_token']
+        token = self.get_token()
         req_url = 'https://api.weixin.qq.com/customservice/kfsession/create?access_token={0}'.format(token)
         data = {'kf_account': account,
                 'openid': open_id,
@@ -155,8 +163,7 @@ class WechatService(object):
         #     return True, self.upload_picture(answer.image)
         # else:
         #     return False, answer.answer
-        self.send_message(open_id, 'test')
-        return True, self.create_channel(open_id)
+        return False, self.create_channel(open_id)
 
     # def get_qq(self, message, open_id):
     #     user = Promotion.objects.get(open_id=open_id)
@@ -185,23 +192,26 @@ class WechatService(object):
     #     article = [reply_dict.get(content, None)]
     #     return self.wechat.send_article_message(open_id, article)
     def create_channel(self, openid):
+        from ctasks import gen_pic_and_send, send_pic
         cn = Channel.objects.filter(scene=openid)
         if cn.exists():
-            return cn[0].mid
+            send_pic.apply_async((openid, self.get_token(), self.wechat_admin.app_id, self.wechat_admin.app_secret))
+            return 'success'
         user_info = self.wechat.get_user_info(openid)
         data = {"action_name": "QR_LIMIT_STR_SCENE", "action_info": {"scene": {"scene_str": openid}}}
         ticket = self.wechat.create_qrcode(data)['ticket']
         qr_url = 'https://mp.weixin.qq.com/cgi-bin/showqrcode?ticket={0}'.format(ticket)
         name = user_info.get('nickname')
-        path, mid = self.create_pic(name, user_info.get('headimgurl'), qr_url, openid)
+        gen_pic_and_send.apply_async((name, user_info.get('headimgurl'), qr_url, openid, self.get_token(), self.wechat_admin.app_id, self.wechat_admin.app_secret))
+        # path, mid = self.create_pic(name, , qr_url, openid)
         channel = Channel()
         channel.name = name
         channel.scene = openid
         channel.ticket = ticket
-        channel.pic = path
-        channel.mid = mid
+        channel.pic = '/static/tmp/{0}.jpg'.format(openid)
+        channel.mid = ''
         channel.save()
-        return channel.mid
+        return channel.pic
 
     def create_pic(self, nick, avatar, qr_url, openid):
         from PIL import Image, ImageOps, ImageDraw, ImageFont
@@ -260,7 +270,7 @@ class WechatService(object):
                 promotion.save()
                 # todo 关注发消息
             mid = self.create_channel(open_id)
-            return True, mid
+            return False, mid
         elif message.type == 'unsubscribe':
             promotion = self.get_promotion_info(open_id)
             promotion.cancel = True

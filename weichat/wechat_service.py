@@ -235,17 +235,17 @@ class WechatService(object):
         save_path = '{0}{1}.jpg'.format(MEDIA_TMP, openid)
         final1 = final1.convert('RGB')
         final1.save(save_path)
-
-        try:
-            tmp_io = StringIO.StringIO()
-            final1.save(tmp_io, 'JPG')
-            res = self.wechat.upload_media('image', tmp_io, extension='jpg')
-            print 'upload pic to wechat as media', res
-            mid = res.get('media_id', '')
-            return '/static/tmp/{0}.jpg'.format(openid), mid
-        except Exception, e:
-            print 'ERROR IN UPLOAD', e
-            return '/static/tmp/{0}.jpg'.format(openid), ''
+        mid = self.upload_picture('http://sy.datoushow.com/static/tmp/{0}.jpg'.format(openid))
+        # try:
+        #     tmp_io = StringIO.StringIO()
+        #     final1.save(tmp_io, 'JPG')
+        #     res = self.wechat.upload_media('image', tmp_io, extension='jpg')
+        #     print 'upload pic to wechat as media', res
+        #     mid = res.get('media_id', '')
+        #     return '/static/tmp/{0}.jpg'.format(openid), mid
+        # except Exception, e:
+        #     print 'ERROR IN UPLOAD', e
+        return '/static/tmp/{0}.jpg'.format(openid), mid
 
     def event_manage(self, message):
         open_id = message.source
@@ -290,7 +290,8 @@ class WechatService(object):
         try:
             tmp_io = StringIO.StringIO(img_req.content)
             res = self.wechat.upload_media('image', tmp_io, extension='jpg')
-            print res
+            print 'UPLOAD TO WECHAT', res
             return res.get('media_id', '')
         except Exception, e:
-            print e
+            print 'ERROR IN UPLOAD', e
+            return ''

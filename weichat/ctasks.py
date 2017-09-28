@@ -69,7 +69,7 @@ def gen_pic_and_send(nick, avatar, qr_url, openid, token, appid, secret):
     data = {'touser': openid,
             'msgtype': 'image',
             'image': {'media_id': mid}}
-    result = requests.post(req_url, data=simplejson.dumps(data))
+    result = requests.post(req_url, data=json.dumps(data))
     return json.loads(result.content)
 
 @app.task
@@ -80,6 +80,6 @@ def send_pic(openid, token, appid, secret):
     data = {'touser': openid,
             'msgtype': 'image',
             'image': {'media_id': mid}}
-    result = requests.post(req_url, data=simplejson.dumps(data))
+    result = requests.post(req_url, data=json.dumps(data))
     return json.loads(result.content)
 

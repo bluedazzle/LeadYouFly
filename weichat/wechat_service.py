@@ -118,7 +118,8 @@ class WechatService(object):
                        'unsubscribe': self.event_manage,
                        'scan': self.event_manage,
                        'view': self.event_manage,
-                       'voice': self.other_manage
+                       'voice': self.other_manage,
+                       'click': self.click_manage
                        }
         is_pic, result = manage_dict[message.type](message)
         if is_pic:
@@ -126,6 +127,11 @@ class WechatService(object):
         else:
             response = self.wechat.response_text(result)
         return response
+
+    def click_manage(self, message):
+        open_id = message.source
+        mid = self.create_channel(open_id)
+        return False, mid
 
     def text_manage(self, message):
         # exclude_words = ['狮子狗', '永猎双子', '寒冰射手']
@@ -349,8 +355,9 @@ class WechatService(object):
             #     user.save()
             # return False, ''
         else:
-            promotion = self.get_promotion_info(open_id)
+            # promotion = self.get_promotion_info(open_id)
             # todo
+            mid = self.create_channel(open_id)
             return False, '''默认关注'''
 
     def other_manage(self, message):

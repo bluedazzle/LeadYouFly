@@ -132,7 +132,7 @@ class WechatService(object):
     def click_manage(self, message):
         open_id = message.source
         mid = self.create_channel(open_id)
-        return False, mid
+        return False, '海报生成中,请稍后...'
 
     def text_manage(self, message):
         # exclude_words = ['狮子狗', '永猎双子', '寒冰射手']

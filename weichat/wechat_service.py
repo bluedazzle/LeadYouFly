@@ -92,9 +92,9 @@ class WechatService(object):
         city = user_info.get('city', None)
         province = user_info.get('province', None)
         sex = '男'
-        if str(user_info['sex']) == '2':
+        if str(user_info.get('sex', 0)) == '2':
             sex = '女'
-        elif str(user_info['sex']) == '0':
+        elif str(user_info.get('sex', 0)) == '0':
             sex = '未知'
         new_promotion = Promotion(open_id=openID,
                                   nick=nick,

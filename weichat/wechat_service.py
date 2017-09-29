@@ -130,8 +130,68 @@ class WechatService(object):
     def text_manage(self, message):
         # exclude_words = ['狮子狗', '永猎双子', '寒冰射手']
         # new_reply = ['白羊', '金牛', '双子', '巨蟹', '狮子', '处女', '天秤', '天蝎', '射手', '摩羯', '水瓶', '双鱼']
-        # question = unicode(message.content)
+        content = unicode(message.content)
         open_id = message.source
+        if content == 'cm':
+            menu = {
+                'button': [
+                    {'name': '分享优惠',
+                     'type': 'click',
+                     'key': 'V1001_HB'
+                     },
+                    {'name': '好客青海',
+                     'sub_button': [
+                         {
+                             'type': 'view',
+                             'name': '天涯牧歌',
+                             'url': 'http://m.qh.petro.tymg.vinotec.cn/adopt/index.aspx'
+                         },
+                         {
+                             'type': 'view',
+                             'name': '秘境寻珍',
+                             'url': 'http://55883069.m.weimob.com/vshop/55883069/Index?PageId=605151&IsPre=1&channel=menu'
+                         },
+                         {
+                             'type': 'view',
+                             'name': '好客青海',
+                             'url': 'http://55883069.m.weimob.com/vshop/55883069/Index?PageId=591449&IsPre=1&channel=menu'
+                         },
+                     ]},
+                    {
+                        'name': '顾客之家',
+                        'sub_button': [
+                            {
+                                'type': 'view',
+                                'name': '优惠集锦',
+                                'url': 'https://mp.weixin.qq.com/s/kZxz40YzVHKdEK2okntNaQ'
+                            },
+                            {
+                                'type': 'view',
+                                'name': '客户经理',
+                                'url': 'http://mp.weixin.qq.com/s/c1f3fV6m6HspvWfHEgN1Dw'
+                            },
+                            {
+                                'type': 'view',
+                                'name': '导航服务',
+                                'url': 'http://www.95504.net/NewMapIndex/MapIndex.html'
+                            },
+                            {
+                                'type': 'view',
+                                'name': '积分兑换',
+                                'url': 'http://jf.95504.net/'
+                            },
+                            {
+                                'type': 'view',
+                                'name': '油卡充值',
+                                'url': 'http://www.95504.net/'
+                            },
+                        ]
+                    }
+
+                ]
+            }
+            self.wechat.create_menu(menu)
+            return 'cm success'
         # if question == '抽奖':
         #     return False, '点击抽奖：http://www.fibar.cn/luckyDraw'
         # for itm in new_reply:

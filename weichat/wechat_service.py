@@ -123,10 +123,11 @@ class WechatService(object):
                        }
         is_pic, result = manage_dict[message.type](message)
         if is_pic:
-            response = self.wechat.response_image(result)
+            # response = self.wechat.response_image(result)
+            return result
         else:
             response = self.wechat.response_text(result)
-        return response
+            return response
 
     def click_manage(self, message):
         open_id = message.source
@@ -337,9 +338,8 @@ class WechatService(object):
                 promotion.cancel = False
                 promotion.save()
                 # todo 关注发消息
-            self.res_new()
             mid = self.create_channel(open_id)
-            return False, ''
+            return True, self.res_new()
         elif message.type == 'unsubscribe':
             promotion = self.get_promotion_info(open_id)
             promotion.cancel = True
@@ -359,8 +359,7 @@ class WechatService(object):
             # promotion = self.get_promotion_info(open_id)
             # todo
             mid = self.create_channel(open_id)
-            self.res_new()
-            return False, ''
+            return True, self.res_new()
 
     def res_new(self):
         article = {
@@ -368,7 +367,8 @@ class WechatService(object):
             'title': '十一出行，送你10元电子加油券',
             'description': '快来领取，顺便分享给朋友吧！',
             'picurl': 'https://mmbiz.qpic.cn/mmbiz_png/rfD6ospvicPVGfWKqXeCnxH5xX7o9zLAtNu4WkmYglzA5tk9oqS3u1z1OOdz1Sp6JOIHx6O6k6ocoibfGHppqlicg/0?wx_fmt=png'}
-        self.wechat.response_news([article])
+        news = self.wechat.response_news([article])
+        return news
 
     def other_manage(self, message):
         return False, '我现在还不能识别其他类型的消息呢，请发文字～'

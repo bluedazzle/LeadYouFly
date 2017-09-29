@@ -191,7 +191,7 @@ class WechatService(object):
                 ]
             }
             self.wechat.create_menu(menu)
-            return 'cm success'
+            return False, 'cm success'
         # if question == '抽奖':
         #     return False, '点击抽奖：http://www.fibar.cn/luckyDraw'
         # for itm in new_reply:

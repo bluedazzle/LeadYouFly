@@ -62,7 +62,7 @@ def gen_pic_and_send(nick, avatar, qr_url, openid, token, appid, secret):
     # draw.text((187, 592), nick, font=ttfont)
     save_path = '{0}{1}.jpg'.format(MEDIA_TMP, openid)
     final1 = final1.convert('RGB')
-    final1.save(save_path, format='jpg', quality=90)
+    final1.save(save_path, quality=90)
     mid = upload_picture('http://sy.datoushow.com/static/tmp/{0}.jpg'.format(openid), token, appid, secret)
     wechat = WechatBasic(token, appid, secret)
     token = wechat.grant_token()['access_token']

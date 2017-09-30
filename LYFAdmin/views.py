@@ -1020,7 +1020,7 @@ def admin_wechat_setting(req):
 @login_require
 def admin_wechat_refresh(req):
     WS = WechatService()
-    WS.refresh_token()
+    WS.get_token()
     return HttpResponseRedirect('/admin/wechat/')
 
 

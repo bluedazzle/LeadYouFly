@@ -131,6 +131,7 @@ class WechatService(object):
 
     def click_manage(self, message):
         open_id = message.source
+        print message.__dict__
         mid = self.create_channel(open_id)
         return False, '海报生成中,请稍后...'
 
@@ -358,8 +359,9 @@ class WechatService(object):
         else:
             # promotion = self.get_promotion_info(open_id)
             # todo
-            mid = self.create_channel(open_id)
-            return True, self.res_new()
+            # mid = self.create_channel(open_id)
+            # return True, self.res_new()
+            return False, ''
 
     def res_new(self):
         article = {

@@ -121,13 +121,14 @@ class WechatService(object):
                        'voice': self.other_manage,
                        'click': self.click_manage
                        }
-        is_pic, result = manage_dict[message.type](message)
-        if is_pic:
-            # response = self.wechat.response_image(result)
-            return result
-        else:
-            response = self.wechat.response_text(result)
-            return response
+        # is_pic, result = manage_dict[message.type](message)
+        # if is_pic:
+        #     response = self.wechat.response_image(result)
+            # return result
+        # else:
+        #     response = self.wechat.response_text(result)
+        #     return response
+        return self.wechat.response_text('')
 
     def click_manage(self, message):
         open_id = message.source

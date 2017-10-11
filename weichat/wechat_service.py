@@ -128,7 +128,7 @@ class WechatService(object):
         # else:
         #     response = self.wechat.response_text(result)
         #     return response
-        return self.wechat.response_text('')
+        return self.wechat.response_text('欢迎您关注中国石油青海销售分公司~')
 
     def click_manage(self, message):
         open_id = message.source

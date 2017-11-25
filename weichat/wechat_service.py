@@ -118,8 +118,7 @@ class WechatService(object):
                        'unsubscribe': self.event_manage,
                        'scan': self.event_manage,
                        'view': self.event_manage,
-                       'voice': self.other_manage,
-                       'click': self.click_manage
+                       'voice': self.other_manage
                        }
         is_pic, result = manage_dict[message.type](message)
         if is_pic:
@@ -139,66 +138,66 @@ class WechatService(object):
         # new_reply = ['白羊', '金牛', '双子', '巨蟹', '狮子', '处女', '天秤', '天蝎', '射手', '摩羯', '水瓶', '双鱼']
         content = unicode(message.content)
         open_id = message.source
-        if content == 'cm':
-            menu = {
-                'button': [
-                    {'name': '分享优惠',
-                     'type': 'click',
-                     'key': 'V1001_HB'
-                     },
-                    {'name': '好客青海',
-                     'sub_button': [
-                         {
-                             'type': 'view',
-                             'name': '天涯牧歌',
-                             'url': 'http://m.qh.petro.tymg.vinotec.cn/adopt/index.aspx'
-                         },
-                         {
-                             'type': 'view',
-                             'name': '秘境寻珍',
-                             'url': 'http://55883069.m.weimob.com/vshop/55883069/Index?PageId=605151&IsPre=1&channel=menu'
-                         },
-                         {
-                             'type': 'view',
-                             'name': '好客青海',
-                             'url': 'http://55883069.m.weimob.com/vshop/55883069/Index?PageId=591449&IsPre=1&channel=menu'
-                         },
-                     ]},
-                    {
-                        'name': '顾客之家',
-                        'sub_button': [
-                            {
-                                'type': 'view',
-                                'name': '优惠集锦',
-                                'url': 'https://mp.weixin.qq.com/s/kZxz40YzVHKdEK2okntNaQ'
-                            },
-                            {
-                                'type': 'view',
-                                'name': '客户经理',
-                                'url': 'http://mp.weixin.qq.com/s/c1f3fV6m6HspvWfHEgN1Dw'
-                            },
-                            {
-                                'type': 'view',
-                                'name': '导航服务',
-                                'url': 'http://www.95504.net/NewMapIndex/MapIndex.html'
-                            },
-                            {
-                                'type': 'view',
-                                'name': '积分兑换',
-                                'url': 'http://jf.95504.net/'
-                            },
-                            {
-                                'type': 'view',
-                                'name': '油卡充值',
-                                'url': 'http://www.95504.net/'
-                            },
-                        ]
-                    }
-
-                ]
-            }
-            self.wechat.create_menu(menu)
-            return False, 'cm success'
+        # if content == 'cm':
+        #     menu = {
+        #         'button': [
+        #             {'name': '分享优惠',
+        #              'type': 'click',
+        #              'key': 'V1001_HB'
+        #              },
+        #             {'name': '好客青海',
+        #              'sub_button': [
+        #                  {
+        #                      'type': 'view',
+        #                      'name': '天涯牧歌',
+        #                      'url': 'http://m.qh.petro.tymg.vinotec.cn/adopt/index.aspx'
+        #                  },
+        #                  {
+        #                      'type': 'view',
+        #                      'name': '秘境寻珍',
+        #                      'url': 'http://55883069.m.weimob.com/vshop/55883069/Index?PageId=605151&IsPre=1&channel=menu'
+        #                  },
+        #                  {
+        #                      'type': 'view',
+        #                      'name': '好客青海',
+        #                      'url': 'http://55883069.m.weimob.com/vshop/55883069/Index?PageId=591449&IsPre=1&channel=menu'
+        #                  },
+        #              ]},
+        #             {
+        #                 'name': '顾客之家',
+        #                 'sub_button': [
+        #                     {
+        #                         'type': 'view',
+        #                         'name': '优惠集锦',
+        #                         'url': 'https://mp.weixin.qq.com/s/kZxz40YzVHKdEK2okntNaQ'
+        #                     },
+        #                     {
+        #                         'type': 'view',
+        #                         'name': '客户经理',
+        #                         'url': 'http://mp.weixin.qq.com/s/c1f3fV6m6HspvWfHEgN1Dw'
+        #                     },
+        #                     {
+        #                         'type': 'view',
+        #                         'name': '导航服务',
+        #                         'url': 'http://www.95504.net/NewMapIndex/MapIndex.html'
+        #                     },
+        #                     {
+        #                         'type': 'view',
+        #                         'name': '积分兑换',
+        #                         'url': 'http://jf.95504.net/'
+        #                     },
+        #                     {
+        #                         'type': 'view',
+        #                         'name': '油卡充值',
+        #                         'url': 'http://www.95504.net/'
+        #                     },
+        #                 ]
+        #             }
+        #
+        #         ]
+        #     }
+        #     self.wechat.create_menu(menu)
+        #     return False, 'cm success'
         # if question == '抽奖':
         #     return False, '点击抽奖：http://www.fibar.cn/luckyDraw'
         # for itm in new_reply:
@@ -262,9 +261,9 @@ class WechatService(object):
     def create_channel(self, openid):
         from ctasks import gen_pic_and_send, send_pic
         cn = Channel.objects.filter(scene=openid)
-        if cn.exists():
-            send_pic.apply_async((openid, self.get_token(), self.wechat_admin.app_id, self.wechat_admin.app_secret))
-            return 'success'
+        # if cn.exists():
+            # send_pic.apply_async((openid, self.get_token(), self.wechat_admin.app_id, self.wechat_admin.app_secret))
+            # return 'success'
         user_info = self.wechat.get_user_info(openid)
         data = {"action_name": "QR_LIMIT_STR_SCENE", "action_info": {"scene": {"scene_str": openid}}}
         ticket = self.wechat.create_qrcode(data)['ticket']
@@ -338,7 +337,7 @@ class WechatService(object):
                 promotion.cancel = False
                 promotion.save()
                 # todo 关注发消息
-            mid = self.create_channel(open_id)
+            # mid = self.create_channel(open_id)
             return True, self.res_new()
         elif message.type == 'unsubscribe':
             promotion = self.get_promotion_info(open_id)
@@ -358,7 +357,7 @@ class WechatService(object):
         else:
             # promotion = self.get_promotion_info(open_id)
             # todo
-            mid = self.create_channel(open_id)
+            # mid = self.create_channel(open_id)
             return True, self.res_new()
 
     def res_new(self):

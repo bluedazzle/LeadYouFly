@@ -120,16 +120,18 @@ class WechatService(object):
                        'view': self.event_manage,
                        'voice': self.other_manage
                        }
-        is_pic, result = manage_dict[message.type](message)
-        if is_pic:
-            # response = self.wechat.response_image(result)
-            return result
-        else:
-            response = self.wechat.response_text(result)
-            return response
+        # is_pic, result = manage_dict[message.type](message)
+        # if is_pic:
+        #     response = self.wechat.response_image(result)
+        # return result
+        # else:
+        #     response = self.wechat.response_text(result)
+        #     return response
+        return self.wechat.response_text('欢迎您关注中国石油青海销售分公司~')
 
     def click_manage(self, message):
         open_id = message.source
+        print message.__dict__
         mid = self.create_channel(open_id)
         return False, '海报生成中,请稍后...'
 
@@ -262,8 +264,8 @@ class WechatService(object):
         from ctasks import gen_pic_and_send, send_pic
         cn = Channel.objects.filter(scene=openid)
         # if cn.exists():
-            # send_pic.apply_async((openid, self.get_token(), self.wechat_admin.app_id, self.wechat_admin.app_secret))
-            # return 'success'
+        # send_pic.apply_async((openid, self.get_token(), self.wechat_admin.app_id, self.wechat_admin.app_secret))
+        # return 'success'
         user_info = self.wechat.get_user_info(openid)
         data = {"action_name": "QR_LIMIT_STR_SCENE", "action_info": {"scene": {"scene_str": openid}}}
         ticket = self.wechat.create_qrcode(data)['ticket']

@@ -120,14 +120,13 @@ class WechatService(object):
                        'view': self.event_manage,
                        'voice': self.other_manage
                        }
-        # is_pic, result = manage_dict[message.type](message)
-        # if is_pic:
-        #     response = self.wechat.response_image(result)
-        # return result
-        # else:
-        #     response = self.wechat.response_text(result)
-        #     return response
-        return self.wechat.response_text('欢迎您关注中国石油青海销售分公司~')
+        is_pic, result = manage_dict[message.type](message)
+        if is_pic:
+            response = self.wechat.response_image(result)
+        else:
+            response = self.wechat.response_text(result)
+        return response
+        # return self.wechat.response_text('欢迎您关注中国石油青海销售分公司~')
 
     def click_manage(self, message):
         open_id = message.source

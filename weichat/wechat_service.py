@@ -360,7 +360,7 @@ class WechatService(object):
             # promotion = self.get_promotion_info(open_id)
             # todo
             # mid = self.create_channel(open_id)
-            return True, self.res_new()
+            return False, '欢迎关注'
 
     def res_new(self):
         article = {

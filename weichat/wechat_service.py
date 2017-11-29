@@ -122,7 +122,7 @@ class WechatService(object):
                        }
         is_pic, result = manage_dict[message.type](message)
         if is_pic:
-            response = self.wechat.response_image(result)
+            response = self.wechat.response_news(result)
         else:
             response = self.wechat.response_text(result)
         return response
@@ -231,7 +231,7 @@ class WechatService(object):
         #     return True, self.upload_picture(answer.image)
         # else:
         #     return False, answer.answer
-        return False, self.create_channel(open_id)
+        return False, ''
 
     # def get_qq(self, message, open_id):
     #     user = Promotion.objects.get(open_id=open_id)
@@ -339,7 +339,8 @@ class WechatService(object):
                 promotion.save()
                 # todo 关注发消息
             # mid = self.create_channel(open_id)
-            return True, self.res_new()
+                return False, channel.welcome_text
+            return False, '欢迎关注'
         elif message.type == 'unsubscribe':
             promotion = self.get_promotion_info(open_id)
             promotion.cancel = True

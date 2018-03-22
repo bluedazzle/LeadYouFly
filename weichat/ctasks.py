@@ -42,8 +42,9 @@ def gen_pic_and_send(nick, avatar, qr_url, openid, token, appid, secret):
     # box = (180, 632, 250, 702)
     # ava_box = (178, 500, 238, 560)
     # region.thumbnail((140, 140))
-    region.thumbnail((90, 90))
-    base_img.paste(region, box)
+    # qr
+    # region.thumbnail((90, 90))
+    # base_img.paste(region, box)
     avatar = Image.open(cStringIO.StringIO(urllib.urlopen(avatar).read()))
     # size = (120, 120)
     size = (56, 56)

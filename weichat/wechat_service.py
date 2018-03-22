@@ -231,7 +231,8 @@ class WechatService(object):
         #     return True, self.upload_picture(answer.image)
         # else:
         #     return False, answer.answer
-        return False, ''
+        return self.click_manage(message)
+        # return False, ''
 
     # def get_qq(self, message, open_id):
     #     user = Promotion.objects.get(open_id=open_id)
@@ -261,26 +262,28 @@ class WechatService(object):
     #     return self.wechat.send_article_message(open_id, article)
     def create_channel(self, openid):
         from ctasks import gen_pic_and_send, send_pic
-        cn = Channel.objects.filter(scene=openid)
+        # cn = Channel.objects.filter(scene=openid)
         # if cn.exists():
         # send_pic.apply_async((openid, self.get_token(), self.wechat_admin.app_id, self.wechat_admin.app_secret))
         # return 'success'
         user_info = self.wechat.get_user_info(openid)
-        data = {"action_name": "QR_LIMIT_STR_SCENE", "action_info": {"scene": {"scene_str": openid}}}
-        ticket = self.wechat.create_qrcode(data)['ticket']
-        qr_url = 'https://mp.weixin.qq.com/cgi-bin/showqrcode?ticket={0}'.format(ticket)
+        # data = {"action_name": "QR_LIMIT_STR_SCENE", "action_info": {"scene": {"scene_str": openid}}}
+        # ticket = self.wechat.create_qrcode(data)['ticket']
+        # qr_url = 'https://mp.weixin.qq.com/cgi-bin/showqrcode?ticket={0}'.format(ticket)
         name = user_info.get('nickname')
+        qr_url = ''
         gen_pic_and_send.apply_async((name, user_info.get('headimgurl'), qr_url, openid, self.get_token(),
                                       self.wechat_admin.app_id, self.wechat_admin.app_secret))
         # path, mid = self.create_pic(name, , qr_url, openid)
-        channel = Channel()
-        channel.name = name
-        channel.scene = openid
-        channel.ticket = ticket
-        channel.pic = '/static/tmp/{0}.jpg'.format(openid)
-        channel.mid = ''
-        channel.save()
-        return channel.pic
+        # channel = Channel()
+        # channel.name = name
+        # channel.scene = openid
+        # channel.ticket = ticket
+        # channel.pic = '/static/tmp/{0}.jpg'.format(openid)
+        # channel.mid = ''
+        # channel.save()
+        pic = '/static/tmp/{0}.jpg'.format(openid)
+        return pic
 
     def create_pic(self, nick, avatar, qr_url, openid):
         from PIL import Image, ImageOps, ImageDraw, ImageFont
@@ -330,16 +333,17 @@ class WechatService(object):
     def event_manage(self, message):
         open_id = message.source
         if message.type == 'subscribe':
-            ticket = message.ticket
-            channel_list = Channel.objects.filter(ticket=message.ticket)
-            if channel_list.exists():
-                channel = channel_list[0]
-                promotion = self.get_promotion_info(open_id, channel)
-                promotion.cancel = False
-                promotion.save()
+            # ticket = message.ticket
+            # channel_list = Channel.objects.filter(ticket=message.ticket)
+            # if channel_list.exists():
+            #     channel = channel_list[0]
+            #     promotion = self.get_promotion_info(open_id, channel)
+            #     promotion.cancel = False
+            #     promotion.save()
+            self.click_manage(message)
                 # todo 关注发消息
             # mid = self.create_channel(open_id)
-                return False, channel.welcome_text
+            #     return False, channel.welcome_text
             return False, '欢迎关注'
         elif message.type == 'unsubscribe':
             promotion = self.get_promotion_info(open_id)

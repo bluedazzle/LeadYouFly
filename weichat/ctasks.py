@@ -35,8 +35,8 @@ def upload_picture(url, token, appid, secret):
 def gen_pic_and_send(nick, avatar, qr_url, openid, token, appid, secret):
     logging.info('Start notify url to baidu')
     MEDIA_TMP = './static/tmp/'
-    region = Image.open(cStringIO.StringIO(urllib.urlopen(qr_url).read()))
-    base_img = Image.open('{0}base0.png'.format(MEDIA_TMP))
+    # region = Image.open(cStringIO.StringIO(urllib.urlopen(qr_url).read()))
+    base_img = Image.open('{0}base323.png'.format(MEDIA_TMP))
     box = (150, 586, 240, 676)
     ava_box = (167, 471, 223, 527)
     # box = (180, 632, 250, 702)
@@ -64,7 +64,7 @@ def gen_pic_and_send(nick, avatar, qr_url, openid, token, appid, secret):
     save_path = '{0}{1}.jpg'.format(MEDIA_TMP, openid)
     final1 = final1.convert('RGB')
     final1.save(save_path, quality=100)
-    mid = upload_picture('http://sy.datoushow.com/static/tmp/{0}.jpg'.format(openid), token, appid, secret)
+    mid = upload_picture('http://sy.chafanbao.com/static/tmp/{0}.jpg'.format(openid), token, appid, secret)
     wechat = WechatBasic(token, appid, secret)
     token = wechat.grant_token()['access_token']
     req_url = 'https://api.weixin.qq.com/cgi-bin/message/custom/send?access_token={0}'.format(token)
@@ -77,7 +77,7 @@ def gen_pic_and_send(nick, avatar, qr_url, openid, token, appid, secret):
 
 @app.task
 def send_pic(openid, token, appid, secret):
-    mid = upload_picture('http://sy.datoushow.com/static/tmp/{0}.jpg'.format(openid), token, appid, secret)
+    mid = upload_picture('http://sy.chafanbao.com/static/tmp/{0}.jpg'.format(openid), token, appid, secret)
     wechat = WechatBasic(token, appid, secret)
     token = wechat.grant_token()['access_token']
     req_url = 'https://api.weixin.qq.com/cgi-bin/message/custom/send?access_token={0}'.format(token)

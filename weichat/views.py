@@ -24,6 +24,7 @@ def wechat_service(req):
         return HttpResponse(echostr)
 
     if req.method == 'POST':
+
         body_text = req.body
         response = WS.message_manage(body_text)
         return HttpResponse(response)

@@ -272,8 +272,13 @@ class WechatService(object):
         # qr_url = 'https://mp.weixin.qq.com/cgi-bin/showqrcode?ticket={0}'.format(ticket)
         name = user_info.get('nickname')
         qr_url = ''
+        num = self.redis.get('xb_num')
+        if not num:
+            num = 37
+            self.redis.set('xb_num', num)
+        num += 13
         gen_pic_and_send.apply_async((name, user_info.get('headimgurl'), qr_url, openid, self.get_token(),
-                                      self.wechat_admin.app_id, self.wechat_admin.app_secret))
+                                      self.wechat_admin.app_id, self.wechat_admin.app_secret), num)
         # path, mid = self.create_pic(name, , qr_url, openid)
         # channel = Channel()
         # channel.name = name

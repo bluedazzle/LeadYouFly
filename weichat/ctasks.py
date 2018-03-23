@@ -32,13 +32,13 @@ def upload_picture(url, token, appid, secret):
 
 
 @app.task
-def gen_pic_and_send(nick, avatar, qr_url, openid, token, appid, secret):
+def gen_pic_and_send(nick, avatar, qr_url, openid, token, appid, secret, num):
     logging.info('Start notify url to baidu')
     MEDIA_TMP = './static/tmp/'
     # region = Image.open(cStringIO.StringIO(urllib.urlopen(qr_url).read()))
     base_img = Image.open('{0}base323.png'.format(MEDIA_TMP))
     box = (150, 586, 240, 676)
-    ava_box = (167, 471, 223, 527)
+    ava_box = (212, 227, 268, 283)
     # box = (180, 632, 250, 702)
     # ava_box = (178, 500, 238, 560)
     # region.thumbnail((140, 140))
@@ -58,8 +58,9 @@ def gen_pic_and_send(nick, avatar, qr_url, openid, token, appid, secret):
     final1.paste(base_img, (0, 0), base_img)
     final1.paste(output, ava_box, output)
     draw = ImageDraw.Draw(final1)
-    ttfont = ImageFont.truetype("{0}fzpc.ttf".format(MEDIA_TMP), 12)
-    draw.text((270, 291), nick, font=ttfont)
+    ttfont = ImageFont.truetype("{0}fzpc.ttf".format(MEDIA_TMP), 15)
+    draw.text((270, 305), nick, font=ttfont)
+    draw.text((370, 325), num, ttfont=ttfont)
     # draw.text((187, 592), nick, font=ttfont)
     save_path = '{0}{1}.jpg'.format(MEDIA_TMP, openid)
     final1 = final1.convert('RGB')

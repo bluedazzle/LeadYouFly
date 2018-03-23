@@ -20,7 +20,7 @@ class WechatService(object):
     def __init__(self, app_id=None, app_secret=None):
         self.redis = redis.StrictRedis(host='localhost', port=6379, db=1)
         if not app_id:
-            self.wechat_admin = WeChatAdmin.objects.all().order_by('id')[0]
+            self.wechat_admin = WeChatAdmin.objects.all().order_by('id')[1]
             self.wechat = WechatBasic(appid=self.wechat_admin.app_id,
                                       appsecret=self.wechat_admin.app_secret,
                                       token=self.wechat_admin.access_token)
@@ -31,11 +31,11 @@ class WechatService(object):
         self.get_token()
 
     def get_token(self):
-        token = self.redis.get('wx_token')
+        token = self.redis.get('qh_wx_token')
         if not token:
             res = self.wechat.grant_token()
             token = res.get('access_token')
-            self.redis.set('wx_token', token, 3600)
+            self.redis.set('qh_wx_token', token, 3600)
             if self.wechat_admin:
                 self.wechat_admin.access_token = token
                 self.wechat_admin.save()
@@ -147,61 +147,56 @@ class WechatService(object):
         if content == 'mm':
             menu = {
                 'button': [
-                    {'name': '昆仑润油',
-                     'sub_button': [
-                         {
-                             'type': 'view',
-                             'name': '企业介绍',
-                             'url': 'http://kunlunlube.cnpc.com.cn/klrhy/mindex/m_index.shtml'
-                         },
-                         {
-                             'type': 'view',
-                             'name': '服务网点',
-                             'url': 'http://www.95504.net/NewMapIndex/MapIndex.html'
-                         },
-                         {
-                             'type': 'view',
-                             'name': '选油小助手',
-                             'url': 'http://chooseoil.kunluntianwei.com:8082/kunlunmp/app/common/chooseOilWeChat/'
-                         },
-                         {
-                             'type': 'view',
-                             'name': '防伪查询',
-                             'url': 'http://kunlunlube.cnpc.com.cn/klrhy/mfwcx/m_fwcx.shtml'
-                         },
-                     ]},
                     {'name': '熄灯开启',
                      'type': 'click',
                      'key': 'DQ001'
                      },
+                    {'name': '好客青海',
+                     'sub_button': [
+                         {
+                             'type': 'view',
+                             'name': '好客青海',
+                             'url': 'http://55883069.m.weimob.com/vshop/55883069/Index?PageId=591449&IsPre=1&channel=menu&sionid=6b4237e6666944d988062452614c3f28'
+                         },
+                         {
+                             'type': 'view',
+                             'name': '天涯牧歌',
+                             'url': 'http://m.qh.petro.tymg.vinotec.cn/adopt/index.aspx'
+                         },
+                         {
+                             'type': 'view',
+                             'name': '旅游卡激活',
+                             'url': 'http://client-zsy-qh.sailouzai.com/'
+                         },
+                         {
+                             'type': 'view',
+                             'name': '测高原图腾',
+                             'url': 'http://m.qh.petro.tymg.vinotec.cn/yunshan_login_2.aspx'
+                         },
+                     ]},
                     {
-                        'name': '润油商盟',
+                        'name': '便捷服务',
                         'sub_button': [
                             {
                                 'type': 'view',
-                                'name': '联系我们',
-                                'url': 'http://call.sailouzai.com'
+                                'name': '今日油价',
+                                'url': 'http://55883069.m.weimob.com/vshop/55883069/Index?PageId=643886&IsPre=1&channel=menu'
                             },
                             {
                                 'type': 'view',
-                                'name': '热门活动',
-                                'url': 'http://call.sailouzai.com/ads.html'
+                                'name': '附近油站',
+                                'url': 'http://www.95504.net/NewMapIndex/MapIndex.html'
                             },
                             {
                                 'type': 'view',
-                                'name': '全新服务',
-                                'url': 'http://call.sailouzai.com/ads.html'
+                                'name': '油卡服务',
+                                'url': 'http://www.95504.net/'
                             },
                             {
                                 'type': 'view',
-                                'name': '销售网点申请',
-                                'url': 'https://wop2.tuobacco.com/app/verify2/#/apply/sales-unit'
-                            },
-                            {
-                                'type': 'view',
-                                'name': '销售员申请',
-                                'url': 'https://wop2.tuobacco.com/app/verify2/#/apply/sale'
-                            },
+                                'name': '在线客服',
+                                'url': 'http://55883069.im.m.weimob.com?channel=menu'
+                            }
                         ]
                     }
 
@@ -272,7 +267,7 @@ class WechatService(object):
     #     article = [reply_dict.get(content, None)]
     #     return self.wechat.send_article_message(open_id, article)
     def create_channel(self, openid):
-        from ctasks import gen_pic_and_send, send_pic
+        from ctasks import gen_qh_pic_and_send, send_pic
         # cn = Channel.objects.filter(scene=openid)
         # if cn.exists():
         # send_pic.apply_async((openid, self.get_token(), self.wechat_admin.app_id, self.wechat_admin.app_secret))
@@ -283,15 +278,15 @@ class WechatService(object):
         # qr_url = 'https://mp.weixin.qq.com/cgi-bin/showqrcode?ticket={0}'.format(ticket)
         name = user_info.get('nickname')
         qr_url = ''
-        num = self.redis.get('xb_num')
+        num = self.redis.get('qh_num')
         if not num:
-            num = 37
-            self.redis.set('xb_num', num)
+            num = 299
+            self.redis.set('qh_num', num)
         num = int(num)
-        num += 13
-        self.redis.set('xb_num', num)
-        gen_pic_and_send.apply_async((name, user_info.get('headimgurl'), qr_url, openid, self.get_token(),
-                                      self.wechat_admin.app_id, self.wechat_admin.app_secret, unicode(num)))
+        num += 56
+        self.redis.set('qh_num', num)
+        gen_qh_pic_and_send.apply_async((name, user_info.get('headimgurl'), qr_url, openid, self.get_token(),
+                                         self.wechat_admin.app_id, self.wechat_admin.app_secret, unicode(num)))
         # path, mid = self.create_pic(name, , qr_url, openid)
         # channel = Channel()
         # channel.name = name

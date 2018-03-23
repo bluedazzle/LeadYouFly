@@ -147,61 +147,86 @@ class WechatService(object):
         if content == 'mm':
             menu = {
                 'button': [
-                    {'name': '分享优惠',
-                     'type': 'click',
-                     'key': 'DQ001'
-                     },
-                    {'name': '好客青海',
+                    {'name': '昆仑润油',
                      'sub_button': [
                          {
                              'type': 'view',
-                             'name': '天涯牧歌',
-                             'url': 'http://m.qh.petro.tymg.vinotec.cn/adopt/index.aspx'
+                             'name': '企业介绍',
+                             'url': 'http://kunlunlube.cnpc.com.cn/klrhy/mindex/m_index.shtml'
                          },
                          {
                              'type': 'view',
-                             'name': '秘境寻珍',
-                             'url': 'http://55883069.m.weimob.com/vshop/55883069/Index?PageId=605151&IsPre=1&channel=menu'
+                             'name': '服务网点',
+                             'url': 'http://www.95504.net/NewMapIndex/MapIndex.html'
                          },
                          {
                              'type': 'view',
-                             'name': '好客青海',
-                             'url': 'http://55883069.m.weimob.com/vshop/55883069/Index?PageId=591449&IsPre=1&channel=menu'
+                             'name': '选油小助手',
+                             'url': 'http://chooseoil.kunluntianwei.com:8082/kunlunmp/app/common/chooseOilWeChat/'
+                         },
+                         {
+                             'type': 'view',
+                             'name': '防伪查询',
+                             'url': 'http://kunlunlube.cnpc.com.cn/klrhy/mfwcx/m_fwcx.shtml'
                          },
                      ]},
+                    {'name': '熄灯开启',
+                     'type': 'click',
+                     'key': 'DQ001'
+                     },
                     {
-                        'name': '顾客之家',
+                        'name': '润油商盟',
                         'sub_button': [
                             {
                                 'type': 'view',
-                                'name': '优惠集锦',
-                                'url': 'https://mp.weixin.qq.com/s/kZxz40YzVHKdEK2okntNaQ'
+                                'name': '联系我们',
+                                'url': 'http://call.sailouzai.com'
                             },
                             {
                                 'type': 'view',
-                                'name': '客户经理',
-                                'url': 'http://mp.weixin.qq.com/s/c1f3fV6m6HspvWfHEgN1Dw'
+                                'name': '热门活动',
+                                'url': 'http://call.sailouzai.com/ads.html'
                             },
                             {
                                 'type': 'view',
-                                'name': '导航服务',
-                                'url': 'http://www.95504.net/NewMapIndex/MapIndex.html'
+                                'name': '全新服务',
+                                'url': 'http://call.sailouzai.com/ads.html'
                             },
                             {
                                 'type': 'view',
-                                'name': '积分兑换',
-                                'url': 'http://jf.95504.net/'
+                                'name': '销售网点申请',
+                                'url': 'https://wop2.tuobacco.com/app/verify2/#/apply/sales-unit'
                             },
                             {
                                 'type': 'view',
-                                'name': '油卡充值',
-                                'url': 'http://www.95504.net/'
+                                'name': '销售员申请',
+                                'url': 'https://wop2.tuobacco.com/app/verify2/#/apply/sale'
                             },
                         ]
                     }
 
                 ]
             }
+            menu = {u'menu': {u'button': [
+                {u'type': u'click', u'name': u'\u5206\u4eab\u4f18\u60e0', u'key': u'DQ001', u'sub_button': []},
+                {u'name': u'\u597d\u5ba2\u9752\u6d77', u'sub_button': [
+                    {u'url': u'http://m.qh.petro.tymg.vinotec.cn/adopt/index.aspx', u'type': u'view',
+                     u'name': u'\u5929\u6daf\u7267\u6b4c', u'sub_button': []},
+                    {u'url': u'http://55883069.m.weimob.com/vshop/55883069/Index?PageId=605151&IsPre=1&channel=menu',
+                     u'type': u'view', u'name': u'\u79d8\u5883\u5bfb\u73cd', u'sub_button': []},
+                    {u'url': u'http://55883069.m.weimob.com/vshop/55883069/Index?PageId=591449&IsPre=1&channel=menu',
+                     u'type': u'view', u'name': u'\u597d\u5ba2\u9752\u6d77', u'sub_button': []}]},
+                {u'name': u'\u987e\u5ba2\u4e4b\u5bb6', u'sub_button': [
+                    {u'url': u'https://mp.weixin.qq.com/s/kZxz40YzVHKdEK2okntNaQ', u'type': u'view',
+                     u'name': u'\u4f18\u60e0\u96c6\u9526', u'sub_button': []},
+                    {u'url': u'http://mp.weixin.qq.com/s/c1f3fV6m6HspvWfHEgN1Dw', u'type': u'view',
+                     u'name': u'\u5ba2\u6237\u7ecf\u7406', u'sub_button': []},
+                    {u'url': u'http://www.95504.net/NewMapIndex/MapIndex.html', u'type': u'view',
+                     u'name': u'\u5bfc\u822a\u670d\u52a1', u'sub_button': []},
+                    {u'url': u'http://jf.95504.net/', u'type': u'view', u'name': u'\u79ef\u5206\u5151\u6362',
+                     u'sub_button': []},
+                    {u'url': u'http://www.95504.net/', u'type': u'view', u'name': u'\u6cb9\u5361\u5145\u503c',
+                     u'sub_button': []}]}]}}
             self.wechat.create_menu(menu)
             return False, 'cm success'
         # if question == '抽奖':
@@ -355,7 +380,7 @@ class WechatService(object):
             #     promotion.cancel = False
             #     promotion.save()
             self.click_manage(message)
-                # todo 关注发消息
+            # todo 关注发消息
             # mid = self.create_channel(open_id)
             #     return False, channel.welcome_text
             return False, '欢迎关注'

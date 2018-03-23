@@ -22,7 +22,7 @@ urlpatterns = patterns('',
                        # url(r'^blog/', include('blog.urls')),
 
                        url(r'^site_admin/', include(admin.site.urls)),
-                       url(r'^service/v1/', include(weichat.urls)),
+                       url(r'^service/v2/', include(weichat.urls)),
                        url(r'^api/v1/', include(LYFApi.urls)),
                        (r'^sitemap.xml$', 'django.contrib.sitemaps.views.sitemap', {'sitemaps': sitemaps}),
                        url(r'^css/(?P<path>.*)$', 'django.views.static.serve', {'document_root': settings.CSS_DIR}),

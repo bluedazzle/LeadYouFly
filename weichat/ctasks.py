@@ -60,7 +60,7 @@ def gen_pic_and_send(nick, avatar, qr_url, openid, token, appid, secret, num):
     draw = ImageDraw.Draw(final1)
     ttfont = ImageFont.truetype("{0}fzpc.ttf".format(MEDIA_TMP), 20)
     draw.text((270, 305), nick, font=ttfont)
-    draw.text((305, 380), num, font=ttfont)
+    draw.text((305, 370), num, font=ttfont)
     # draw.text((187, 592), nick, font=ttfont)
     save_path = '{0}{1}.jpg'.format(MEDIA_TMP, openid)
     final1 = final1.convert('RGB')

@@ -207,26 +207,6 @@ class WechatService(object):
 
                 ]
             }
-            menu = {u'menu': {u'button': [
-                {u'type': u'click', u'name': u'\u5206\u4eab\u4f18\u60e0', u'key': u'DQ001', u'sub_button': []},
-                {u'name': u'\u597d\u5ba2\u9752\u6d77', u'sub_button': [
-                    {u'url': u'http://m.qh.petro.tymg.vinotec.cn/adopt/index.aspx', u'type': u'view',
-                     u'name': u'\u5929\u6daf\u7267\u6b4c', u'sub_button': []},
-                    {u'url': u'http://55883069.m.weimob.com/vshop/55883069/Index?PageId=605151&IsPre=1&channel=menu',
-                     u'type': u'view', u'name': u'\u79d8\u5883\u5bfb\u73cd', u'sub_button': []},
-                    {u'url': u'http://55883069.m.weimob.com/vshop/55883069/Index?PageId=591449&IsPre=1&channel=menu',
-                     u'type': u'view', u'name': u'\u597d\u5ba2\u9752\u6d77', u'sub_button': []}]},
-                {u'name': u'\u987e\u5ba2\u4e4b\u5bb6', u'sub_button': [
-                    {u'url': u'https://mp.weixin.qq.com/s/kZxz40YzVHKdEK2okntNaQ', u'type': u'view',
-                     u'name': u'\u4f18\u60e0\u96c6\u9526', u'sub_button': []},
-                    {u'url': u'http://mp.weixin.qq.com/s/c1f3fV6m6HspvWfHEgN1Dw', u'type': u'view',
-                     u'name': u'\u5ba2\u6237\u7ecf\u7406', u'sub_button': []},
-                    {u'url': u'http://www.95504.net/NewMapIndex/MapIndex.html', u'type': u'view',
-                     u'name': u'\u5bfc\u822a\u670d\u52a1', u'sub_button': []},
-                    {u'url': u'http://jf.95504.net/', u'type': u'view', u'name': u'\u79ef\u5206\u5151\u6362',
-                     u'sub_button': []},
-                    {u'url': u'http://www.95504.net/', u'type': u'view', u'name': u'\u6cb9\u5361\u5145\u503c',
-                     u'sub_button': []}]}]}}
             self.wechat.create_menu(menu)
             return False, 'cm success'
         # if question == '抽奖':

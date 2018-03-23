@@ -118,6 +118,7 @@ class WechatService(object):
                        'unsubscribe': self.event_manage,
                        'scan': self.event_manage,
                        'view': self.event_manage,
+                       'event': self.event_manage,
                        'voice': self.other_manage
                        }
         is_pic, result = manage_dict[message.type](message)
@@ -139,7 +140,9 @@ class WechatService(object):
         # new_reply = ['白羊', '金牛', '双子', '巨蟹', '狮子', '处女', '天秤', '天蝎', '射手', '摩羯', '水瓶', '双鱼']
         content = unicode(message.content)
         open_id = message.source
-        # if content == 'cm':
+        if content == 'cm':
+            print self.wechat.get_menu()
+            return False, ''
         #     menu = {
         #         'button': [
         #             {'name': '分享优惠',
@@ -231,8 +234,9 @@ class WechatService(object):
         #     return True, self.upload_picture(answer.image)
         # else:
         #     return False, answer.answer
-        return self.click_manage(message)
-        # return False, ''
+        if content == 'sc':
+            return self.click_manage(message)
+        return False, ''
 
     # def get_qq(self, message, open_id):
     #     user = Promotion.objects.get(open_id=open_id)
@@ -339,6 +343,7 @@ class WechatService(object):
 
     def event_manage(self, message):
         open_id = message.source
+        print message.type
         if message.type == 'subscribe':
             # ticket = message.ticket
             # channel_list = Channel.objects.filter(ticket=message.ticket)
@@ -367,6 +372,10 @@ class WechatService(object):
             #     user.reply = '{0}; 点击菜单：{1}'.format(user.reply, menu_dict.get(message.key, '菜单'))
             #     user.save()
             # return False, ''
+        elif message.type == 'event':
+            # print message.__dict__
+            if message.event_key == 'DQ001':
+                self.click_manage(message)
         else:
             # promotion = self.get_promotion_info(open_id)
             # todo

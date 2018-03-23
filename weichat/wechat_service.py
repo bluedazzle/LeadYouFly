@@ -119,7 +119,8 @@ class WechatService(object):
                        'scan': self.event_manage,
                        'view': self.event_manage,
                        'event': self.event_manage,
-                       'voice': self.other_manage
+                       'voice': self.other_manage,
+                       'click': self.click_manage
                        }
         is_pic, result = manage_dict[message.type](message)
         if is_pic:

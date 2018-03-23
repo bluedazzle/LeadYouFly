@@ -36,7 +36,7 @@ def gen_pic_and_send(nick, avatar, qr_url, openid, token, appid, secret, num):
     logging.info('Start notify url to baidu')
     MEDIA_TMP = './static/tmp/'
     # region = Image.open(cStringIO.StringIO(urllib.urlopen(qr_url).read()))
-    base_img = Image.open('{0}base323.png'.format(MEDIA_TMP))
+    base_img = Image.open('{0}base00.png'.format(MEDIA_TMP))
     box = (150, 586, 240, 676)
     ava_box = (212, 227, 268, 283)
     # box = (180, 632, 250, 702)

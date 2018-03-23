@@ -278,7 +278,6 @@ class WechatService(object):
             self.redis.set('xb_num', num)
         num = int(num)
         num += 13
-        num = '第{0}'.format(num)
         gen_pic_and_send.apply_async((name, user_info.get('headimgurl'), qr_url, openid, self.get_token(),
                                       self.wechat_admin.app_id, self.wechat_admin.app_secret, unicode(num)))
         # path, mid = self.create_pic(name, , qr_url, openid)

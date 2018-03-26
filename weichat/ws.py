@@ -147,10 +147,34 @@ class WechatService(object):
         if content == 'mm':
             menu = {
                 'button': [
-                    {'name': '熄灯开启',
-                     'type': 'click',
-                     'key': 'DQ001'
-                     },
+                    {'name': '车主福利',
+                     'sub_button': [
+                         {
+                             'type': 'view',
+                             'name': '优惠集锦',
+                             'url': 'https://mp.weixin.qq.com/mp/homepage?__biz=MzI5NjQ0NTQwOA==&hid=1&sn=9ba7e62ab89b1845613fd0ca698eac5a&scene=18&uin=&key=&devicetype=Windows+7&version=6206021b&lang=zh_CN&ascene=7&winzoom=1'
+                         },
+                         {
+                             'type': 'view',
+                             'name': '小新说车',
+                             'url': 'https://mp.weixin.qq.com/mp/homepage?__biz=MzI5NjQ0NTQwOA==&hid=2&sn=1aed9c875448867a399265949b53cfdf&scene=18&uin=&key=&devicetype=Windows+7&version=6206021b&lang=zh_CN&ascene=7&winzoom=1'
+                         },
+                         {
+                             'type': 'view',
+                             'name': '爱车保养',
+                             'url': 'http://mp.weixin.qq.com/s/3XI9-kJvYXCXHJWWIeUMDw'
+                         },
+                         {
+                             'type': 'view',
+                             'name': '昆仑之家',
+                             'url': 'http://mp.weixin.qq.com/s/IZqPav9JEOT59196SkloFA'
+                         },
+                         {
+                             'type': 'view',
+                             'name': '跨界合作优惠',
+                             'url': 'https://mp.weixin.qq.com/s/bww8CY09eLTjuapp6vDG8g'
+                         },
+                     ]},
                     {'name': '好客青海',
                      'sub_button': [
                          {
@@ -345,7 +369,7 @@ class WechatService(object):
 
     def event_manage(self, message):
         open_id = message.source
-        print message.type
+        # print message.type
         if message.type == 'subscribe':
             # ticket = message.ticket
             # channel_list = Channel.objects.filter(ticket=message.ticket)
@@ -354,7 +378,7 @@ class WechatService(object):
             #     promotion = self.get_promotion_info(open_id, channel)
             #     promotion.cancel = False
             #     promotion.save()
-            self.click_manage(message)
+            # self.click_manage(message)
             # todo 关注发消息
             # mid = self.create_channel(open_id)
             #     return False, channel.welcome_text

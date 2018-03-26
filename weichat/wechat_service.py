@@ -170,12 +170,8 @@ class WechatService(object):
                              'url': 'http://kunlunlube.cnpc.com.cn/klrhy/mfwcx/m_fwcx.shtml'
                          },
                      ]},
-                    {'name': '熄灯开启',
-                     'type': 'click',
-                     'key': 'DQ001'
-                     },
                     {
-                        'name': '润油商盟',
+                        'name': '润油有礼',
                         'sub_button': [
                             {
                                 'type': 'view',
@@ -189,9 +185,14 @@ class WechatService(object):
                             },
                             {
                                 'type': 'view',
-                                'name': '全新服务',
+                                'name': '全新活动',
                                 'url': 'http://call.sailouzai.com/ads.html'
                             },
+                        ]
+                    },
+                    {
+                        'name': '润油商盟',
+                        'sub_button': [
                             {
                                 'type': 'view',
                                 'name': '销售网点申请',
@@ -201,6 +202,16 @@ class WechatService(object):
                                 'type': 'view',
                                 'name': '销售员申请',
                                 'url': 'https://wop2.tuobacco.com/app/verify2/#/apply/sale'
+                            },
+                            {
+                                'type': 'view',
+                                'name': '修理厂申请',
+                                'url': 'https://wop2.tuobacco.com/app/verify2/#/apply/region'
+                            },
+                            {
+                                'type': 'view',
+                                'name': '区域经理申请',
+                                'url': 'http://call.sailouzai.com'
                             },
                         ]
                     }
@@ -350,7 +361,7 @@ class WechatService(object):
 
     def event_manage(self, message):
         open_id = message.source
-        print message.type
+        # print message.type
         if message.type == 'subscribe':
             # ticket = message.ticket
             # channel_list = Channel.objects.filter(ticket=message.ticket)
@@ -359,7 +370,7 @@ class WechatService(object):
             #     promotion = self.get_promotion_info(open_id, channel)
             #     promotion.cancel = False
             #     promotion.save()
-            self.click_manage(message)
+            # self.click_manage(message)
             # todo 关注发消息
             # mid = self.create_channel(open_id)
             #     return False, channel.welcome_text

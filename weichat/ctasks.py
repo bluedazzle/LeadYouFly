@@ -78,7 +78,7 @@ def gen_pic_and_send(nick, avatar, qr_url, openid, token, appid, secret, num):
     # save_path = '{0}.jpg'.format(openid)
     save_path = '{0}{1}.jpg'.format(MEDIA_TMP, openid)
     final1 = final1.convert('RGB')
-    final1.save(save_path, quality=50)
+    final1.save(save_path, quality=100)
     mid = upload_picture('http://sy.chafanbao.com/static/tmp/{0}.jpg'.format(openid), token, appid, secret)
     wechat = WechatBasic(token, appid, secret)
     token = wechat.grant_token()['access_token']

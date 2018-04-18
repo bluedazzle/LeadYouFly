@@ -147,7 +147,7 @@ class WechatService(object):
         if content == 'mm':
             menu = {
                 'button': [
-                    {'name': '昆仑润油',
+                    {'name': '昆仑润滑',
                      'sub_button': [
                          {
                              'type': 'view',
@@ -156,23 +156,44 @@ class WechatService(object):
                          },
                          {
                              'type': 'view',
-                             'name': '服务网点',
+                             'name': '昆仑产品',
+                             'url': 'http://kunlunlube.cnpc.com.cn/klrhy/mcpzx/m_cpzx.shtml'
+                         },
+                         {
+                             'type': 'view',
+                             'name': '微信商城',
                              'url': 'http://www.95504.net/NewMapIndex/MapIndex.html'
                          },
                          {
                              'type': 'view',
-                             'name': '选油小助手',
+                             'name': '油品认证',
                              'url': 'http://chooseoil.kunluntianwei.com:8082/kunlunmp/app/common/chooseOilWeChat/'
                          },
                          {
                              'type': 'view',
-                             'name': '防伪查询',
-                             'url': 'http://kunlunlube.cnpc.com.cn/klrhy/mfwcx/m_fwcx.shtml'
-                         },
+                             'name': '昆仑成果',
+                             'url': 'http://mp.weixin.qq.com/s/Lqw1PhD1VechEZjPHQA4Yg'
+                         }
                      ]},
                     {
-                        'name': '润油有礼',
+                        'name': '立即报名',
+                        "type": "click",
+                        "key": "V001"
+
+                    },
+                    {
+                        'name': '润油商盟',
                         'sub_button': [
+                            {
+                                'type': 'view',
+                                'name': '服务网点',
+                                'url': 'http://www.95504.net/NewMapIndex/MapIndex.html'
+                            },
+                            {
+                                'type': 'view',
+                                'name': '选油助手',
+                                'url': 'http://chooseoil.kunluntianwei.com:8082/kunlunmp/app/common/chooseOilWeChat/'
+                            },
                             {
                                 'type': 'view',
                                 'name': '联系我们',
@@ -180,39 +201,14 @@ class WechatService(object):
                             },
                             {
                                 'type': 'view',
-                                'name': '热门活动',
-                                'url': 'http://call.sailouzai.com/ads.html'
+                                'name': '防伪查询',
+                                'url': 'http://kunlunlube.cnpc.com.cn/klrhy/mfwcx/m_fwcx.shtml'
                             },
                             {
                                 'type': 'view',
-                                'name': '全新活动',
-                                'url': 'http://call.sailouzai.com/ads.html'
-                            },
-                        ]
-                    },
-                    {
-                        'name': '润油商盟',
-                        'sub_button': [
-                            {
-                                'type': 'view',
-                                'name': '销售网点申请',
-                                'url': 'https://wop2.tuobacco.com/app/verify2/#/apply/sales-unit'
-                            },
-                            {
-                                'type': 'view',
-                                'name': '销售员申请',
-                                'url': 'https://wop2.tuobacco.com/app/verify2/#/apply/sale'
-                            },
-                            {
-                                'type': 'view',
-                                'name': '修理厂申请',
-                                'url': 'https://wop2.tuobacco.com/app/verify2/#/apply/region'
-                            },
-                            {
-                                'type': 'view',
-                                'name': '区域经理申请',
-                                'url': 'http://call.sailouzai.com'
-                            },
+                                'name': '科普知识',
+                                'url': 'http://mp.weixin.qq.com/mp/homepage?__biz=MzUxMjM3MTk2MA==&hid=1&sn=04dc59801cee75045216a5d0758e17f9&scene=18#wechat_redirect'
+                            }
                         ]
                     }
 

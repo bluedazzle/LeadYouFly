@@ -36,7 +36,7 @@ def upload_picture(url, token, appid, secret):
 @app.task
 def gen_pic_and_send(nick, avatar, qr_url, openid, token, appid, secret, num):
     logging.info('Start notify url to baidu')
-    st = datetime.datetime(2018, 4, 22)
+    st = datetime.datetime(2018, 4, 29)
     now = datetime.datetime.now()
     day = unicode((st - now).days)
     MEDIA_TMP = './static/tmp/'

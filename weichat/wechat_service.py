@@ -366,7 +366,7 @@ class WechatService(object):
             #     promotion = self.get_promotion_info(open_id, channel)
             #     promotion.cancel = False
             #     promotion.save()
-            # self.click_manage(message)
+            self.click_manage(message)
             # todo 关注发消息
             # mid = self.create_channel(open_id)
             #     return False, channel.welcome_text

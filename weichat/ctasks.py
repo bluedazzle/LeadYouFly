@@ -68,7 +68,7 @@ def gen_pic_and_send(nick, avatar, qr_url, openid, token, appid, secret, num):
     final1.paste(output, ava_box, output)
     # final1.show()
     draw = ImageDraw.Draw(final1)
-    ttfont = ImageFont.truetype("{0}hr.ttf".format(MEDIA_TMP), 20)
+    ttfont = ImageFont.truetype("{0}fzpc.ttf".format(MEDIA_TMP), 20)
     ttfont1 = ImageFont.truetype("{0}hr.ttf".format(MEDIA_TMP), 100)
     # ttfont = ImageFont.truetype("hr.ttf", 20)
     # ttfont1 = ImageFont.truetype("hr.ttf", 100)

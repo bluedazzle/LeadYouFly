@@ -182,7 +182,7 @@ class WechatService(object):
 
                     },
                     {
-                        'name': '润油商盟',
+                        'name': '昆仑养护',
                         'sub_button': [
                             {
                                 'type': 'view',

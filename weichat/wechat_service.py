@@ -370,7 +370,10 @@ class WechatService(object):
             # todo 关注发消息
             # mid = self.create_channel(open_id)
             #     return False, channel.welcome_text
-            return False, '欢迎关注领奖品！最高价值458元的大奖哟~月29日14点，我们相约武威失红星时代广场。你的活动邀请函正在制作中，请稍后......'
+            return False, '''欢迎关注领奖品！最高价值458元的大奖哟~
+4月29日14点，我们相约武威市红星时代广场
+
+您的活动邀请函正在制作中，请稍后......'''
         elif message.type == 'unsubscribe':
             promotion = self.get_promotion_info(open_id)
             promotion.cancel = True

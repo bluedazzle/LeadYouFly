@@ -176,65 +176,40 @@ class WechatService(object):
                          }
                      ]},
                     {
-                        'name': '昆仑养护',
-                        'sub_button': [
-                         {
-                             'type': 'view',
-                             'name': '选油助手',
-                             'url': 'http://mall.kunluntianwei.com/oosweb/app/common/wx/kunlunSecond/chooseMyCar?openid=oVHVrswZ3QRT8drfcX6iM1ELP0Kg'
-                         },
-                         {
-                             'type': 'view',
-                             'name': '门店推荐',
-                             'url': 'http://station.eqiqu.mobi/'
-                         },
-                         {
-                             'type': 'view',
-                             'name': '老昆说车',
-                             'url': 'http://mp.weixin.qq.com/mp/homepage?__biz=MzUxMjM3MTk2MA==&hid=1&sn=04dc59801cee75045216a5d0758e17f9&scene=18#wechat_redirect'
-                         },
-                         {
-                             'type': 'view',
-                             'name': '保养师活动',
-                             'url': 'http://sale.klqr.cnpc.com.cn/zsyyxfgs/scan/mechanicindex?zsykey=e56b94b9cf60e9f6 '
-                         },
-                         {
-                             'type': 'view',
-                             'name': '保养师数据',
-                             'url': 'http://sale.klqr.cnpc.com.cn/zsyyxfgs/account/center?zsykey=e56b94b9cf60e9f6'
-                         }
-                     ]
-
+                        'name': '立即报名',
+                        "type": "click",
+                        "key": "V001"
                     },
                     {
                         'name': '昆仑养护',
                         'sub_button': [
                             {
                                 'type': 'view',
-                                'name': '服务网点',
-                                'url': 'http://www.95504.net/NewMapIndex/MapIndex.html'
-                            },
-                            {
-                                'type': 'view',
                                 'name': '选油助手',
-                                'url': 'http://chooseoil.kunluntianwei.com:8082/kunlunmp/app/common/chooseOilWeChat/'
+                                'url': 'http://mall.kunluntianwei.com/oosweb/app/common/wx/kunlunSecond/chooseMyCar?openid=oVHVrswZ3QRT8drfcX6iM1ELP0Kg'
                             },
                             {
                                 'type': 'view',
-                                'name': '联系我们',
-                                'url': 'http://call.sailouzai.com'
+                                'name': '门店推荐',
+                                'url': 'http://station.eqiqu.mobi/'
                             },
                             {
                                 'type': 'view',
-                                'name': '防伪查询',
-                                'url': 'http://kunlunlube.cnpc.com.cn/klrhy/mfwcx/m_fwcx.shtml'
-                            },
-                            {
-                                'type': 'view',
-                                'name': '科普知识',
+                                'name': '老昆说车',
                                 'url': 'http://mp.weixin.qq.com/mp/homepage?__biz=MzUxMjM3MTk2MA==&hid=1&sn=04dc59801cee75045216a5d0758e17f9&scene=18#wechat_redirect'
+                            },
+                            {
+                                'type': 'view',
+                                'name': '保养师活动',
+                                'url': 'http://sale.klqr.cnpc.com.cn/zsyyxfgs/scan/mechanicindex?zsykey=e56b94b9cf60e9f6 '
+                            },
+                            {
+                                'type': 'view',
+                                'name': '保养师数据',
+                                'url': 'http://sale.klqr.cnpc.com.cn/zsyyxfgs/account/center?zsykey=e56b94b9cf60e9f6'
                             }
                         ]
+
                     }
 
                 ]

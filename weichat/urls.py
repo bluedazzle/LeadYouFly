@@ -5,5 +5,6 @@ from weichat.views import *
 urlpatterns = patterns('',
                        # url(r'^qh/$', qh_service),
                        url(r'^$', wechat_service),
+                       url(r'^zh/$', ZPView.as_view()),
 
 )

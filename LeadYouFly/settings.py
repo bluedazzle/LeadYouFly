@@ -27,7 +27,7 @@ DEBUG = True
 
 TEMPLATE_DEBUG = False
 
-ALLOWED_HOSTS = ['www.fibar.cn']
+ALLOWED_HOSTS = ['www.fibar.cn', 'localhost', '10.2.209.85']
 
 WEBSITE_SIGN = 'L'
 

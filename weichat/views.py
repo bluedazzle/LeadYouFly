@@ -3,6 +3,7 @@ from __future__ import unicode_literals
 from django.http import HttpResponse
 from django.shortcuts import render
 from django.views.decorators.csrf import csrf_exempt
+from django.views.generic import TemplateView
 from wechat_sdk import WechatBasic
 from kw import get_answer
 
@@ -48,3 +49,7 @@ def qh_service(req):
         body_text = req.body
         response = WS.message_manage(body_text)
         return HttpResponse(response)
+
+
+class ZPView(TemplateView):
+    template_name = 'zp.html'
